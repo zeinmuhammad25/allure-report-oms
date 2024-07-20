@@ -1,5 +1,5 @@
 import {expect, Page} from "@playwright/test";
-import Element from "./objects/Element";
+import Element, {ElementType} from "./objects/Element";
 
 export default abstract class BasePage {
     private _page: Page;
@@ -20,17 +20,23 @@ export default abstract class BasePage {
     async navigateHere(): Promise<void> {
         await this.navigateTo(this.pageUrl());
         for (const element of this.shouldHave()) {
-            if (element.selector != undefined && element.value != undefined)
-                await this.expectHaveValue(element.selector, element.value);
-            else if (element.value != undefined)
-                await this.expectTextVisible(element.value);
-            else if (element.selector != undefined)
-                await this.expectVisible(element.selector);
+            switch (element.type) {
+                case ElementType.TEXT:
+                    await this.expectTextVisible(element.value);
+                    break;
+                case ElementType.ELEMENT:
+                    await this.expectVisible(element.selector);
+                    break;
+                case ElementType.KEY_VALUE:
+                    await this.expectHaveValue(element.selector, element.value);
+                    break;
+
+            }
         }
     }
 
     async navigateTo(url: string): Promise<void> {
-        await this._page.goto(this._baseUrl + url);
+        await this._page.goto(this.baseUrl + url);
     }
 
     getTitle(): Promise<String> {
