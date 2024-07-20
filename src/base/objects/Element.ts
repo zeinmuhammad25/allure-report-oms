@@ -22,6 +22,6 @@ export default class Element {
     }
 }
 
-enum ElementType {
+export enum ElementType {
     TEXT, ELEMENT, KEY_VALUE
 }
