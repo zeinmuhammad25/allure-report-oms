@@ -67,6 +67,10 @@ export default abstract class BasePage {
         return this._page.click(selector);
     }
 
+    protected clickText(text: string): Promise<void> {
+        return this._page.getByText(text).click();
+    }
+
     protected expectEnabled(selector: string): Promise<void> {
         return expect(this._page.locator(selector)).toBeEnabled();
     }
@@ -79,8 +83,8 @@ export default abstract class BasePage {
         return expect(this._page.locator(selector)).toBeVisible();
     }
 
-    protected expectTextVisible(text: string): Promise<void> {
-        return expect(this._page.getByText(text)).toBeVisible();
+    protected expectTextVisible(text: string, exact: boolean = false): Promise<void> {
+        return expect(this._page.getByText(text, {exact: exact})).toBeVisible();
     }
 
     protected async expectHaveValue(selector: string, value: string): Promise<void> {
@@ -89,10 +93,8 @@ export default abstract class BasePage {
 
     protected async expectHaveButton(selector: string, value: string, enabled: boolean = true): Promise<void> {
         let e = expect(this._page.getByRole('button', {name: value}));
-        if (enabled)
-            await e.toBeEnabled();
-        else
-            await e.toBeDisabled();
+        if (enabled) await e.toBeEnabled();
+        else await e.toBeDisabled();
     }
 
     async wait(time: number) {

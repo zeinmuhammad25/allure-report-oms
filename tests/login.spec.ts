@@ -5,12 +5,14 @@ import DashboardLocator from "../src/modules/dashboard/dashboard-locator";
 
 test(`User log in with wrong email`, async ({page}) => {
     const loginPage = new LoginPage(page);
-
-    // Navigate to the login page
     await loginPage.navigateHere();
+    await loginPage.performWrongLogin();
+});
 
-    // Perform wrong login
-    await loginPage.wrongLogin();
+test(`User forget password`, async ({page}) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateHere();
+    await loginPage.performForgetPassword();
 });
 
 test('User can log in and see the "Later" button on the dashboard', async ({page}) => {
@@ -20,10 +22,10 @@ test('User can log in and see the "Later" button on the dashboard', async ({page
     await loginPage.navigateHere();
 
     // Perform wrong login
-    await loginPage.wrongLogin();
+    await loginPage.performWrongLogin();
 
     // Perform login
-    await loginPage.login();
+    await loginPage.performLogin();
 
     // Wait for the dashboard page is loaded
     await page.waitForURL(`${process.env.BASE_URL}${Urls.dashboard}`);
