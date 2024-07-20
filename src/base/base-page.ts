@@ -19,10 +19,10 @@ export default abstract class BasePage {
 
     async navigateHere(): Promise<void> {
         await this.navigateTo(this.pageUrl());
-        await this.checkInitialElements();
+        await this.performCheckInitialElements();
     }
 
-    public async checkInitialElements(): Promise<void> {
+    public async performCheckInitialElements(): Promise<void> {
         for (const element of this.shouldHave()) {
             switch (element.type) {
                 case ElementType.TEXT:
