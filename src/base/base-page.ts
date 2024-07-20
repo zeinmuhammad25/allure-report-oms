@@ -1,4 +1,5 @@
 import {expect, Page} from "@playwright/test";
+import Element from "./objects/Element";
 
 export default abstract class BasePage {
     private _page: Page;
@@ -9,6 +10,8 @@ export default abstract class BasePage {
 
     abstract pageUrl: () => string;
 
+    abstract shouldHave(): Element[];
+
     private _baseUrl: string = process.env.BASE_URL;
     protected get baseUrl(): string {
         return this._baseUrl;
@@ -16,6 +19,14 @@ export default abstract class BasePage {
 
     async navigateHere(): Promise<void> {
         await this.navigateTo(this.pageUrl());
+        for (const element of this.shouldHave()) {
+            if (element.selector != undefined && element.value != undefined)
+                await this.expectHaveValue(element.selector, element.value);
+            else if (element.value != undefined)
+                await this.expectTextVisible(element.value);
+            else if (element.selector != undefined)
+                await this.expectVisible(element.selector);
+        }
     }
 
     async navigateTo(url: string): Promise<void> {
@@ -34,7 +45,7 @@ export default abstract class BasePage {
     protected async fill(selector: string, value: string): Promise<void> {
         console.log(`fill ${selector} with ${value}`);
         await this._page.fill(selector, value);
-        await expect(this._page.locator(selector)).toHaveValue(value);
+        await this.expectHaveValue(selector, value);
     }
 
     protected click(selector: string): Promise<void> {
@@ -56,6 +67,10 @@ export default abstract class BasePage {
 
     protected expectTextVisible(text: string): Promise<void> {
         return expect(this._page.getByText(text)).toBeVisible();
+    }
+
+    protected async expectHaveValue(selector: string, value: string): Promise<void> {
+        await expect(this._page.locator(selector)).toHaveValue(value);
     }
 
     async wait(time: number) {
