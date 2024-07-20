@@ -63,31 +63,37 @@ export default abstract class BasePage {
     }
 
     protected click(selector: string): Promise<void> {
-        console.log(`click ${selector}`);
+        console.log(`click : ${selector}`);
         return this._page.click(selector);
     }
 
     protected clickText(text: string): Promise<void> {
+        console.log(`click text:  ${text}`);
         return this._page.getByText(text).click();
     }
 
     protected expectEnabled(selector: string): Promise<void> {
+        console.log(`check if enabled:  ${selector}`);
         return expect(this._page.locator(selector)).toBeEnabled();
     }
 
     protected expectDisabled(selector: string): Promise<void> {
+        console.log(`check if disabled:  ${selector}`);
         return expect(this._page.locator(selector)).toBeDisabled();
     }
 
     protected expectVisible(selector: string): Promise<void> {
+        console.log(`check if visible:  ${selector}`);
         return expect(this._page.locator(selector)).toBeVisible();
     }
 
     protected expectTextVisible(text: string, exact: boolean = false): Promise<void> {
+        console.log(`check if text visible:  ${text} | exact : ${exact}`);
         return expect(this._page.getByText(text, {exact: exact})).toBeVisible();
     }
 
     protected async expectHaveValue(selector: string, value: string): Promise<void> {
+        console.log(`check if : ${selector}  hasValue : ${value}`);
         await expect(this._page.locator(selector)).toHaveValue(value);
     }
 
