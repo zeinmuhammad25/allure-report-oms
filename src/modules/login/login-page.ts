@@ -6,8 +6,8 @@ export default class LoginPage extends BasePage {
     pageUrl = (): string => Urls.login;
 
     async wrongLogin(): Promise<void> {
-        const email = "wrongEmail";
-        const password = "";
+        const email: string = "wrongEmail";
+        const password: string = "";
         await this.fill(LoginLocator.usernameInput, email);
         await this.expectDisabled(LoginLocator.loginButton);
         await this.fill(LoginLocator.passwordInput, password);
@@ -17,6 +17,7 @@ export default class LoginPage extends BasePage {
     async login(): Promise<void> {
         const email = process.env.USEREMAIL;
         const password = process.env.PASSWORD;
+        await this.expectDisabled(LoginLocator.loginButton);
         await this.fill(LoginLocator.usernameInput, email);
         await this.fill(LoginLocator.passwordInput, password);
         await this.expectEnabled(LoginLocator.loginButton);
