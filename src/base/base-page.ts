@@ -32,10 +32,10 @@ export default abstract class BasePage {
                     await this.expectVisible(element.selector);
                     break;
                 case ElementType.KEY_VALUE:
-                    await this.expectHaveValue(element.selector, element.value);
+                    await this.expectHasValue(element.selector, element.value);
                     break;
                 case ElementType.BUTTON:
-                    await this.expectHaveButton(element.selector, element.value, element.enabled);
+                    await this.expectHasButton(element.selector, element.value, element.enabled);
                     break;
                 case ElementType.LINK:
                     break;
@@ -59,7 +59,7 @@ export default abstract class BasePage {
     protected async fill(selector: string, value: string): Promise<void> {
         console.log(`fill ${selector} with ${value}`);
         await this._page.fill(selector, value);
-        await this.expectHaveValue(selector, value);
+        await this.expectHasValue(selector, value);
     }
 
     protected click(selector: string): Promise<void> {
@@ -92,12 +92,12 @@ export default abstract class BasePage {
         return expect(this._page.getByText(text, {exact: exact})).toBeVisible();
     }
 
-    protected async expectHaveValue(selector: string, value: string): Promise<void> {
+    protected async expectHasValue(selector: string, value: string): Promise<void> {
         console.log(`check if : ${selector}  hasValue : ${value}`);
         await expect(this._page.locator(selector)).toHaveValue(value);
     }
 
-    protected async expectHaveButton(selector: string, value: string, enabled: boolean = true): Promise<void> {
+    protected async expectHasButton(selector: string, value: string, enabled: boolean = true): Promise<void> {
         let e = expect(this._page.getByRole('button', {name: value}));
         if (enabled) await e.toBeEnabled();
         else await e.toBeDisabled();
