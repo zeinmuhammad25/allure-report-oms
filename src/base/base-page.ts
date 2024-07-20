@@ -22,7 +22,7 @@ export default abstract class BasePage {
         await this.checkInitialElements();
     }
 
-    protected async checkInitialElements(): Promise<void> {
+    public async checkInitialElements(): Promise<void> {
         for (const element of this.shouldHave()) {
             switch (element.type) {
                 case ElementType.TEXT:
