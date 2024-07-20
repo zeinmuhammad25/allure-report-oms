@@ -1,9 +1,22 @@
 import BasePage from "../../base/base-page";
 import LoginLocator from "./login-locator";
 import Urls from "../../configs/urls";
+import Element from "../../base/objects/Element";
+
 
 export default class LoginPage extends BasePage {
     pageUrl = (): string => Urls.login;
+
+    shouldHave(): Element[] {
+        return [
+            Element.ofSelector(LoginLocator.suggestConfirmEmail),
+            Element.ofSelector(LoginLocator.suggestRegister),
+            Element.ofText("Cek email untuk verifikasi atau"),
+            Element.ofText("Kirim ulang link verifikasi"),
+            Element.ofText("Belum punya akun? "),
+            Element.ofText("Daftar Sekarang"),
+        ];
+    }
 
     private email = process.env.USEREMAIL;
     private emailWrong = "wrongEmail";
