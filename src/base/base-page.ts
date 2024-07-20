@@ -19,6 +19,10 @@ export default abstract class BasePage {
 
     async navigateHere(): Promise<void> {
         await this.navigateTo(this.pageUrl());
+        await this.checkInitialElements();
+    }
+
+    protected async checkInitialElements(): Promise<void> {
         for (const element of this.shouldHave()) {
             switch (element.type) {
                 case ElementType.TEXT:
@@ -30,7 +34,11 @@ export default abstract class BasePage {
                 case ElementType.KEY_VALUE:
                     await this.expectHaveValue(element.selector, element.value);
                     break;
-
+                case ElementType.BUTTON:
+                    await this.expectHaveButton(element.selector, element.value, element.enabled);
+                    break;
+                case ElementType.LINK:
+                    break;
             }
         }
     }
@@ -77,6 +85,14 @@ export default abstract class BasePage {
 
     protected async expectHaveValue(selector: string, value: string): Promise<void> {
         await expect(this._page.locator(selector)).toHaveValue(value);
+    }
+
+    protected async expectHaveButton(selector: string, value: string, enabled: boolean = true): Promise<void> {
+        let e = expect(this._page.getByRole('button', {name: value}));
+        if (enabled)
+            await e.toBeEnabled();
+        else
+            await e.toBeDisabled();
     }
 
     async wait(time: number) {

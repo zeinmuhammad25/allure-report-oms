@@ -9,6 +9,9 @@ export default class LoginPage extends BasePage {
 
     shouldHave(): Element[] {
         return [
+            Element.of(LoginLocator.usernameInput, ''),
+            Element.of(LoginLocator.passwordInput, ''),
+            Element.ofButton("Masuk", false),
             Element.ofSelector(LoginLocator.suggestConfirmEmail),
             Element.ofSelector(LoginLocator.suggestRegister),
             Element.ofText("Cek email untuk verifikasi atau"),

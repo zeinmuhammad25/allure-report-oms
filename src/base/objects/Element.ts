@@ -2,6 +2,7 @@ export default class Element {
     selector?: string;
     value?: string;
     type: ElementType;
+    enabled: boolean;
 
     private constructor(selector: string, value: string, type: ElementType) {
         this.selector = selector;
@@ -20,8 +21,19 @@ export default class Element {
     static ofText(text: string): Element {
         return new Element(null, text, ElementType.TEXT);
     }
+
+    static ofLink(text: string): Element {
+        return new Element(null, text, ElementType.LINK);
+    }
+
+    static ofButton(text: string, enabled: boolean = true) {
+        let e = new Element(null, text, ElementType.BUTTON);
+        e.enabled = enabled;
+        return e;
+
+    }
 }
 
 export enum ElementType {
-    TEXT, ELEMENT, KEY_VALUE
+    TEXT, ELEMENT, KEY_VALUE, LINK, BUTTON
 }
