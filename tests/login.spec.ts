@@ -3,13 +3,24 @@ import LoginPage from "../src/modules/login/login-page";
 import Urls from "../src/configs/urls";
 import DashboardLocator from "../src/modules/dashboard/dashboard-locator";
 
-require('dotenv');
+test(`User log in with wrong email`, async ({page}) => {
+    const loginPage = new LoginPage(page);
+
+    // Navigate to the login page
+    await loginPage.navigateHere();
+
+    // Perform wrong login
+    await loginPage.wrongLogin();
+});
 
 test('User can log in and see the "Later" button on the dashboard', async ({page}) => {
     const loginPage = new LoginPage(page);
 
     // Navigate to the login page
     await loginPage.navigateHere();
+
+    // Perform wrong login
+    await loginPage.wrongLogin();
 
     // Perform login
     await loginPage.login();
