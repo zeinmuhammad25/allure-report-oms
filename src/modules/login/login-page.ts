@@ -66,6 +66,7 @@ export default class LoginPage extends BasePage {
         await this.fill(LoginLocator.inputResetPassword, this.email);
         await this.expectEnabled(LoginLocator.buttonResetPasswordSubmit);
         await this.click(LoginLocator.buttonResetPasswordSubmit);
+        await this.expectTextVisible(`Link reset kata sandi telah dikirim ke email ${this.email}`);
     }
 
     async performLogin(): Promise<void> {
