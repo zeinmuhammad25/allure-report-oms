@@ -5,4 +5,6 @@ export default class LoginLocator extends BaseLocator {
     static passwordInput: string = '#password';
     static loginButton: string = `//button`;
 
+    static suggestConfirmEmail: string = '.suggest-confirm-email';
+    static suggestRegister: string = '.suggest-register';
 }
