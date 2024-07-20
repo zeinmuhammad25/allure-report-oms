@@ -26,6 +26,11 @@ export default abstract class BasePage {
         return this._page.title();
     }
 
+    protected async clear(fieldSelector: string): Promise<void> {
+        await this.fill(fieldSelector, '');
+        await expect(this._page.locator(fieldSelector)).toHaveValue('');
+    }
+
     protected async fill(selector: string, value: string): Promise<void> {
         console.log(`fill ${selector} with ${value}`);
         await this._page.fill(selector, value);
@@ -47,6 +52,14 @@ export default abstract class BasePage {
 
     protected expectVisible(selector: string): Promise<void> {
         return expect(this._page.locator(selector)).toBeVisible();
+    }
+
+    protected expectTextVisible(text: string): Promise<void> {
+        return expect(this._page.getByText(text)).toBeVisible();
+    }
+
+    async wait(time: number) {
+        return new Promise(resolve => setTimeout(resolve, time));
     }
 
     protected async perform(actions: Promise<any>[]) {
