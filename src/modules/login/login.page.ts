@@ -49,7 +49,7 @@ export default class LoginPage extends BasePage implements LoginScenario {
         await this.clickText("Lupa Kata Sandi?");
         await this.expectTextVisible("Reset Kata Sandi", true);
         await this.expectTextVisible("Masukkan email yang Anda gunakan saat proses pendaftaran ESB POSLite. Link reset kata sandi akan dikirimkan ke email ini.", true);
-        // await this.expectHasButton(LoginLocator.buttonResetPasswordBack, "Kembali", true);
+        await this.expectHasButton(LoginLocator.buttonResetPasswordBack, " Kembali ");
         await this.expectHasButton(LoginLocator.buttonResetPasswordSubmit, "Kirim", false);
 
         await this.expectHasValue(LoginLocator.inputResetPassword, '')
@@ -67,6 +67,7 @@ export default class LoginPage extends BasePage implements LoginScenario {
         await this.fill(LoginLocator.inputResetPassword, this.email);
         await this.expectEnabled(LoginLocator.buttonResetPasswordSubmit);
         await this.click(LoginLocator.buttonResetPasswordSubmit);
+        await this.waitForResponse("auth/forgot-password");
         await this.expectTextVisible(`Link reset kata sandi telah dikirim ke email ${this.email}`);
     }
 
