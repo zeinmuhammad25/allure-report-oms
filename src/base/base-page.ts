@@ -107,6 +107,18 @@ export default abstract class BasePage implements BaseScenario {
         return new Promise(resolve => setTimeout(resolve, time));
     }
 
+    async waitForResponse(urlOrPredicate: string) {
+        console.log(`waiting for response API contain ${urlOrPredicate}`);
+        return this._page.waitForResponse(new RegExp('\\b' + urlOrPredicate + '\\b')).then(response => {
+            console.log("Response Received");
+            console.log(response.url());
+            console.log(response.ok());
+            console.log(response.status());
+            console.log(response.statusText());
+            return response;
+        });
+    }
+
     protected async perform(actions: Promise<any>[]) {
         return Promise.all(actions).then(value => {
             console.log(value.length)
