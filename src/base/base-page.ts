@@ -1,7 +1,8 @@
 import {expect, Page} from "@playwright/test";
 import Element, {ElementType} from "./objects/Element";
+import BaseScenario from "./base-scenario";
 
-export default abstract class BasePage {
+export default abstract class BasePage implements BaseScenario {
     private _page: Page;
 
     constructor(page: Page) {
