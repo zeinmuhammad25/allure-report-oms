@@ -67,7 +67,21 @@ export default class LoginPage extends BasePage implements LoginScenario {
         await this.fill(LoginLocator.inputResetPassword, this.email);
         await this.expectEnabled(LoginLocator.buttonResetPasswordSubmit);
         await this.click(LoginLocator.buttonResetPasswordSubmit);
-        await this.waitForResponse("auth/forgot-password");
+        await this.waitForResponse("auth/forgot-password")
+            .then(response => {
+                if (response.ok()) {
+                    // TODO
+                    return;
+                }
+                if (response.status() == 400) {
+                    //TODO
+                    return;
+                }
+            })
+            .catch(reason => {
+                // TODO
+            });
+
         await this.expectTextVisible(`Link reset kata sandi telah dikirim ke email ${this.email}`);
     }
 
