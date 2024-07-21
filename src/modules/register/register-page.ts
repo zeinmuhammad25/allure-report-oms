@@ -14,8 +14,8 @@ export default class RegisterPage extends BasePage implements RegisterScenario {
         throw new Error("Method not implemented.");
     }
 
-    performClickTnC(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async performClickTnC(): Promise<void> {
+        await this.clickText('Syarat dan Ketentuan');
     }
 
     performClickPrivacyPolicy(): Promise<void> {
