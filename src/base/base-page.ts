@@ -24,26 +24,23 @@ export default abstract class BasePage implements BaseScenario {
     }
 
     public async performCheckInitialElements(): Promise<void> {
-        for (const element of this.shouldHave()) {
+        let promises: Promise<any>[] = this.shouldHave().map(element => {
             switch (element.type) {
                 case ElementType.TEXT:
-                    await this.expectTextVisible(element.value);
-                    break;
+                    return this.expectTextVisible(element.value);
                 case ElementType.ELEMENT:
-                    await this.expectVisible(element.selector);
-                    break;
+                    return this.expectVisible(element.selector);
                 case ElementType.KEY_VALUE:
-                    await this.expectHasValue(element.selector, element.value);
-                    break;
+                    return this.expectHasValue(element.selector, element.value);
                 case ElementType.BUTTON:
-                    await this.expectHasButton(element.selector, element.value, element.enabled);
-                    break;
+                    return this.expectHasButton(element.selector, element.value, element.enabled);
                 case ElementType.LINK:
-                    break;
                 case ElementType.INPUT:
-                    break;
+                default:
+                    return new Promise<void>(resolve => resolve());
             }
-        }
+        });
+        await Promise.all(promises);
     }
 
     async navigateTo(url: string): Promise<void> {
@@ -103,7 +100,7 @@ export default abstract class BasePage implements BaseScenario {
     protected async expectHasButton(selector: string, value: string, enabled: boolean = true): Promise<void> {
         let e = expect(this._page.getByRole('button', {name: value}));
         if (enabled) await e.toBeEnabled();
-        return  e.toBeDisabled();
+        return e.toBeDisabled();
     }
 
     async wait(time: number) {
