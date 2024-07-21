@@ -97,13 +97,13 @@ export default abstract class BasePage implements BaseScenario {
 
     protected async expectHasValue(selector: string, value: string): Promise<void> {
         console.log(`check if : ${selector}  hasValue : ${value}`);
-        await expect(this._page.locator(selector)).toHaveValue(value);
+        return expect(this._page.locator(selector)).toHaveValue(value);
     }
 
     protected async expectHasButton(selector: string, value: string, enabled: boolean = true): Promise<void> {
         let e = expect(this._page.getByRole('button', {name: value}));
         if (enabled) await e.toBeEnabled();
-        else await e.toBeDisabled();
+        return  e.toBeDisabled();
     }
 
     async wait(time: number) {
