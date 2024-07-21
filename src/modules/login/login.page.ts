@@ -1,8 +1,8 @@
 import BasePage from "../../base/base-page";
-import LoginLocator from "./login-locator";
+import LoginLocator from "./login.locator";
 import Urls from "../../configs/urls";
 import Element from "../../base/objects/Element";
-import LoginScenario from "./login-scenario";
+import LoginScenario from "./login.scenario";
 
 
 export default class LoginPage extends BasePage implements LoginScenario {

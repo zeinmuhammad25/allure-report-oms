@@ -1,6 +1,6 @@
 import BasePage from "../../base/base-page";
 import Element from "../../base/objects/Element";
-import RegisterScenario from "./register-scenario";
+import RegisterScenario from "./register.scenario";
 import Urls from "../../configs/urls";
 
 export default class RegisterPage extends BasePage implements RegisterScenario {
