@@ -40,6 +40,8 @@ export default abstract class BasePage implements BaseScenario {
                     break;
                 case ElementType.LINK:
                     break;
+                case ElementType.INPUT:
+                    break;
             }
         }
     }
