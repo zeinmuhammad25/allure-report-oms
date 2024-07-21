@@ -99,7 +99,7 @@ export default abstract class BasePage implements BaseScenario {
 
     protected async expectHasButton(selector: string, value: string, enabled: boolean = true): Promise<void> {
         let e = expect(this._page.getByRole('button', {name: value}));
-        if (enabled) await e.toBeEnabled();
+        if (enabled) return e.toBeEnabled();
         return e.toBeDisabled();
     }
 
