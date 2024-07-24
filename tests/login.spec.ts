@@ -28,3 +28,18 @@ test('User can log in and see the "Later" button on the dashboard', async ({page
     const buttonLater = await page.waitForSelector(DashboardLocator.buttonLater);
     expect(buttonLater).toBeTruthy();
 });
+
+
+test('User can log in and see the "Later" button on the dashboard', async ({page}) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateHere();
+    await loginPage.performWrongLogin();
+    await loginPage.performLogin();
+
+    // Wait for the dashboard page is loaded
+    await page.waitForURL(`${process.env.BASE_URL}${Urls.dashboard}`);
+
+    // Verify "Nanti Saja" button
+    const buttonLater = await page.waitForSelector(DashboardLocator.buttonLater);
+    expect(buttonLater).toBeTruthy();
+});
