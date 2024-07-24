@@ -1,6 +1,7 @@
 import {expect, Page} from "@playwright/test";
 import Element, {ElementType} from "./objects/Element";
 import BaseScenario from "./base-scenario";
+import Urls from "../configs/urls";
 
 export default abstract class BasePage implements BaseScenario {
     private _page: Page;
@@ -87,6 +88,11 @@ export default abstract class BasePage implements BaseScenario {
         return expect(this._page.locator(selector)).toBeVisible();
     }
 
+    protected expectInvisible(selector: string): Promise<void> {
+        console.log(`check if Invisible:  ${selector}`);
+        return expect(this._page.locator(selector)).toBeHidden();
+    }
+
     protected expectTextVisible(text: string, exact: boolean = false): Promise<void> {
         console.log(`check if text visible:  ${text} | exact : ${exact}`);
         return expect(this._page.getByText(text, {exact: exact})).toBeVisible();
@@ -123,5 +129,13 @@ export default abstract class BasePage implements BaseScenario {
         return Promise.all(actions).then(value => {
             console.log(value.length)
         });
+    }
+
+    protected waitForUrl(url: string): Promise<void> {
+        return this._page.waitForURL(url);
+    }
+
+    protected isEnabled(selector: string): Promise<boolean> {
+        return this._page.locator(selector).isEnabled();
     }
 }
