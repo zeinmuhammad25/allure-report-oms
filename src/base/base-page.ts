@@ -1,7 +1,6 @@
 import {expect, Page} from "@playwright/test";
 import Element, {ElementType} from "./objects/Element";
 import BaseScenario from "./base-scenario";
-import Urls from "../configs/urls";
 
 export default abstract class BasePage implements BaseScenario {
     private _page: Page;
@@ -131,8 +130,8 @@ export default abstract class BasePage implements BaseScenario {
         });
     }
 
-    protected waitForUrl(url: string): Promise<void> {
-        return this._page.waitForURL(url);
+    protected waitForUrl(urlOrPredicate: string): Promise<void> {
+        return this._page.waitForURL(new RegExp('\\b' + urlOrPredicate + '\\b');
     }
 
     protected isEnabled(selector: string): Promise<boolean> {
