@@ -3,6 +3,7 @@ import LoginLocator from "./login.locator";
 import Urls from "../../configs/urls";
 import Element from "../../base/objects/Element";
 import LoginScenario from "./login.scenario";
+import DashboardLocator from "../dashboard/dashboard.locator";
 
 
 export default class LoginPage extends BasePage implements LoginScenario {
@@ -94,5 +95,11 @@ export default class LoginPage extends BasePage implements LoginScenario {
         await this.fill(LoginLocator.inputPassword, this.password);
         await this.expectEnabled(LoginLocator.loginButton);
         await this.click(LoginLocator.loginButton);
+        await this.waitForUrl(`${process.env.BASE_URL}${Urls.dashboard}`);
+        if  (await this.isEnabled(DashboardLocator.buttonLater)) {
+        await this.click(DashboardLocator.buttonLater);
+        }
+
     }
+
 }
