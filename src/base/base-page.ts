@@ -131,7 +131,7 @@ export default abstract class BasePage implements BaseScenario {
     }
 
     protected waitForUrl(urlOrPredicate: string): Promise<void> {
-        return this._page.waitForURL(new RegExp('\\b' + urlOrPredicate + '\\b');
+        return this._page.waitForURL(new RegExp('\\b' + urlOrPredicate + '\\b'));
     }
 
     protected isEnabled(selector: string): Promise<boolean> {
