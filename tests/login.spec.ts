@@ -1,7 +1,5 @@
-import {expect, test} from "@playwright/test";
+import {test} from "@playwright/test";
 import LoginPage from "../src/modules/login/login.page";
-import Urls from "../src/configs/urls";
-import DashboardLocator from "../src/modules/dashboard/dashboard.locator";
 
 test(`User log in with wrong email`, async ({page}) => {
     const loginPage = new LoginPage(page);

@@ -6,4 +6,6 @@ export default interface LoginScenario extends BaseScenario {
     performLogin(): Promise<void>;
 
     performForgetPassword(): Promise<void>;
+
+    performLoginSubs(): Promise<void>;
 }

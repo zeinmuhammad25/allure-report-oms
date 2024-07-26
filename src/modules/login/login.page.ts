@@ -7,6 +7,15 @@ import DashboardLocator from "../dashboard/dashboard.locator";
 
 
 export default class LoginPage extends BasePage implements LoginScenario {
+    private email = process.env.USEREMAIL;
+    private emailWrong = "wrongEmail";
+    private emailEmpty = "";
+    private password = process.env.PASSWORD;
+    private passwordEmpty = "";
+    private useremail2 = process.env.USEREMAIL2;
+    private password2 = process.env.PASSWORD2;
+
+
     pageUrl = (): string => Urls.login;
 
     shouldHave(): Element[] {
@@ -23,12 +32,6 @@ export default class LoginPage extends BasePage implements LoginScenario {
             Element.ofText("Lupa Kata Sandi?"),
         ];
     }
-
-    private email = process.env.USEREMAIL;
-    private emailWrong = "wrongEmail";
-    private emailEmpty = "";
-    private password = process.env.PASSWORD;
-    private passwordEmpty = "";
 
     async performWrongLogin(): Promise<void> {
         await this.fill(LoginLocator.inputUsername, this.emailWrong);
@@ -96,10 +99,25 @@ export default class LoginPage extends BasePage implements LoginScenario {
         await this.expectEnabled(LoginLocator.loginButton);
         await this.click(LoginLocator.loginButton);
         await this.waitForUrl(`${process.env.BASE_URL}${Urls.dashboard}`);
-        if  (await this.isEnabled(DashboardLocator.buttonLater)) {
-        await this.click(DashboardLocator.buttonLater);
+        if (await this.isEnabled(DashboardLocator.buttonLater)) {
+            await this.click(DashboardLocator.buttonLater);
         }
 
+    }
+
+    async performLoginSubs(): Promise<void> {
+        await this.clear(LoginLocator.inputUsername);
+        await this.clear(LoginLocator.inputPassword);
+        await this.expectDisabled(LoginLocator.loginButton);
+
+        await this.fill(LoginLocator.inputUsername, this.useremail2);
+        await this.fill(LoginLocator.inputPassword, this.password2);
+        await this.expectEnabled(LoginLocator.loginButton);
+        await this.click(LoginLocator.loginButton);
+        await this.waitForUrl(`${process.env.BASE_URL}${Urls.dashboard}`);
+        if (await this.isEnabled(DashboardLocator.buttonLater2)) {
+            await this.click(DashboardLocator.buttonLater2);
+        }
     }
 
 }
