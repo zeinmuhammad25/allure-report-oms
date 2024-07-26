@@ -3,5 +3,6 @@ export default class Urls {
     static login: string = "/esb-core-lite/login";
     static register: string = "/esb-self-on-board/";
     static dashboard: string = "/esb-core-lite/dashboard/index";
+    static profile: string = "/esb-core-lite/profile";
 
 }

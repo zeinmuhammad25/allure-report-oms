@@ -12,6 +12,9 @@ export default class LoginPage extends BasePage implements LoginScenario {
     private emailEmpty = "";
     private password = process.env.PASSWORD;
     private passwordEmpty = "";
+    private useremail2 = process.env.USEREMAIL2;
+    private password2 = process.env.PASSWORD2;
+
 
     pageUrl = (): string => Urls.login;
 
@@ -102,5 +105,19 @@ export default class LoginPage extends BasePage implements LoginScenario {
 
     }
 
+    async performLoginSubs(): Promise<void> {
+        await this.clear(LoginLocator.inputUsername);
+        await this.clear(LoginLocator.inputPassword);
+        await this.expectDisabled(LoginLocator.loginButton);
+
+        await this.fill(LoginLocator.inputUsername, this.useremail2);
+        await this.fill(LoginLocator.inputPassword, this.password2);
+        await this.expectEnabled(LoginLocator.loginButton);
+        await this.click(LoginLocator.loginButton);
+        await this.waitForUrl(`${process.env.BASE_URL}${Urls.dashboard}`);
+        if (await this.isEnabled(DashboardLocator.buttonLater2)) {
+            await this.click(DashboardLocator.buttonLater2);
+        }
+    }
 
 }
