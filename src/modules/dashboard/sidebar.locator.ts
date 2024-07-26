@@ -6,5 +6,7 @@ export default class SidebarLocator extends BaseLocator {
     static sidebartoggle: string = "//span[@class='sidebar-toggle']";
     static sidebarisopen: string = "//img[contains(@src, 'left')]";
     static sidebarisclosed: string = "//img[contains(@src, 'right')]";
+    static katalog: string = "(//div[contains(text(),'Katalog')])[1]";
+    static menusidebar: string = "//a[normalize-space()='Menu']";
 
 }
