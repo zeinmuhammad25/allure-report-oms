@@ -1,4 +1,4 @@
-import {expect, test} from "@playwright/test";
+import {test} from "@playwright/test";
 import LoginPage from "../src/modules/login/login.page";
 
 test(`User log in with wrong email`, async ({page}) => {

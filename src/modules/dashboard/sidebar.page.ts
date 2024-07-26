@@ -5,18 +5,15 @@ import SidebarLocator from "./sidebar.locator";
 import Urls from "../../configs/urls";
 
 
-
 export default class SidebarPage extends BasePage implements SidebarScenario {
     pageUrl = (): string => Urls.dashboard;
 
     shouldHave(): Element[] {
-        return [
-
-        ];
+        return [];
     }
 
 
-    async   closeSidebar(): Promise<void> {
+    async closeSidebar(): Promise<void> {
         await this.isEnabled(SidebarLocator.sidebarisopen)
         await this.click(SidebarLocator.sidebartoggle);
     }
