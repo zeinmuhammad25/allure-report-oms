@@ -5,5 +5,6 @@ export default class Urls {
     static dashboard: string = "/esb-core-lite/dashboard/index";
     static profile: string = "/esb-core-lite/profile";
     static menu: string = "/esb-core-lite/catalog/menu/index";
+    static singlemenu: string = "/esb-core-lite/catalog/menu/create";
 
 }
