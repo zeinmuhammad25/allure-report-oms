@@ -72,6 +72,12 @@ export default abstract class BasePage implements BaseScenario {
         return this._page.getByText(text).click();
     }
 
+    protected clickButtonByText(text: string): Promise<void> {
+        console.log(`click button by text:  ${text}`);
+        return this._page.getByRole('button', {name: text}).click();
+
+    }
+
     protected expectEnabled(selector: string): Promise<void> {
         console.log(`check if enabled:  ${selector}`);
         return expect(this._page.locator(selector)).toBeEnabled();
