@@ -6,5 +6,6 @@ export default class Urls {
     static profile: string = "/esb-core-lite/profile";
     static menu: string = "/esb-core-lite/catalog/menu/index";
     static singlemenu: string = "/esb-core-lite/catalog/menu/create";
+    static printer: string ="/esb-core-lite/printer-setting/station/index";
 
 }
