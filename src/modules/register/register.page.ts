@@ -2,12 +2,24 @@ import BasePage from "../../base/base-page";
 import Element from "../../base/objects/Element";
 import RegisterScenario from "./register.scenario";
 import Urls from "../../configs/urls";
+import RegisterLocator from "./register.locator";
 
 export default class RegisterPage extends BasePage implements RegisterScenario {
     pageUrl = (): string => Urls.register;
 
     shouldHave(): Element[] {
-        return [];
+        return [
+            Element.ofText("Gabung dengan 20.000+ UMKM lainnya!"),
+            Element.ofText("Nama Penanggung Jawab"),
+            Element.ofText("Email"),
+            Element.ofText("Nomor Ponsel"),
+            Element.ofText("Sudah punya akun? Masuk Sekarang"),
+            Element.ofSelector(RegisterLocator.picnamefield),
+            Element.ofSelector(RegisterLocator.emailfield),
+            Element.ofSelector(RegisterLocator.phonefield),
+            Element.ofSelector(RegisterLocator.buttonregister),
+            Element.ofSelector(RegisterLocator.signinnowbutton),
+        ];
     }
 
     performRegister(): Promise<void> {
