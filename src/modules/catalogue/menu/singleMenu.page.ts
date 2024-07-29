@@ -1,12 +1,11 @@
 import BasePage from "../../../base/base-page";
 import Urls from "../../../configs/urls";
 import Element from "../../../base/objects/Element";
-import MenuScenario from "./menu.scenario";
 import MenuLocator from "./menu.locator";
-import SinglemenuScenario from "./singlemenu.scenario";
+import SingleMenuScenario from "./singleMenu.scenario";
 
 
-export default class SinglemenuPage extends BasePage implements SinglemenuScenario {
+export default class SingleMenuPage extends BasePage implements SingleMenuScenario {
 
 
     pageUrl = (): string => Urls.singlemenu;

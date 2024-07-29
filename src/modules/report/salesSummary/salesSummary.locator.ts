@@ -1,6 +1,6 @@
 import BaseLocator from "../../../base/base-locator";
 
-export default class RangkumanpenjualanLocator extends BaseLocator {
+export default class SalesSummaryLocator extends BaseLocator {
     static salesdatefield: string = "(//input[@type='text'])[1]";
     static salescompfield: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[1]";
     static salesbrandfield: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[2]";

@@ -1,6 +1,6 @@
 import BaseLocator from "../../../base/base-locator";
 
-export default class BahanbakuLocator extends BaseLocator {
+export default class RawMaterialLocator extends BaseLocator {
 
     static addrawbutton: string = "(//button[normalize-space()='Bahan Baku'])[1]";
     static importrawbutton: string = "(//button[normalize-space()='Impor Data'])[1]";
