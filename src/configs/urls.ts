@@ -10,6 +10,6 @@ export default class Urls {
     static salessum: string = "/esb-core-lite/report/sales-summary/index";
     static accbranch: string = "https://dev7.esb.co.id/esb-core-lite/account-setting/branch/index";
     static rawmaterial: string = "https://dev7.esb.co.id/esb-core-lite/inventory/product/index";
+    static promotion: string = "https://dev7.esb.co.id/esb-core-lite/promotion/create";
     static employee: string = "https://dev7.esb.co.id/esb-core-lite/attendance/employee/index";
-
 }
