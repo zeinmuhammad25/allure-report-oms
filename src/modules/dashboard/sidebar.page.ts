@@ -14,13 +14,13 @@ export default class SidebarPage extends BasePage implements SidebarScenario {
 
 
     async closeSidebar(): Promise<void> {
-        await this.isEnabled(SidebarLocator.sidebarisopen)
-        await this.click(SidebarLocator.sidebartoggle);
+        await this.isEnabled(SidebarLocator.sidebarOpened)
+        await this.click(SidebarLocator.sidebarToggle);
     }
 
     async openSidebar(): Promise<void> {
-        await this.isEnabled(SidebarLocator.sidebarisclosed)
-        await this.click(SidebarLocator.sidebartoggle);
+        await this.isEnabled(SidebarLocator.sidebarClosed)
+        await this.click(SidebarLocator.sidebarToggle);
     }
 
 

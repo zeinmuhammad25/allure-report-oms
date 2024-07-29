@@ -13,14 +13,14 @@ export default class SingleMenuPage extends BasePage implements SingleMenuScenar
     shouldHave(): Element[] {
         return [
 
-            Element.ofSelector(MenuLocator.menunamefield),
-            Element.ofSelector(MenuLocator.menucodefield),
-            Element.ofSelector(MenuLocator.menucategorybutton),
-            Element.ofSelector(MenuLocator.menudescfield),
-            Element.ofSelector(MenuLocator.menucategoryfield),
-            Element.ofSelector(MenuLocator.addmenubookbutton),
-            Element.ofSelector(MenuLocator.menusavebutton),
-            Element.ofSelector(MenuLocator.menucancelbutton),
+            Element.ofSelector(MenuLocator.menuNameField),
+            Element.ofSelector(MenuLocator.menuCodeField),
+            Element.ofSelector(MenuLocator.menuCategoryButton),
+            Element.ofSelector(MenuLocator.menuDesciptionField),
+            Element.ofSelector(MenuLocator.menuCategoryField),
+            Element.ofSelector(MenuLocator.addMenuBookButton),
+            Element.ofSelector(MenuLocator.saveMenuButton),
+            Element.ofSelector(MenuLocator.cancelMenuButton),
 
         ];
     }

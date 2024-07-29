@@ -11,12 +11,12 @@ export default class DashboardPage extends BasePage implements DashboardScenario
     shouldHave(): Element[] {
         return [
             Element.ofSelector(DashboardLocator.buttonProfile),
-            Element.ofSelector(DashboardLocator.findbutton),
-            Element.ofSelector(DashboardLocator.findcompanyfield),
-            Element.ofSelector(DashboardLocator.findbrandfield),
-            Element.ofSelector(DashboardLocator.findbranchfield),
-            Element.ofSelector(DashboardLocator.daybuttonchecked),
-            Element.ofSelector(DashboardLocator.monthbuttonunchecked),
+            Element.ofSelector(DashboardLocator.findButton),
+            Element.ofSelector(DashboardLocator.findCompanyField),
+            Element.ofSelector(DashboardLocator.findBrandField),
+            Element.ofSelector(DashboardLocator.findBranchField),
+            Element.ofSelector(DashboardLocator.dayButtonChecked),
+            Element.ofSelector(DashboardLocator.monthButtonChecked),
             Element.ofText("Filter Dashboard"),
 
         ];

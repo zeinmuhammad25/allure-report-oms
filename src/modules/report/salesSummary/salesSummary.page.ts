@@ -12,12 +12,12 @@ export default class SalesSummaryPage extends BasePage implements SalesSummarySc
 
     shouldHave(): Element[] {
         return [
-            Element.ofSelector(SalesSummaryLocator.salesdatefield),
-            Element.ofSelector(SalesSummaryLocator.salescompfield),
-            Element.ofSelector(SalesSummaryLocator.salesbrandfield),
-            Element.ofSelector(SalesSummaryLocator.salesbranchfield),
-            Element.ofSelector(SalesSummaryLocator.salesdownloadbutton),
-            Element.ofSelector(SalesSummaryLocator.salesviewbutton),
+            Element.ofSelector(SalesSummaryLocator.salesDateField),
+            Element.ofSelector(SalesSummaryLocator.salesCompanyField),
+            Element.ofSelector(SalesSummaryLocator.salesBrandField),
+            Element.ofSelector(SalesSummaryLocator.salesBranchField),
+            Element.ofSelector(SalesSummaryLocator.salesDownloadButton),
+            Element.ofSelector(SalesSummaryLocator.salesViewButton),
         ];
     }
 

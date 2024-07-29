@@ -14,11 +14,11 @@ export default class RegisterPage extends BasePage implements RegisterScenario {
             Element.ofText("Email"),
             Element.ofText("Nomor Ponsel"),
             Element.ofText("Sudah punya akun? Masuk Sekarang"),
-            Element.ofSelector(RegisterLocator.picnamefield),
-            Element.ofSelector(RegisterLocator.emailfield),
-            Element.ofSelector(RegisterLocator.phonefield),
-            Element.ofSelector(RegisterLocator.buttonregister),
-            Element.ofSelector(RegisterLocator.signinnowbutton),
+            Element.ofSelector(RegisterLocator.picNameField),
+            Element.ofSelector(RegisterLocator.emailFieldRegister),
+            Element.ofSelector(RegisterLocator.phoneFieldRegister),
+            Element.ofSelector(RegisterLocator.buttonRegister),
+            Element.ofSelector(RegisterLocator.signInNowButton),
         ];
     }
 
