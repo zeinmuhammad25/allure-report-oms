@@ -13,10 +13,10 @@ export default class BranchPage extends BasePage implements BranchScenario {
     shouldHave(): Element[] {
         return [
             Element.ofText("Daftar Cabang"),
-            Element.ofSelector(BranchLocator.addbranchbtn),
-            Element.ofSelector(BranchLocator.accsearchbranch),
-            Element.ofSelector(BranchLocator.accsearchexpired),
-            Element.ofSelector(BranchLocator.accbranchamount),
+            Element.ofSelector(BranchLocator.addBranchButton),
+            Element.ofSelector(BranchLocator.accountSearchBranch),
+            Element.ofSelector(BranchLocator.accountSearchExpired),
+            Element.ofSelector(BranchLocator.accountBranchAmount),
 
         ];
     }
