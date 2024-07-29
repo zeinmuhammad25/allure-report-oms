@@ -1,7 +1,6 @@
 import BasePage from "../../../base/base-page";
 import Urls from "../../../configs/urls";
 import Element from "../../../base/objects/Element";
-import MenuScenario from "./menu.scenario";
 import MenuLocator from "./menu.locator";
 import SingleMenuScenario from "./singleMenu.scenario";
 
