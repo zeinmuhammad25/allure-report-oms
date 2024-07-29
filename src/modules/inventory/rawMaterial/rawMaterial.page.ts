@@ -13,9 +13,9 @@ export default class RawMaterialPage extends BasePage implements RawMaterialScen
     shouldHave(): Element[] {
         return [
             Element.ofText("Daftar Bahan Baku"),
-            Element.ofSelector(RawMaterialLocator.addrawbutton),
-            Element.ofSelector(RawMaterialLocator.importrawbutton),
-            Element.ofSelector(RawMaterialLocator.rawmaterialsearch),
+            Element.ofSelector(RawMaterialLocator.addRawButton),
+            Element.ofSelector(RawMaterialLocator.importRawButton),
+            Element.ofSelector(RawMaterialLocator.rawMaterialSearch),
         ];
     }
 
