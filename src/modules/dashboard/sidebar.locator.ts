@@ -10,5 +10,8 @@ export default class SidebarLocator extends BaseLocator {
     static menusidebar: string = "//a[normalize-space()='Menu']";
     static accsettinghead: string = "(//div[@class='ant-menu-submenu-title'])[9]"; // Request dev for a better id
     static accsettingbranch: string = "(//a[normalize-space()='Cabang'])[1]";
+    static absencehead: string = "(//div[contains(text(),'Absensi')])[1]";
+    static employeedatachild: string = "(//a[normalize-space()='Data Karyawan'])[1]";
+    static absencedatachild: string = "(//a[normalize-space()='Daftar Kehadiran'])[1]";
 
 }
