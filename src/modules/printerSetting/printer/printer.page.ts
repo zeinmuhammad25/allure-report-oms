@@ -12,10 +12,10 @@ export default class PrinterPage extends BasePage implements PrinterScenario {
 
     shouldHave(): Element[] {
         return [
-            Element.ofSelector(PrinterLocator.printerfilter),
-            Element.ofSelector(PrinterLocator.findprinterfield),
-            Element.ofSelector(PrinterLocator.printerarchivebtn),
-            Element.ofSelector(PrinterLocator.addprinterbtn)
+            Element.ofSelector(PrinterLocator.printerFilter),
+            Element.ofSelector(PrinterLocator.findPrinterField),
+            Element.ofSelector(PrinterLocator.printerArchiveButton),
+            Element.ofSelector(PrinterLocator.addPrinterButton)
         ];
     }
 
