@@ -1,6 +1,6 @@
 import BaseLocator from "../../../base/base-locator";
 
-export default class CabangLocator extends BaseLocator {
+export default class BranchLocator extends BaseLocator {
 
     static addbranchbtn: string = "(//a[normalize-space()='Cabang'])[1]";
     static accsearchbranch: string = "(//input[@placeholder='Cari Berdasarkan Nama Cabang'])[1]";
