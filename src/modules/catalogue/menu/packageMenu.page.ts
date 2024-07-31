@@ -9,6 +9,7 @@ export default class PackageMenuPage extends BasePage implements PackageMenuScen
 
 
     pageUrl = (): string => Urls.singlemenu;
+
     // real URL : https://dev7.esb.co.id/esb-core-lite-8/catalog/menu/create-package
 
     shouldHave(): Element[] {
@@ -24,7 +25,6 @@ export default class PackageMenuPage extends BasePage implements PackageMenuScen
             Element.ofSelector(MenuLocator.separatePrintNoRadio),
             Element.ofSelector(MenuLocator.addGroupMenuButton),
             Element.ofSelector(MenuLocator.menuCategoryField),
-
 
 
         ];
