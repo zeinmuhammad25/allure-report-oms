@@ -33,10 +33,10 @@ export default class MenuLocator extends BaseLocator {
     static addMenuBookButton: string = "//button[normalize-space()='Tambah Buku Menu']";
     static newHeadPackageMenuRadio: string = `//span[text()=' Buat Kepala Paket Baru ']/preceding-sibling::span/input`;             //request better Selector Name
     static existingHeadPackageMenuRadio: string = `//span[text()=' Pakai Menu yang Tersedia ']/preceding-sibling::span/input`;      //request better Selector Name
-    static separatePrintYesRadio : string = `//span[text()=' Ya ']/preceding-sibling::span/input`;                                  //request better Selector Name
-    static separatePrintNoRadio : string = `//span[text()=' Tidak ']/preceding-sibling::span/input`;                                //request better Selector Name
-    static menuPackageNameField : string = `//input[@formcontrolname='menuName']`;
-    static addGroupMenuButton : string = `//button[text()=' Tambah Kelompok ']`;
+    static separatePrintYesRadio: string = `//span[text()=' Ya ']/preceding-sibling::span/input`;                                  //request better Selector Name
+    static separatePrintNoRadio: string = `//span[text()=' Tidak ']/preceding-sibling::span/input`;                                //request better Selector Name
+    static menuPackageNameField: string = `//input[@formcontrolname='menuName']`;
+    static addGroupMenuButton: string = `//button[text()=' Tambah Kelompok ']`;
 
     //Pajak & Service Charge section
 
