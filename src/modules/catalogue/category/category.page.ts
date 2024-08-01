@@ -19,7 +19,7 @@ export default class CategoryPage extends BasePage implements CategoryScenario {
             Element.ofSelector(CategoryLocator.statusNameColumn),
             Element.ofSelector(CategoryLocator.categoryNameSearch),
             Element.ofSelector(CategoryLocator.statusSearch),
-            Element.ofSelector(CategoryLocator.addCategoryButton)
+            Element.ofSelector(CategoryLocator.addCategoryButton),
         ];
     }
 
