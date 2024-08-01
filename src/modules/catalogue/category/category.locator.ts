@@ -13,7 +13,7 @@ export default class CategoryLocator extends BaseLocator {
     static statusSearch: string = `//nz-select[@nzplaceholder='Cari Berdasarkan Status']`;
     static addCategoryButton: string = `#i-menucategory1`;
     static setSubCategory: string = `//td[text()='Makanan']/following-sibling::td/button[text() = ' Terapkan Sub Kategori']`;
-    static editButton: string = `//td[text()='Makanan']/following-sibling::td/button[@nzplacement='bottomRight']`
+    static editButton: string = `//td[text()='Makanan']/following-sibling::td/button[@nzplacement='bottomRight']`;
 
 
     //      Add Category
