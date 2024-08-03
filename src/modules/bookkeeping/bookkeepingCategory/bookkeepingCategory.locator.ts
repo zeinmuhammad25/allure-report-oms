@@ -1,6 +1,6 @@
 import BaseLocator from "../../../base/base-locator";
 
-export default class bookkeepingCategoryLocator extends BaseLocator {
+export default class BookkeepingCategoryLocator extends BaseLocator {
 
     // Index
     static guideButton: string = "//a[@href='https://help.esb.id/content/article/mengatur-kategori-pembukuan-pada-poslite-dashboard']";
