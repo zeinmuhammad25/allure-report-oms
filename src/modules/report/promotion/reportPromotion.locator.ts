@@ -1,6 +1,6 @@
 import BaseLocator from "../../../base/base-locator";
 
-export default class PromotionLocator extends BaseLocator {
+export default class ReportPromotionLocator extends BaseLocator {
     static salesDateField: string = "(//input[@class='filter-calendar ng-untouched ng-valid ng-star-inserted ng-dirty'])[1]";
     static salesCompanyField: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[1]";
     static salesBrandField: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[2]";
