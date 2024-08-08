@@ -5,7 +5,7 @@ import EmployeeDataScenario from "./employeeData.scenario";
 import EmployeeDataLocator from "./employeeData.locator";
 
 
-export default class EmployeeData extends BasePage implements EmployeeDataScenario {
+export default class EmployeeDataPage extends BasePage implements EmployeeDataScenario {
 
 
     pageUrl = (): string => Urls.employee;
