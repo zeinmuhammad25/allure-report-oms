@@ -13,7 +13,7 @@ export default class RawMaterialReportLocator extends BaseLocator {
 
     static prevYearRawMaterialReport: string = "//span[@class='ant-picker-super-prev-icon']";
     static nexYearRawMaterialReport: string = "//span[@class='ant-picker-super-next-icon']";
-    static nowYearRawMaterialReport: string = "//button[@title='Pilih satu tahun']"
+    static nowYearRawMaterialReport: string = "//button[@title='Pilih satu tahun']";
     static janStartDateRawMaterialReport: string = "//div[normalize-space()='Jan']";
     static febStartDateRawMaterialReport: string = "//div[normalize-space()='Feb']";
     static aprStartDateRawMaterialReport: string = "//div[normalize-space()='Apr']";
