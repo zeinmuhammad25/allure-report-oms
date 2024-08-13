@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class SalesMenuLocator extends BaseLocator {
     static salesDateField: string = "(//input[@class='filter-calendar ng-untouched ng-valid ng-star-inserted ng-dirty'])[1]";

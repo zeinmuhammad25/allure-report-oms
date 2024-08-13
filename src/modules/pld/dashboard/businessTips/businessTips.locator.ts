@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class BusinessTipsLocator extends BaseLocator {
     static businessTipsTittle: string = "//h1[normalize-space()='Tips Bisnis']";

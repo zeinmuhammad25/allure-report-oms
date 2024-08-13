@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class BookKeepingLocator extends BaseLocator {
     //Statistic Pembukuan

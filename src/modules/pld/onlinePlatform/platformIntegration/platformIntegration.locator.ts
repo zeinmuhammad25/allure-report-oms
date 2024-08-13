@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class PlatformIntegrationLocator extends BaseLocator {
     static integrateNow: string = "//button[@id='btn-integrasi-sekarang-grabfood']";

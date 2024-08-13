@@ -1,5 +1,5 @@
-import BasePage from "../../../base/base-page";
-import Element from "../../../base/objects/Element";
+import BasePage from "../../../../base/base-page";
+import Element from "../../../../base/objects/Element";
 import BusinessScenario from "./business.scenario";
 import BusinessLocator from "./business.locator";
 

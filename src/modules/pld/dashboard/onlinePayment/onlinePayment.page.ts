@@ -1,6 +1,6 @@
-import BasePage from "../../../base/base-page";
-import Urls from "../../../configs/urls";
-import Element from "../../../base/objects/Element";
+import BasePage from "../../../../base/base-page";
+import Urls from "../../../../configs/urls";
+import Element from "../../../../base/objects/Element";
 import OnlinePaymentScenario from "./onlinePayment.scenario";
 import OnlinePaymentLocator from "./onlinePayment.locator";
 

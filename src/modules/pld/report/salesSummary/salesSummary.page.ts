@@ -1,6 +1,6 @@
-import BasePage from "../../../base/base-page";
-import Urls from "../../../configs/urls";
-import Element from "../../../base/objects/Element";
+import BasePage from "../../../../base/base-page";
+import Urls from "../../../../configs/urls";
+import Element from "../../../../base/objects/Element";
 import SalesSummaryScenario from "./salesSummary.scenario";
 import SalesSummaryLocator from "./salesSummary.locator";
 

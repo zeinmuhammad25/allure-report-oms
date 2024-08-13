@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class NotificationEmailLocator extends BaseLocator {
     static notificationEmailTab: string = "//div[@role='tab' and text()='Email Notifikasi']";

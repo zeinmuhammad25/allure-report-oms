@@ -1,6 +1,6 @@
-import BasePage from "../../../base/base-page";
-import Element from "../../../base/objects/Element";
-import Urls from "../../../configs/urls";
+import BasePage from "../../../../base/base-page";
+import Element from "../../../../base/objects/Element";
+import Urls from "../../../../configs/urls";
 import BookKeepingScenario from "./bookKeeping.scenario";
 import BookKeepingLocator from "./bookKeeping.locator";
 

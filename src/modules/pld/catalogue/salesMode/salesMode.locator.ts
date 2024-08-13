@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class SalesModeLocator extends BaseLocator {
     static archiveButton: string = "//button[@routerlink='/catalog/sales-mode/archive']";

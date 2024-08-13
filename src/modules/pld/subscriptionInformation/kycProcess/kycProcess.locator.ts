@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class KycProcessLocator extends BaseLocator {
     static kycPopUp: string = "//app-modal-fill-self-data";

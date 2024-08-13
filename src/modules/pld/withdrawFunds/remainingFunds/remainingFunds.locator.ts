@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class RemainingFundsLocator extends BaseLocator {
     static incomeSummaryTab: string = "//div[@role='tab' and text()='Rangkuman Pendapatan']";

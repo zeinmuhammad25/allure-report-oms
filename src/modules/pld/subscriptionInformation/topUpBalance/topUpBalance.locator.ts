@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class TopUpBalanceLocator extends BaseLocator {
     static inputBalanceAmount: string = "//input[@placeholder='Minimal 100.000 dan Maksimal 30.000.000']";

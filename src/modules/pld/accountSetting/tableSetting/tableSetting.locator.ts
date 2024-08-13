@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class TableSettingLocator extends BaseLocator {
     static addTableSettingButton: string = "(//button[normalize-space()='Tambah Pengaturan Meja'])[1]";

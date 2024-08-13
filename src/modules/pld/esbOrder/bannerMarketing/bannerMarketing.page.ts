@@ -1,6 +1,6 @@
-import BasePage from "../../../base/base-page";
-import Urls from "../../../configs/urls";
-import Element from "../../../base/objects/Element";
+import BasePage from "../../../../base/base-page";
+import Urls from "../../../../configs/urls";
+import Element from "../../../../base/objects/Element";
 import BannerMarketingScenario from "./bannerMarketing.scenario";
 import BannerMarketingLocator from "./bannerMarketing.locator";
 

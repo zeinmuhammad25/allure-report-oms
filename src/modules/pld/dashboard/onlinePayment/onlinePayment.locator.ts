@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class OnlinePaymentLocator extends BaseLocator {
     static dataReadGuideButton: string = "(//button[@class='button button-yellow button-small'])[1]";

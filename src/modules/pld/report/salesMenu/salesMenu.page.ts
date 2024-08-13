@@ -1,5 +1,5 @@
-import BasePage from "../../../base/base-page";
-import Element from "../../../base/objects/Element";
+import BasePage from "../../../../base/base-page";
+import Element from "../../../../base/objects/Element";
 import SalesMenuScenario from "./salesMenu.scenario";
 import SalesMenuLocator from "./salesMenu.locator";
 

@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class SpecialPriceLocator extends BaseLocator {
     static guideButton: string = "//a[@href='https://help.esb.id/content/POSLite/topic/111104701641800']";

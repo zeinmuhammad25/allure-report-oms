@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class SettingLocator extends BaseLocator {
     static settingTab: string = "//div[@role='tab' and text()='Pengaturan']";

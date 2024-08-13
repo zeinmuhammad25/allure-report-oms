@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class CategoryLocator extends BaseLocator {
     static categoryTab: string = `//div[@role='tab' and text()='Kategori']`;

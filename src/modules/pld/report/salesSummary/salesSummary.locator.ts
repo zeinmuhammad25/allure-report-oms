@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class SalesSummaryLocator extends BaseLocator {
     static salesDateField: string = "(//input[@type='text'])[1]";

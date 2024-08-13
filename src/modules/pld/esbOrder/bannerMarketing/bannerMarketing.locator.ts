@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class BannerMarketingLocator extends BaseLocator {
     static bannerMarketingTab: string = "//div[@role='tab' and text()='Banner Marketing']";

@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class PrinterLocator extends BaseLocator {
     static printerFilter: string = "(//nz-select-item[@title='Nama Printer'])[1]";

@@ -1,6 +1,6 @@
-import BasePage from "../../../base/base-page";
-import Urls from "../../../configs/urls";
-import Element from "../../../base/objects/Element";
+import BasePage from "../../../../base/base-page";
+import Urls from "../../../../configs/urls";
+import Element from "../../../../base/objects/Element";
 import IntegrationSettingScenario from "./integrationSetting.scenario";
 import IntegrationSettingLocator from "./integrationSetting.locator";
 

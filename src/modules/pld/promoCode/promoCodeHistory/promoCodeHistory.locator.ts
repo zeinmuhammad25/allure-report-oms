@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class PromoCodeHistoryLocator extends BaseLocator {
     static codePromoInputButton: string = "//button[text() = ' Kode Promo ']";

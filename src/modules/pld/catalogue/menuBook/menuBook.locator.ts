@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class MenuBookLocator extends BaseLocator {
     static menuBookTab: string = "//div[@role='tab' and text()='Buku Menu']";

@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class StockMenuLocator extends BaseLocator {
     static branchFilter: string = "//nz-select[@nzplaceholder='Cari Berdasarkan Cabang']";

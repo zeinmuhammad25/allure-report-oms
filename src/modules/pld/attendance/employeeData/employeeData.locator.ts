@@ -1,4 +1,4 @@
-import BaseLocator from "../../../base/base-locator";
+import BaseLocator from "../../../../base/base-locator";
 
 export default class EmployeeDataLocator extends BaseLocator {
     static addEmployeeButton: string = "(//button[@class='button button-orange button-small tambah-cabang'])[1]";

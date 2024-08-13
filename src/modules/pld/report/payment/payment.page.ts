@@ -1,5 +1,5 @@
-import BasePage from "../../../base/base-page";
-import Element from "../../../base/objects/Element";
+import BasePage from "../../../../base/base-page";
+import Element from "../../../../base/objects/Element";
 import PaymentLocator from "./payment.locator";
 import PaymentScenario from "./payment.scenario";
 
