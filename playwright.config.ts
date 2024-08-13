@@ -34,7 +34,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     headless: false,
     permissions: ['geolocation'],
-    geolocation: {latitude: -6.2114, longitude: 106.8446}
+    geolocation: {latitude: -6.2114, longitude: 106.8446},
 
   },
 
