@@ -1,6 +1,6 @@
 import {test} from "@playwright/test";
-import SidebarPage from "../src/modules/dashboard/sidebar.page";
-import LoginPage from "../src/modules/login/login.page";
+import SidebarPage from "../src/modules/pld/dashboard/sidebar.page";
+import LoginPage from "../src/modules/pld/login/login.page";
 
 
 test(`User can close and open sidebar`, async ({page}) => {

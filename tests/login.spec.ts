@@ -1,5 +1,5 @@
 import {test} from "@playwright/test";
-import LoginPage from "../src/modules/login/login.page";
+import LoginPage from "../src/modules/pld/login/login.page";
 
 test(`User log in with wrong email`, async ({page}) => {
     const loginPage = new LoginPage(page);
