@@ -3,7 +3,6 @@ import BaseLocator from "../../../base/base-locator";
 export default class SalesMenuLocator extends BaseLocator {
     static salesDateField: string = "(//input[@class='filter-calendar ng-untouched ng-valid ng-star-inserted ng-dirty'])[1]";
 
-
     //business field
     static businessField: string = "//input[@placeholder='Pilih Usaha']";
     static businessFieldClear: string = "//nz-input-group[@class='ng-tns-c124-61 ant-input-affix-wrapper ant-input-affix-wrapper-lg']//span[@type='suffix']";
@@ -14,14 +13,12 @@ export default class SalesMenuLocator extends BaseLocator {
     static viewButton: string = "//button[normalize-space()='Tampilkan']";
     static downloadButton: string = "//button[normalize-space()='Unduh']";
 
-
 //report type
     static reportTypeDropdown: string = "reportTypeDropdown";
     static menuPeriodReportType: string = "//div[contains(text(),'Menu Per Periode')]";
     static menuReportType: string = "//div[normalize-space()='Menu']";
     static menuInHourReportType: string = "//div[normalize-space()='Menu Per Jam']";
     static menuPackageReportType: string = "//div[contains(text(),'Menu Paket Per Periode')]";
-
 
 //Date picker locator
     static todayFilter: string = "(//button[normalize-space()='Hari ini'])[1]";
