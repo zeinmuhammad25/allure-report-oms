@@ -14,7 +14,7 @@ export default class SalesMenuLocator extends BaseLocator {
     static downloadButton: string = "//button[normalize-space()='Unduh']";
 
 //report type
-    static reportTypeDropdown: string = "reportTypeDropdown";
+    static reportTypeDropdown: string = "//nz-select-item[@title='Menu Paket Per Periode']";
     static menuPeriodReportType: string = "//div[contains(text(),'Menu Per Periode')]";
     static menuReportType: string = "//div[normalize-space()='Menu']";
     static menuInHourReportType: string = "//div[normalize-space()='Menu Per Jam']";
