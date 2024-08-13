@@ -24,5 +24,4 @@ export default class CancelAndVoidLocator extends BaseLocator {
     static downloadButton: string = "//button[normalize-space()='Unduh']";
 
 
-
 }
