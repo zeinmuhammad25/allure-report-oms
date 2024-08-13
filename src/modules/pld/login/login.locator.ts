@@ -1,4 +1,4 @@
-import BaseLocator from "../../../../base/base-locator";
+import BaseLocator from "../../../base/base-locator";
 
 export default class LoginLocator extends BaseLocator {
     static inputUsername: string = '#email';

@@ -1,4 +1,4 @@
-import BaseLocator from "../../../../base/base-locator";
+import BaseLocator from "../../../base/base-locator";
 
 export default class SidebarLocator extends BaseLocator {
     // Locator to help access the sidebar

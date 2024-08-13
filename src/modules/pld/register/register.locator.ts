@@ -1,4 +1,4 @@
-import BaseLocator from "../../../../base/base-locator";
+import BaseLocator from "../../../base/base-locator";
 
 export default class RegisterLocator extends BaseLocator {
     static picNameField: string = "(//input[@placeholder='Contoh: Andi Firman'])[1]";
