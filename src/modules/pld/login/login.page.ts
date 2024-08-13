@@ -4,9 +4,10 @@ import Urls from "../../../configs/urls";
 import Element from "../../../base/objects/Element";
 import LoginScenario from "./login.scenario";
 import DashboardLocator from "../../pld/dashboard/dashboard.locator";
+import BasePosLitePage from "../base-pos-lite-page";
 
 
-export default class LoginPage extends BasePage implements LoginScenario {
+export default class LoginPage extends BasePosLitePage implements LoginScenario {
     private email = process.env.USEREMAIL;
     private emailWrong = "wrongEmail";
     private emailEmpty = "";

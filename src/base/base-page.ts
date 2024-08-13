@@ -1,12 +1,15 @@
 import {expect, Page} from "@playwright/test";
 import Element, {ElementType} from "./objects/Element";
 import BaseScenario from "./base-scenario";
+import BaseUrl from "./base-url";
 
-export default abstract class BasePage implements BaseScenario {
+export default abstract class BasePage<T extends BaseUrl> implements BaseScenario {
     private _page: Page;
+    protected urls: T;
 
-    constructor(page: Page) {
+    constructor(page: Page, urls: T) {
         this._page = page;
+        this.urls = urls;
     }
 
     abstract pageUrl: () => string;
