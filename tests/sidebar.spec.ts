@@ -6,7 +6,7 @@ import LoginPage from "../src/modules/pld/login/login.page";
 test(`User can close and open sidebar`, async ({page}) => {
     const loginPage = new LoginPage(page);
     await loginPage.navigateHere();
-    await loginPage.performLogin();
+    await loginPage.performLoginSubs();
 
     const sidebarPage = new SidebarPage(page);
     await sidebarPage.closeSidebar();
