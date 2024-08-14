@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import MenuScenario from "./menu.scenario";
 import MenuLocator from "./menu.locator";
 
 
-export default class MenuPage extends BasePage implements MenuScenario {
+export default class MenuPage extends BasePosLitePage implements MenuScenario {
 
 
     pageUrl = (): string => Urls.menu;

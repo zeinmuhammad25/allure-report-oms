@@ -1,10 +1,10 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
 import PaymentLocator from "./payment.locator";
 import PaymentScenario from "./payment.scenario";
 
 
-export default class PaymentPage extends BasePage implements PaymentScenario {
+export default class PaymentPage extends BasePosLitePage implements PaymentScenario {
 
 
     pageUrl = (): string => '';

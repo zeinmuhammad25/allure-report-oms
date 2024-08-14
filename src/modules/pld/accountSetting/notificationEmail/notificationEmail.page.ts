@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import NotificationEmailScenario from "./notificationEmail.scenario";
 import NotificationEmailLocator from "./notificationEmail.locator";
+import BasePosLitePage from "../../base-pos-lite-page";
 
 
-export default class NotificationEmailPage extends BasePage implements NotificationEmailScenario {
+export default class NotificationEmailPage extends BasePosLitePage implements NotificationEmailScenario {
 
 
     pageUrl = (): string => Urls.accbranch;

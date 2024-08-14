@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
 import Urls from "../../../../configs/urls";
 import BookKeepingScenario from "./bookKeeping.scenario";
 import BookKeepingLocator from "./bookKeeping.locator";
 
 
-export default class BookKeepingPage extends BasePage implements BookKeepingScenario {
+export default class BookKeepingPage extends BasePosLitePage implements BookKeepingScenario {
     pageUrl = (): string => Urls.dashboard;
 
     shouldHave(): Element[] {

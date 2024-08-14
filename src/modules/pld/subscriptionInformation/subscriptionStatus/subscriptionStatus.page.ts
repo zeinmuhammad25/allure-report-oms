@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import SubscriptionStatusScenario from "./subscriptionStatus.scenario";
 import SubscriptionStatusLocator from "./subscriptionStatus.locator";
 
 
-export default class SubscriptionStatusPage extends BasePage implements SubscriptionStatusScenario {
+export default class SubscriptionStatusPage extends BasePosLitePage implements SubscriptionStatusScenario {
 
 
     pageUrl = (): string => Urls.menu;

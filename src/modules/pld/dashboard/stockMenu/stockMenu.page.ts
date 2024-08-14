@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import StockMenuScenario from "./stockMenu.scenario";
 import StockMenuLocator from "./stockMenu.locator";
 
 
-export default class StockMenuPage extends BasePage implements StockMenuScenario {
+export default class StockMenuPage extends BasePosLitePage implements StockMenuScenario {
 
 
     pageUrl = (): string => Urls.accbranch;

@@ -1,10 +1,10 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import BookkeepingInputLocator from "./bookkeepingInput.locator"
 import BookkeepingInputScenario from "./bookkeepingInput.scenario"
 
-export default class BookkeepingInputPage extends BasePage implements BookkeepingInputScenario {
+export default class BookkeepingInputPage extends BasePosLitePage implements BookkeepingInputScenario {
 
 
     pageUrl = (): string => Urls.menu;

@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import MenuLocator from "./menu.locator";
 import SingleMenuScenario from "./singleMenu.scenario";
 
 
-export default class SingleMenuPage extends BasePage implements SingleMenuScenario {
+export default class SingleMenuPage extends BasePosLitePage implements SingleMenuScenario {
 
 
     pageUrl = (): string => Urls.singlemenu;

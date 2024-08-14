@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import EmployeeDataScenario from "./employeeData.scenario";
 import EmployeeDataLocator from "./employeeData.locator";
 
 
-export default class EmployeeDataPage extends BasePage implements EmployeeDataScenario {
+export default class EmployeeDataPage extends BasePosLitePage implements EmployeeDataScenario {
 
 
     pageUrl = (): string => Urls.employee;

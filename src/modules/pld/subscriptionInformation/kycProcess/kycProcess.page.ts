@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import KycProcessLocator from "./kycProcess.locator";
 import KycProcessScenario from "./kycProcess.scenario";
 
 
-export default class KycProcessPage extends BasePage implements KycProcessScenario {
+export default class KycProcessPage extends BasePosLitePage implements KycProcessScenario {
 
 
     pageUrl = (): string => Urls.menu;

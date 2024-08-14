@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import HistoryScenario from "./history.scenario";
 import HistoryLocator from "./history.locator";
 
 
-export default class HistoryPage extends BasePage implements HistoryScenario {
+export default class HistoryPage extends BasePosLitePage implements HistoryScenario {
 
 
     pageUrl = (): string => Urls.menu;

@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import BannerMarketingScenario from "./bannerMarketing.scenario";
 import BannerMarketingLocator from "./bannerMarketing.locator";
 
 
-export default class BannerMarketingPage extends BasePage implements BannerMarketingScenario {
+export default class BannerMarketingPage extends BasePosLitePage implements BannerMarketingScenario {
 
 
     pageUrl = (): string => Urls.menu;

@@ -1,10 +1,10 @@
-import BasePage from "../../base/base-page";
-import Element from "../../base/objects/Element";
-import Urls from "../../configs/urls";
+import Element from "../../../base/objects/Element";
+import Urls from "../../../configs/urls";
 import PromotionScenario from "./promotion.scenario";
 import PromotionLocator from "./promotion.locator";
+import BasePosLitePage from "../base-pos-lite-page";
 
-export default class PromotionPage extends BasePage implements PromotionScenario {
+export default class PromotionPage extends BasePosLitePage implements PromotionScenario {
     pageUrl = (): string => Urls.promotion;
 
     shouldHave(): Element[] {
