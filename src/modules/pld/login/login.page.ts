@@ -16,7 +16,7 @@ export default class LoginPage extends BasePosLitePage implements LoginScenario 
     private password2 = process.env.PASSWORD2;
 
 
-    pageUrl = (): string => Urls.login;
+    pageUrl = (): string => this.urls.get.login.loginUrl;
 
     shouldHave(): Element[] {
         return [

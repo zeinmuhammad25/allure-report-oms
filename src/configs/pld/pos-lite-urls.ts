@@ -20,6 +20,9 @@ export default class PosLiteUrls extends BaseUrl {
         },
         accountSetting: {
             branch: "branch url nya apa"
-        }
+        },
+        login: {
+            loginUrl: "/esb-core-lite/login",
+        },
     };
 }
