@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import ManageOnlineMenuScenario from "./manageOnlineMenu.scenario";
 import ManageOnlineMenuLocator from "./manageOnlineMenu.locator";
 
 
-export default class ManageOnlineMenuPage extends BasePage implements ManageOnlineMenuScenario {
+export default class ManageOnlineMenuPage extends BasePosLitePage implements ManageOnlineMenuScenario {
 
 
     pageUrl = (): string => Urls.menu;

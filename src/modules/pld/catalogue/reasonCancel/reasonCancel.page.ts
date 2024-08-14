@@ -1,4 +1,4 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 
@@ -6,7 +6,7 @@ import ReasonCancelScenario from "./reasonCancel.scenario";
 import ReasonCancelLocator from "./reasonCancel.locator";
 
 
-export default class ReasonCancelPage extends BasePage implements ReasonCancelScenario {
+export default class ReasonCancelPage extends BasePosLitePage implements ReasonCancelScenario {
 
 
     pageUrl = (): string => Urls.menu;

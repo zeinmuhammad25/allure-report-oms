@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import OnboardingProcessScenario from "./onboardingProcess.scenario";
 import OnboardingProcessLocator from "./onboardingProcess.locator";
 
 
-export default class OnboardingProcessPage extends BasePage implements OnboardingProcessScenario {
+export default class OnboardingProcessPage extends BasePosLitePage implements OnboardingProcessScenario {
 
 
     pageUrl = (): string => Urls.menu;

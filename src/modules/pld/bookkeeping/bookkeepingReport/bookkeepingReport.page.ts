@@ -1,10 +1,10 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import BookkeepingReportLocator from "./bookkeepingReport.locator"
 import BookkeepingReportScenario from "./bookkeepingReport.scenario"
 
-export default class BookkeepingReportPage extends BasePage implements BookkeepingReportScenario {
+export default class BookkeepingReportPage extends BasePosLitePage implements BookkeepingReportScenario {
 
 
     pageUrl = (): string => Urls.menu;

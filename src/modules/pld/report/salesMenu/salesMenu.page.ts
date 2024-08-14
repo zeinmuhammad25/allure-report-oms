@@ -1,10 +1,10 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
 import SalesMenuScenario from "./salesMenu.scenario";
 import SalesMenuLocator from "./salesMenu.locator";
 
 
-export default class SalesMenuPage extends BasePage implements SalesMenuScenario {
+export default class SalesMenuPage extends BasePosLitePage implements SalesMenuScenario {
 
 
     pageUrl = (): string => '';

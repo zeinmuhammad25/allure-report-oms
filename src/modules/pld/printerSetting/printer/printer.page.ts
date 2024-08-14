@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import PrinterScenario from "./printer.scenario";
 import PrinterLocator from "./printer.locator";
 
 
-export default class PrinterPage extends BasePage implements PrinterScenario {
+export default class PrinterPage extends BasePosLitePage implements PrinterScenario {
 
 
     pageUrl = (): string => Urls.printer;

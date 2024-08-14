@@ -1,9 +1,9 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
 import ReportPromotionScenario from "./reportPromotion.scenario";
 import ReportPromotionLocator from "./reportPromotion.locator";
 
-export default class ReportPromotionPage extends BasePage implements ReportPromotionScenario {
+export default class ReportPromotionPage extends BasePosLitePage implements ReportPromotionScenario {
 
 
     pageUrl = (): string => '';

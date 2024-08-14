@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import PromoCodeHistoryScenario from "./promoCodeHistory.scenario";
 import PromoCodeHistoryLocator from "./promoCodeHistory.locator";
 
 
-export default class PromoCodeHistoryPage extends BasePage implements PromoCodeHistoryScenario {
+export default class PromoCodeHistoryPage extends BasePosLitePage implements PromoCodeHistoryScenario {
 
 
     pageUrl = (): string => Urls.menu;

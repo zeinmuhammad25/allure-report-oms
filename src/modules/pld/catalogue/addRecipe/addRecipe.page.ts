@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import AddRecipeScenario from "./addRecipe.scenario";
 import AddRecipeLocator from "./addRecipe.locator";
 
 
-export default class AddRecipePage extends BasePage implements AddRecipeScenario {
+export default class AddRecipePage extends BasePosLitePage implements AddRecipeScenario {
 
 
     pageUrl = (): string => Urls.menu;

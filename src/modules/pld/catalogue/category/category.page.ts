@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import CategoryScenario from "./category.scenario";
 import CategoryLocator from "./category.locator";
 
 
-export default class CategoryPage extends BasePage implements CategoryScenario {
+export default class CategoryPage extends BasePosLitePage implements CategoryScenario {
 
 
     pageUrl = (): string => Urls.menu;

@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import RemainingFundsScenario from "./remainingFunds.scenario";
 import RemainingFundsLocator from "./remainingFunds.locator";
 
 
-export default class RemainingFundsPage extends BasePage implements RemainingFundsScenario {
+export default class RemainingFundsPage extends BasePosLitePage implements RemainingFundsScenario {
 
 
     pageUrl = (): string => Urls.menu;

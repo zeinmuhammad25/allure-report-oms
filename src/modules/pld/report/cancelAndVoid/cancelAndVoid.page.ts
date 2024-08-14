@@ -1,9 +1,9 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
 import CancelAndVoidLocator from "./cancelAndVoid.locator";
 
 
-export default class CancelAndVoidPage extends BasePage implements CancelAndVoidLocator {
+export default class CancelAndVoidPage extends BasePosLitePage implements CancelAndVoidLocator {
 
 
     pageUrl = (): string => '';

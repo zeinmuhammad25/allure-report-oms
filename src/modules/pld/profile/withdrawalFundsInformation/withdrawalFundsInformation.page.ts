@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import WithdrawalFundsInformationScenario from "./withdrawalFundsInformation.scenario";
 import WithdrawalFundsInformationLocator from "./withdrawalFundsInformation.locator";
 
 
-export default class WithdrawalFundsInformationPage extends BasePage implements WithdrawalFundsInformationScenario {
+export default class WithdrawalFundsInformationPage extends BasePosLitePage implements WithdrawalFundsInformationScenario {
 
 
     pageUrl = (): string => Urls.menu;

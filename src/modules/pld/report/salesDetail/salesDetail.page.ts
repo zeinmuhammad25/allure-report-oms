@@ -1,10 +1,10 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
 import SalesDetailScenario from "./salesDetail.scenario";
 import SalesDetailLocator from "./salesDetail.locator";
 
 
-export default class SalesDetailPage extends BasePage implements SalesDetailScenario {
+export default class SalesDetailPage extends BasePosLitePage implements SalesDetailScenario {
 
 
     pageUrl = (): string => '';
