@@ -4,7 +4,7 @@ import ProfitAndLossScenario from "./profitAndLoss.scenario";
 import ProfitAndLossLocator from "./profitAndLoss.locator";
 
 
-export default class ProfitAndLossPage extends BasePage implements ProfitAndLossScenario {
+export default class ProfitAndLossPage extends BasePosLitePage implements ProfitAndLossScenario {
 
 
     pageUrl = (): string => '';

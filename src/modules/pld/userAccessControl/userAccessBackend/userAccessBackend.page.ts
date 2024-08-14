@@ -5,7 +5,7 @@ import UserAccessBackendScenario from "./userAccessBackend.scenario";
 import UserAccessBackendLocator from "./userAccessBackend.locator";
 
 
-export default class UserAccessBackendPage extends BasePage implements UserAccessBackendScenario {
+export default class UserAccessBackendPage extends BasePosLitePage implements UserAccessBackendScenario {
 
 
     pageUrl = (): string => Urls.menu;

@@ -5,7 +5,7 @@ import WithdrawalFundsInformationScenario from "./withdrawalFundsInformation.sce
 import WithdrawalFundsInformationLocator from "./withdrawalFundsInformation.locator";
 
 
-export default class WithdrawalFundsInformationPage extends BasePage implements WithdrawalFundsInformationScenario {
+export default class WithdrawalFundsInformationPage extends BasePosLitePage implements WithdrawalFundsInformationScenario {
 
 
     pageUrl = (): string => Urls.menu;

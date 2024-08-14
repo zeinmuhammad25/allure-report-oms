@@ -5,7 +5,7 @@ import SubscriptionStatusScenario from "./subscriptionStatus.scenario";
 import SubscriptionStatusLocator from "./subscriptionStatus.locator";
 
 
-export default class SubscriptionStatusPage extends BasePage implements SubscriptionStatusScenario {
+export default class SubscriptionStatusPage extends BasePosLitePage implements SubscriptionStatusScenario {
 
 
     pageUrl = (): string => Urls.menu;

@@ -5,7 +5,7 @@ import KycProcessLocator from "./kycProcess.locator";
 import KycProcessScenario from "./kycProcess.scenario";
 
 
-export default class KycProcessPage extends BasePage implements KycProcessScenario {
+export default class KycProcessPage extends BasePosLitePage implements KycProcessScenario {
 
 
     pageUrl = (): string => Urls.menu;

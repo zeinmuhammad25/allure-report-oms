@@ -5,7 +5,7 @@ import PromoCodeHistoryScenario from "./promoCodeHistory.scenario";
 import PromoCodeHistoryLocator from "./promoCodeHistory.locator";
 
 
-export default class PromoCodeHistoryPage extends BasePage implements PromoCodeHistoryScenario {
+export default class PromoCodeHistoryPage extends BasePosLitePage implements PromoCodeHistoryScenario {
 
 
     pageUrl = (): string => Urls.menu;

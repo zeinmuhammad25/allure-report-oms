@@ -4,7 +4,7 @@ import Urls from "../../configs/urls";
 import PromotionScenario from "./promotion.scenario";
 import PromotionLocator from "./promotion.locator";
 
-export default class PromotionPage extends BasePage implements PromotionScenario {
+export default class PromotionPage extends BasePosLitePage implements PromotionScenario {
     pageUrl = (): string => Urls.promotion;
 
     shouldHave(): Element[] {

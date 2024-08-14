@@ -5,7 +5,7 @@ import BannerMarketingScenario from "./bannerMarketing.scenario";
 import BannerMarketingLocator from "./bannerMarketing.locator";
 
 
-export default class BannerMarketingPage extends BasePage implements BannerMarketingScenario {
+export default class BannerMarketingPage extends BasePosLitePage implements BannerMarketingScenario {
 
 
     pageUrl = (): string => Urls.menu;

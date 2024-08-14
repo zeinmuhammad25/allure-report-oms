@@ -5,7 +5,7 @@ import OnlinePaymentScenario from "./onlinePayment.scenario";
 import OnlinePaymentLocator from "./onlinePayment.locator";
 
 
-export default class OnlinePaymentPage extends BasePage implements OnlinePaymentScenario {
+export default class OnlinePaymentPage extends BasePosLitePage implements OnlinePaymentScenario {
 
 
     pageUrl = (): string => Urls.singlemenu;

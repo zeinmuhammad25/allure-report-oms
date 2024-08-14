@@ -5,7 +5,7 @@ import OnboardingProcessScenario from "./onboardingProcess.scenario";
 import OnboardingProcessLocator from "./onboardingProcess.locator";
 
 
-export default class OnboardingProcessPage extends BasePage implements OnboardingProcessScenario {
+export default class OnboardingProcessPage extends BasePosLitePage implements OnboardingProcessScenario {
 
 
     pageUrl = (): string => Urls.menu;

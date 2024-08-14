@@ -5,7 +5,7 @@ import SalesModeScenario from "./salesMode.scenario";
 import SalesModeLocator from "./salesMode.locator";
 
 
-export default class SalesModePage extends BasePage implements SalesModeScenario {
+export default class SalesModePage extends BasePosLitePage implements SalesModeScenario {
 
 
     pageUrl = (): string => Urls.menu;

@@ -5,7 +5,7 @@ import PlatformIntegrationScenario from "./platformIntegration.scenario";
 import PlatformIntegrationLocator from "./platformIntegration.locator";
 
 
-export default class PlatformIntegrationPage extends BasePage implements PlatformIntegrationScenario {
+export default class PlatformIntegrationPage extends BasePosLitePage implements PlatformIntegrationScenario {
 
 
     pageUrl = (): string => Urls.menu;

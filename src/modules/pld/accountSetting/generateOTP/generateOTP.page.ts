@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import GenerateOTPScenario from "./generateOTP.scenario";
 import GenerateOTPLocator from "./generateOTP.locator";
+import BasePosLitePage from "../../base-pos-lite-page";
 
 
-export default class GenerateOTPPage extends BasePage implements GenerateOTPScenario {
+export default class GenerateOTPPage extends BasePosLitePage implements GenerateOTPScenario {
 
 
     pageUrl = (): string => Urls.menu;

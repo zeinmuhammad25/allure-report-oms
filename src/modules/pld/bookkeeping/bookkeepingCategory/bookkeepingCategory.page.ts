@@ -5,7 +5,7 @@ import BookkeepingCategoryLocator from "./bookkeepingCategory.locator"
 import BookkeepingCategoryScenario from "./bookkeepingCategory.scenario"
 
 
-export default class BookkeepingCategoryPage extends BasePage implements BookkeepingCategoryScenario {
+export default class BookkeepingCategoryPage extends BasePosLitePage implements BookkeepingCategoryScenario {
 
 
     pageUrl = (): string => Urls.menu;

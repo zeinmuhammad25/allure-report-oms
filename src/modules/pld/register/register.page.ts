@@ -4,7 +4,7 @@ import RegisterScenario from "./register.scenario";
 import Urls from "../../../configs/urls";
 import RegisterLocator from "./register.locator";
 
-export default class RegisterPage extends BasePage implements RegisterScenario {
+export default class RegisterPage extends BasePosLitePage implements RegisterScenario {
     pageUrl = (): string => Urls.register;
 
     shouldHave(): Element[] {

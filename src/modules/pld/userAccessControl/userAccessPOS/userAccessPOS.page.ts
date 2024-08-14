@@ -5,7 +5,7 @@ import UserAccessPOSLocator from "./userAccessPOS.locator";
 import UserAccessPOSScenario from "./userAccessPOS.scenario";
 
 
-export default class UserAccessPOSPage extends BasePage implements UserAccessPOSScenario {
+export default class UserAccessPOSPage extends BasePosLitePage implements UserAccessPOSScenario {
 
 
     pageUrl = (): string => Urls.menu;

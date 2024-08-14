@@ -5,7 +5,7 @@ import HistoryScenario from "./history.scenario";
 import HistoryLocator from "./history.locator";
 
 
-export default class HistoryPage extends BasePage implements HistoryScenario {
+export default class HistoryPage extends BasePosLitePage implements HistoryScenario {
 
 
     pageUrl = (): string => Urls.menu;

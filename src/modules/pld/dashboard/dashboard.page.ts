@@ -5,7 +5,7 @@ import DashboardScenario from "./dashboard.scenario";
 import DashboardLocator from "./dashboard.locator";
 
 
-export default class DashboardPage extends BasePage implements DashboardScenario {
+export default class DashboardPage extends BasePosLitePage implements DashboardScenario {
     pageUrl = (): string => Urls.dashboard;
 
     shouldHave(): Element[] {

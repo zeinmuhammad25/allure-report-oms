@@ -5,7 +5,7 @@ import BusinessTipsScenario from "./businessTips.scenario";
 import BusinessTipsLocator from "./businessTips.locator";
 
 
-export default class BusinessTipsPage extends BasePage implements BusinessTipsScenario {
+export default class BusinessTipsPage extends BasePosLitePage implements BusinessTipsScenario {
     pageUrl = (): string => Urls.dashboard;
 
     shouldHave(): Element[] {

@@ -4,7 +4,7 @@ import PaymentLocator from "./payment.locator";
 import PaymentScenario from "./payment.scenario";
 
 
-export default class PaymentPage extends BasePage implements PaymentScenario {
+export default class PaymentPage extends BasePosLitePage implements PaymentScenario {
 
 
     pageUrl = (): string => '';

@@ -5,7 +5,7 @@ import StockMenuScenario from "./stockMenu.scenario";
 import StockMenuLocator from "./stockMenu.locator";
 
 
-export default class StockMenuPage extends BasePage implements StockMenuScenario {
+export default class StockMenuPage extends BasePosLitePage implements StockMenuScenario {
 
 
     pageUrl = (): string => Urls.accbranch;

@@ -5,7 +5,7 @@ import MenuBookScenario from "./menuBook.scenario";
 import MenuBookLocator from "./menuBook.locator";
 
 
-export default class MenuBookPage extends BasePage implements MenuBookScenario {
+export default class MenuBookPage extends BasePosLitePage implements MenuBookScenario {
 
 
     pageUrl = (): string => Urls.menu;

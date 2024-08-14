@@ -5,7 +5,7 @@ import SalesSummaryScenario from "./salesSummary.scenario";
 import SalesSummaryLocator from "./salesSummary.locator";
 
 
-export default class SalesSummaryPage extends BasePage implements SalesSummaryScenario {
+export default class SalesSummaryPage extends BasePosLitePage implements SalesSummaryScenario {
 
 
     pageUrl = (): string => Urls.salessum;

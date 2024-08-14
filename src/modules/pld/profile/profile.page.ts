@@ -6,7 +6,7 @@ import DashboardLocator from "../dashboard/dashboard.locator";
 import ProfileLocator from "./profile.locator";
 
 
-export default class ProfilePage extends BasePage implements ProfileScenario {
+export default class ProfilePage extends BasePosLitePage implements ProfileScenario {
     private testname = "test QA1";
 
     pageUrl = (): string => Urls.profile;

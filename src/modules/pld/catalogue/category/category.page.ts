@@ -5,7 +5,7 @@ import CategoryScenario from "./category.scenario";
 import CategoryLocator from "./category.locator";
 
 
-export default class CategoryPage extends BasePage implements CategoryScenario {
+export default class CategoryPage extends BasePosLitePage implements CategoryScenario {
 
 
     pageUrl = (): string => Urls.menu;

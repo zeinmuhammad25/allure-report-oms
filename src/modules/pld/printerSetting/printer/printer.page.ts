@@ -5,7 +5,7 @@ import PrinterScenario from "./printer.scenario";
 import PrinterLocator from "./printer.locator";
 
 
-export default class PrinterPage extends BasePage implements PrinterScenario {
+export default class PrinterPage extends BasePosLitePage implements PrinterScenario {
 
 
     pageUrl = (): string => Urls.printer;

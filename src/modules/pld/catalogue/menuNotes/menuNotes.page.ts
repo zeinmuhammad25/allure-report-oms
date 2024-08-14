@@ -5,7 +5,7 @@ import MenuNotesLocator from "./menuNotes.locator";
 import MenuNotesScenario from "./menuNotes.scenario";
 
 
-export default class MenuNotesPage extends BasePage implements MenuNotesScenario {
+export default class MenuNotesPage extends BasePosLitePage implements MenuNotesScenario {
 
 
     pageUrl = (): string => Urls.menu;

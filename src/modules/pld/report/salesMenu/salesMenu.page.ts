@@ -4,7 +4,7 @@ import SalesMenuScenario from "./salesMenu.scenario";
 import SalesMenuLocator from "./salesMenu.locator";
 
 
-export default class SalesMenuPage extends BasePage implements SalesMenuScenario {
+export default class SalesMenuPage extends BasePosLitePage implements SalesMenuScenario {
 
 
     pageUrl = (): string => '';

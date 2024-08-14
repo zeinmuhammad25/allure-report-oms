@@ -5,7 +5,7 @@ import TopUpBalanceScenario from "./topUpBalance.scenario";
 import TopUpBalanceLocator from "./topUpBalance.locator";
 
 
-export default class TopUpBalancePage extends BasePage implements TopUpBalanceScenario {
+export default class TopUpBalancePage extends BasePosLitePage implements TopUpBalanceScenario {
 
 
     pageUrl = (): string => Urls.menu;

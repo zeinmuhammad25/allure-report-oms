@@ -5,7 +5,7 @@ import RawMaterialStockScenario from "./rawMaterialStock.scenario";
 import RawMaterialStockLocator from "./rawMaterialStock.locator";
 
 
-export default class RawMaterialStockPage extends BasePage implements RawMaterialStockScenario {
+export default class RawMaterialStockPage extends BasePosLitePage implements RawMaterialStockScenario {
 
 
     pageUrl = (): string => Urls.rawmaterial;

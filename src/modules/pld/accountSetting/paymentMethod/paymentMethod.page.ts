@@ -1,11 +1,11 @@
-import BasePage from "../../../../base/base-page";
 import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import PaymentMethodScenario from "./paymentMethod.scenario";
 import PaymentMethodLocator from "./paymentMethod.locator";
+import BasePosLitePage from "../../base-pos-lite-page";
 
 
-export default class PaymentMethodPage extends BasePage implements PaymentMethodScenario {
+export default class PaymentMethodPage extends BasePosLitePage implements PaymentMethodScenario {
 
 
     pageUrl = (): string => Urls.accbranch;

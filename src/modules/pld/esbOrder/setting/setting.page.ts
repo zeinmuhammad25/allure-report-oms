@@ -5,7 +5,7 @@ import SettingScenario from "./setting.scenario";
 import SettingLocator from "./setting.locator";
 
 
-export default class SettingPage extends BasePage implements SettingScenario {
+export default class SettingPage extends BasePosLitePage implements SettingScenario {
 
 
     pageUrl = (): string => Urls.menu;

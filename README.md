@@ -182,7 +182,7 @@ import Element from "../../base/objects/Element";
 import LoginScenario from "./login.scenario";
 
 
-export default class LoginPage extends BasePage implements LoginScenario {
+export default class LoginPage extends BasePosLitePage implements LoginScenario {
     pageUrl = (): string => Urls.login;
 
     shouldHave(): Element[] {

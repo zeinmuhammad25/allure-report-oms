@@ -5,7 +5,7 @@ import GroupListScenario from "./groupList.scenario";
 import GroupListLocator from "./groupList.locator";
 
 
-export default class GroupListPage extends BasePage implements GroupListScenario {
+export default class GroupListPage extends BasePosLitePage implements GroupListScenario {
 
 
     pageUrl = (): string => Urls.menu;

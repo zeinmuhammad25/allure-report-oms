@@ -5,7 +5,7 @@ import IntegrationSettingScenario from "./integrationSetting.scenario";
 import IntegrationSettingLocator from "./integrationSetting.locator";
 
 
-export default class IntegrationSettingPage extends BasePage implements IntegrationSettingScenario {
+export default class IntegrationSettingPage extends BasePosLitePage implements IntegrationSettingScenario {
 
 
     pageUrl = (): string => Urls.menu;

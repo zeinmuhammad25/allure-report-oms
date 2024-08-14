@@ -5,7 +5,7 @@ import SidebarLocator from "./sidebar.locator";
 import Urls from "../../../configs/urls";
 
 
-export default class SidebarPage extends BasePage implements SidebarScenario {
+export default class SidebarPage extends BasePosLitePage implements SidebarScenario {
     pageUrl = (): string => Urls.dashboard;
 
     shouldHave(): Element[] {

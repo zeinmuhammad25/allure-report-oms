@@ -4,7 +4,7 @@ import SalesDetailScenario from "./salesDetail.scenario";
 import SalesDetailLocator from "./salesDetail.locator";
 
 
-export default class SalesDetailPage extends BasePage implements SalesDetailScenario {
+export default class SalesDetailPage extends BasePosLitePage implements SalesDetailScenario {
 
 
     pageUrl = (): string => '';

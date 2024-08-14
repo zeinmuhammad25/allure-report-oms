@@ -5,7 +5,7 @@ import UserScenario from "./user.scenario";
 import UserLocator from "./user.locator";
 
 
-export default class UserPage extends BasePage implements UserScenario {
+export default class UserPage extends BasePosLitePage implements UserScenario {
 
 
     pageUrl = (): string => Urls.menu;

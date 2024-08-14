@@ -5,7 +5,7 @@ import RemainingFundsScenario from "./remainingFunds.scenario";
 import RemainingFundsLocator from "./remainingFunds.locator";
 
 
-export default class RemainingFundsPage extends BasePage implements RemainingFundsScenario {
+export default class RemainingFundsPage extends BasePosLitePage implements RemainingFundsScenario {
 
 
     pageUrl = (): string => Urls.menu;

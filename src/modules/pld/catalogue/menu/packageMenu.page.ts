@@ -5,7 +5,7 @@ import MenuLocator from "./menu.locator";
 import PackageMenuScenario from "./packageMenu.scenario";
 
 
-export default class PackageMenuPage extends BasePage implements PackageMenuScenario {
+export default class PackageMenuPage extends BasePosLitePage implements PackageMenuScenario {
 
 
     pageUrl = (): string => Urls.singlemenu;

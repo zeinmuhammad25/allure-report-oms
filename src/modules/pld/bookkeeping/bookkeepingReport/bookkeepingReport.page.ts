@@ -4,7 +4,7 @@ import Element from "../../../../base/objects/Element";
 import BookkeepingReportLocator from "./bookkeepingReport.locator"
 import BookkeepingReportScenario from "./bookkeepingReport.scenario"
 
-export default class BookkeepingReportPage extends BasePage implements BookkeepingReportScenario {
+export default class BookkeepingReportPage extends BasePosLitePage implements BookkeepingReportScenario {
 
 
     pageUrl = (): string => Urls.menu;

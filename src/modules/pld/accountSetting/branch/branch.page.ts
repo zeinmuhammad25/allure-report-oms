@@ -3,9 +3,10 @@ import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import BranchScenario from "./branch.scenario";
 import BranchLocator from "./branch.locator";
+import BasePosLitePage from "../../base-pos-lite-page";
 
 
-export default class BranchPage extends BasePage implements BranchScenario {
+export default class BranchPage extends BasePosLitePage implements BranchScenario {
 
 
     pageUrl = (): string => Urls.accbranch;
