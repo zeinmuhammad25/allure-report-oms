@@ -1,4 +1,3 @@
-import BasePage from "../../../base/base-page";
 import Urls from "../../../configs/urls";
 import Element from "../../../base/objects/Element";
 import ProfileScenario from "./profile.scenario";
