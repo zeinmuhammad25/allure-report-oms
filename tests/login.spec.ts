@@ -16,7 +16,7 @@ test(`User forget password`, async ({page}) => {
 test('User can log in and see the "Later" button on the dashboard', async ({page}) => {
     const loginPage = new LoginPage(page);
     await loginPage.navigateHere();
-    await loginPage.performLogin();
+    await loginPage.performLoginSubs();
 
 });
 
