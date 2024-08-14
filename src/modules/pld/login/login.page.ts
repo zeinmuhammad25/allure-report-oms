@@ -12,7 +12,7 @@ export default class LoginPage extends BasePosLitePage implements LoginScenario 
     private emailEmpty = "";
     private password = process.env.PASSWORD;
     private passwordEmpty = "";
-    private useremail2 = process.env.USEREMAIL2;
+    private userEmail2 = process.env.USEREMAIL2;
     private password2 = process.env.PASSWORD2;
 
 
@@ -110,7 +110,7 @@ export default class LoginPage extends BasePosLitePage implements LoginScenario 
         await this.clear(LoginLocator.inputPassword);
         await this.expectDisabled(LoginLocator.loginButton);
 
-        await this.fill(LoginLocator.inputUsername, this.useremail2);
+        await this.fill(LoginLocator.inputUsername, this.userEmail2);
         await this.fill(LoginLocator.inputPassword, this.password2);
         await this.expectEnabled(LoginLocator.loginButton);
         await this.click(LoginLocator.loginButton);
