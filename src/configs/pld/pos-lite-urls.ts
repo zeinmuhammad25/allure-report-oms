@@ -11,5 +11,15 @@ export default class PosLiteUrls extends BaseUrl {
         return this._instance || (this._instance = new this());
     }
 
-    baseUrl = (): string => "";
+    baseUrl = (): string => process.env.BASE_URL;
+
+    public get = {
+        account: {
+            forgotPassword: "forgotPassword urlnya apa",
+            logout: "logout urlnya apa",
+        },
+        accountSetting: {
+            branch: "branch url nya apa"
+        }
+    };
 }

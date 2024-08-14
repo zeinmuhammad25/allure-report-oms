@@ -1,3 +1,5 @@
 export default abstract class BaseUrl {
-    abstract baseUrl: () => string;
+    public abstract baseUrl: () => string;
+
+    public abstract get get(): {};
 }

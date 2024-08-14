@@ -7,7 +7,7 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
     private _page: Page;
     protected urls: T;
 
-    constructor(page: Page, urls: T) {
+    protected constructor(page: Page, urls: T) {
         this._page = page;
         this.urls = urls;
     }
@@ -16,9 +16,8 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
 
     abstract shouldHave(): Element[];
 
-    private _baseUrl: string = process.env.BASE_URL;
     protected get baseUrl(): string {
-        return this._baseUrl;
+        return this.urls.baseUrl();
     }
 
     async navigateHere(): Promise<void> {
