@@ -19,7 +19,14 @@ export default class PosLiteUrls extends BaseUrl {
             logout: "logout urlnya apa",
         },
         accountSetting: {
-            branch: "branch url nya apa"
+            branch: "branch url nya apa",
+        },
+        login: {
+            loginUrl: "/esb-core-lite/login",
+        },
+        printerSetting: {
+            menuManagement: "/esb-core-lite/printer-setting/branch-menu/index",
+            printer: "/esb-core-lite/printer-setting/station/index",
         }
     };
 }

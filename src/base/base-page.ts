@@ -105,6 +105,11 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
         return expect(this._page.getByText(text, {exact: exact})).toBeVisible();
     }
 
+    protected expectTextInvisible(text: string, exact: boolean = false): Promise<void> {
+        console.log(`check if text visible:  ${text} | exact : ${exact}`);
+        return expect(this._page.getByText(text, {exact: exact})).toBeHidden();
+    }
+
     protected async expectHasValue(selector: string, value: string): Promise<void> {
         console.log(`check if : ${selector}  hasValue : ${value}`);
         return expect(this._page.locator(selector)).toHaveValue(value);
