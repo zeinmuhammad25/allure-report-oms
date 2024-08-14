@@ -1,8 +1,8 @@
-import BasePage from "../../../base/base-page";
 import Element from "../../../base/objects/Element";
 import SidebarScenario from "./sidebar.scenario";
 import SidebarLocator from "./sidebar.locator";
 import Urls from "../../../configs/urls";
+import BasePosLitePage from "../base-pos-lite-page";
 
 
 export default class SidebarPage extends BasePosLitePage implements SidebarScenario {

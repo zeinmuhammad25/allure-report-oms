@@ -1,4 +1,4 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
 import Urls from "../../../../configs/urls";
 import BusinessTipsScenario from "./businessTips.scenario";

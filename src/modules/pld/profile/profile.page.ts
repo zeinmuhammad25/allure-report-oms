@@ -4,6 +4,7 @@ import Element from "../../../base/objects/Element";
 import ProfileScenario from "./profile.scenario";
 import DashboardLocator from "../dashboard/dashboard.locator";
 import ProfileLocator from "./profile.locator";
+import BasePosLitePage from "../base-pos-lite-page";
 
 
 export default class ProfilePage extends BasePosLitePage implements ProfileScenario {

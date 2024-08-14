@@ -1,4 +1,4 @@
-import BasePage from "../../../../base/base-page";
+import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
 import PaymentLocator from "./payment.locator";
 import PaymentScenario from "./payment.scenario";

@@ -1,8 +1,8 @@
-import BasePage from "../../../base/base-page";
 import Element from "../../../base/objects/Element";
 import RegisterScenario from "./register.scenario";
 import Urls from "../../../configs/urls";
 import RegisterLocator from "./register.locator";
+import BasePosLitePage from "../base-pos-lite-page";
 
 export default class RegisterPage extends BasePosLitePage implements RegisterScenario {
     pageUrl = (): string => Urls.register;

@@ -1,8 +1,8 @@
-import BasePage from "../../base/base-page";
-import Urls from "../../configs/urls";
-import Element from "../../base/objects/Element";
+import Urls from "../../../configs/urls";
+import Element from "../../../base/objects/Element";
 import GroupListScenario from "./groupList.scenario";
 import GroupListLocator from "./groupList.locator";
+import BasePosLitePage from "../base-pos-lite-page";
 
 
 export default class GroupListPage extends BasePosLitePage implements GroupListScenario {

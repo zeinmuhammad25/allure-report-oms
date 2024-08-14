@@ -3,6 +3,7 @@ import Element from "../../base/objects/Element";
 import Urls from "../../configs/urls";
 import DashboardScenario from "./dashboard.scenario";
 import DashboardLocator from "./dashboard.locator";
+import BasePosLitePage from "../base-pos-lite-page";
 
 
 export default class DashboardPage extends BasePosLitePage implements DashboardScenario {
