@@ -2,6 +2,7 @@ import {expect, Page} from "@playwright/test";
 import Element, {ElementType} from "./objects/Element";
 import BaseScenario from "./base-scenario";
 import BaseUrl from "./base-url";
+import {Keyboard} from "./constants/Keyboard";
 
 export default abstract class BasePage<T extends BaseUrl> implements BaseScenario {
     private _page: Page;
@@ -137,10 +138,12 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
         });
     }
 
-    protected async perform(actions: Promise<any>[]) {
-        return Promise.all(actions).then(value => {
-            console.log(value.length)
-        });
+    protected pressKeyboard(...keys: Keyboard[]): Promise<void> {
+        return this._page.keyboard.type(keys.map(key => Keyboard[key]).join("+"));
+    }
+
+    protected typeKeyboard(text: string): Promise<void> {
+        return this._page.keyboard.type(text);
     }
 
     protected waitForUrl(urlOrPredicate: string): Promise<void> {
