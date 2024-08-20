@@ -14,6 +14,8 @@ export default class PrinterLocator extends BaseLocator {
     static printerSearchDropdown: string = "//nz-select-item[@title='Nama Printer']";
     static printerStationData: string = "//tr[contains(@class, 'ant-table-row')][1]//td[1]"
     static printerDeleteButton: string = "//tr[contains(@class, 'ant-table-row')][1]//button[contains(@class, 'button-red')]";
+    static printerPopupImage: string = "//img[@class='img-fluid ng-star-inserted']";
+    static printerDeleteNotif: string = "//nz-notification//div[text() = 'Data berhasil dipindahkan ke ']";
     static printerPopupDelete: string = "//button[@class='button button-outline-red button-small button-block']";
     static printerPopupCancel: string = "//button[@class='button button-orange button-small button-block']";
     static printerEditButton: string = "//button[@class='button button-blue button-x-small button-icon']";
