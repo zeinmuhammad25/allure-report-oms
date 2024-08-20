@@ -38,7 +38,9 @@ export default class PrinterPage extends BasePosLitePage implements PrinterScena
     async performDeletePrinter(): Promise<void> {
         await this.expectVisible(PrinterLocator.printerDeleteButton);
         await this.click(PrinterLocator.printerDeleteButton);
+        await this.expectVisible(PrinterLocator.printerPopupImage);
         await this.click(PrinterLocator.printerPopupDelete);
+        await this.click(PrinterLocator.printerDeleteNotif);
     }
 
     async performSearchPrinter(): Promise<void> {
