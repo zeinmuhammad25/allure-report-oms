@@ -5,7 +5,7 @@ import PrinterCreatePage from "../../../src/modules/pld/printerSetting/printer/p
 
 
 test.describe.serial('Printer Tests', () => {
-    let loginPage;
+    let loginPage: LoginPage;
 
 
     test.beforeEach(async ({page}) => {
