@@ -1,8 +1,14 @@
 import BaseLocator from "../../../../base/base-locator";
 
 export default class MenuManagementLocator extends BaseLocator {
+
+    //menuManagementSidebar
+
+    static menuManagementSidebar: string = "//a[@ng-reflect-router-link='printer-setting/branch-menu']";
+    static menuManagementEditButton: string = "//button[@id='i-branchmenu1']//i[@class='anticon anticon-form']//*[name()='svg']";
+
     static menuManagementTab: string = "//div[@role='tab' and text()='Manajemen Menu']";
-    static branchSearch: string = "//input[@placeholder='Cari Berdasarkan Cabang']";
+    static menuManagementSearchBar: string = "//input[@placeholder='Cari Berdasarkan Cabang']";
     static branchColumn: string = "//nz-table-sorters/span[text() = ' Cabang ']";
 
     static firstBranchEditButton: string = "#i-branchmenu1";
