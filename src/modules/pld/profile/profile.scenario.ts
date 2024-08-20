@@ -3,6 +3,9 @@ import BaseScenario from "../../../base/base-scenario";
 export default interface ProfileScenario extends BaseScenario {
 
 
-    changeUsername(): Promise<void>;
+    userNameChange(): Promise<void>;
+
+    userNameChangeDirect(): Promise<void>;
+
 
 }
