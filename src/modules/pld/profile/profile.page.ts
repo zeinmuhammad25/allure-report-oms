@@ -47,12 +47,12 @@ export default class ProfilePage extends BasePosLitePage implements ProfileScena
         await this.click(DashboardLocator.buttonProfile);
         await this.waitForUrl(`${process.env.BASE_URL}${Urls.profile}`);
         await this.expectTextVisible("Informasi Pengguna");
+        await this.expectVisible(ProfileLocator.userNameField);
+        await this.clear(ProfileLocator.userNameField);
+        await this.fill(ProfileLocator.userNameField, this.testName2);
         await this.click(ProfileLocator.userNameEditButton);
-        await this.expectVisible(ProfileLocator.saveButton)
-        await this.click(ProfileLocator.userNameEditFieldPopup);
-        await this.clear(ProfileLocator.userNameEditFieldPopup);
-        await this.fill(ProfileLocator.userNameEditFieldPopup, this.testName);
         await this.click(ProfileLocator.saveButton);
+        await this.expectTextVisible(this.testName2);
     }
 
 
