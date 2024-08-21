@@ -3,10 +3,12 @@ import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import BranchScenario from "./branch.scenario";
 import BranchLocator from "./branch.locator";
+import SidebarLocator from "../../dashboard/sidebar.locator";
+import {Keyboard} from "../../../../base/constants/Keyboard";
 
 
 export default class BranchPage extends BasePosLitePage implements BranchScenario {
-
+    private branchName = "Ini Cabang 6 bulan";
 
     pageUrl = (): string => Urls.accbranch;
 
@@ -19,6 +21,17 @@ export default class BranchPage extends BasePosLitePage implements BranchScenari
             Element.ofSelector(BranchLocator.accountBranchAmount),
 
         ];
+    }
+
+    async navigateToBranchSetting(): Promise<void> {
+        await this.expectVisible(SidebarLocator.accountSettingHead);
+        await this.click(SidebarLocator.accountSettingHead);
+        await this.expectVisible(SidebarLocator.accountSettingBranch);
+        await this.click(SidebarLocator.accountSettingBranch);
+        await this.expectVisible(BranchLocator.branchSearchBar);
+        await this.click(BranchLocator.branchSearchBar);
+        await this.typeKeyboard(this.branchName);
+        await this.pressKeyboard(Keyboard.ENTER);
     }
 
 
