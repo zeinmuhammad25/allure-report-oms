@@ -2,6 +2,8 @@ import {test} from "@playwright/test";
 import LoginPage from "../../../src/modules/pld/login/login.page";
 import BranchPage from "../../../src/modules/pld/accountSetting/branch/branch.page";
 import BranchMainTabPage from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchMainTab.page";
+import BranchTabTransactionPage
+    from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabTransaction/branchTabTransaction.page";
 
 
 test.describe.serial('Printer Tests', () => {
@@ -29,6 +31,14 @@ test.describe.serial('Printer Tests', () => {
         await branchMainTabPage.performEditBranchName();
         await branchPage.searchBranchDataEdit();
         await branchMainTabPage.performResetBranchName();
+    });
+
+    test('Verify if user can activate payment method for all modules', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+        const branchPage: BranchPage = new BranchPage(page);
+        const branchTabTransaction: BranchTabTransactionPage = new BranchTabTransactionPage(page);
+        await branchPage.navigateToBranchSetting();
+        await branchPage.searchBranchData();
+        await branchTabTransaction.navigateToBranchTabTransaction();
     });
 
 });
