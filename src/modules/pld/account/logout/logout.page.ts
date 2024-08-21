@@ -14,9 +14,17 @@ export default class LogoutPage extends BasePosLitePage implements LogoutScenari
     shouldHave(): Element[] {
         return [
             Element.ofSelector(LogoutLocator.logoutConfirmationPopUp),
-            Element.ofSelector(LogoutLocator.cancelLogoutButton),
+            Element.ofSelector(LogoutLocator.logoutCancelButton),
             Element.ofSelector(LogoutLocator.logoutConfirmationButton),
         ];
+    }
+
+    async performLogout(): Promise<void> {
+        await this.click(LogoutLocator.accountDropdown);
+        await this.click(LogoutLocator.logoutButton);
+        await this.expectVisible(LogoutLocator.logoutConfirmationPopUp);
+        await this.click(LogoutLocator.logoutConfirmationPopUp);
+
     }
 
 
