@@ -1,8 +1,11 @@
 import {test} from "@playwright/test";
 import LoginPage from "../../../src/modules/pld/login/login.page";
 import MenuManagementPage from "../../../src/modules/pld/printerSetting/menuManagement/menuManagement.page";
+import MenuManagementEditPage
+    from "../../../src/modules/pld/printerSetting/menuManagement/menuManagementEdit/menuManagementEdit.page";
 
-test.describe.serial('Printer Tests', () => {
+
+test.describe.serial('menuManagement Tests', () => {
     let loginPage: LoginPage;
 
 
@@ -16,8 +19,9 @@ test.describe.serial('Printer Tests', () => {
     test('Verify if user can edit menuManagement', {tag: '@smokeTest, @printerSetting'}, async ({page}) => {
         const menuManagementPage = new MenuManagementPage(page);
         await menuManagementPage.navigateToManagement();
-        await menuManagementPage.managementMenuSearch();
-        await menuManagementPage.managementMenuEdit();
+        await menuManagementPage.navigateToMenuManagementEdit();
+        const menuManagementEditPage = new MenuManagementEditPage(page);
+        await menuManagementEditPage.setOutOfStockTrue();
 
     });
 
