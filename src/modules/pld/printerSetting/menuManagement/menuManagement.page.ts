@@ -3,6 +3,7 @@ import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import MenuManagementScenario from "./menuManagement.scenario";
 import MenuManagementLocator from "./menuManagement.locator";
+import PrinterLocator from "../printer/printer.locator";
 
 
 export default class MenuManagementPage extends BasePosLitePage implements MenuManagementScenario {
@@ -14,12 +15,31 @@ export default class MenuManagementPage extends BasePosLitePage implements MenuM
     shouldHave(): Element[] {
         return [
             Element.ofSelector(MenuManagementLocator.menuManagementTab),
-            Element.ofSelector(MenuManagementLocator.branchSearch),
+            Element.ofSelector(MenuManagementLocator.menuManagementSearchBar),
             Element.ofSelector(MenuManagementLocator.branchColumn),
             Element.ofSelector(MenuManagementLocator.firstBranchEditButton),
 
         ];
     }
 
+    async navigateToManagement(): Promise<void> {
+        await this.expectVisible(PrinterLocator.printerSettingSidebar);
+        await this.click(PrinterLocator.printerSettingSidebar)
+        await this.expectVisible(MenuManagementLocator.menuManagementSidebar);
+        await this.click(MenuManagementLocator.menuManagementSidebar);
+
+    }
+
+    async managementMenuSearch(): Promise<void> {
+        await this.expectVisible(PrinterLocator.printerSettingSidebar);
+        await this.click(PrinterLocator.printerSettingSidebar)
+        await this.expectVisible(MenuManagementLocator.menuManagementSidebar);
+        await this.click(MenuManagementLocator.menuManagementSidebar);
+        await this.expectVisible(MenuManagementLocator.menuManagementSearchBar);
+    }
+
+    async navigateToMenuManagementEdit(): Promise<void> {
+        await this.click(MenuManagementLocator.menuManagementEditButton);
+    }
 
 }
