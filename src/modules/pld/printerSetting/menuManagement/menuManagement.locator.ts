@@ -5,7 +5,7 @@ export default class MenuManagementLocator extends BaseLocator {
     //menuManagementSidebar
 
     static menuManagementSidebar: string = "//a[@ng-reflect-router-link='printer-setting/branch-menu']";
-    static menuManagementEditButton: string = "//button[@id='i-branchmenu1']//i[@class='anticon anticon-form']//*[name()='svg']";
+    static menuManagementEditButton: string = "//tr[1]/td[2]//button[@id='i-branchmenu1']";
 
     static menuManagementTab: string = "//div[@role='tab' and text()='Manajemen Menu']";
     static menuManagementSearchBar: string = "//input[@placeholder='Cari Berdasarkan Cabang']";
