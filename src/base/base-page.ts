@@ -82,27 +82,27 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
     }
 
     protected expectEnabled(selector: string): Promise<void> {
-        console.log(`check if enabled:  ${selector}`);
+        console.log(`expect enabled:  ${selector}`);
         return expect(this._page.locator(selector)).toBeEnabled();
     }
 
     protected expectDisabled(selector: string): Promise<void> {
-        console.log(`check if disabled:  ${selector}`);
+        console.log(`expect disabled:  ${selector}`);
         return expect(this._page.locator(selector)).toBeDisabled();
     }
 
     protected expectVisible(selector: string): Promise<void> {
-        console.log(`check if visible:  ${selector}`);
+        console.log(`expect visible:  ${selector}`);
         return expect(this._page.locator(selector)).toBeVisible();
     }
 
     protected expectInvisible(selector: string): Promise<void> {
-        console.log(`check if Invisible:  ${selector}`);
+        console.log(`expect Invisible:  ${selector}`);
         return expect(this._page.locator(selector)).toBeHidden();
     }
 
     protected expectTextVisible(text: string, exact: boolean = false): Promise<void> {
-        console.log(`check if text visible:  ${text} | exact : ${exact}`);
+        console.log(`expect text visible:  ${text} | exact : ${exact}`);
         return expect(this._page.getByText(text, {exact: exact})).toBeVisible();
     }
 
@@ -122,10 +122,6 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
         return e.toBeDisabled();
     }
 
-    async wait(time: number) {
-        return new Promise(resolve => setTimeout(resolve, time));
-    }
-
     async waitForResponse(urlOrPredicate: string) {
         console.log(`waiting for response API contain ${urlOrPredicate}`);
         return this._page.waitForResponse(new RegExp('\\b' + urlOrPredicate + '\\b')).then(response => {
@@ -139,7 +135,7 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
     }
 
     protected pressKeyboard(...keys: Keyboard[]): Promise<void> {
-        return this._page.keyboard.type(keys.map(key => Keyboard[key]).join("+"));
+        return this._page.keyboard.press(keys.map(key => `${key}`).join("+"));
     }
 
     protected typeKeyboard(text: string): Promise<void> {
@@ -152,5 +148,20 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
 
     protected isEnabled(selector: string): Promise<boolean> {
         return this._page.locator(selector).isEnabled();
+    }
+
+    protected isChecked(selector: string): Promise<boolean> {
+        console.log(`check if checked:  ${selector}`);
+        return this._page.locator(selector).isChecked();
+    }
+
+    protected isVisible(selector: string): Promise<boolean> {
+        console.log(`check if visible:  ${selector}`);
+        return this._page.locator(selector).isVisible();
+    }
+
+    protected isTextVisible(text: string): Promise<boolean> {
+        console.log(`check if text visible:  ${text}`);
+        return this._page.getByText(text).isVisible();
     }
 }
