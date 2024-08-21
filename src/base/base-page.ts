@@ -139,7 +139,7 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
     }
 
     protected pressKeyboard(...keys: Keyboard[]): Promise<void> {
-        return this._page.keyboard.press(keys.map(key => Keyboard[key]).join("+"));
+        return this._page.keyboard.press(keys.map(key => `${key}`).join("+"));
     }
 
     protected typeKeyboard(text: string): Promise<void> {
