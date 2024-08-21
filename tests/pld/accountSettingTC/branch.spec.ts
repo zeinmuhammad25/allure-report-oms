@@ -15,13 +15,20 @@ test.describe.serial('Printer Tests', () => {
     });
 
 
+    test('Verify if user clean up data', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+        const branchPage = new BranchPage(page);
+        await branchPage.navigateToBranchSetting();
+        await branchPage.cleanUpBranchData();
+    });
+
     test('Verify if user can edit branch in main tab', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
         const branchPage = new BranchPage(page);
         await branchPage.navigateToBranchSetting();
         await branchPage.searchBranchData();
         const branchMainTabPage = new BranchMainTabPage(page);
         await branchMainTabPage.performEditBranchName();
-        // await branchPage.searchBranchDataEdit();
+        await branchPage.searchBranchDataEdit();
+        await branchMainTabPage.performResetBranchName();
     });
 
 });
