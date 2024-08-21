@@ -21,6 +21,8 @@ export default class MenuManagementEditPage extends BasePosLitePage implements M
 
     async setOutOfStockTrue(): Promise<void> {
         await this.expectVisible(MenuManagementEditLocator.menuManagementRadioBtn);
+        await this.click(MenuManagementEditLocator.menuManagementSaveBtn);
+        await this.expectVisible(MenuManagementEditLocator.menuManagementRadioBtnActive);
     }
 
     async setOutOfStockFalse(): Promise<void> {
