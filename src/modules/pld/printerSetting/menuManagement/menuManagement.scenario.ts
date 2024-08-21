@@ -6,6 +6,6 @@ export default interface MenuManagementScenario extends BaseScenario {
 
     managementMenuSearch(): Promise<void>;
 
-    managementMenuEdit(): Promise<void>;
+    navigateToMenuManagementEdit(): Promise<void>;
 
 }
