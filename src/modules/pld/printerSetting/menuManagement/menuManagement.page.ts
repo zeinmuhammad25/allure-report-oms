@@ -38,7 +38,7 @@ export default class MenuManagementPage extends BasePosLitePage implements MenuM
         await this.expectVisible(MenuManagementLocator.menuManagementSearchBar);
     }
 
-    async managementMenuEdit(): Promise<void> {
+    async navigateToMenuManagementEdit(): Promise<void> {
         await this.click(MenuManagementLocator.menuManagementEditButton);
     }
 
