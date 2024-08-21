@@ -5,6 +5,7 @@ import BranchScenario from "./branch.scenario";
 import BranchLocator from "./branch.locator";
 import SidebarLocator from "../../dashboard/sidebar.locator";
 import {Keyboard} from "../../../../base/constants/Keyboard";
+import BranchMainTabLocator from "./branchTabs/branchMainTab.locator";
 
 
 export default class BranchPage extends BasePosLitePage implements BranchScenario {
@@ -32,6 +33,21 @@ export default class BranchPage extends BasePosLitePage implements BranchScenari
         await this.click(SidebarLocator.accountSettingBranch);
     }
 
+    async cleanUpBranchData(): Promise<void> {
+        await this.expectVisible(BranchLocator.branchSearchBar);
+        await this.click(BranchLocator.branchSearchBar);
+        await this.typeKeyboard(this.branchNameEdit);
+        await this.pressKeyboard(Keyboard.ENTER);
+
+        const isSaveButtonVisible = await this.isVisible(BranchLocator.branchOriginDataName);
+        if (!isSaveButtonVisible) {
+            await this.click(BranchLocator.branchEditButton);
+            await this.clear(BranchMainTabLocator.branchTabNameField);
+            await this.fill(BranchMainTabLocator.branchTabNameField, this.branchName);
+            await this.click(BranchMainTabLocator.branchTabSaveButton);
+        }
+    }
+
     async searchBranchData(isVisible: boolean = false): Promise<void> {
         await this.expectVisible(BranchLocator.branchSearchBar);
         await this.click(BranchLocator.branchSearchBar);
@@ -47,6 +63,7 @@ export default class BranchPage extends BasePosLitePage implements BranchScenari
         await this.typeKeyboard(this.branchNameEdit);
         await this.pressKeyboard(Keyboard.ENTER);
         await this.expectVisible(BranchLocator.branchEditDataName);
+        await this.click(BranchLocator.branchEditButton);
     }
 
 
