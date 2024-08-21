@@ -29,7 +29,7 @@ export default class BranchMainTabPage extends BasePosLitePage implements Branch
 
     }
 
-    async performCleanUpBranchName(): Promise<void>{
+    async performResetBranchName(): Promise<void> {
         await this.click(BranchMainTabLocator.branchTabNameField);
         await this.clear(BranchMainTabLocator.branchTabNameField);
         await this.fill(BranchMainTabLocator.branchTabNameField, this.branchMainTabOrigin);
