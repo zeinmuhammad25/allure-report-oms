@@ -6,6 +6,9 @@ import BranchMainTabLocator from "./branchMainTab.locator";
 
 
 export default class BranchMainTabPage extends BasePosLitePage implements BranchMainTabScenario {
+    private branchMainTabName = "Test Cabang Edit";
+    private branchMainTabOrigin = "Ini Cabang 6 Bulan";
+
     pageUrl = (): string => Urls.dashboard;
 
     shouldHave(): Element[] {
@@ -19,7 +22,18 @@ export default class BranchMainTabPage extends BasePosLitePage implements Branch
 
 
     async performEditBranchName(): Promise<void> {
-        await this.expectVisible(BranchMainTabLocator.branchTabNameField);
+        await this.click(BranchMainTabLocator.branchTabNameField);
+        await this.clear(BranchMainTabLocator.branchTabNameField);
+        await this.fill(BranchMainTabLocator.branchTabNameField, this.branchMainTabName);
+        await this.click(BranchMainTabLocator.branchTabSaveButton);
+
+    }
+
+    async performCleanUpBranchName(): Promise<void>{
+        await this.click(BranchMainTabLocator.branchTabNameField);
+        await this.clear(BranchMainTabLocator.branchTabNameField);
+        await this.fill(BranchMainTabLocator.branchTabNameField, this.branchMainTabOrigin);
+        await this.click(BranchMainTabLocator.branchTabSaveButton);
     }
 
 }

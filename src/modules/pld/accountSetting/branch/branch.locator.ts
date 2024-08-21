@@ -12,7 +12,11 @@ export default class BranchLocator extends BaseLocator {
 
     //branchDashboard
     static branchSearchBar: string = "//input[@placeholder='Cari Berdasarkan Nama Cabang']";
-    static branchEditButton: string = "//tr[contains(@class, 'ant-table-row')]//button[contains(@class, 'button-blue')]";
+    static branchEditButton: string = "(//button[@class='button button-blue button-x-small button-icon'])[1]";
+
+    //assertion
+    static branchEditDataName: string = "//td[normalize-space()='Test Cabang Baru']";
+    static branchOriginDataName: string = "//td[normalize-space()='Ini Cabang 6 Bulan']";
 
 
 }
