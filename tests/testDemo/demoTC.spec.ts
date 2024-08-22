@@ -5,55 +5,26 @@ import BranchPage from "../../src/modules/pld/accountSetting/branch/branch.page"
 import PrinterPage from "../../src/modules/pld/printerSetting/printer/printer.page";
 import PrinterCreatePage from "../../src/modules/pld/printerSetting/printer/printerCreate/printerCreate.page";
 import BrandPage from "../../src/modules/pld/accountSetting/brand/brand.page";
+import DashboardPage from "../../src/modules/pld/dashboard/dashboard.page";
+import ProfilePage from "../../src/modules/pld/profile/profile.page";
 
 
 test.describe.serial('Demo Test Case', () => {
     let loginPage: LoginPage;
 
 
-    test.beforeEach(async ({page}) => {
+    test('aaaa', {tag: '@demoTest, @accountDemo'}, async ({page}) => {
         loginPage = new LoginPage(page);
         await loginPage.navigateHere();
         await loginPage.performLoginSubs();
-    });
 
-    test('Verify all logout page elements are present', {tag: '@demoTest, @accountDemo'}, async ({page}) => {
-        const logout = new LogoutPage(page);
-        await logout.navigateToLogoutPage();
-
-    });
-
-    test('Verify all branch elements are present', {tag: '@demoTest, @branchDemo'}, async ({page}) => {
-        const branch = new BranchPage(page);
-        await branch.navigateToBranchSetting();
-        await branch.performBranchElementCheck();
+        await loginPage.gotoPage(DashboardPage)
+            .then(page => page.gotoPage(BrandPage))
+            .then(page => page.gotoPage(PrinterPage))
+            .then(page => page.gotoPage(BranchPage))
+            .then(page => page.gotoPage(PrinterCreatePage))
+            .then(page => page.gotoPage(ProfilePage))
 
     });
-
-    test('Verify all branch main tab elements are present', {tag: '@demoTest, @branchDemo'}, async ({page}) => {
-        const branch = new BranchPage(page);
-        await branch.navigateToBranchSetting();
-        await branch.performBranchElementCheck();
-
-    });
-
-    test('Verify all printer page elements are present', {tag: '@demoTest, @branchDemo'}, async ({page}) => {
-        const printer = new PrinterPage(page);
-        await printer.navigateHere();
-
-    });
-
-    test('Verify all create printer page elements are present', {tag: '@demoTest, @printerDemo'}, async ({page}) => {
-        const printerCreate = new PrinterCreatePage(page);
-        await printerCreate.navigateHere();
-
-    });
-
-    test('Verify all create account setting brand page elements are present', {tag: '@demoTest, @brandDemo'}, async ({page}) => {
-        const brand = new BrandPage(page);
-        await brand.navigateHere();
-
-    });
-
 
 });

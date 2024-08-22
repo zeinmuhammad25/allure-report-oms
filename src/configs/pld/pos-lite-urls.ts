@@ -25,6 +25,9 @@ export default class PosLiteUrls extends BaseUrl {
         login: {
             loginUrl: "/esb-core-lite/login",
         },
+        dashboard: {
+            dashboardIndex: "/esb-core-lite/dashboard/index",
+        },
         printerSetting: {
             menuManagement: "/esb-core-lite/printer-setting/branch-menu/index",
             printer: "/esb-core-lite/printer-setting/station/index",

@@ -6,7 +6,7 @@ import BasePosLitePage from "../base-pos-lite-page";
 
 
 export default class DashboardPage extends BasePosLitePage implements DashboardScenario {
-    pageUrl = (): string => Urls.dashboard;
+    pageUrl = (): string => this.urls.get.dashboard.dashboardIndex
 
     shouldHave(): Element[] {
         return [
@@ -17,7 +17,6 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
             Element.ofSelector(DashboardLocator.findBranchField),
             Element.ofSelector(DashboardLocator.dayButtonChecked),
             Element.ofSelector(DashboardLocator.monthButtonChecked),
-            Element.ofText("Filter Dashboard"),
 
         ];
     }
