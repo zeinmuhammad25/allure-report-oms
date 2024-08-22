@@ -4,6 +4,7 @@ import LogoutPage from "../../src/modules/pld/account/logout/logout.page";
 import BranchPage from "../../src/modules/pld/accountSetting/branch/branch.page";
 import PrinterPage from "../../src/modules/pld/printerSetting/printer/printer.page";
 import PrinterCreatePage from "../../src/modules/pld/printerSetting/printer/printerCreate/printerCreate.page";
+import BrandPage from "../../src/modules/pld/accountSetting/brand/brand.page";
 
 
 test.describe.serial('Demo Test Case', () => {
@@ -42,9 +43,15 @@ test.describe.serial('Demo Test Case', () => {
 
     });
 
-    test('Verify all create printer page elements are present', {tag: '@demoTest, @branchDemo'}, async ({page}) => {
+    test('Verify all create printer page elements are present', {tag: '@demoTest, @printerDemo'}, async ({page}) => {
         const printerCreate = new PrinterCreatePage(page);
         await printerCreate.navigateHere();
+
+    });
+
+    test('Verify all create account setting brand page elements are present', {tag: '@demoTest, @brandDemo'}, async ({page}) => {
+        const brand = new BrandPage(page);
+        await brand.navigateHere();
 
     });
 
