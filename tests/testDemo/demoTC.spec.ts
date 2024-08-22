@@ -14,18 +14,27 @@ test.describe.serial('Demo Test Case', () => {
         await loginPage.performLoginSubs();
     });
 
-    test('Verify if user can access logout page', {tag: '@demoTest, @accountDemo'}, async ({page}) => {
+    test('Verify all logout page elements are present', {tag: '@demoTest, @accountDemo'}, async ({page}) => {
         const logout = new LogoutPage(page);
         await logout.navigateToLogoutPage();
 
     });
 
-    test('Verify if user can access branch page ', {tag: '@demoTest, @branchDemo'}, async ({page}) => {
+    test('Verify all branch elements are present', {tag: '@demoTest, @branchDemo'}, async ({page}) => {
         const branch = new BranchPage(page);
         await branch.navigateToBranchSetting();
         await branch.performBranchElementCheck();
 
     });
+
+    test('Verify all branch elements are present', {tag: '@demoTest, @branchDemo'}, async ({page}) => {
+        const branch = new BranchPage(page);
+        await branch.navigateToBranchSetting();
+        await branch.performBranchElementCheck();
+
+    });
+
+
 
 
 });
