@@ -27,7 +27,7 @@ test.describe.serial('Demo Test Case', () => {
 
     });
 
-    test('Verify all branch elements are present', {tag: '@demoTest, @branchDemo'}, async ({page}) => {
+    test('Verify all branch main tab elements are present', {tag: '@demoTest, @branchDemo'}, async ({page}) => {
         const branch = new BranchPage(page);
         await branch.navigateToBranchSetting();
         await branch.performBranchElementCheck();
