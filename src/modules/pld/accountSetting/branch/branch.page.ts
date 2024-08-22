@@ -5,7 +5,7 @@ import BranchScenario from "./branch.scenario";
 import BranchLocator from "./branch.locator";
 import SidebarLocator from "../../dashboard/sidebar.locator";
 import {Keyboard} from "../../../../base/constants/Keyboard";
-import BranchMainTabLocator from "./branchTabs/branchMainTab.locator";
+import BranchTabMainLocator from "./branchTabs/branchTabMain.locator";
 
 
 export default class BranchPage extends BasePosLitePage implements BranchScenario {
@@ -42,9 +42,9 @@ export default class BranchPage extends BasePosLitePage implements BranchScenari
         const isSaveButtonVisible = await this.isVisible(BranchLocator.branchOriginDataName);
         if (!isSaveButtonVisible) {
             await this.click(BranchLocator.branchEditButton);
-            await this.clear(BranchMainTabLocator.branchTabNameField);
-            await this.fill(BranchMainTabLocator.branchTabNameField, this.branchName);
-            await this.click(BranchMainTabLocator.branchTabSaveButton);
+            await this.clear(BranchTabMainLocator.branchTabNameField);
+            await this.fill(BranchTabMainLocator.branchTabNameField, this.branchName);
+            await this.click(BranchTabMainLocator.branchTabSaveButton);
         }
     }
 
