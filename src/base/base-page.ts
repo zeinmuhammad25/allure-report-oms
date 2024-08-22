@@ -5,7 +5,7 @@ import BaseUrl from "./base-url";
 import {Keyboard} from "./constants/Keyboard";
 
 export default abstract class BasePage<T extends BaseUrl> implements BaseScenario {
-    private _page: Page;
+    private readonly _page: Page;
     protected urls: T;
 
     protected constructor(page: Page, urls: T) {
@@ -24,6 +24,12 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
     async navigateHere(): Promise<void> {
         await this.navigateTo(this.pageUrl());
         await this.performCheckInitialElements();
+    }
+
+    public async gotoPage<P extends BasePage<T>>(pageCreator: new(page: Page, urls: T) => P): Promise<P> {
+        let newPage: P = new pageCreator(this._page, this.urls);
+        await newPage.navigateHere();
+        return newPage;
     }
 
     public async performCheckInitialElements(): Promise<void> {
