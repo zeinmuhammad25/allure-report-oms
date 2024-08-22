@@ -6,8 +6,7 @@ import BranchTabTransactionLocator from "./branchTabTransaction.locator";
 
 
 export default class BranchTabTransactionPage extends BasePosLitePage implements BranchTabTransactionScenario {
-    private branchMainTabName = "Test Cabang Edit";
-    private branchMainTabOrigin = "Ini Cabang 6 Bulan";
+
 
     pageUrl = (): string => Urls.dashboard;
 
@@ -21,9 +20,39 @@ export default class BranchTabTransactionPage extends BasePosLitePage implements
 
     async navigateToBranchTabTransaction(): Promise<void> {
         await this.click(BranchTabTransactionLocator.branchTransactionTab);
-        await this.checkRadioButtonByLabel(BranchTabTransactionLocator.branchTabTransactionCashCheckBox);
-        await this.click(BranchTabTransactionLocator.branchTransactionSaveButton);
-
     }
+
+
+    async makeSureOnlyCashChecked(): Promise<void> {
+
+        const checkboxLocators = [
+            BranchTabTransactionLocator.branchTabTransactionCashCheckBox,
+            BranchTabTransactionLocator.branchTabTransactionDanaCheckBox,
+            BranchTabTransactionLocator.branchTabTransactionOvoCheckBox,
+            BranchTabTransactionLocator.branchTabTransactionGoPayCheckBox,
+            BranchTabTransactionLocator.branchTabTransactionQRISCheckBox
+        ];
+
+        const isCashChecked = await this.isChecked(BranchTabTransactionLocator.branchTabTransactionCashCheckBox);
+
+
+        if (!isCashChecked) {
+            console.log("Cash checkbox is not checked. Checking it now...");
+            await this.click(BranchTabTransactionLocator.branchTabTransactionCashCheckBox);
+        }
+
+        for (const locator of checkboxLocators) {
+            if (locator !== BranchTabTransactionLocator.branchTabTransactionCashCheckBox) {
+                const isChecked = await this.isChecked(locator);
+                if (isChecked) {
+                    console.log(`Unchecking: ${locator}`);
+                    await this.click(locator);
+                }
+            }
+        }
+
+        await this.click(BranchTabTransactionLocator.branchTransactionSaveButton);
+    }
+
 
 }
