@@ -18,7 +18,7 @@ export default class BranchTabTransactionPage extends BasePosLitePage implements
         ];
     }
 
-    async navigateToBranchTabTransaction(): Promise<void> {
+    async navigateToBranchTab(): Promise<void> {
         await this.click(BranchTabTransactionLocator.branchTransactionTab);
     }
 

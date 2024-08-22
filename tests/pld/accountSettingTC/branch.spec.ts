@@ -38,6 +38,7 @@ test.describe.serial('Printer Tests', () => {
         const branchTabTransaction: BranchTabTransactionPage = new BranchTabTransactionPage(page);
         await branchPage.navigateToBranchSetting();
         await branchPage.searchBranchData();
+        await branchTabTransaction.navigateToBranchTab()
         await branchTabTransaction.makeSureOnlyCashChecked();
 
     });

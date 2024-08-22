@@ -2,6 +2,7 @@ import BaseScenario from "../../../../../../base/base-scenario";
 
 export default interface BranchTabTransactionScenario extends BaseScenario {
 
-    navigateToBranchTabTransaction(): Promise<void>;
+    navigateToBranchTab(): Promise<void>;
+
     makeSureOnlyCashChecked(): Promise<void>;
 }
