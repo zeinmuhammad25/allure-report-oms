@@ -27,6 +27,7 @@ export default class PosLiteUrls extends BaseUrl {
         printerSetting: {
             menuManagement: "/esb-core-lite/printer-setting/branch-menu/index",
             printer: "/esb-core-lite/printer-setting/station/index",
+            printerCreate: "/esb-core-lite/printer-setting/station/create",
         }
     };
 }
