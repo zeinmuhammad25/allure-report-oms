@@ -1,7 +1,7 @@
 import {test} from "@playwright/test";
 import LoginPage from "../../../src/modules/pld/login/login.page";
 import BranchPage from "../../../src/modules/pld/accountSetting/branch/branch.page";
-import BranchMainTabPage from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchMainTab.page";
+import BranchTabMainPage from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabMain.page";
 import BranchTabTransactionPage
     from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabTransaction/branchTabTransaction.page";
 
@@ -27,18 +27,20 @@ test.describe.serial('Printer Tests', () => {
         const branchPage = new BranchPage(page);
         await branchPage.navigateToBranchSetting();
         await branchPage.searchBranchData();
-        const branchMainTabPage = new BranchMainTabPage(page);
+        const branchMainTabPage = new BranchTabMainPage(page);
         await branchMainTabPage.performEditBranchName();
         await branchPage.searchBranchDataEdit();
         await branchMainTabPage.performResetBranchName();
     });
 
-    test('Verify if user can activate payment method for all modules', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+    test('Verify if only cash is checked ', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
         const branchPage: BranchPage = new BranchPage(page);
         const branchTabTransaction: BranchTabTransactionPage = new BranchTabTransactionPage(page);
         await branchPage.navigateToBranchSetting();
         await branchPage.searchBranchData();
-        await branchTabTransaction.navigateToBranchTabTransaction();
+        await branchTabTransaction.makeSureOnlyCashChecked();
+
     });
+
 
 });
