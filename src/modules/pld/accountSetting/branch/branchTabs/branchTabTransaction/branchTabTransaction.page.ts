@@ -64,7 +64,5 @@ export default class BranchTabTransactionPage extends BasePosLitePage implements
         await this.click(BranchTabTransactionLocator.branchTransactionButtonSave);
     }
 
-    async
-
 
 }

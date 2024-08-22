@@ -5,4 +5,5 @@ export default interface BranchTabTransactionScenario extends BaseScenario {
     navigateToBranchTab(): Promise<void>;
 
     makeSureOnlyCashChecked(): Promise<void>;
+
 }
