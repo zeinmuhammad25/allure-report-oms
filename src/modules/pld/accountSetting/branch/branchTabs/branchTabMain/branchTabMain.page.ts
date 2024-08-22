@@ -1,6 +1,6 @@
-import BasePosLitePage from "../../../base-pos-lite-page";
-import Urls from "../../../../../configs/urls";
-import Element from "../../../../../base/objects/Element";
+import BasePosLitePage from "../../../../base-pos-lite-page";
+import Urls from "../../../../../../configs/urls";
+import Element from "../../../../../../base/objects/Element";
 import BranchTabMainScenario from "./branchTabMain.scenario";
 import BranchTabMainLocator from "./branchTabMain.locator";
 

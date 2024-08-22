@@ -5,7 +5,7 @@ import BranchScenario from "./branch.scenario";
 import BranchLocator from "./branch.locator";
 import SidebarLocator from "../../dashboard/sidebar.locator";
 import {Keyboard} from "../../../../base/constants/Keyboard";
-import BranchTabMainLocator from "./branchTabs/branchTabMain.locator";
+import BranchTabMainLocator from "./branchTabs/branchTabMain/branchTabMain.locator";
 
 
 export default class BranchPage extends BasePosLitePage implements BranchScenario {
