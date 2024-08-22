@@ -3,4 +3,6 @@ import BaseScenario from "../../../../../../base/base-scenario";
 export default interface BranchTabMainScenario extends BaseScenario {
 
     performResetBranchName(): Promise<void>;
+
+    performBranchTabMainElementCheck(): Promise<void>;
 }

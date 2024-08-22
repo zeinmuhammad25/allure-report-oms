@@ -66,5 +66,18 @@ export default class BranchPage extends BasePosLitePage implements BranchScenari
         await this.click(BranchLocator.branchEditButton);
     }
 
+    async performBranchElementCheck(): Promise<void> {
+        await this.expectVisible(BranchLocator.branchSearchBar);
+        console.log('Search bar in branch page is present');
+        await this.expectVisible(BranchLocator.addBranchButton);
+        console.log('Add branch button in branch page is present');
+        await this.expectTextVisible("Daftar Cabang")
+        console.log('Branch page title is present');
+        await this.expectVisible(BranchLocator.accountSearchExpired);
+        console.log('Branch page expired order row is present');
+        await this.expectVisible(BranchLocator.accountBranchAmount);
+        console.log('Branch count in branch page is present');
+    }
+
 
 }
