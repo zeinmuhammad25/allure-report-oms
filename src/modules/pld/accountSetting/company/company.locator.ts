@@ -1,7 +1,7 @@
 import BaseLocator from "../../../../base/base-locator";
 
 export default class CompanyLocator extends BaseLocator {
-    static companyGroupNameField: string = "#companyName";
+    static companyGroupNameField: string = "//div[@class='d-flex gap-6 w-100']//input[@id='companyName']";
     static companyChangeNameButton: string = "//button[text()=' Ubah ']";
     static companyAddButton: string = "//button[@routerlink='/account-setting/company/create']";
     static companyArchiveButton: string = "//button[@routerlink='/account-setting/company/archive']";
