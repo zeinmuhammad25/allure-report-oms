@@ -2,6 +2,8 @@ import {test} from "@playwright/test";
 import LoginPage from "../../src/modules/pld/login/login.page";
 import LogoutPage from "../../src/modules/pld/account/logout/logout.page";
 import BranchPage from "../../src/modules/pld/accountSetting/branch/branch.page";
+import PrinterPage from "../../src/modules/pld/printerSetting/printer/printer.page";
+import PrinterCreatePage from "../../src/modules/pld/printerSetting/printer/printerCreate/printerCreate.page";
 
 
 test.describe.serial('Demo Test Case', () => {
@@ -34,5 +36,17 @@ test.describe.serial('Demo Test Case', () => {
 
     });
 
-   
+    test('Verify all printer page elements are present', {tag: '@demoTest, @branchDemo'}, async ({page}) => {
+        const printer = new PrinterPage(page);
+        await printer.navigateHere();
+
+    });
+
+    test('Verify all create printer page elements are present', {tag: '@demoTest, @branchDemo'}, async ({page}) => {
+        const printerCreate = new PrinterCreatePage(page);
+        await printerCreate.navigateHere();
+
+    });
+
+
 });
