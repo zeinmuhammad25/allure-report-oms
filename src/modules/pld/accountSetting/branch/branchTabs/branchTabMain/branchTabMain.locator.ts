@@ -1,6 +1,6 @@
-import BaseLocator from "../../../../../base/base-locator";
+import BaseLocator from "../../../../../../base/base-locator";
 
-export default class BranchMainTabLocator extends BaseLocator {
+export default class BranchTabMainLocator extends BaseLocator {
 
     static branchTabMain: string = "//div[contains(text(),'Utama')]";
     static branchTabNameField: string = "//input[@id='branchName']";
