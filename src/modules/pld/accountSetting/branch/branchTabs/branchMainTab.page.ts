@@ -34,6 +34,7 @@ export default class BranchMainTabPage extends BasePosLitePage implements Branch
         await this.clear(BranchMainTabLocator.branchTabNameField);
         await this.fill(BranchMainTabLocator.branchTabNameField, this.branchMainTabOrigin);
         await this.click(BranchMainTabLocator.branchTabSaveButton);
+
     }
 
 }
