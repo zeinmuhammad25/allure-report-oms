@@ -17,6 +17,7 @@ export default class PosLiteUrls extends BaseUrl {
         account: {
             forgotPassword: "forgotPassword urlnya apa",
             logout: "logout urlnya apa",
+            profile: "/esb-core-lite/profile",
         },
         accountSetting: {
             branch: "/esb-core-lite/account-setting/branch/index",

@@ -22,8 +22,8 @@ test.describe.serial('Demo Test Case', () => {
             .then(page => page.gotoPage(BrandPage))
             .then(page => page.gotoPage(PrinterPage))
             .then(page => page.gotoPage(BranchPage))
-            // .then(page => page.gotoPage(PrinterCreatePage))
-            // .then(page => page.gotoPage(ProfilePage))
+            .then(page => page.gotoPage(PrinterCreatePage))
+            .then(page => page.gotoPage(ProfilePage))
 
     });
 

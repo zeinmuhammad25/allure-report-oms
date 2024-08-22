@@ -10,7 +10,7 @@ export default class ProfilePage extends BasePosLitePage implements ProfileScena
     private testName = "test QA1";
     private testName2 = "testQA2";
 
-    pageUrl = (): string => Urls.profile;
+    pageUrl = (): string => this.urls.get.account.profile;
 
     shouldHave(): Element[] {
         return [];
