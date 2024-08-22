@@ -10,17 +10,16 @@ export default class CompanyPage extends BasePosLitePage implements CompanyScena
 
     pageUrl = (): string => Urls.menu;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/account-setting/company/index
     shouldHave(): Element[] {
         return [
             Element.ofSelector(CompanyLocator.companyGroupNameField),
-            Element.ofSelector(CompanyLocator.changeCompanyNameButton),
-            Element.ofSelector(CompanyLocator.addCompanyButton),
-            Element.ofSelector(CompanyLocator.archiveCompanyButton),
-            Element.ofSelector(CompanyLocator.companySearch),
-            Element.ofSelector(CompanyLocator.numberColumn),
-            Element.ofSelector(CompanyLocator.companyColumn),
-            Element.ofSelector(CompanyLocator.addressColumn),
+            Element.ofSelector(CompanyLocator.companyChangeNameButton),
+            Element.ofSelector(CompanyLocator.companyAddButton),
+            Element.ofSelector(CompanyLocator.companyArchiveButton),
+            Element.ofSelector(CompanyLocator.companySearchField),
+            Element.ofSelector(CompanyLocator.companyNumberColumn),
+            Element.ofSelector(CompanyLocator.companyNameColumn),
+            Element.ofSelector(CompanyLocator.companyAddressColumn),
 
         ];
     }

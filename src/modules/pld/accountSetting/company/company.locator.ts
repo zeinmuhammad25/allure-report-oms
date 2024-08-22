@@ -2,14 +2,14 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class CompanyLocator extends BaseLocator {
     static companyGroupNameField: string = "#companyName";
-    static changeCompanyNameButton: string = "//button[text()=' Ubah ']";
-    static addCompanyButton: string = "//button[@routerlink='/account-setting/company/create']";
-    static archiveCompanyButton: string = "//button[@routerlink='/account-setting/company/archive']";
-    static companySearch: string = "//input[@placeholder='Cari berdasarkan nama usaha']";
+    static companyChangeNameButton: string = "//button[text()=' Ubah ']";
+    static companyAddButton: string = "//button[@routerlink='/account-setting/company/create']";
+    static companyArchiveButton: string = "//button[@routerlink='/account-setting/company/archive']";
+    static companySearchField: string = "//input[@placeholder='Cari berdasarkan nama usaha']";
 
-    static numberColumn: string = "//th[text() = ' No. ']";
-    static companyColumn: string = "//nz-table-sorters/span[text() = ' Nama Usaha ']";
-    static addressColumn: string = "//nz-table-sorters/span[text() = ' Alamat ']";
+    static companyNumberColumn: string = "//th[text() = ' No. ']";
+    static companyNameColumn: string = "//nz-table-sorters/span[text() = ' Nama Usaha ']";
+    static companyAddressColumn: string = "//nz-table-sorters/span[text() = ' Alamat ']";
 
 
     // Add Company
@@ -21,8 +21,8 @@ export default class CompanyLocator extends BaseLocator {
     static mandatoryAttendanceImageSwitch: string = "#flagMandatoryAttendancePhoto";
     static customerNumberSwitch: string = "#flagInputPhoneNum";
 
-    static saveButton: string = "//button[text()=' Simpan ']";
-    static cancelButton: string = "//button[@routerlink='/account-setting/company/index']";
+    static companySaveButton: string = "//button[text()=' Simpan ']";
+    static companyCancelButton: string = "//button[@routerlink='/account-setting/company/index']";
 
 
 }
