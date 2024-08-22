@@ -25,6 +25,41 @@ import MenuNotesPage from "../../src/modules/pld/catalogue/menuNotes/menuNotes.p
 import ReasonCancelPage from "../../src/modules/pld/catalogue/reasonCancel/reasonCancel.page";
 import SalesModePage from "../../src/modules/pld/catalogue/salesMode/salesMode.page";
 import SpecialPricePage from "../../src/modules/pld/catalogue/specialPrice/specialPrice.page";
+import BusinessTipsPage from "../../src/modules/pld/dashboard/businessTips/businessTips.page";
+import OnlinePaymentPage from "../../src/modules/pld/dashboard/onlinePayment/onlinePayment.page";
+import StockMenuPage from "../../src/modules/pld/dashboard/stockMenu/stockMenu.page";
+import BannerMarketingPage from "../../src/modules/pld/esbOrder/bannerMarketing/bannerMarketing.page";
+import SettingPage from "../../src/modules/pld/esbOrder/setting/setting.page";
+import RawMaterialPage from "../../src/modules/pld/inventory/rawMaterial/rawMaterial.page";
+import RawMaterialReportPage from "../../src/modules/pld/inventory/rawMaterialReport/rawMaterialReport.page";
+import RawMaterialStockPage from "../../src/modules/pld/inventory/rawMaterialStock/rawMaterialStock.page";
+import RawMaterialTransactionPage
+    from "../../src/modules/pld/inventory/rawMaterialTransaction/rawMaterialTransaction.page";
+import IntegrationSettingPage from "../../src/modules/pld/onlinePlatform/integrationSetting/integrationSetting.page";
+import ManageOnlineMenuPage from "../../src/modules/pld/onlinePlatform/manageOnlineMenu/manageOnlineMenu.page";
+import PlatformIntegrationPage from "../../src/modules/pld/onlinePlatform/platformIntegration/platformIntegration.page";
+import MenuManagementPage from "../../src/modules/pld/printerSetting/menuManagement/menuManagement.page";
+import WithdrawalFundsInformationPage
+    from "../../src/modules/pld/profile/withdrawalFundsInformation/withdrawalFundsInformation.page";
+import PromoCodePage from "../../src/modules/pld/promoCode/promoCode/promoCode.page";
+import PromoCodeHistoryPage from "../../src/modules/pld/promoCode/promoCodeHistory/promoCodeHistory.page";
+import PromotionPage from "../../src/modules/pld/promotion/promotion.page";
+import CancelAndVoidPage from "../../src/modules/pld/report/cancelAndVoid/cancelAndVoid.page";
+import PaymentPage from "../../src/modules/pld/report/payment/payment.page";
+import ProfitAndLossPage from "../../src/modules/pld/report/profitAndLoss/profitAndLoss.page";
+import SalesDetailPage from "../../src/modules/pld/report/salesDetail/salesDetail.page";
+import SalesMenuPage from "../../src/modules/pld/report/salesMenu/salesMenu.page";
+import SalesSummaryPage from "../../src/modules/pld/report/salesSummary/salesSummary.page";
+import KycProcessPage from "../../src/modules/pld/subscriptionInformation/kycProcess/kycProcess.page";
+import OnboardingProcessPage
+    from "../../src/modules/pld/subscriptionInformation/onboardingProcess/onboardingProcess.page";
+import SubscriptionStatusPage
+    from "../../src/modules/pld/subscriptionInformation/subscriptionStatus/subscriptionStatus.page";
+import TopUpBalancePage from "../../src/modules/pld/subscriptionInformation/topUpBalance/topUpBalance.page";
+import UserPage from "../../src/modules/pld/userAccessControl/user/user.page";
+import UserAccessBackendPage from "../../src/modules/pld/userAccessControl/userAccessBackend/userAccessBackend.page";
+import HistoryPage from "../../src/modules/pld/withdrawFunds/history/history.page";
+import RemainingFundsPage from "../../src/modules/pld/withdrawFunds/remainingFunds/remainingFunds.page";
 
 
 test.describe.serial('Demo Test Case', () => {
@@ -55,7 +90,7 @@ test.describe.serial('Demo Test Case', () => {
             .then(page => page.gotoPage(BookkeepingCategoryPage))
             .then(page => page.gotoPage(BookkeepingInputPage))
             .then(page => page.gotoPage(BookkeepingReportPage))
-            .then(page => page.gotoPage(BookKeepingPage))
+            //catalogue
             .then(page => page.gotoPage(AddRecipePage))
             .then(page => page.gotoPage(CategoryPage))
             .then(page => page.gotoPage(MenuPage))
@@ -64,6 +99,53 @@ test.describe.serial('Demo Test Case', () => {
             .then(page => page.gotoPage(ReasonCancelPage))
             .then(page => page.gotoPage(SalesModePage))
             .then(page => page.gotoPage(SpecialPricePage))
+            //dashboard
+            .then(page => page.gotoPage(BookKeepingPage))
+            .then(page => page.gotoPage(BusinessTipsPage))
+            .then(page => page.gotoPage(OnlinePaymentPage))
+            .then(page => page.gotoPage(SpecialPricePage))
+            .then(page => page.gotoPage(StockMenuPage))
+            //esbOrder
+            .then(page => page.gotoPage(BannerMarketingPage))
+            .then(page => page.gotoPage(SettingPage))
+            //inventory
+            .then(page => page.gotoPage(RawMaterialPage))
+            .then(page => page.gotoPage(RawMaterialReportPage))
+            .then(page => page.gotoPage(RawMaterialStockPage))
+            .then(page => page.gotoPage(RawMaterialTransactionPage))
+            //onlinePlatform
+            .then(page => page.gotoPage(IntegrationSettingPage))
+            .then(page => page.gotoPage(ManageOnlineMenuPage))
+            .then(page => page.gotoPage(PlatformIntegrationPage))
+            //printerSetting
+            .then(page => page.gotoPage(MenuManagementPage))
+            .then(page => page.gotoPage(PrinterPage))
+            //profile
+            .then(page => page.gotoPage(ProfilePage))
+            .then(page => page.gotoPage(WithdrawalFundsInformationPage))
+            //promoCode
+            .then(page => page.gotoPage(PromoCodePage))
+            .then(page => page.gotoPage(PromoCodeHistoryPage))
+            //promotion
+            .then(page => page.gotoPage(PromotionPage))
+            //report
+            .then(page => page.gotoPage(CancelAndVoidPage))
+            .then(page => page.gotoPage(PaymentPage))
+            .then(page => page.gotoPage(ProfitAndLossPage))
+            .then(page => page.gotoPage(SalesDetailPage))
+            .then(page => page.gotoPage(SalesMenuPage))
+            .then(page => page.gotoPage(SalesSummaryPage))
+            //subscriptionInformation
+            .then(page => page.gotoPage(KycProcessPage))
+            .then(page => page.gotoPage(OnboardingProcessPage))
+            .then(page => page.gotoPage(SubscriptionStatusPage))
+            .then(page => page.gotoPage(TopUpBalancePage))
+            //userAccessControl
+            .then(page => page.gotoPage(UserPage))
+            .then(page => page.gotoPage(UserAccessBackendPage))
+            //withdrawFunds
+            .then(page => page.gotoPage(HistoryPage))
+            .then(page => page.gotoPage(RemainingFundsPage))
 
 
     });
