@@ -46,8 +46,12 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
                     return this.expectHasValue(element.selector, element.value);
                 case ElementType.BUTTON:
                     return this.expectHasButton(element.selector, element.value, element.enabled);
-                case ElementType.LINK:
+                case ElementType.BUTTON_SELECTOR:
+                    return this.expectVisible(element.selector)
+                        .then(value => this.expectHasButtonWithID(element.selector, element.value, element.enabled));
                 case ElementType.INPUT:
+                    return this.expectVisible(element.selector);
+                case ElementType.LINK:
                 default:
                     return new Promise<void>(resolve => resolve());
             }
@@ -131,6 +135,12 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return e.toBeDisabled();
     }
 
+    protected async expectHasButtonWithID(selector: string, value: string, enabled: boolean = true): Promise<void> {
+        let e = expect(this._page.locator(selector, {hasText: value}));
+        if (enabled) return e.toBeEnabled();
+        return e.toBeDisabled();
+    }
+
     async waitForResponse(urlOrPredicate: string) {
         console.log(`waiting for response API contain ${urlOrPredicate}`);
         return this._page.waitForResponse(new RegExp('\\b' + urlOrPredicate + '\\b')).then(response => {
@@ -153,6 +163,10 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
 
     protected waitForUrl(urlOrPredicate: string): Promise<void> {
         return this._page.waitForURL(new RegExp('\\b' + urlOrPredicate + '\\b'));
+    }
+
+    protected wait(milliseconds: number): Promise<void> {
+        return new Promise(resolve => setTimeout(resolve, milliseconds));
     }
 
     protected isEnabled(selector: string): Promise<boolean> {

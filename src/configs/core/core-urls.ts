@@ -14,5 +14,8 @@ export default class CoreUrls extends BaseUrl {
 
     baseUrl = (): string => "https://qa5.esb.co.id/esb-core-refactor/";
 
-    public get = {}
+    public get = {
+        login: "site/login",
+        home: "article/index"
+    }
 }
