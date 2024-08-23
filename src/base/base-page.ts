@@ -3,14 +3,17 @@ import Element, {ElementType} from "./objects/Element";
 import BaseScenario from "./base-scenario";
 import BaseUrl from "./base-url";
 import {Keyboard} from "./constants/Keyboard";
+import BaseConfigs from "./base-configs";
 
-export default abstract class BasePage<T extends BaseUrl> implements BaseScenario {
+export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs> implements BaseScenario {
     private readonly _page: Page;
     protected urls: T;
+    protected configs: U;
 
-    protected constructor(page: Page, urls: T) {
+    protected constructor(page: Page, urls: T, configs: U) {
         this._page = page;
         this.urls = urls;
+        this.configs = configs;
     }
 
     abstract pageUrl: () => string;
@@ -26,8 +29,8 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
         await this.performCheckInitialElements();
     }
 
-    public async gotoPage<P extends BasePage<T>>(pageCreator: new(page: Page, urls: T) => P): Promise<P> {
-        let newPage: P = new pageCreator(this._page, this.urls);
+    public async gotoPage<P extends BasePage<T, U>>(pageCreator: new(page: Page, urls: T, configs: U) => P): Promise<P> {
+        let newPage: P = new pageCreator(this._page, this.urls, this.configs);
         await newPage.navigateHere();
         return newPage;
     }
