@@ -1,12 +1,11 @@
 import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
-import Urls from "../../../../configs/urls";
 import BusinessTipsScenario from "./businessTips.scenario";
 import BusinessTipsLocator from "./businessTips.locator";
 
 
 export default class BusinessTipsPage extends BasePosLitePage implements BusinessTipsScenario {
-    pageUrl = (): string => Urls.dashboard;
+    pageUrl = (): string => this.urls.get.dashboard.onlinePaymentUrl;
 
     shouldHave(): Element[] {
         return [

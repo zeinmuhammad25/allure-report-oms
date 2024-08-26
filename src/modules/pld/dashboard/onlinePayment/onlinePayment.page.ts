@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import OnlinePaymentScenario from "./onlinePayment.scenario";
 import OnlinePaymentLocator from "./onlinePayment.locator";
@@ -8,9 +7,8 @@ import OnlinePaymentLocator from "./onlinePayment.locator";
 export default class OnlinePaymentPage extends BasePosLitePage implements OnlinePaymentScenario {
 
 
-    pageUrl = (): string => Urls.singlemenu;
+    pageUrl = (): string => this.urls.get.dashboard.onlinePaymentUrl;
 
-    // real URL : /esb-core-lite/dashboard/online-fund/index
 
     shouldHave(): Element[] {
         return [

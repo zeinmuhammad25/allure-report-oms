@@ -52,6 +52,11 @@ export default class PosLiteUrls extends BaseUrl {
         },
         dashboard: {
             dashboardIndexUrl: "/esb-core-lite/dashboard/index",
+            bookKeepingUrl: "/esb-core-lite/dashboard/accounting",
+            businessTipsUrl: "/esb-core-lite/dashboard/stock-recommendation",
+            onlinePaymentUrl: "/esb-core-lite/dashboard/online-fund/index",
+            stockMenuUrl: "/esb-core-lite/dashboard/stock-menu/index",
+
         },
         printerSetting: {
             menuManagementUrl: "/esb-core-lite/printer-setting/branch-menu/index",

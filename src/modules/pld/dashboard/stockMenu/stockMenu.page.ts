@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import StockMenuScenario from "./stockMenu.scenario";
 import StockMenuLocator from "./stockMenu.locator";
@@ -8,9 +7,9 @@ import StockMenuLocator from "./stockMenu.locator";
 export default class StockMenuPage extends BasePosLitePage implements StockMenuScenario {
 
 
-    pageUrl = (): string => Urls.accbranch;
+    pageUrl = (): string => this.urls.get.dashboard.stockMenuUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/dashboard/stock-menu/index
+
     shouldHave(): Element[] {
         return [
             Element.ofSelector(StockMenuLocator.branchFilter),
