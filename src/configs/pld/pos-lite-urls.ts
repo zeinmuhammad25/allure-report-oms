@@ -38,7 +38,6 @@ export default class PosLiteUrls extends BaseUrl {
             bookkeepingReportUrl: "/esb-core-lite/finance/profit-loss-report/index",
         },
         catalogue: {
-            addRecipeUrl: "/esb-core-lite/catalog/menu-category/index",
             categoryUrl: "/esb-core-lite/catalog/menu-category/index",
             menuUrl: "/esb-core-lite/catalog/menu-category/index",
             menuBookUrl: "/esb-core-lite/catalog/menu-template/index",
