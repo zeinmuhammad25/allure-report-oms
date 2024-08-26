@@ -17,12 +17,11 @@ export default class UserAccessBackendPage extends BasePosLitePage implements Us
             Element.ofSelector(UserAccessBackendLocator.userAccessBackendNameSearch),
             Element.ofSelector(UserAccessBackendLocator.userAccessTypeSearch),
             Element.ofSelector(UserAccessBackendLocator.userActiveFeatureSearch),
-            // Element.ofSelector(UserAccessBackendLocator.statusSearch),
-            // Element.ofSelector(UserAccessBackendLocator.statusSearch),
-            // Element.ofSelector(UserAccessBackendLocator.userAccessBackendNameColumn),
-            // Element.ofSelector(UserAccessBackendLocator.userAccessTypeColumn),
-            // Element.ofSelector(UserAccessBackendLocator.userActiveFeatureColumn),
-            // Element.ofSelector(UserAccessBackendLocator.statusNameColumn),
+            Element.ofSelector(UserAccessBackendLocator.statusSearch),
+            Element.ofSelector(UserAccessBackendLocator.userAccessBackendNameColumn),
+            Element.ofSelector(UserAccessBackendLocator.userAccessTypeColumn),
+            Element.ofSelector(UserAccessBackendLocator.userActiveFeatureColumn),
+            Element.ofSelector(UserAccessBackendLocator.statusNameColumn),
 
         ];
     }
