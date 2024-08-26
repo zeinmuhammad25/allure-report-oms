@@ -97,5 +97,9 @@ export default class PosLiteUrls extends BaseUrl {
             userAccessBackendUrl: "/esb-core-lite/role/user-role/index",
             userAccessPOSUrl: "/esb-core-lite/role/pos-user-role/index",
         },
+        withdrawFunds: {
+            historyUrl: "/esb-core-lite/disbursement/disbursement-report-history/index",
+            remainingFunds: "/esb-core-lite/disbursement/disbursement-report/index",
+        },
     };
 }
