@@ -1,5 +1,5 @@
-import Element from "../../../base/objects/Element";
-import BaseCorePage from "../base-core-page";
+import Element from "../../../../base/objects/Element";
+import BaseCorePage from "../../base/base-core-page";
 import LoginLocator from "./login-locator";
 
 export default class LoginPage extends BaseCorePage {

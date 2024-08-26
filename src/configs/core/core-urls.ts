@@ -25,6 +25,9 @@ export default class CoreUrls extends BaseUrl {
             branch: {
                 view: "branch",
                 create: "branch/create",
+            },
+            currency: {
+                view: "currency",
             }
         }
     }

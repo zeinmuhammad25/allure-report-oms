@@ -16,6 +16,7 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         this.configs = configs;
     }
 
+
     abstract pageUrl: () => string;
 
     abstract shouldHave(): Element[];
@@ -72,13 +73,13 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         await expect(this._page.locator(fieldSelector)).toHaveValue('');
     }
 
-    protected async fill(selector: string, value: string): Promise<void> {
+    public async fill(selector: string, value: string): Promise<void> {
         console.log(`fill ${selector} with ${value}`);
         await this._page.fill(selector, value);
         await this.expectHasValue(selector, value);
     }
 
-    protected click(selector: string): Promise<void> {
+    public click(selector: string): Promise<void> {
         console.log(`click : ${selector}`);
         return this._page.click(selector);
     }
@@ -104,7 +105,7 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return expect(this._page.locator(selector)).toBeDisabled();
     }
 
-    protected expectVisible(selector: string): Promise<void> {
+    public expectVisible(selector: string): Promise<void> {
         console.log(`expect visible:  ${selector}`);
         return expect(this._page.locator(selector)).toBeVisible();
     }
@@ -171,7 +172,25 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         console.log(`waitForVisible: ${selector}, it's not visible!`);
     }
 
-    protected pressKeyboard(...keys: Keyboard[]): Promise<void> {
+    async waitForInvisible(
+        selector: string,
+        onVisible: () => Promise<void>,
+        duration: number = 100,
+        retry: number = 15,
+    ): Promise<void> {
+        for (let i = 0; i < retry; i++) {
+            console.log(`waitForInvisible: ${selector}, for ${duration * (i + 1)}`);
+            await this.wait(duration);
+            if (await this.isInvisible(selector)) {
+                console.log(`waitForInvisible: ${selector}, it's invisible!`);
+                await onVisible();
+                return;
+            }
+        }
+        console.log(`waitForInvisible: ${selector}, it's not invisible!`);
+    }
+
+    pressKeyboard(...keys: Keyboard[]): Promise<void> {
         return this._page.keyboard.press(keys.map(key => `${key}`).join("+"));
     }
 
@@ -183,7 +202,7 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.waitForURL(new RegExp('\\b' + urlOrPredicate + '\\b'));
     }
 
-    protected wait(milliseconds: number): Promise<void> {
+    public wait(milliseconds: number): Promise<void> {
         return new Promise(resolve => setTimeout(resolve, milliseconds));
     }
 
@@ -199,6 +218,11 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
     protected isVisible(selector: string): Promise<boolean> {
         console.log(`check if visible:  ${selector}`);
         return this._page.locator(selector).isVisible();
+    }
+
+    protected isInvisible(selector: string): Promise<boolean> {
+        console.log(`check if visible:  ${selector}`);
+        return this._page.locator(selector).isHidden();
     }
 
     protected isTextVisible(text: string): Promise<boolean> {
