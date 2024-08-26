@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import SettingScenario from "./setting.scenario";
 import SettingLocator from "./setting.locator";
