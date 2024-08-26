@@ -39,7 +39,7 @@ export default class PosLiteUrls extends BaseUrl {
         },
         catalogue: {
             categoryUrl: "/esb-core-lite/catalog/menu-category/index",
-            menuUrl: "/esb-core-lite/catalog/menu-category/index",
+            menuUrl: "/esb-core-lite/catalog/menu/index",
             menuBookUrl: "/esb-core-lite/catalog/menu-template/index",
             menuNotesUrl: "/esb-core-lite/catalog/notes-category/index",
             reasonCancelUrl: "/esb-core-lite/catalog/menu-template/index",
