@@ -13,8 +13,8 @@ export default class BookkeepingCategoryPage extends BasePosLitePage implements 
     shouldHave(): Element[] {
         return [
             Element.ofSelector(BookkeepingCategoryLocator.guideButton),
-            Element.ofSelector(BookkeepingCategoryLocator.addBookkeepingCategoryButton),
-            Element.ofSelector(BookkeepingCategoryLocator.archiveBookkeepingCategoryButton),
+            Element.ofSelector(BookkeepingCategoryLocator.bookkeepingCategoryAddButton),
+            Element.ofSelector(BookkeepingCategoryLocator.bookkeepingCategoryArchiveButton),
             Element.ofSelector(BookkeepingCategoryLocator.bookkeepingCategorySearch),
             Element.ofSelector(BookkeepingCategoryLocator.bookkeepingTypeSearch),
             Element.ofSelector(BookkeepingCategoryLocator.numberColumn),
