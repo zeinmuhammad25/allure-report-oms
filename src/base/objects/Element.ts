@@ -32,13 +32,20 @@ export default class Element {
         return e;
     }
 
+    static ofButtonWithSelector(selector: string, text: string, enabled: boolean = true) {
+        let e = new Element(selector, text, ElementType.BUTTON_SELECTOR);
+        e.enabled = enabled;
+        return e;
+    }
+
+
     static ofInput(selector: string, text: string, enabled: boolean = true): Element {
-        let e =  new Element(selector, text, ElementType.BUTTON);
+        let e = new Element(selector, text, ElementType.INPUT);
         e.enabled = enabled;
         return e;
     }
 }
 
 export enum ElementType {
-    TEXT, ELEMENT, KEY_VALUE, LINK, BUTTON, INPUT
+    TEXT, ELEMENT, KEY_VALUE, LINK, BUTTON, BUTTON_SELECTOR, INPUT
 }
