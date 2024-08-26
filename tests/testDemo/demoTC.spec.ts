@@ -124,11 +124,6 @@ test.describe.serial('Demo Test Case', () => {
             .then(page => page.gotoPage(SalesDetailPage))
             .then(page => page.gotoPage(SalesMenuPage))
             .then(page => page.gotoPage(SalesSummaryPage))
-            //subscriptionInformation
-            .then(page => page.gotoPage(KycProcessPage))
-            .then(page => page.gotoPage(OnboardingProcessPage))
-            .then(page => page.gotoPage(SubscriptionStatusPage))
-            .then(page => page.gotoPage(TopUpBalancePage))
             //userAccessControl
             .then(page => page.gotoPage(UserPage))
             .then(page => page.gotoPage(UserAccessBackendPage))

@@ -92,5 +92,10 @@ export default class PosLiteUrls extends BaseUrl {
             salesMenuUrl: "/esb-core-lite/report/sales-menu/index",
             salesSummaryUrl: "/esb-core-lite/report/sales-summary/index",
         },
+        userAccessControl: {
+            userUrl: "/esb-core-lite/role/user/index",
+            userAccessBackendUrl: "/esb-core-lite/role/user-role/index",
+            userAccessPOSUrl: "/esb-core-lite/role/pos-user-role/index",
+        },
     };
 }
