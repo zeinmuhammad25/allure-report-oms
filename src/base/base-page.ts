@@ -153,6 +153,21 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         });
     }
 
+    async waitForVisible(
+        selector: string,
+        onVisible: () => Promise<void>,
+        duration: number = 200,
+        retry: number = 5,
+    ): Promise<void> {
+        for (let i = 0; i < retry; i++) {
+            await this.wait(duration);
+            if (await this.isVisible(selector)) {
+                await onVisible();
+                break;
+            }
+        }
+    }
+
     protected pressKeyboard(...keys: Keyboard[]): Promise<void> {
         return this._page.keyboard.press(keys.map(key => `${key}`).join("+"));
     }

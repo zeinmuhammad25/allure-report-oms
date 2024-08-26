@@ -21,6 +21,12 @@ export default class LoginPage extends BaseCorePage {
         await this.fill(LoginLocator.inputUsername, this.configs.get.username);
         await this.fill(LoginLocator.inputPassword, this.configs.get.password);
         await this.click(LoginLocator.loginButton);
+        await this.waitForVisible(LoginLocator.loginConfirmDialog, () => this.click(LoginLocator.loginConfirmButtonCancel));
+
+        await this.expectInvisible(LoginLocator.loginConfirmDialog);
+
+        await this.click(LoginLocator.loginButton);
+        await this.waitForVisible(LoginLocator.loginConfirmDialog, () => this.click(LoginLocator.loginConfirmButtonConfirm));
         await this.waitForUrl(this.urls.get.home);
     }
 
