@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import BookkeepingInputLocator from "./bookkeepingInput.locator"
 import BookkeepingInputScenario from "./bookkeepingInput.scenario"
@@ -7,9 +6,8 @@ import BookkeepingInputScenario from "./bookkeepingInput.scenario"
 export default class BookkeepingInputPage extends BasePosLitePage implements BookkeepingInputScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.bookkeeping.bookkeepingInputUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/finance/input-finance/index
     shouldHave(): Element[] {
         return [
             Element.ofSelector(BookkeepingInputLocator.guideButton),

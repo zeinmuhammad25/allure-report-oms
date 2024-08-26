@@ -31,6 +31,10 @@ export default class PosLiteUrls extends BaseUrl {
         attendance: {
             attendanceListUrl: "/esb-core-lite/attendance/report/index",
             employeeDataUrl: "/esb-core-lite/attendance/employee/index",
+        },
+        bookkeeping: {
+            bookkeepingCategoryUrl: "/esb-core-lite/finance/charts-of-account/index",
+            bookkeepingInputUrl: "/esb-core-lite/finance/input-finance/index",
 
         },
         login: {
