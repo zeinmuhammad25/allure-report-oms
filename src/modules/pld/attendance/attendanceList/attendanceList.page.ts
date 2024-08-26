@@ -11,13 +11,11 @@ export default class AttendanceListPage extends BasePosLitePage implements Atten
 
     shouldHave(): Element[] {
         return [
-
             Element.ofSelector(AttendanceListLocator.attendanceDateField),
             Element.ofSelector(AttendanceListLocator.attendanceClockIN),
             Element.ofSelector(AttendanceListLocator.attendanceClockOut),
             Element.ofSelector(AttendanceListLocator.attendanceEmployeeIdField),
             Element.ofSelector(AttendanceListLocator.attendanceViewButton),
-
 
         ];
     }
