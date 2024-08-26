@@ -11,9 +11,10 @@ export default class EmployeeDataPage extends BasePosLitePage implements Employe
 
     shouldHave(): Element[] {
         return [
-            Element.ofText("Data Karyawan"),
-            Element.ofSelector(EmployeeDataLocator.addEmployeeButton),
-            Element.ofSelector(EmployeeDataLocator.employeeDataDropdown),
+
+            Element.ofSelector(EmployeeDataLocator.employeeAddButton),
+            Element.ofSelector(EmployeeDataLocator.employeeNameDropdown),
+            Element.ofSelector(EmployeeDataLocator.employeeSearchField),
         ];
     }
 

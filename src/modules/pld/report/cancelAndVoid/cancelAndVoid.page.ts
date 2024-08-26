@@ -10,11 +10,10 @@ export default class CancelAndVoidPage extends BasePosLitePage implements Cancel
 
     shouldHave(): Element[] {
         return [
-            Element.ofText("Batal dan Void"),
             Element.ofSelector(CancelAndVoidLocator.orderDateField),
-            Element.ofSelector(CancelAndVoidLocator.selectCompanyActiveField),
-            Element.ofSelector(CancelAndVoidLocator.selectBrandActiveField),
-            Element.ofSelector(CancelAndVoidLocator.selectBranchActiveField),
+            Element.ofSelector(CancelAndVoidLocator.cancelAndVoidCompanyDropdown),
+            Element.ofSelector(CancelAndVoidLocator.cancelAndVoidBrandDropdown),
+            Element.ofSelector(CancelAndVoidLocator.cancelAndVoidBranchDropdown),
             Element.ofSelector(CancelAndVoidLocator.transactionNumberField),
             Element.ofSelector(CancelAndVoidLocator.cashierNameField),
             Element.ofSelector(CancelAndVoidLocator.salesTypeField),

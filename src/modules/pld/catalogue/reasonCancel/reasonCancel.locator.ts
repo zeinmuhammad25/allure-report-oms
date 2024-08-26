@@ -3,12 +3,9 @@ import BaseLocator from "../../../../base/base-locator";
 export default class ReasonCancelLocator extends BaseLocator {
 
     // Index Reason Cancel
-    static cancelDescriptionTab: string = "//div[@role='tab' and text()='Alasan Pembatalan']";
-    static addCancelDescriptionButton: string = "//button[@routerlink='/catalog/cancel-reason/create']";
-    static cancelDescriptionColumn: string = "//nz-table-sorters/span[text() = ' Deskripsi Pembatalan ']";
-    static statusNameColumn: string = "//th[text() = ' Status ']";
-    static cancelDescriptionSearch: string = "//input[@placeholder = 'Cari Berdasarkan Deskripsi Pembatalan']";
-    static statusSearch: string = "//nz-select[@nzplaceholder='Cari Berdasarkan Status']";
+    static reasonCancelAddButton: string = "//button[@class='btn btn-primary']";
+    static reasonCancelSearchBar: string = "//div[@class='ant-col ant-col-xs-24 ant-col-md-18']";
+    static reasonCancelStatusDropdown: string = "//div[@class='ant-col ant-col-xs-24 ant-col-md-6']";
 
     // Add Reason Cancel
     static cancelDescriptionField: string = "#cancelReasonDesc";

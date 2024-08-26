@@ -4,8 +4,8 @@ export default class BookkeepingCategoryLocator extends BaseLocator {
 
     // Index
     static guideButton: string = "//a[@href='https://help.esb.id/content/article/mengatur-kategori-pembukuan-pada-poslite-dashboard']";
-    static addBookkeepingCategoryButton: string = "//button[text() = ' Kategori Pembukuan ']";
-    static archiveBookkeepingCategoryButton: string = "//button[@routerlink='/finance/charts-of-account/archive']";
+    static bookkeepingCategoryAddButton: string = "//button[text() = ' Kategori Pembukuan ']";
+    static bookkeepingCategoryArchiveButton: string = "//button[@routerlink='/finance/charts-of-account/archive']";
 
     static bookkeepingCategorySearch: string = "//input[@placeholder='Cari berdasarkan kategori pembukuan']";
     static bookkeepingTypeSearch: string = "//nz-select-top-control[@ng-reflect-place-holder='Pilih Tipe Pembukuan']";

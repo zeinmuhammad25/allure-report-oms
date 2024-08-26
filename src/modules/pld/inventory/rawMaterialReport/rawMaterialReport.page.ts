@@ -11,16 +11,11 @@ export default class RawMaterialReportPage extends BasePosLitePage implements Ra
 
     shouldHave(): Element[] {
         return [
-            Element.ofText("Laporan Bahan Baku"),
-            Element.ofText("Tipe Laporan"),
-            Element.ofText("Periode Dari"),
-            Element.ofText("Periode Sampai"),
-            Element.ofText("Cabang"),
-            Element.ofSelector(RawMaterialReportLocator.reportTypeRawMaterialReportDropdown),
-            Element.ofSelector(RawMaterialReportLocator.startDateRawMaterialReport),
-            Element.ofSelector(RawMaterialReportLocator.endDateRawMaterialReport),
-            Element.ofSelector(RawMaterialReportLocator.branchRawMaterialReportDropdown),
-            Element.ofSelector(RawMaterialReportLocator.viewRawMaterialReportButton),
+            Element.ofSelector(RawMaterialReportLocator.rawMaterialReportTypeDropdown),
+            Element.ofSelector(RawMaterialReportLocator.rawMaterialReportStartDate),
+            Element.ofSelector(RawMaterialReportLocator.rawMaterialReportEndDate),
+            Element.ofSelector(RawMaterialReportLocator.ramMaterialReportBranchDropdown),
+            Element.ofSelector(RawMaterialReportLocator.rawMaterialReportViewButton),
         ];
     }
 

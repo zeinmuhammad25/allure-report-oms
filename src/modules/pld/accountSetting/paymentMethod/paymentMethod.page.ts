@@ -7,12 +7,12 @@ import BasePosLitePage from "../../base-pos-lite-page";
 export default class PaymentMethodPage extends BasePosLitePage implements PaymentMethodScenario {
 
 
-    pageUrl = (): string => this.urls.get.accountSetting.notificationEmailUrl;
+    pageUrl = (): string => this.urls.get.accountSetting.paymentMethodUrl;
 
 
     shouldHave(): Element[] {
         return [
-            Element.ofSelector(PaymentMethodLocator.addPaymentMethodButton),
+            Element.ofSelector(PaymentMethodLocator.paymentMethodAddButton),
             Element.ofSelector(PaymentMethodLocator.paymentMethodNameSearch),
             Element.ofSelector(PaymentMethodLocator.paymentMethodTypeSearch),
             Element.ofSelector(PaymentMethodLocator.branchSearch),

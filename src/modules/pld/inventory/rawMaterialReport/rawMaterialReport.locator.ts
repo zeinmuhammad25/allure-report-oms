@@ -2,11 +2,11 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class RawMaterialReportLocator extends BaseLocator {
 
-    static reportTypeRawMaterialReportDropdown: string = "//nz-select-item[@title='Rata-Rata Penggunaan']";
-    static startDateRawMaterialReport: string = "//input[@placeholder='Pilih Periode Mulai']";
-    static endDateRawMaterialReport: string = "//input[@placeholder='Pilih Periode Selesai']";
-    static branchRawMaterialReportDropdown: string = "//input[@class='ant-select-selection-search-input ng-pristine ng-valid ng-touched']";
-    static viewRawMaterialReportButton: string = "//button[normalize-space()='Tampilkan']";
+    static rawMaterialReportTypeDropdown: string = "//nz-select-item[@title='Rata-Rata Penggunaan']";
+    static rawMaterialReportStartDate: string = "//input[@placeholder='Pilih Periode Mulai']";
+    static rawMaterialReportEndDate: string = "//input[@placeholder='Pilih Periode Selesai']";
+    static ramMaterialReportBranchDropdown: string = "//nz-select[@nzplaceholder='Pilih Cabang' and @nzsize='large']//input[contains(@class, 'ant-select-selection-search-input')]";
+    static rawMaterialReportViewButton: string = "//button[normalize-space()='Tampilkan']";
 
 
     //month picker

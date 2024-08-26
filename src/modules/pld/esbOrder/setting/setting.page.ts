@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import SettingScenario from "./setting.scenario";
 import SettingLocator from "./setting.locator";
@@ -14,7 +13,6 @@ export default class SettingPage extends BasePosLitePage implements SettingScena
     shouldHave(): Element[] {
         return [
             Element.ofSelector(SettingLocator.settingTab),
-            Element.ofSelector(SettingLocator.companyImageTab),
             Element.ofSelector(SettingLocator.esoLinkField),
             Element.ofSelector(SettingLocator.editESOLink),
             Element.ofSelector(SettingLocator.visitLink),
