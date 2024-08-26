@@ -2,7 +2,8 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class CancelAndVoidLocator extends BaseLocator {
 
-    static orderDateField: string = "//input[@class='filter-calendar ng-untouched ng-valid ng-star-inserted ng-dirty']";
+    //datep
+    static orderDateField: string = "//input[@ng-reflect-model='[object Object]']";
     static datePickerToday: string = "//button[normalize-space()='Hari ini']";
     static datePickerYesterday: string = "//button[normalize-space()='Kemarin']";
     static datePickerLastWeek: string = "//button[normalize-space()='7 Hari terakhir']";
@@ -11,15 +12,19 @@ export default class CancelAndVoidLocator extends BaseLocator {
     static datePickerLastMonth: string = "//button[normalize-space()='Bulan lalu']";
     static datePickerSelectButton: string = "//button[normalize-space()='Pilih']";
     static datePickerCancelButton: string = "//button[normalize-space()='Batal']";
-    static selectCompanyActiveField: string = "//div[@class='ant-select-item-option-content']";
+
+    //dropdown
+    static cancelAndVoidCompanyDropdown: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Perusahaan']//input[@autocomplete='off']";
     static optionCompanyActive: string = "//div[@class='ant-select-item-option-content']";
-    static selectBrandActiveField: string = "//nz-select-search[@ng-reflect-focus-trigger='true']//input[@class='ant-select-selection-search-input ng-pristine ng-valid ng-touched']";
+    static cancelAndVoidBrandDropdown: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Brand']//input[@autocomplete='off']";
     static optionBrandActive: string = "//div[@class='ant-select-item-option-content']";
-    static selectBranchActiveField: string = "//nz-select-search[@ng-reflect-focus-trigger='true']//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid']";
+    static cancelAndVoidBranchDropdown: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Cabang']//input[@autocomplete='off']";
+
+    //inputField
     static transactionNumberField: string = "//input[@id='salesNum']";
     static cashierNameField: string = "//input[@id='cashierName']";
-    static salesTypeField: string = "//nz-select-top-control[@class='ng-tns-c137-70 ant-select-selector']";
-    static paymentMethod: string = "//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid']";
+    static salesTypeField: string = "//nz-select-search[@ng-reflect-mirror-sync='true']//input[@autocomplete='off']";
+    static paymentMethod: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Metode Pembay']//input[@autocomplete='off']";
     static viewButton: string = "//button[normalize-space()='Tampilkan']";
     static downloadButton: string = "//button[normalize-space()='Unduh']";
 
