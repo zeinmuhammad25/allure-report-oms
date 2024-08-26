@@ -16,6 +16,16 @@ export default class CoreUrls extends BaseUrl {
 
     public get = {
         login: "site/login",
-        home: "article/index"
+        home: "article/index",
+        purchaseOrder: {
+            view: "purchase",
+            create: "purchase/create",
+        },
+        master: {
+            branch: {
+                view: "branch",
+                create: "branch/create",
+            }
+        }
     }
 }
