@@ -71,6 +71,10 @@ export default class PosLiteUrls extends BaseUrl {
             rawMaterialStockUrl: "/esb-core-lite/inventory/product-inquiry/index",
             rawMaterialTransactionUrl: "/esb-core-lite/inventory/transaction/index",
         },
+        onlinePlatform: {
+            platformIntegrationUrl: "/esb-core-lite/online-platform/integration/index",
+            manageOnlineMenuUrl: "/esb-core-lite/online-platform/menu-setting/index",
+        },
         printerSetting: {
             menuManagementUrl: "/esb-core-lite/printer-setting/branch-menu/index",
             printerUrl: "/esb-core-lite/printer-setting/station/index",
