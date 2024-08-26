@@ -14,7 +14,6 @@ export default class SettingPage extends BasePosLitePage implements SettingScena
     shouldHave(): Element[] {
         return [
             Element.ofSelector(SettingLocator.settingTab),
-            Element.ofSelector(SettingLocator.companyImageTab),
             Element.ofSelector(SettingLocator.esoLinkField),
             Element.ofSelector(SettingLocator.editESOLink),
             Element.ofSelector(SettingLocator.visitLink),
