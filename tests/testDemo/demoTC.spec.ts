@@ -2,7 +2,6 @@ import {test} from "@playwright/test";
 import LoginPage from "../../src/modules/pld/login/login.page";
 import BranchPage from "../../src/modules/pld/accountSetting/branch/branch.page";
 import PrinterPage from "../../src/modules/pld/printerSetting/printer/printer.page";
-import PrinterCreatePage from "../../src/modules/pld/printerSetting/printer/printerCreate/printerCreate.page";
 import BrandPage from "../../src/modules/pld/accountSetting/brand/brand.page";
 import DashboardPage from "../../src/modules/pld/dashboard/dashboard.page";
 import ProfilePage from "../../src/modules/pld/profile/profile.page";
@@ -35,7 +34,6 @@ import RawMaterialReportPage from "../../src/modules/pld/inventory/rawMaterialRe
 import RawMaterialStockPage from "../../src/modules/pld/inventory/rawMaterialStock/rawMaterialStock.page";
 import RawMaterialTransactionPage
     from "../../src/modules/pld/inventory/rawMaterialTransaction/rawMaterialTransaction.page";
-import IntegrationSettingPage from "../../src/modules/pld/onlinePlatform/integrationSetting/integrationSetting.page";
 import ManageOnlineMenuPage from "../../src/modules/pld/onlinePlatform/manageOnlineMenu/manageOnlineMenu.page";
 import PlatformIntegrationPage from "../../src/modules/pld/onlinePlatform/platformIntegration/platformIntegration.page";
 import MenuManagementPage from "../../src/modules/pld/printerSetting/menuManagement/menuManagement.page";
@@ -112,7 +110,6 @@ test.describe.serial('Demo Test Case', () => {
             .then(page => page.gotoPage(RawMaterialStockPage))
             .then(page => page.gotoPage(RawMaterialTransactionPage))
             //onlinePlatform
-            .then(page => page.gotoPage(IntegrationSettingPage))
             .then(page => page.gotoPage(ManageOnlineMenuPage))
             .then(page => page.gotoPage(PlatformIntegrationPage))
             //printerSetting
