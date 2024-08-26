@@ -65,6 +65,12 @@ export default class PosLiteUrls extends BaseUrl {
         groupList: {
             groupListUrl: "/esb-core-lite/role/user/index",
         },
+        inventory: {
+            rawMaterialUrl: "/esb-core-lite/inventory/product/index",
+            rawMaterialReportUrl: "/esb-core-lite/inventory/report/index",
+            rawMaterialStockUrl: "/esb-core-lite/inventory/product-inquiry/index",
+            rawMaterialTransactionUrl: "/esb-core-lite/inventory/transaction/index",
+        },
         printerSetting: {
             menuManagementUrl: "/esb-core-lite/printer-setting/branch-menu/index",
             printerUrl: "/esb-core-lite/printer-setting/station/index",
