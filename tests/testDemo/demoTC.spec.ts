@@ -37,8 +37,6 @@ import RawMaterialTransactionPage
 import ManageOnlineMenuPage from "../../src/modules/pld/onlinePlatform/manageOnlineMenu/manageOnlineMenu.page";
 import PlatformIntegrationPage from "../../src/modules/pld/onlinePlatform/platformIntegration/platformIntegration.page";
 import MenuManagementPage from "../../src/modules/pld/printerSetting/menuManagement/menuManagement.page";
-import WithdrawalFundsInformationPage
-    from "../../src/modules/pld/profile/withdrawalFundsInformation/withdrawalFundsInformation.page";
 import PromoCodePage from "../../src/modules/pld/promoCode/promoCode/promoCode.page";
 import PromoCodeHistoryPage from "../../src/modules/pld/promoCode/promoCodeHistory/promoCodeHistory.page";
 import PromotionPage from "../../src/modules/pld/promotion/promotion.page";
@@ -117,10 +115,6 @@ test.describe.serial('Demo Test Case', () => {
             .then(page => page.gotoPage(PrinterPage))
             //profile
             .then(page => page.gotoPage(ProfilePage))
-            .then(page => page.gotoPage(WithdrawalFundsInformationPage))
-            //promoCode
-            .then(page => page.gotoPage(PromoCodePage))
-            .then(page => page.gotoPage(PromoCodeHistoryPage))
             //promotion
             .then(page => page.gotoPage(PromotionPage))
             //report
