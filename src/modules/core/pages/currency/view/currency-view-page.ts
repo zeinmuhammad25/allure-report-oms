@@ -1,6 +1,6 @@
 import Element from "../../../../../base/objects/Element";
 import BaseCorePaginationPage from "../../../base/base-core-pagination-page";
-import {CoreFilter, CoreFilterInput} from "../../../objects/CoreFilter";
+import {CoreFilter, CoreFilterInput, CoreFilterSelect} from "../../../objects/CoreFilter";
 import CurrencyViewLocator from "./currency-view-locator";
 
 export default class CurrencyViewPage extends BaseCorePaginationPage {
@@ -15,6 +15,13 @@ export default class CurrencyViewPage extends BaseCorePaginationPage {
         CoreFilterInput.of(CurrencyViewLocator.inputFilterCurrencyRate)
             .withTitle("Rate"),
         CoreFilterInput.of(CurrencyViewLocator.inputFilterCurrencySign),
+        CoreFilterSelect.of(
+            CurrencyViewLocator.selectFilterCurrencyActive,
+            CurrencyViewLocator.selectFilterCurrencyActiveResultsContainer
+        ).withChildren(
+            Element.of(CurrencyViewLocator.getLocatorFilterCurrencyOptions(0), "Not Active"),
+            Element.of(CurrencyViewLocator.getLocatorFilterCurrencyOptions(1), "Active"),
+        ),
     ];
 
 
