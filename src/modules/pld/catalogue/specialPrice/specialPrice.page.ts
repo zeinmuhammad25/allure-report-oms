@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import SpecialPriceScenario from "./specialPrice.scenario";
 import SpecialPriceLocator from "./specialPrice.locator";
@@ -7,9 +6,9 @@ import SpecialPriceLocator from "./specialPrice.locator";
 export default class SpecialPricePage extends BasePosLitePage implements SpecialPriceScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.catalogue.specialPriceUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/catalog/special-price/index
+
     shouldHave(): Element[] {
         return [
             Element.ofSelector(SpecialPriceLocator.guideButton),
