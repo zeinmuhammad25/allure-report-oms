@@ -1,4 +1,3 @@
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import TableSettingScenario from "./tableSetting.scenario";
 import TableSettingLocator from "./tableSetting.locator";

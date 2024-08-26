@@ -1,4 +1,3 @@
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import NotificationEmailScenario from "./notificationEmail.scenario";
 import NotificationEmailLocator from "./notificationEmail.locator";

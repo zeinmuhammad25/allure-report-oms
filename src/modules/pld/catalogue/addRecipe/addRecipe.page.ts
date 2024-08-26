@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import AddRecipeScenario from "./addRecipe.scenario";
 import AddRecipeLocator from "./addRecipe.locator";
