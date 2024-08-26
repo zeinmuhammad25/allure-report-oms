@@ -1,4 +1,3 @@
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import AttendanceListScenario from "./attendanceList.scenario";
 import AttendanceListLocator from "./attendanceList.locator";
@@ -8,7 +7,7 @@ import BasePosLitePage from "../../base-pos-lite-page";
 export default class AttendanceListPage extends BasePosLitePage implements AttendanceListScenario {
 
 
-    pageUrl = (): string => Urls.accbranch;
+    pageUrl = (): string => this.urls.get.attendance.attendanceListUrl;
 
     shouldHave(): Element[] {
         return [

@@ -28,6 +28,11 @@ export default class PosLiteUrls extends BaseUrl {
             paymentMethodUrl: "/esb-core-lite/account-setting/payment-method/index",
             tableSettingUrl: "/esb-core-lite/account-setting/table/index",
         },
+        attendance: {
+            attendanceListUrl: "/esb-core-lite/attendance/report/index",
+            employeeDataUrl: "/esb-core-lite/attendance/employee/index",
+
+        },
         login: {
             loginUrl: "/esb-core-lite/login",
         },
