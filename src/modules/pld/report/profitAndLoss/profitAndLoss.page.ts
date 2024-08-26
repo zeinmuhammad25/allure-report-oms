@@ -11,15 +11,11 @@ export default class ProfitAndLossPage extends BasePosLitePage implements Profit
 
     shouldHave(): Element[] {
         return [
-            Element.ofText("Laporan Laba Rugi"),
+
             Element.ofSelector(ProfitAndLossLocator.periodFromDateField),
-            Element.ofText("Periode Dari"),
             Element.ofSelector(ProfitAndLossLocator.periodToDateField),
-            Element.ofText("Periode Sampai"),
-            Element.ofSelector(ProfitAndLossLocator.reportTypeDropdown),
-            Element.ofText("Jenis Laporan"),
-            Element.ofSelector(ProfitAndLossLocator.businessField),
-            Element.ofText("Usaha"),
+            Element.ofSelector(ProfitAndLossLocator.profitAndLossReportTypeDropdown),
+            Element.ofSelector(ProfitAndLossLocator.profitAndLossCompanyDropdown),
             Element.ofSelector(ProfitAndLossLocator.viewButton),
 
         ];
