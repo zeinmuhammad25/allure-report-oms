@@ -7,7 +7,7 @@ import BrandLocator from "./brand.locator";
 export default class BrandPage extends BasePosLitePage implements BrandScenario {
 
 
-    pageUrl = (): string => this.urls.get.accountSetting.brand;
+    pageUrl = (): string => this.urls.get.accountSetting.brandUrl;
 
     shouldHave(): Element[] {
         return [

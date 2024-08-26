@@ -7,7 +7,7 @@ import BasePosLitePage from "../../base-pos-lite-page";
 export default class CompanyPage extends BasePosLitePage implements CompanyScenario {
 
 
-    pageUrl = (): string => this.urls.get.accountSetting.company;
+    pageUrl = (): string => this.urls.get.accountSetting.companyUrl;
 
     shouldHave(): Element[] {
         return [

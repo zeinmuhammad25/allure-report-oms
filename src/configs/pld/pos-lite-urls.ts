@@ -20,23 +20,24 @@ export default class PosLiteUrls extends BaseUrl {
             profile: "/esb-core-lite/profile",
         },
         accountSetting: {
-            branch: "/esb-core-lite/account-setting/branch/index",
-            brand: "/esb-core-lite/account-setting/brand/index",
-            company: "/esb-core-lite/account-setting/company/index",
-            generateOTP: "/esb-core-lite/account-setting/otp/create",
-            notificationEmail: "/esb-core-lite/account-setting/email-recipient/index",
-            paymentMethod: "/esb-core-lite/account-setting/payment-method/index",
+            branchUrl: "/esb-core-lite/account-setting/branch/index",
+            brandUrl: "/esb-core-lite/account-setting/brand/index",
+            companyUrl: "/esb-core-lite/account-setting/company/index",
+            generateOTPUrl: "/esb-core-lite/account-setting/otp/create",
+            notificationEmailUrl: "/esb-core-lite/account-setting/email-recipient/index",
+            paymentMethodUrl: "/esb-core-lite/account-setting/payment-method/index",
+            tableSettingUrl: "/esb-core-lite/account-setting/table/index",
         },
         login: {
             loginUrl: "/esb-core-lite/login",
         },
         dashboard: {
-            dashboardIndex: "/esb-core-lite/dashboard/index",
+            dashboardIndexUrl: "/esb-core-lite/dashboard/index",
         },
         printerSetting: {
-            menuManagement: "/esb-core-lite/printer-setting/branch-menu/index",
-            printer: "/esb-core-lite/printer-setting/station/index",
-            printerCreate: "/esb-core-lite/printer-setting/station/create",
+            menuManagementUrl: "/esb-core-lite/printer-setting/branch-menu/index",
+            printerUrl: "/esb-core-lite/printer-setting/station/index",
+            printerCreateUrl: "/esb-core-lite/printer-setting/station/create",
         }
     };
 }

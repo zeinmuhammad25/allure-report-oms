@@ -7,7 +7,7 @@ import BasePosLitePage from "../../base-pos-lite-page";
 export default class GenerateOTPPage extends BasePosLitePage implements GenerateOTPScenario {
 
 
-    pageUrl = (): string => this.urls.get.accountSetting.generateOTP;
+    pageUrl = (): string => this.urls.get.accountSetting.generateOTPUrl;
 
     shouldHave(): Element[] {
         return [

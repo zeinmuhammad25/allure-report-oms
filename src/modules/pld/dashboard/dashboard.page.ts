@@ -4,7 +4,7 @@ import BasePosLitePage from "../base-pos-lite-page";
 
 
 export default class DashboardPage extends BasePosLitePage implements DashboardScenario {
-    pageUrl = (): string => this.urls.get.dashboard.dashboardIndex
+    pageUrl = (): string => this.urls.get.dashboard.dashboardIndexUrl
 
     shouldHave(): Element[] {
         return [];

@@ -8,7 +8,7 @@ import BasePosLitePage from "../../base-pos-lite-page";
 export default class TableSettingPage extends BasePosLitePage implements TableSettingScenario {
 
 
-    pageUrl = (): string => Urls.accbranch;
+    pageUrl = (): string => this.urls.get.accountSetting.tableSettingUrl;
 
     shouldHave(): Element[] {
         return [

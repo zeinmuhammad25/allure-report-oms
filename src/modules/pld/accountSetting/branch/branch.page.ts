@@ -13,7 +13,7 @@ export default class BranchPage extends BasePosLitePage implements BranchScenari
     private branchNameEdit = "Test Cabang Edit";
 
 
-    pageUrl = (): string => this.urls.get.accountSetting.branch;
+    pageUrl = (): string => this.urls.get.accountSetting.branchUrl;
 
     shouldHave(): Element[] {
         return [

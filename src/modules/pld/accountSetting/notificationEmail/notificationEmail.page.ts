@@ -8,7 +8,7 @@ import BasePosLitePage from "../../base-pos-lite-page";
 export default class NotificationEmailPage extends BasePosLitePage implements NotificationEmailScenario {
 
 
-    pageUrl = (): string => this.urls.get.accountSetting.notificationEmail;
+    pageUrl = (): string => this.urls.get.accountSetting.notificationEmailUrl;
 
 
     shouldHave(): Element[] {
