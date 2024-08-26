@@ -9,7 +9,7 @@ export default class BookkeepingInputLocator extends BaseLocator {
 
     static bookkeepingDateSearch: string = "//app-date-range-picker-custom//input";
     static bookkeepingOptionSearch: string = "//nz-select-top-control";
-    static bookkeepingValueSearch: string = "//nz-input-group/input";
+    static bookkeepingValueSearch: string = "//input[@placeholder='Cari berdasarkan Cabang']";
 
     static bookkeepingNoColumn: string = "//th[text() = ' No. ']";
     static bookkeepingBranchColumn: string = "//nz-table-sorters/span[text() = ' Cabang ']";
