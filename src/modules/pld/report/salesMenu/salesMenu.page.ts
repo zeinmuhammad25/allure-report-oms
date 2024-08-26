@@ -7,7 +7,7 @@ import SalesMenuLocator from "./salesMenu.locator";
 export default class SalesMenuPage extends BasePosLitePage implements SalesMenuScenario {
 
 
-    pageUrl = (): string => '';
+    pageUrl = (): string => this.urls.get.report.salesMenuUrl;
 
     shouldHave(): Element[] {
         return [

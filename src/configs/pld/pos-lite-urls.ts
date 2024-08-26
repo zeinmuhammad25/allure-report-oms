@@ -82,6 +82,15 @@ export default class PosLiteUrls extends BaseUrl {
         },
         promotion: {
             promotionUrl: "/esb-core-lite/promotion/index",
-        }
+        },
+        report: {
+            cancelAndVoidUrl: "/esb-core-lite/report/cancel-menu/index",
+            paymentReportUrl: "/esb-core-lite/report/sales-payment/index",
+            profitAndLossUrl: "/esb-core-lite/report/profit-loss/index",
+            promotionReportUrl: "/esb-core-lite/report/promotion/index",
+            salesDetailUrl: "/esb-core-lite/report/sales-detail/index",
+            salesMenuUrl: "/esb-core-lite/report/sales-menu/index",
+            salesSummaryUrl: "/esb-core-lite/report/sales-summary/index",
+        },
     };
 }

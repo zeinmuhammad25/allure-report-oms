@@ -7,7 +7,7 @@ import ProfitAndLossLocator from "./profitAndLoss.locator";
 export default class ProfitAndLossPage extends BasePosLitePage implements ProfitAndLossScenario {
 
 
-    pageUrl = (): string => '';
+    pageUrl = (): string => this.urls.get.report.profitAndLossUrl;
 
     shouldHave(): Element[] {
         return [

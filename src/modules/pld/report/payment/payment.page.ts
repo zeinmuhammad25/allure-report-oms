@@ -7,7 +7,7 @@ import PaymentScenario from "./payment.scenario";
 export default class PaymentPage extends BasePosLitePage implements PaymentScenario {
 
 
-    pageUrl = (): string => '';
+    pageUrl = (): string => this.urls.get.report.paymentReportUrl;
 
     shouldHave(): Element[] {
         return [
