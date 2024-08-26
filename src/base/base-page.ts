@@ -160,12 +160,15 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         retry: number = 5,
     ): Promise<void> {
         for (let i = 0; i < retry; i++) {
+            console.log(`waitForVisible: ${selector}, for ${duration * (i + 1)}`);
             await this.wait(duration);
             if (await this.isVisible(selector)) {
+                console.log(`waitForVisible: ${selector}, it's visible!`);
                 await onVisible();
-                break;
+                return;
             }
         }
+        console.log(`waitForVisible: ${selector}, it's not visible!`);
     }
 
     protected pressKeyboard(...keys: Keyboard[]): Promise<void> {
