@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import AddRecipeScenario from "./addRecipe.scenario";
 import AddRecipeLocator from "./addRecipe.locator";
@@ -8,9 +7,9 @@ import AddRecipeLocator from "./addRecipe.locator";
 export default class AddRecipePage extends BasePosLitePage implements AddRecipeScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.catalogue.addRecipeUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/catalog/menu-category/index
+
     shouldHave(): Element[] {
         return [
             Element.ofSelector(AddRecipeLocator.adjustRecipeButton),

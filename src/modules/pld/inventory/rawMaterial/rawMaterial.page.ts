@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import RawMaterialScenario from "./rawMaterial.scenario";
 import RawMaterialLocator from "./rawMaterial.locator";
@@ -8,7 +7,7 @@ import RawMaterialLocator from "./rawMaterial.locator";
 export default class RawMaterialPage extends BasePosLitePage implements RawMaterialScenario {
 
 
-    pageUrl = (): string => Urls.rawmaterial;
+    pageUrl = (): string => this.urls.get.inventory.rawMaterialUrl;
 
     shouldHave(): Element[] {
         return [

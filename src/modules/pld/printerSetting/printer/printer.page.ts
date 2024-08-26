@@ -7,7 +7,7 @@ import PrinterLocator from "./printer.locator";
 export default class PrinterPage extends BasePosLitePage implements PrinterScenario {
     private stationName = "Test Printer 01";
 
-    pageUrl = (): string => this.urls.get.printerSetting.printer;
+    pageUrl = (): string => this.urls.get.printerSetting.printerUrl;
 
     shouldHave(): Element[] {
         return [

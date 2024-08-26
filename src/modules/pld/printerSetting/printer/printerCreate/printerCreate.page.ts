@@ -6,7 +6,7 @@ import PrinterCreateScenario from "./printerCreate.scenario";
 export default class PrinterCreatePage extends BasePosLitePage implements PrinterCreateScenario {
     private stationName = "Test Printer 01";
 
-    pageUrl = (): string => this.urls.get.printerSetting.printerCreate;
+    pageUrl = (): string => this.urls.get.printerSetting.printerCreateUrl;
 
     shouldHave(): Element[] {
         return [

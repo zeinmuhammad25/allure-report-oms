@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import UserAccessPOSLocator from "./userAccessPOS.locator";
 import UserAccessPOSScenario from "./userAccessPOS.scenario";
@@ -8,9 +7,8 @@ import UserAccessPOSScenario from "./userAccessPOS.scenario";
 export default class UserAccessPOSPage extends BasePosLitePage implements UserAccessPOSScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.userAccessControl.userAccessPOSUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/role/pos-user-role/index
     shouldHave(): Element[] {
         return [
             Element.ofSelector(UserAccessPOSLocator.userAccessPOSTab),

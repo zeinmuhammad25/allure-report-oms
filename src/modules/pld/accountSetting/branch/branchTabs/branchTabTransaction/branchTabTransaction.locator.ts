@@ -17,8 +17,6 @@ export default class BranchTabTransactionLocator extends BaseLocator {
     static branchRadioBtnRoundingNo: string = "//nz-radio-group[@formcontrolname='activateRounding']//label[span[text()=' Tidak ']]/span/input";
 
 
-
-
     //checkBox
     static paymentCashCheckBox: string = "//label[@class='ant-checkbox-wrapper ng-valid ng-dirty ng-touched cdk-focused cdk-mouse-focused']//input[@type='checkbox']";
     static branchTabTransactionCheckBoxCash: string = "//label[.//p[@class='child-title' and contains(text(), 'Cash')]]//input[@type='checkbox']";

@@ -6,7 +6,7 @@ import CancelAndVoidLocator from "./cancelAndVoid.locator";
 export default class CancelAndVoidPage extends BasePosLitePage implements CancelAndVoidLocator {
 
 
-    pageUrl = (): string => '';
+    pageUrl = (): string => this.urls.get.report.cancelAndVoidUrl;
 
     shouldHave(): Element[] {
         return [

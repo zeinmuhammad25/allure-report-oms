@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import PlatformIntegrationScenario from "./platformIntegration.scenario";
 import PlatformIntegrationLocator from "./platformIntegration.locator";
@@ -8,7 +7,7 @@ import PlatformIntegrationLocator from "./platformIntegration.locator";
 export default class PlatformIntegrationPage extends BasePosLitePage implements PlatformIntegrationScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.onlinePlatform.platformIntegrationUrl;
 
 
     shouldHave(): Element[] {

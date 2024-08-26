@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import BookkeepingCategoryLocator from "./bookkeepingCategory.locator"
 import BookkeepingCategoryScenario from "./bookkeepingCategory.scenario"
@@ -8,9 +7,9 @@ import BookkeepingCategoryScenario from "./bookkeepingCategory.scenario"
 export default class BookkeepingCategoryPage extends BasePosLitePage implements BookkeepingCategoryScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.bookkeeping.bookkeepingCategoryUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/finance/charts-of-account/index
+
     shouldHave(): Element[] {
         return [
             Element.ofSelector(BookkeepingCategoryLocator.guideButton),

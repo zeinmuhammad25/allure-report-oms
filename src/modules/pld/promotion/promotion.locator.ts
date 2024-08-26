@@ -1,4 +1,4 @@
-import BaseLocator from "../../base/base-locator";
+import BaseLocator from "../../../base/base-locator";
 
 export default class PromotionLocator extends BaseLocator {
     static discPercent: string = "(//span[@class='ant-radio-button ant-radio-button-checked'])[1]";

@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import EmployeeDataScenario from "./employeeData.scenario";
 import EmployeeDataLocator from "./employeeData.locator";
@@ -8,7 +7,7 @@ import EmployeeDataLocator from "./employeeData.locator";
 export default class EmployeeDataPage extends BasePosLitePage implements EmployeeDataScenario {
 
 
-    pageUrl = (): string => Urls.employee;
+    pageUrl = (): string => this.urls.get.attendance.employeeDataUrl;
 
     shouldHave(): Element[] {
         return [

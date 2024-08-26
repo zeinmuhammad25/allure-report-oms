@@ -3,14 +3,17 @@ import Element, {ElementType} from "./objects/Element";
 import BaseScenario from "./base-scenario";
 import BaseUrl from "./base-url";
 import {Keyboard} from "./constants/Keyboard";
+import BaseConfigs from "./base-configs";
 
-export default abstract class BasePage<T extends BaseUrl> implements BaseScenario {
+export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs> implements BaseScenario {
     private readonly _page: Page;
     protected urls: T;
+    protected configs: U;
 
-    protected constructor(page: Page, urls: T) {
+    protected constructor(page: Page, urls: T, configs: U) {
         this._page = page;
         this.urls = urls;
+        this.configs = configs;
     }
 
     abstract pageUrl: () => string;
@@ -26,8 +29,8 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
         await this.performCheckInitialElements();
     }
 
-    public async gotoPage<P extends BasePage<T>>(pageCreator: new(page: Page, urls: T) => P): Promise<P> {
-        let newPage: P = new pageCreator(this._page, this.urls);
+    public async gotoPage<P extends BasePage<T, U>>(pageCreator: new(page: Page, urls: T, configs: U) => P): Promise<P> {
+        let newPage: P = new pageCreator(this._page, this.urls, this.configs);
         await newPage.navigateHere();
         return newPage;
     }
@@ -43,8 +46,12 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
                     return this.expectHasValue(element.selector, element.value);
                 case ElementType.BUTTON:
                     return this.expectHasButton(element.selector, element.value, element.enabled);
-                case ElementType.LINK:
+                case ElementType.BUTTON_SELECTOR:
+                    return this.expectVisible(element.selector)
+                        .then(value => this.expectHasButtonWithID(element.selector, element.value, element.enabled));
                 case ElementType.INPUT:
+                    return this.expectVisible(element.selector);
+                case ElementType.LINK:
                 default:
                     return new Promise<void>(resolve => resolve());
             }
@@ -128,6 +135,12 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
         return e.toBeDisabled();
     }
 
+    protected async expectHasButtonWithID(selector: string, value: string, enabled: boolean = true): Promise<void> {
+        let e = expect(this._page.locator(selector, {hasText: value}));
+        if (enabled) return e.toBeEnabled();
+        return e.toBeDisabled();
+    }
+
     async waitForResponse(urlOrPredicate: string) {
         console.log(`waiting for response API contain ${urlOrPredicate}`);
         return this._page.waitForResponse(new RegExp('\\b' + urlOrPredicate + '\\b')).then(response => {
@@ -150,6 +163,10 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
 
     protected waitForUrl(urlOrPredicate: string): Promise<void> {
         return this._page.waitForURL(new RegExp('\\b' + urlOrPredicate + '\\b'));
+    }
+
+    protected wait(milliseconds: number): Promise<void> {
+        return new Promise(resolve => setTimeout(resolve, milliseconds));
     }
 
     protected isEnabled(selector: string): Promise<boolean> {
