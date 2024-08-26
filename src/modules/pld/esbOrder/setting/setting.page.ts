@@ -8,9 +8,9 @@ import SettingLocator from "./setting.locator";
 export default class SettingPage extends BasePosLitePage implements SettingScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.esbOrder.settingUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/esb-order/setting/index
+
     shouldHave(): Element[] {
         return [
             Element.ofSelector(SettingLocator.settingTab),
