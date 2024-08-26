@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import RemainingFundsScenario from "./remainingFunds.scenario";
 import RemainingFundsLocator from "./remainingFunds.locator";
@@ -8,9 +7,9 @@ import RemainingFundsLocator from "./remainingFunds.locator";
 export default class RemainingFundsPage extends BasePosLitePage implements RemainingFundsScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.withdrawFunds.remainingFunds;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/disbursement/disbursement-report/index
+
     shouldHave(): Element[] {
         return [
             Element.ofSelector(RemainingFundsLocator.incomeSummaryTab),

@@ -9,4 +9,6 @@ export default interface BranchScenario extends BaseScenario {
     searchBranchDataEdit(): Promise<void>;
 
     cleanUpBranchData(): Promise<void>;
+
+    performBranchElementCheck(): Promise<void>;
 }

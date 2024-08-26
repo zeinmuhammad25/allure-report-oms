@@ -1,7 +1,7 @@
 import BaseLocator from "../../../../base/base-locator";
 
 export default class PaymentMethodLocator extends BaseLocator {
-    static addPaymentMethodButton: string = "//button[@routerlink='/account-setting/payment-method/create']";
+    static paymentMethodAddButton: string = "//button[@routerlink='/account-setting/payment-method/create']";
     static paymentMethodNameSearch: string = "//input[@placeholder='Cari Berdasarkan Nama Metode Pembayaran']";
     static paymentMethodTypeSearch: string = "//nz-select[@nzplaceholder='Cari Berdasarkan Tipe Metode']";
     static branchSearch: string = "//nz-select[@nzplaceholder='Cari Berdasarkan Cabang']";

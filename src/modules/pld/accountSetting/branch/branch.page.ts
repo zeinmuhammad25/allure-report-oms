@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import BranchScenario from "./branch.scenario";
 import BranchLocator from "./branch.locator";
@@ -13,7 +12,7 @@ export default class BranchPage extends BasePosLitePage implements BranchScenari
     private branchNameEdit = "Test Cabang Edit";
 
 
-    pageUrl = (): string => Urls.accbranch;
+    pageUrl = (): string => this.urls.get.accountSetting.branchUrl;
 
     shouldHave(): Element[] {
         return [
@@ -64,6 +63,19 @@ export default class BranchPage extends BasePosLitePage implements BranchScenari
         await this.pressKeyboard(Keyboard.ENTER);
         await this.expectVisible(BranchLocator.branchEditDataName);
         await this.click(BranchLocator.branchEditButton);
+    }
+
+    async performBranchElementCheck(): Promise<void> {
+        await this.expectVisible(BranchLocator.branchSearchBar);
+        console.log('Search bar in branch page is present');
+        await this.expectVisible(BranchLocator.addBranchButton);
+        console.log('Add branch button in branch page is present');
+        await this.expectTextVisible("Daftar Cabang")
+        console.log('Branch page title is present');
+        await this.expectVisible(BranchLocator.accountSearchExpired);
+        console.log('Branch page expired order row is present');
+        await this.expectVisible(BranchLocator.accountBranchAmount);
+        console.log('Branch count in branch page is present');
     }
 
 

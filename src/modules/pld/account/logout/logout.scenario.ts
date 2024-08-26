@@ -4,4 +4,6 @@ export default interface LogoutScenario extends BaseScenario {
 
     performLogout(): Promise<void>;
 
+    navigateToLogoutPage(): Promise<void>;
+
 }

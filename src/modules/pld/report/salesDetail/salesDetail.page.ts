@@ -7,7 +7,7 @@ import SalesDetailLocator from "./salesDetail.locator";
 export default class SalesDetailPage extends BasePosLitePage implements SalesDetailScenario {
 
 
-    pageUrl = (): string => '';
+    pageUrl = (): string => this.urls.get.report.salesDetailUrl;
 
     shouldHave(): Element[] {
         return [

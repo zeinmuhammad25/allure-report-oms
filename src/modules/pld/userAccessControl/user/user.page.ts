@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import UserScenario from "./user.scenario";
 import UserLocator from "./user.locator";
@@ -8,9 +7,8 @@ import UserLocator from "./user.locator";
 export default class UserPage extends BasePosLitePage implements UserScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.userAccessControl.userUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/role/user/index
     shouldHave(): Element[] {
         return [
             Element.ofSelector(UserLocator.userTab),

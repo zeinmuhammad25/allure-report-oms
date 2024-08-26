@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import BannerMarketingScenario from "./bannerMarketing.scenario";
 import BannerMarketingLocator from "./bannerMarketing.locator";
@@ -8,9 +7,9 @@ import BannerMarketingLocator from "./bannerMarketing.locator";
 export default class BannerMarketingPage extends BasePosLitePage implements BannerMarketingScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.esbOrder.bannerMarketingUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/esb-order/banner/index
+
     shouldHave(): Element[] {
         return [
             Element.ofSelector(BannerMarketingLocator.bannerMarketingTab),

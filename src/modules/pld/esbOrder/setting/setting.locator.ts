@@ -1,7 +1,7 @@
 import BaseLocator from "../../../../base/base-locator";
 
 export default class SettingLocator extends BaseLocator {
-    static settingTab: string = "//div[@role='tab' and text()='Pengaturan']";
+    static settingTab: string = "//div[@role='tab'][normalize-space()='Pengaturan']";
     static companyImageTab: string = "//div[@role='tab' and text()='Gambar Pengaturan']";
 
 

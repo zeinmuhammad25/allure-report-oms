@@ -1,4 +1,3 @@
-import Urls from "../../../configs/urls";
 import Element from "../../../base/objects/Element";
 import GroupListScenario from "./groupList.scenario";
 import GroupListLocator from "./groupList.locator";
@@ -8,9 +7,9 @@ import BasePosLitePage from "../base-pos-lite-page";
 export default class GroupListPage extends BasePosLitePage implements GroupListScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.groupList.groupListUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/role/user/index
+
     shouldHave(): Element[] {
         return [
             Element.ofSelector(GroupListLocator.groupListPopUp),

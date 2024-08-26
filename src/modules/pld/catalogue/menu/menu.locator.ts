@@ -8,7 +8,7 @@ export default class MenuLocator extends BaseLocator {
     static importMenuButton: string = "//button[normalize-space()='Impor Menu']"
     static exportMenuButton: string = "//button[normalize-space()='Ekspor Menu']"
     static addMenuButton: string = "(//button[@id='i-menu1'])[1]";
-    static menuDropdownField: string = "//nz-select-top-control[@class='ng-tns-c137-291 ant-select-selector']"//request for better selector name
+    static menuDropdownField: string = "//body/app-layout/nz-layout/nz-layout/nz-content[@ng-reflect-ng-class='[object Object]']/div[@ng-reflect-ng-class='[object Object]']/app-menu/app-menu-index/div/div/div/div/div/app-tab-menu-index[@ng-reflect-uac-recipe='[object Object]']/div[1]/div[1]"
     static menuSearchField: string = "//input[@placeholder='Cari berdasarkan Menu']";
     static menuTotalCount: string = "//div[@class='page-total-container']";
     static paginationNextButton: string = "//li[@title='Halaman Berikutnya']//button[@type='button']";

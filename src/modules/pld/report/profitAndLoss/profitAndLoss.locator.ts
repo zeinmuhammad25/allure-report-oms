@@ -2,10 +2,10 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class ProfitAndLossLocator extends BaseLocator {
 
-    static periodFromDateField: string = "//input[@class='ng-tns-c247-87 ng-pristine ng-valid ng-touched']";
-    static periodToDateField: string = "//input[@class='ng-tns-c247-87 ng-pristine ng-valid ng-touched']";
-    static reportTypeDropdown: string = "//nz-select-top-control[@class='ng-tns-c137-91 ant-select-selector']//nz-select-item[@title='Perusahaan'][normalize-space()='Perusahaan']";
-    static businessField: string = "//input[@class='custom-dropdown ant-input ng-pristine ng-valid ant-input-lg ng-star-inserted ng-touched']";
+    static periodFromDateField: string = "//div[@ng-reflect-ng-class='[object Object]']//app-profit-loss//app-profit-loss-index//div//div//div//div//div//div//nz-form-item//nz-form-control//div//div//nz-date-picker[@nzsize='large']//div//input[@placeholder='Pilih Periode Mulai']";
+    static periodToDateField: string = "//div[@ng-reflect-ng-class='[object Object]']//app-profit-loss//app-profit-loss-index//div//div//div//div//div//div//nz-form-item//nz-form-control//div//div//nz-date-picker[@nzsize='large']//div//input[@placeholder='Pilih Periode Selesai']";
+    static profitAndLossReportTypeDropdown: string = "//div[@ng-reflect-ng-class='[object Object]']//app-profit-loss//app-profit-loss-index//div//div//div//div//div//div//nz-form-item//nz-form-control//div//div//nz-select-item[@title='Perusahaan'][normalize-space()='Perusahaan']";
+    static profitAndLossCompanyDropdown: string = "//nz-input-group[@nzsize='large']//nz-input-group[@nzsize='large']//input[@placeholder='Pilih Usaha']";
     static viewButton: string = "//button[@class='btn-md-primary full-width']";
 
 //Month Picker

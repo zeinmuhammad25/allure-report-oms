@@ -27,5 +27,19 @@ export default class LogoutPage extends BasePosLitePage implements LogoutScenari
 
     }
 
+    async navigateToLogoutPage(): Promise<void> {
+        await this.click(LogoutLocator.accountDropdown);
+        await this.expectVisible(LogoutLocator.logoutButton);
+        console.log('The logout option is present');
+        await this.click(LogoutLocator.logoutButton);
+        await this.expectVisible(LogoutLocator.logoutConfirmationButton);
+        console.log('the logout popup confirmation is present');
+        await this.expectVisible(LogoutLocator.logoutConfirmationButton);
+        console.log('The logout popup save button is present');
+        await this.expectVisible(LogoutLocator.logoutCancelButton);
+        console.log('the logout popup cancel button is present');
+
+    }
+
 
 }
