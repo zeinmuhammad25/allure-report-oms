@@ -62,6 +62,9 @@ export default class PosLiteUrls extends BaseUrl {
             bannerMarketingUrl: "/esb-core-lite/esb-order/banner/index",
             settingUrl: "/esb-core-lite/esb-order/setting/index",
         },
+        groupList: {
+            groupListUrl: "/esb-core-lite/role/user/index",
+        },
         printerSetting: {
             menuManagementUrl: "/esb-core-lite/printer-setting/branch-menu/index",
             printerUrl: "/esb-core-lite/printer-setting/station/index",
