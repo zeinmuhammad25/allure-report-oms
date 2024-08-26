@@ -35,6 +35,7 @@ export default class PosLiteUrls extends BaseUrl {
         bookkeeping: {
             bookkeepingCategoryUrl: "/esb-core-lite/finance/charts-of-account/index",
             bookkeepingInputUrl: "/esb-core-lite/finance/input-finance/index",
+            bookkeepingReportUrl: "/esb-core-lite/finance/profit-loss-report/index",
 
         },
         login: {

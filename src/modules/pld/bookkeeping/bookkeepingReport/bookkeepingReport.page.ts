@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import BookkeepingReportLocator from "./bookkeepingReport.locator"
 import BookkeepingReportScenario from "./bookkeepingReport.scenario"
@@ -7,9 +6,8 @@ import BookkeepingReportScenario from "./bookkeepingReport.scenario"
 export default class BookkeepingReportPage extends BasePosLitePage implements BookkeepingReportScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.bookkeeping.bookkeepingReportUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/finance/profit-loss-report/index
     shouldHave(): Element[] {
         return [
             Element.ofSelector(BookkeepingReportLocator.startMonthSearch),
