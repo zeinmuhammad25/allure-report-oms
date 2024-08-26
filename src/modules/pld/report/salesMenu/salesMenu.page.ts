@@ -11,12 +11,12 @@ export default class SalesMenuPage extends BasePosLitePage implements SalesMenuS
 
     shouldHave(): Element[] {
         return [
-            Element.ofText("Laporan Penjualan Menu"),
-            Element.ofSelector(SalesMenuLocator.salesDateField),
-            Element.ofSelector(SalesMenuLocator.businessField),
-            Element.ofSelector(SalesMenuLocator.businessFieldClear),
-            Element.ofSelector(SalesMenuLocator.businessSearchField),
-            Element.ofSelector(SalesMenuLocator.reportTypeDropdown),
+            Element.ofSelector(SalesMenuLocator.salesMenuOrderDate),
+            Element.ofSelector(SalesMenuLocator.salesMenuBranchDropdown),
+            Element.ofSelector(SalesMenuLocator.salesMenuViewButton),
+            Element.ofSelector(SalesMenuLocator.salesMenuSoldAmount),
+            Element.ofSelector(SalesMenuLocator.salesMenuReportTypeDropdown),
+            Element.ofSelector(SalesMenuLocator.salesMenuCompanyDropdown),
 
         ];
     }
