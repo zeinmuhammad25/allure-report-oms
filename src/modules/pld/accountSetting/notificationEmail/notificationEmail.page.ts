@@ -8,9 +8,9 @@ import BasePosLitePage from "../../base-pos-lite-page";
 export default class NotificationEmailPage extends BasePosLitePage implements NotificationEmailScenario {
 
 
-    pageUrl = (): string => Urls.accbranch;
+    pageUrl = (): string => this.urls.get.accountSetting.notificationEmail;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/account-setting/email-recipient/index
+
     shouldHave(): Element[] {
         return [
             Element.ofSelector(NotificationEmailLocator.notificationEmailTab),

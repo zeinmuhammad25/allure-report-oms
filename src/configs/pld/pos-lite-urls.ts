@@ -23,6 +23,9 @@ export default class PosLiteUrls extends BaseUrl {
             branch: "/esb-core-lite/account-setting/branch/index",
             brand: "/esb-core-lite/account-setting/brand/index",
             company: "/esb-core-lite/account-setting/company/index",
+            generateOTP: "/esb-core-lite/account-setting/otp/create",
+            notificationEmail: "/esb-core-lite/account-setting/email-recipient/index",
+            paymentMethod: "/esb-core-lite/account-setting/payment-method/index",
         },
         login: {
             loginUrl: "/esb-core-lite/login",
