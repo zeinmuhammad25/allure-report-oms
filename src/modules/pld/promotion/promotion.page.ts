@@ -8,20 +8,11 @@ export default class PromotionPage extends BasePosLitePage implements PromotionS
 
     shouldHave(): Element[] {
         return [
-            Element.ofText("Tipe Promosi"),
-            Element.ofSelector(PromotionLocator.discPercent),
-            Element.ofSelector(PromotionLocator.discNoteRupiah),
-            Element.ofSelector(PromotionLocator.discMenuRupiah),
-            Element.ofSelector(PromotionLocator.discCustomPercent),
-            Element.ofSelector(PromotionLocator.discSaveButton),
-            Element.ofSelector(PromotionLocator.discCancelButton),
-            Element.ofSelector(PromotionLocator.discNameField),
-            Element.ofSelector(PromotionLocator.discDiscField),
-            Element.ofSelector(PromotionLocator.discBranchField),
-            Element.ofSelector(PromotionLocator.discPercentField),
-            Element.ofSelector(PromotionLocator.minTransField),
-            Element.ofSelector(PromotionLocator.maxDiscField),
-            Element.ofSelector(PromotionLocator.paymentMethodField),
+            Element.ofSelector(PromotionLocator.promotionStatusDropdown),
+            Element.ofSelector(PromotionLocator.promotionSearchByName),
+            Element.ofSelector(PromotionLocator.promotionTypeDropdown),
+            Element.ofSelector(PromotionLocator.promotionStartDateDropdown),
+            Element.ofSelector(PromotionLocator.promotionEndDateDropdown),
 
         ];
     }

@@ -1,12 +1,13 @@
 import BaseLocator from "../../../base/base-locator";
 
 export default class PromotionLocator extends BaseLocator {
-    static discPercent: string = "(//span[@class='ant-radio-button ant-radio-button-checked'])[1]";
-    static discNoteRupiah: string = "(//span[@class='ant-radio-button'])[1]";
-    static discMenuRupiah: string = "(//span[@class='ant-radio-button'])[2]";
-    static discCustomPercent: string = "(//span[@class='ant-radio-button'])[3]";
-    static discSaveButton: string = "(//button[normalize-space()='Lanjut'])[1]";
-    static discCancelButton: string = "(//button[normalize-space()='Batal'])[1]";
+    static promotionSearchByName: string = "//input[@placeholder='Cari Berdasarkan Nama Promosi']";
+    static promotionStatusDropdown: string = "//nz-select-item[@title='Aktif']";
+    static promotionTypeDropdown: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Tipe Promosi']//input[@autocomplete='off']";
+    static promotionBranchDropdown: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Cabang']//input[@autocomplete='off']";
+    static promotionStartDateDropdown: string = "//input[@placeholder='Cari Berdasarkan Tanggal Mulai']";
+    static promotionEndDateDropdown: string = "//input[@placeholder='Cari Berdasarkan Tanggal Berakhir']";
+    static promotionAddButton: string = "//button[normalize-space()='Promosi']";
 
     //Detail Promo
     static discNameField: string = "(//input[@id='notes'])[1]";
