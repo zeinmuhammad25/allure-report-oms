@@ -10,7 +10,8 @@ export default class SidebarLocator extends BaseLocator {
     static sidebarMenu: string = "//a[normalize-space()='Menu']";
 
     //accountSetting
-    static sidebarAccountSettingHead: string = "//div[contains(text(),'Pengaturan Cabang')]";
+    static sidebarAccountSettingHead: string = "//li[@class='account-setting menu-item ant-menu-submenu ant-menu-submenu-inline ng-star-inserted ant-menu-submenu-open']";
+    static sidebarAccountSettingHeadClosed: string = "//li[@class='account-setting menu-item ant-menu-submenu ant-menu-submenu-inline ng-star-inserted']//div[@class='ant-menu-submenu-title']"
     static sidebarAccountSettingBranch: string = "//a[@ng-reflect-router-link='account-setting/branch']";
     static sidebarAccountSettingBrand: string = "//a[@ng-reflect-router-link='account-setting/company']";
     static sidebarAccountSettingCompany: string = "//a[@ng-reflect-router-link='account-setting/company']";
