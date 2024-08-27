@@ -91,12 +91,12 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
 
     }
 
-    protected expectEnabled(selector: string): Promise<void> {
+    public expectEnabled(selector: string): Promise<void> {
         console.log(`expect enabled:  ${selector}`);
         return expect(this._page.locator(selector)).toBeEnabled();
     }
 
-    protected expectDisabled(selector: string): Promise<void> {
+    public expectDisabled(selector: string): Promise<void> {
         console.log(`expect disabled:  ${selector}`);
         return expect(this._page.locator(selector)).toBeDisabled();
     }

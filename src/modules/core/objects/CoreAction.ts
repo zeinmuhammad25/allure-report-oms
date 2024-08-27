@@ -24,7 +24,7 @@ export class CoreActionClear extends CoreAction {
 
     public async validate(page: BaseCorePaginationPage): Promise<void> {
         await page.click(this.selector);
-        await page.waitForLoading();
+        await page.waitForLoadingComplete();
     }
 }
 
@@ -38,7 +38,7 @@ export class CoreActionRefresh extends CoreAction {
 
     public async validate(page: BaseCorePaginationPage): Promise<void> {
         await page.click(this.selector);
-        await page.waitForLoading();
+        await page.waitForLoadingComplete();
     }
 
 }

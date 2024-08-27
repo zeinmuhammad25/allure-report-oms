@@ -4,9 +4,6 @@ import Promises from "../../../base/utils/promises";
 import BaseCorePaginationPage from "../base/base-core-pagination-page";
 
 export abstract class CoreFilter {
-
-    protected static locatorLoading = "//div[@class='kv-grid-loading' and @id='#w0-container']";
-
     protected selector: string;
     protected selectorTitle?: string;
     protected textTitle?: string;
@@ -40,7 +37,7 @@ export class CoreFilterInput extends CoreFilter {
         await page.click(this.selector);
         await page.fill(this.selector, "test abc");
         await page.pressKeyboard(Keyboard.ENTER);
-        await page.waitForLoading(() => Promises.empty());
+        await page.waitForLoadingComplete(() => Promises.empty());
         if (this.selectorTitle != null) await page.expectVisible(this.selectorTitle)
         return;
     }
@@ -70,7 +67,7 @@ export class CoreFilterSelect extends CoreFilter {
         for (let i = 0; i < items.length; i++) {
             let x = items[i];
             if (await page.isInvisible(this.selectorContainer)) await page.click(this.selector);
-            await page.waitForLoading(() => x.click());
+            await page.waitForLoadingComplete(() => x.click());
         }
     }
 
