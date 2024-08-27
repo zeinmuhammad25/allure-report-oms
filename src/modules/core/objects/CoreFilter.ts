@@ -45,6 +45,11 @@ export class CoreFilterInput extends CoreFilter {
             await page.expectVisible(this.selectorTitle)
         return;
     }
+
+    public async validateCleared(page: BasePage<any, any>): Promise<void> {
+        await page.expectVisible(this.selector);
+        await page.expectEmpty(this.selector)
+    }
 }
 
 export class CoreFilterSelect extends CoreFilter {
@@ -68,6 +73,12 @@ export class CoreFilterSelect extends CoreFilter {
             if (await page.isInvisible(this.selectorContainer)) await page.click(this.selector);
             await page.waitForInvisible(CoreFilterInput.locatorLoading, () => x.click());
         }
+    }
+
+    public async validateCleared(page: BasePage<any, any>): Promise<void> {
+        await page.expectVisible(this.selector);
+        const item = page.getLocator(this.selectorContainer).locator('li').first();
+        await page.expectHasValue(this.selector, await item.textContent());
     }
 }
 

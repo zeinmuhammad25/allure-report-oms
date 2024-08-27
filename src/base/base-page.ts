@@ -126,6 +126,11 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return expect(this._page.locator(selector)).toHaveValue(value);
     }
 
+    public async expectEmpty(selector: string): Promise<void> {
+        console.log(`check if : ${selector}  empty`);
+        return this.expectHasValue(selector, '');
+    }
+
     public async expectHasElement(...elements: Element[]) {
         for (const element of elements) await element.validate(this);
     }
