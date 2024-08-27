@@ -26,10 +26,10 @@ export default class BranchPage extends BasePosLitePage implements BranchScenari
     }
 
     async navigateToBranchSetting(): Promise<void> {
-        await this.expectVisible(SidebarLocator.accountSettingHead);
-        await this.click(SidebarLocator.accountSettingHead);
-        await this.expectVisible(SidebarLocator.accountSettingBranch);
-        await this.click(SidebarLocator.accountSettingBranch);
+        await this.expectVisible(SidebarLocator.sidebarAccountSettingHead);
+        await this.click(SidebarLocator.sidebarAccountSettingHead);
+        await this.expectVisible(SidebarLocator.sidebarAccountSettingBranch);
+        await this.click(SidebarLocator.sidebarAccountSettingBranch);
     }
 
     async cleanUpBranchData(): Promise<void> {
