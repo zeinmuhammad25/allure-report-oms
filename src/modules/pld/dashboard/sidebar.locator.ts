@@ -22,10 +22,22 @@ export default class SidebarLocator extends BaseLocator {
     //printerSetting
     static printerSettingHead: string = "//div[contains(text(),'Pengaturan Printer')]";
     static printerSettingChild: string = "//a[@ng-reflect-router-link='printer-setting/station']";
+    static menuManagementSidebar: string = "//a[@ng-reflect-router-link='printer-setting/branch-menu']";
 
-
+    //attendance
     static attendanceHead: string = "(//div[contains(text(),'Absensi')])[1]";
-    static employeeDataChild: string = "(//a[normalize-space()='Data Karyawan'])[1]";
-    static attendanceDataChild: string = "(//a[normalize-space()='Daftar Kehadiran'])[1]";
+    static employeeDataChild: string = "//a[@ng-reflect-router-link='attendance/employee']";
+    static attendanceDataChild: string = "//a[@ng-reflect-router-link='attendance/report']";
+
+    //report
+    static reportSidebarHead: string = "//div[contains(text(),'Laporan')]";
+    static cancelAndVoidSidebar: string = "//a[@ng-reflect-router-link='report/cancel-menu']";
+    static paymentReportSidebar: string = "//a[@ng-reflect-router-link='report/sales-payment']";
+    static salesDetailSidebar: string = "//a[@ng-reflect-router-link='report/sales-detail']";
+    static salesSummarySidebar: string = "//a[@ng-reflect-router-link='report/sales-summary']";
+    static reportPromotionSidebar: string = "//a[@ng-reflect-router-link='report/promotion']";
+    static profitAndLossSidebar: string = "//a[@ng-reflect-router-link='report/profit-loss']";
+
+
 
 }
