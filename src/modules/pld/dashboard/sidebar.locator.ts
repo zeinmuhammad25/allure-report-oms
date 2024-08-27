@@ -19,6 +19,11 @@ export default class SidebarLocator extends BaseLocator {
     static accountSettingGenerateOTP: string = "//a[@ng-reflect-router-link='account-setting/otp']";
     static accountSettingEmailNotification: string = "//a[@ng-reflect-router-link='account-setting/email-recipien']";
 
+    //printerSetting
+    static printerSettingHead: string = "//div[contains(text(),'Pengaturan Printer')]";
+    static printerSettingChild: string = "//a[@ng-reflect-router-link='printer-setting/station']";
+
+
     static attendanceHead: string = "(//div[contains(text(),'Absensi')])[1]";
     static employeeDataChild: string = "(//a[normalize-space()='Data Karyawan'])[1]";
     static attendanceDataChild: string = "(//a[normalize-space()='Daftar Kehadiran'])[1]";
