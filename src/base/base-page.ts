@@ -6,7 +6,7 @@ import {Keyboard} from "./constants/Keyboard";
 import BaseConfigs from "./base-configs";
 
 export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs> implements BaseScenario {
-    private readonly _page: Page;
+    protected readonly _page: Page;
     protected urls: T;
     protected configs: U;
 

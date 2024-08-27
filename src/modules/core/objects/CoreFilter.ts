@@ -1,7 +1,7 @@
 import BasePage from "../../../base/base-page";
 import {Keyboard} from "../../../base/constants/Keyboard";
 import Promises from "../../../base/utils/promises";
-import Element from "../../../base/objects/Element";
+import BaseCorePaginationPage from "../base/base-core-pagination-page";
 
 export abstract class CoreFilter {
 
@@ -20,7 +20,7 @@ export abstract class CoreFilter {
         return this;
     }
 
-    public abstract validate(page: BasePage<any, any>): Promise<void>;
+    public abstract validate(page: BaseCorePaginationPage): Promise<void>;
 }
 
 export class CoreFilterInput extends CoreFilter {
@@ -35,18 +35,17 @@ export class CoreFilterInput extends CoreFilter {
         return filter;
     }
 
-    public async validate(page: BasePage<any, any>): Promise<void> {
+    public async validate(page: BaseCorePaginationPage): Promise<void> {
         await page.expectVisible(this.selector);
         await page.click(this.selector);
         await page.fill(this.selector, "test abc");
         await page.pressKeyboard(Keyboard.ENTER);
-        await page.waitForInvisible(CoreFilterInput.locatorLoading, () => Promises.empty());
-        if (this.selectorTitle != null)
-            await page.expectVisible(this.selectorTitle)
+        await page.waitForLoading(() => Promises.empty());
+        if (this.selectorTitle != null) await page.expectVisible(this.selectorTitle)
         return;
     }
 
-    public async validateCleared(page: BasePage<any, any>): Promise<void> {
+    public async validateCleared(page: BaseCorePaginationPage): Promise<void> {
         await page.expectVisible(this.selector);
         await page.expectEmpty(this.selector)
     }
@@ -63,7 +62,7 @@ export class CoreFilterSelect extends CoreFilter {
         return filter;
     }
 
-    public async validate(page: BasePage<any, any>): Promise<void> {
+    public async validate(page: BaseCorePaginationPage): Promise<void> {
         await page.expectVisible(this.selector);
         await page.click(this.selector);
         await page.expectVisible(this.selectorContainer);
@@ -71,11 +70,11 @@ export class CoreFilterSelect extends CoreFilter {
         for (let i = 0; i < items.length; i++) {
             let x = items[i];
             if (await page.isInvisible(this.selectorContainer)) await page.click(this.selector);
-            await page.waitForInvisible(CoreFilterInput.locatorLoading, () => x.click());
+            await page.waitForLoading(() => x.click());
         }
     }
 
-    public async validateCleared(page: BasePage<any, any>): Promise<void> {
+    public async validateCleared(page: BaseCorePaginationPage): Promise<void> {
         await page.expectVisible(this.selector);
         const item = page.getLocator(this.selectorContainer).locator('li').first();
         await page.expectHasValue(this.selector, await item.textContent());
