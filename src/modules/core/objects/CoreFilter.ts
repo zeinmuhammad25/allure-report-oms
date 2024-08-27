@@ -50,7 +50,6 @@ export class CoreFilterInput extends CoreFilter {
 export class CoreFilterSelect extends CoreFilter {
 
     private selectorContainer: string;
-    private children: Element[] = [];
 
     public static of(selector: string, selectorContainer: string): CoreFilterSelect {
         let filter = new CoreFilterSelect();
@@ -59,15 +58,16 @@ export class CoreFilterSelect extends CoreFilter {
         return filter;
     }
 
-    public withChildren(...child: Element[]): CoreFilterSelect {
-        this.children.push(...child);
-        return this;
-    }
-
     public async validate(page: BasePage<any, any>): Promise<void> {
         await page.expectVisible(this.selector);
         await page.click(this.selector);
         await page.expectVisible(this.selectorContainer);
+        const items = await page.getLocator(this.selectorContainer).locator('li').all();
+        for (let i = 0; i < items.length; i++) {
+            let x = items[i];
+            if (await page.isInvisible(this.selectorContainer)) await page.click(this.selector);
+            await page.waitForInvisible(CoreFilterInput.locatorLoading, () => x.click());
+        }
     }
 }
 

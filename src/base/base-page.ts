@@ -220,7 +220,7 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.locator(selector).isVisible();
     }
 
-    protected isInvisible(selector: string): Promise<boolean> {
+    public isInvisible(selector: string): Promise<boolean> {
         console.log(`check if visible:  ${selector}`);
         return this._page.locator(selector).isHidden();
     }
@@ -228,5 +228,9 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
     protected isTextVisible(text: string): Promise<boolean> {
         console.log(`check if text visible:  ${text}`);
         return this._page.getByText(text).isVisible();
+    }
+
+    public getLocator(selector: string) {
+        return this._page.locator(selector);
     }
 }

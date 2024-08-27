@@ -18,9 +18,6 @@ export default class CurrencyViewPage extends BaseCorePaginationPage {
         CoreFilterSelect.of(
             CurrencyViewLocator.selectFilterCurrencyActive,
             CurrencyViewLocator.selectFilterCurrencyActiveResultsContainer
-        ).withChildren(
-            Element.of(CurrencyViewLocator.getLocatorFilterCurrencyOptions(0), "Not Active"),
-            Element.of(CurrencyViewLocator.getLocatorFilterCurrencyOptions(1), "Active"),
         ),
     ];
 

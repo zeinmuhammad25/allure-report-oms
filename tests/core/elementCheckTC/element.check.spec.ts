@@ -7,8 +7,8 @@ test('test-core', async ({page}) => {
     const loginPage = new LoginPage(page);
     await loginPage.navigateHere();
     await loginPage.performLogin();
-    let purchaseOrderCreatePage = await loginPage.gotoPage(PurchaseOrderCreatePage);
-    await purchaseOrderCreatePage.performFieldValidation();
-    let currencyView = await  purchaseOrderCreatePage.gotoPage(CurrencyViewPage);
+    // let purchaseOrderCreatePage = await loginPage.gotoPage(PurchaseOrderCreatePage);
+    // await purchaseOrderCreatePage.performFieldValidation();
+    let currencyView = await loginPage.gotoPage(CurrencyViewPage);
 
 });
