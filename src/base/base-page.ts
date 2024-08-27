@@ -43,7 +43,7 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return newPage;
     }
 
-    protected async goBackAndExpectGotoPage<P extends BasePage<T, U>>(pageCreator: new(page: Page, urls: T, configs: U) => P): Promise<P> {
+    public async goBackAndExpectGotoPage<P extends BasePage<T, U>>(pageCreator: new(page: Page, urls: T, configs: U) => P): Promise<P> {
         await this._page.goBack();
         let newPage: P = new pageCreator(this._page, this.urls, this.configs);
         await this.waitForUrl(newPage.pageUrl());
