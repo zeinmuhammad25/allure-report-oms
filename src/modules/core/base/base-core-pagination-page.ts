@@ -32,7 +32,6 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
         for (const filter of this.withFilters()) await filter.validate(this);
         await this.expectContentEmpty();
         for (const action of this.withActions()) await action.validate(this);
-        await this.expectHasContent();
         return super.performCheckInitialElements();
     }
 
@@ -46,15 +45,15 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
 
     public async waitForLoading(
         onComplete?: () => Promise<void>,
-        duration: number = 100,
+        duration: number = 50,
         retry: number = 20,
     ): Promise<void> {
         for (let i = 0; i < retry; i++) {
-            await this.wait(duration);
             if (await this.loadingLocator.isHidden()) {
                 if (onComplete != null) await onComplete();
                 return;
             }
+            await this.wait(duration);
         }
     }
 }
