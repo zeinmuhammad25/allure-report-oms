@@ -10,10 +10,9 @@ export default class SidebarLocator extends BaseLocator {
     static sidebarMenu: string = "//a[normalize-space()='Menu']";
 
     //accountSetting
-    static sidebarAccountSettingHead: string = "//li[@class='account-setting menu-item ant-menu-submenu ant-menu-submenu-inline ng-star-inserted ant-menu-submenu-open']";
-    static sidebarAccountSettingHeadClosed: string = "//li[@class='account-setting menu-item ant-menu-submenu ant-menu-submenu-inline ng-star-inserted']//div[@class='ant-menu-submenu-title']"
+    static sidebarAccountSettingHead: string = "//div[contains(text(),'Pengaturan Cabang')]";
     static sidebarAccountSettingBranch: string = "//a[@ng-reflect-router-link='account-setting/branch']";
-    static sidebarAccountSettingBrand: string = "//a[@ng-reflect-router-link='account-setting/company']";
+    static sidebarAccountSettingBrand: string = "//a[@ng-reflect-router-link='account-setting/brand']";
     static sidebarAccountSettingCompany: string = "//a[@ng-reflect-router-link='account-setting/company']";
     static sidebarAccountSettingTableSetting: string = "//a[@ng-reflect-router-link='account-setting/table']";
     static sidebarAccountSettingPayment: string = "//a[@ng-reflect-router-link='account-setting/payment-method']";
@@ -26,7 +25,7 @@ export default class SidebarLocator extends BaseLocator {
     static sidebarMenuManagement: string = "//a[@ng-reflect-router-link='printer-setting/branch-menu']";
 
     //attendance
-    static attendanceHead: string = "(//div[contains(text(),'Absensi')])[1]";
+    static sidebarAttendanceHead: string = "//div[contains(text(),'Absensi')]";
     static sidebarEmployeeDataChild: string = "//a[@ng-reflect-router-link='attendance/employee']";
     static sidebarAttendanceDataChild: string = "//a[@ng-reflect-router-link='attendance/report']";
 

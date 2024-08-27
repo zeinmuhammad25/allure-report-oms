@@ -1,6 +1,54 @@
 import BaseScenario from "../../base/base-scenario";
 import DashboardPage from "./dashboard.page";
 import BusinessTipsPage from "./businessTips/businessTips.page";
+import BranchPage from "../accountSetting/branch/branch.page";
+import BrandPage from "../accountSetting/brand/brand.page";
+import CompanyPage from "../accountSetting/company/company.page";
+import GenerateOTPPage from "../accountSetting/generateOTP/generateOTP.page";
+import NotificationEmailPage from "../accountSetting/notificationEmail/notificationEmail.page";
+import PaymentMethodPage from "../accountSetting/paymentMethod/paymentMethod.page";
+import TableSettingPage from "../accountSetting/tableSetting/tableSetting.page";
+import AttendanceListPage from "../attendance/attendanceList/attendanceList.page";
+import EmployeeDataPage from "../attendance/employeeData/employeeData.page";
+import BookkeepingCategoryPage from "../bookkeeping/bookkeepingCategory/bookkeepingCategory.page";
+import BookkeepingInputPage from "../bookkeeping/bookkeepingInput/bookkeepingInput.page";
+import BookkeepingReportPage from "../bookkeeping/bookkeepingReport/bookkeepingReport.page";
+import CategoryPage from "../catalogue/category/category.page";
+import MenuPage from "../catalogue/menu/menu.page";
+import MenuBookPage from "../catalogue/menuBook/menuBook.page";
+import MenuNotesPage from "../catalogue/menuNotes/menuNotes.page";
+import ReasonCancelPage from "../catalogue/reasonCancel/reasonCancel.page";
+import SalesModePage from "../catalogue/salesMode/salesMode.page";
+import SpecialPricePage from "../catalogue/specialPrice/specialPrice.page";
+import BannerMarketingPage from "../esbOrder/bannerMarketing/bannerMarketing.page";
+import SettingPage from "../esbOrder/setting/setting.page";
+import RawMaterialPage from "../inventory/rawMaterial/rawMaterial.page";
+import RawMaterialReportPage from "../inventory/rawMaterialReport/rawMaterialReport.page";
+import RawMaterialStockPage from "../inventory/rawMaterialStock/rawMaterialStock.page";
+import RawMaterialTransactionPage from "../inventory/rawMaterialTransaction/rawMaterialTransaction.page";
+import ManageOnlineMenuPage from "../onlinePlatform/manageOnlineMenu/manageOnlineMenu.page";
+import PlatformIntegrationPage from "../onlinePlatform/platformIntegration/platformIntegration.page";
+import MenuManagementPage from "../printerSetting/menuManagement/menuManagement.page";
+import PrinterPage from "../printerSetting/printer/printer.page";
+import ProfilePage from "../profile/profile.page";
+import WithdrawalFundsInformationPage from "../profile/withdrawalFundsInformation/withdrawalFundsInformation.page";
+import PromoCodePage from "../promoCode/promoCode/promoCode.page";
+import PromoCodeHistoryPage from "../promoCode/promoCodeHistory/promoCodeHistory.page";
+import PromotionPage from "../promotion/promotion.page";
+import CancelAndVoidPage from "../report/cancelAndVoid/cancelAndVoid.page";
+import PaymentPage from "../report/payment/payment.page";
+import ProfitAndLossPage from "../report/profitAndLoss/profitAndLoss.page";
+import ReportPromotionPage from "../report/promotion/reportPromotion.page";
+import SalesDetailPage from "../report/salesDetail/salesDetail.page";
+import SalesMenuPage from "../report/salesMenu/salesMenu.page";
+import SalesSummaryPage from "../report/salesSummary/salesSummary.page";
+import KycProcessPage from "../subscriptionInformation/kycProcess/kycProcess.page";
+import OnboardingProcessPage from "../subscriptionInformation/onboardingProcess/onboardingProcess.page";
+import SubscriptionStatusPage from "../subscriptionInformation/subscriptionStatus/subscriptionStatus.page";
+import TopUpBalancePage from "../subscriptionInformation/topUpBalance/topUpBalance.page";
+import UserPage from "../userAccessControl/user/user.page";
+import UserAccessBackendPage from "../userAccessControl/userAccessBackend/userAccessBackend.page";
+import UserAccessPOSPage from "../userAccessControl/userAccessPOS/userAccessPOS.page";
 
 export default interface DashboardScenario extends BaseScenario {
 
@@ -12,80 +60,80 @@ export default interface DashboardScenario extends BaseScenario {
     goToOnlinePayment(): Promise<DashboardPage>;
 
     //accountSetting
-    goToBranch(): Promise<DashboardPage>;
-    goToBrand(): Promise<DashboardPage>;
-    goToCompany(): Promise<DashboardPage>;
-    goToGenerateOTP(): Promise<DashboardPage>;
-    goToNotificationEmail(): Promise<DashboardPage>;
-    goToPaymentMethod(): Promise<DashboardPage>;
-    goToTableSetting(): Promise<DashboardPage>;
+    goToBranch(): Promise<BranchPage>;
+    goToBrand(): Promise<BrandPage>;
+    goToCompany(): Promise<CompanyPage>;
+    goToGenerateOTP(): Promise<GenerateOTPPage>;
+    goToNotificationEmail(): Promise<NotificationEmailPage>;
+    goToPaymentMethod(): Promise<PaymentMethodPage>;
+    goToTableSetting(): Promise<TableSettingPage>;
 
     //attendance
-    goToAttendanceList(): Promise<DashboardPage>;
-    goToEmployeeData(): Promise<DashboardPage>;
+    goToAttendanceList(): Promise<AttendanceListPage>;
+    goToEmployeeData(): Promise<EmployeeDataPage>;
 
     //bookkeeping
-    goToBookkeepingCategory(): Promise<DashboardPage>;
-    goToBookkeepingInput(): Promise<DashboardPage>;
-    goToBookkeepingReport(): Promise<DashboardPage>;
+    goToBookkeepingCategory(): Promise<BookkeepingCategoryPage>;
+    goToBookkeepingInput(): Promise<BookkeepingInputPage>;
+    goToBookkeepingReport(): Promise<BookkeepingReportPage>;
 
     //catalogue
-    goToCategory(): Promise<DashboardPage>;
-    goToMenu(): Promise<DashboardPage>;
-    goToMenuBook(): Promise<DashboardPage>;
-    goToMenuNotes(): Promise<DashboardPage>;
-    goToReasonCancel(): Promise<DashboardPage>;
-    goToSalesMode(): Promise<DashboardPage>;
-    goToSpecialPrice(): Promise<DashboardPage>;
+    goToCategory(): Promise<CategoryPage>;
+    goToMenu(): Promise<MenuPage>;
+    goToMenuBook(): Promise<MenuBookPage>;
+    goToMenuNotes(): Promise<MenuNotesPage>;
+    goToReasonCancel(): Promise<ReasonCancelPage>;
+    goToSalesMode(): Promise<SalesModePage>;
+    goToSpecialPrice(): Promise<SpecialPricePage>;
 
     //esbOrder
-    goToBannerMarketing(): Promise<DashboardPage>;
-    goToSetting(): Promise<DashboardPage>;
+    goToBannerMarketing(): Promise<BannerMarketingPage>;
+    goToSetting(): Promise<SettingPage>;
 
     //inventory
-    goToRawMaterial(): Promise<DashboardPage>;
-    goToRawMaterialReport(): Promise<DashboardPage>;
-    goToRawMaterialStock(): Promise<DashboardPage>;
-    goToRawMaterialTransaction(): Promise<DashboardPage>;
+    goToRawMaterial(): Promise<RawMaterialPage>;
+    goToRawMaterialReport(): Promise<RawMaterialReportPage>;
+    goToRawMaterialStock(): Promise<RawMaterialStockPage>;
+    goToRawMaterialTransaction(): Promise<RawMaterialTransactionPage>;
 
     //onlinePlatform
-    goToManageOnlineMenu(): Promise<DashboardPage>;
-    goToPlatformIntegration(): Promise<DashboardPage>;
+    goToManageOnlineMenu(): Promise<ManageOnlineMenuPage>;
+    goToPlatformIntegration(): Promise<PlatformIntegrationPage>;
 
     //printerSetting
-    goToMenuManagement(): Promise<DashboardPage>;
-    goToPrinter(): Promise<DashboardPage>;
+    goToMenuManagement(): Promise<MenuManagementPage>;
+    goToPrinter(): Promise<PrinterPage>;
 
     //profile
-    goToProfile(): Promise<DashboardPage>;
-    goToWithdrawalFundsInformation(): Promise<DashboardPage>;
+    goToProfile(): Promise<ProfilePage>;
+    goToWithdrawalFundsInformation(): Promise<WithdrawalFundsInformationPage>;
 
     //promoCode
-    goToPromoCode(): Promise<DashboardPage>;
-    goToPromoCodeHistory(): Promise<DashboardPage>;
+    goToPromoCode(): Promise<PromoCodePage>;
+    goToPromoCodeHistory(): Promise<PromoCodeHistoryPage>;
 
     //promotion
-    goToPromotion(): Promise<DashboardPage>;
+    goToPromotion(): Promise<PromotionPage>;
 
     //report
-    goToCancelAndVoid(): Promise<DashboardPage>;
-    goToPayment(): Promise<DashboardPage>;
-    goToProfitAndLoss(): Promise<DashboardPage>;
-    goToPromotionReport(): Promise<DashboardPage>;
-    goToSalesDetail(): Promise<DashboardPage>;
-    goToSalesMenu(): Promise<DashboardPage>;
-    goToSalesSummary(): Promise<DashboardPage>;
+    goToCancelAndVoid(): Promise<CancelAndVoidPage>;
+    goToPayment(): Promise<PaymentPage>;
+    goToProfitAndLoss(): Promise<ProfitAndLossPage>;
+    goToPromotionReport(): Promise<ReportPromotionPage>;
+    goToSalesDetail(): Promise<SalesDetailPage>;
+    goToSalesMenu(): Promise<SalesMenuPage>;
+    goToSalesSummary(): Promise<SalesSummaryPage>;
 
     //subscriptionInformation
-    goToKYCProcess(): Promise<DashboardPage>;
-    goToOnboardingProcess(): Promise<DashboardPage>;
-    goToSubscriptionStatus(): Promise<DashboardPage>;
-    goToTopUpBalance(): Promise<DashboardPage>;
+    goToKYCProcess(): Promise<KycProcessPage>;
+    goToOnboardingProcess(): Promise<OnboardingProcessPage>;
+    goToSubscriptionStatus(): Promise<SubscriptionStatusPage>;
+    goToTopUpBalance(): Promise<TopUpBalancePage>;
 
     //userAccessControl
-    goToUserAccessControl(): Promise<DashboardPage>;
-    goToUserAccessBackend(): Promise<DashboardPage>;
-    goToUserAccessPOS(): Promise<DashboardPage>;
+    goToUserAccessControl(): Promise<UserPage>;
+    goToUserAccessBackend(): Promise<UserAccessBackendPage>;
+    goToUserAccessPOS(): Promise<UserAccessPOSPage>;
 
 
 
