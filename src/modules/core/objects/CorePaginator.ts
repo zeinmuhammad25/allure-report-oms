@@ -14,30 +14,24 @@ export default class CorePaginator {
 
     constructor(page: Page) {
         this.paginatorLocator = page.locator(this.paginatorSelector()).locator('ul');
-        // this.firstLocator = this.paginatorLocator.locator("//li[@class='first']");
-        // this.prevLocator = this.paginatorLocator.locator("//li[@class='prev']");
-        // this.nextLocator = this.paginatorLocator.locator("//li[@class='next']");
-        // this.lastLocator = this.paginatorLocator.locator("//li[@class='last']");
-
         this.pageLocator = this.paginatorLocator.locator("li");
-        // .filter({hasNot: page.locator('.first')})
-        // .filter({hasNot: this.prevLocator})
-        // .filter({hasNot: this.nextLocator})
-        // .filter({hasNot: this.lastLocator});
+        this.firstLocator = this.pageLocator.first();
+        this.lastLocator = this.pageLocator.last();
     }
 
-    public async validate(page: BaseCorePaginationPage): Promise<void> {
+    public async validate(page: BaseCorePaginationPage, onPageChanged?: (page: number) => Promise<void>): Promise<void> {
         this.activePage = 0;
         // do nothing if no paginator
-        if (await this.paginatorLocator.isHidden()) return;
+        if (await this.paginatorLocator.isHidden()) {
+            if (onPageChanged != null) await onPageChanged(this.activePage);
+            return;
+        }
 
         const pagesLocator = await this.pageLocator.all();
         const pageSize: number = pagesLocator.length;
         if (pageSize == 0) return;
-        this.firstLocator = pagesLocator[0];
         this.prevLocator = pagesLocator[1];
         this.nextLocator = pagesLocator[pageSize - 2];
-        this.lastLocator = pagesLocator[pageSize - 1];
 
         const regexDisabled = new RegExp("disabled");
         const regexEnabled = new RegExp("^(?!.*\bdisable\b).*");
@@ -56,14 +50,19 @@ export default class CorePaginator {
             this.activePage = i - 2;
             await pagesLocator[i].locator('a').click();
             await page.waitForLoadingComplete();
+            if (onPageChanged != null) await onPageChanged(this.activePage);
+
             if (i == pageSize - 1) {
                 await expect(this.nextLocator).toHaveClass(regexDisabled);
                 await expect(this.lastLocator).toHaveClass(regexDisabled);
             }
             await page.wait(1000);
         }
+
+        // restore to first page
         if (!await this.firstLocator.evaluate(on => on.classList.contains('disabled'))) {
             await this.firstLocator.locator('a').click();
+            this.activePage = 0;
         }
     }
 }
