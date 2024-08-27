@@ -16,6 +16,7 @@ export default class CorePaginator {
         this.paginatorLocator = page.locator(this.paginatorSelector()).locator('ul');
         this.pageLocator = this.paginatorLocator.locator("li");
         this.firstLocator = this.pageLocator.first();
+        this.prevLocator = this.pageLocator.nth(1);
         this.lastLocator = this.pageLocator.last();
     }
 
@@ -30,7 +31,7 @@ export default class CorePaginator {
         const pagesLocator = await this.pageLocator.all();
         const pageSize: number = pagesLocator.length;
         if (pageSize == 0) return;
-        this.prevLocator = pagesLocator[1];
+        // this need to be assigned
         this.nextLocator = pagesLocator[pageSize - 2];
 
         const regexDisabled = new RegExp("disabled");
