@@ -52,7 +52,9 @@ import UserAccessPOSPage from "../userAccessControl/userAccessPOS/userAccessPOS.
 
 export default interface DashboardScenario extends BaseScenario {
 
+
     //dashboard
+    accountSettingAccordionCheck(): Promise<void>;
     goToDashboard(): Promise<void>;
     goToStockMenu(): Promise<DashboardPage>;
     goToBookKeeping(): Promise<DashboardPage>;
@@ -69,15 +71,18 @@ export default interface DashboardScenario extends BaseScenario {
     goToTableSetting(): Promise<TableSettingPage>;
 
     //attendance
+    attendanceAccordionCheck(): Promise<void>;
     goToAttendanceList(): Promise<AttendanceListPage>;
     goToEmployeeData(): Promise<EmployeeDataPage>;
 
     //bookkeeping
+    bookkeepingAccordionCheck(): Promise<void>;
     goToBookkeepingCategory(): Promise<BookkeepingCategoryPage>;
     goToBookkeepingInput(): Promise<BookkeepingInputPage>;
     goToBookkeepingReport(): Promise<BookkeepingReportPage>;
 
     //catalogue
+    catalogueAccordionCheck(): Promise<void>;
     goToCategory(): Promise<CategoryPage>;
     goToMenu(): Promise<MenuPage>;
     goToMenuBook(): Promise<MenuBookPage>;
@@ -101,6 +106,7 @@ export default interface DashboardScenario extends BaseScenario {
     goToPlatformIntegration(): Promise<PlatformIntegrationPage>;
 
     //printerSetting
+    printerSettingAccordionCheck(): Promise<void>;
     goToMenuManagement(): Promise<MenuManagementPage>;
     goToPrinter(): Promise<PrinterPage>;
 

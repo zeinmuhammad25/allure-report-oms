@@ -11,6 +11,8 @@ export default class SidebarLocator extends BaseLocator {
 
     //accountSetting
     static sidebarAccountSettingHead: string = "//div[contains(text(),'Pengaturan Cabang')]";
+    static sidebarAccountSettingHeadClosed: string = "//div[contains(text(),'Pengaturan Cabang')]/ancestor::li[@ng-reflect-nz-open='false']";
+    static sidebarAccountSettingHeadOpen: string = "//div[contains(text(),'Pengaturan Cabang')]/ancestor::li[@ng-reflect-nz-open='true']";
     static sidebarAccountSettingBranch: string = "//a[@ng-reflect-router-link='account-setting/branch']";
     static sidebarAccountSettingBrand: string = "//a[@ng-reflect-router-link='account-setting/brand']";
     static sidebarAccountSettingCompany: string = "//a[@ng-reflect-router-link='account-setting/company']";
@@ -21,11 +23,15 @@ export default class SidebarLocator extends BaseLocator {
 
     //printerSetting
     static printerSettingHead: string = "//div[contains(text(),'Pengaturan Printer')]";
+    static printerSettingHeadOpen: string = "//div[contains(text(),'Pengaturan Printer')]/ancestor::li[@ng-reflect-nz-open='true']";
+    static printerSettingHeadClosed: string = "//div[contains(text(),'Pengaturan Printer')]/ancestor::li[@ng-reflect-nz-open='false']";
     static sidebarPrinterSettingChild: string = "//a[@ng-reflect-router-link='printer-setting/station']";
     static sidebarMenuManagement: string = "//a[@ng-reflect-router-link='printer-setting/branch-menu']";
 
     //attendance
     static sidebarAttendanceHead: string = "//div[contains(text(),'Absensi')]";
+    static sidebarAttendanceHeadClosed: string = "//div[contains(text(),'Absensi')]/ancestor::li[@ng-reflect-nz-open='false']";
+    static sidebarAttendanceHeadOpen: string = "//div[contains(text(),'Absensi')]/ancestor::li[@ng-reflect-nz-open='true']"
     static sidebarEmployeeDataChild: string = "//a[@ng-reflect-router-link='attendance/employee']";
     static sidebarAttendanceDataChild: string = "//a[@ng-reflect-router-link='attendance/report']";
 
@@ -40,6 +46,8 @@ export default class SidebarLocator extends BaseLocator {
 
     //catalogue
     static sidebarCatalogueHead: string = "//div[contains(text(),'Pengaturan Menu')]";
+    static sidebarCatalogueHeadOpen: string =  "//div[contains(text(),'Pengaturan Menu')]/ancestor::li[@ng-reflect-nz-open='true']";
+    static sidebarCatalogueHeadClosed: string =  "//div[contains(text(),'Pengaturan Menu')]/ancestor::li[@ng-reflect-nz-open='false']";
     static sidebarChildMenu: string = "//a[@ng-reflect-router-link='catalog/menu']";
     static sidebarChildCategory: string = "//a[@ng-reflect-router-link='catalog/menu-category']";
     static sidebarMenuBook: string = "//a[@ng-reflect-router-link='catalog/menu-template']";
@@ -81,6 +89,8 @@ export default class SidebarLocator extends BaseLocator {
 
     //bookkeeping
     static sidebarBookkeeping: string = "//div[contains(text(),'Pembukuan')]";
+    static sidebarBookkeepingOpen: string =  "//div[contains(text(),'Pembukuan')]/ancestor::li[@ng-reflect-nz-open='true']";
+    static sidebarBookkeepingClosed: string =  "//div[contains(text(),'Pembukuan')]/ancestor::li[@ng-reflect-nz-open='false']";
     static sidebarBookkeepingCategory: string = "//a[@ng-reflect-router-link='finance/charts-of-account']";
     static sidebarBookkeepingInput: string = "//a[@ng-reflect-router-link='finance/input-finance']";
     static sidebarBookkeepingReport: string = "//a[@ng-reflect-router-link='finance/profit-loss-report']";

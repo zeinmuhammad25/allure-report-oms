@@ -16,22 +16,24 @@ test.describe.serial('Printer Tests', () => {
 
     test('Verify accountSetting modules element', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
         let dashboardPage = new DashboardPage(page);
-        await dashboardPage.goToBrand();
-        await dashboardPage.goBackAndExpectGotoPage(DashboardPage);
         await dashboardPage.goToBranch();
+        await dashboardPage.goBackAndExpectGotoPage(DashboardPage);
+
 
 
     });
 
     test('Verify accountSetting modules', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+        test.setTimeout(300000);
         let dashboardPage = new DashboardPage(page);
 
         const goBackToDashboard = async () => {
             await dashboardPage.goBackAndExpectGotoPage(DashboardPage);
         };
-        await dashboardPage.goToBrand();
-        await goBackToDashboard();
+        //accountSetting
         await dashboardPage.goToBranch();
+        await goBackToDashboard();
+        await dashboardPage.goToBrand();
         await goBackToDashboard();
         await dashboardPage.goToCompany();
         await goBackToDashboard();
@@ -43,16 +45,32 @@ test.describe.serial('Printer Tests', () => {
         await goBackToDashboard();
         await dashboardPage.goToTableSetting();
         await goBackToDashboard();
+
+        // //rawMaterial
         await dashboardPage.goToBookkeepingInput();
         await goBackToDashboard();
-        // await dashboardPage.goToBookkeepingCategory();
-        // await goBackToDashboard();
-        // await dashboardPage.goToAttendanceList();
-        // await goBackToDashboard();
-        // await dashboardPage.goToEmployeeData();
-        // await goBackToDashboard();
+        await dashboardPage.goToBookkeepingCategory();
+        await goBackToDashboard();
 
+        // //attendance
+        await dashboardPage.goToAttendanceList();
+        await goBackToDashboard();
+        await dashboardPage.goToEmployeeData();
+        await goBackToDashboard();
 
+        //catalogue
+        await dashboardPage.goToMenu();
+        await goBackToDashboard();
+        await dashboardPage.goToMenuNotes();
+        await goBackToDashboard();
+        await dashboardPage.goToMenuBook();
+        await goBackToDashboard();
+        await dashboardPage.goToReasonCancel();
+        await goBackToDashboard();
+        await dashboardPage.goToSalesMode();
+        await goBackToDashboard();
+        await dashboardPage.goToSpecialPrice();
+        await goBackToDashboard();
 
 
     });
