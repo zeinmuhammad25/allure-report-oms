@@ -58,6 +58,8 @@ export default class SidebarLocator extends BaseLocator {
 
     //inventory
     static sidebarInventoryHead: string = "//div[contains(text(),'Inventori')]";
+    static sidebarInventoryHeadClosed: string = "//div[contains(text(),'Inventori')]/ancestor::li[@ng-reflect-nz-open='false']";
+    static sidebarInventoryHeadOpen: string = "//div[contains(text(),'Inventori')]/ancestor::li[@ng-reflect-nz-open='true']";
     static sidebarRawMaterial: string = "//a[@ng-reflect-router-link='inventory/product']";
     static sidebarRawMaterialTransaction: string = "//a[@ng-reflect-router-link='inventory/transaction']";
     static sidebarRawMaterialStock: string = "//a[@ng-reflect-router-link='inventory/product-inquiry']";
@@ -76,6 +78,8 @@ export default class SidebarLocator extends BaseLocator {
 
     //ESBOrder
     static sidebarESBOrderHead: string = "//div[contains(text(),'ESB Order')]";
+    static sidebarESBOrderHeadClosed: string = "//div[contains(text(),'ESB Order')]/ancestor::li[@ng-reflect-nz-open='false']";
+    static sidebarESBOrderHeadOpen: string = "//div[contains(text(),'ESB Order')]/ancestor::li[@ng-reflect-nz-open='true']";
     static sidebarESBOrderSetting: string = "//a[@ng-reflect-router-link='esb-order/setting']";
     static sidebarESBOrderBannerMarketing: string = "//a[@ng-reflect-router-link='esb-order/banner']";
 
