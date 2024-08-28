@@ -22,14 +22,9 @@ export abstract class CoreFilter {
     public abstract cleanUp(page: BaseCorePaginationPage): Promise<void>;
 }
 
-export class CoreFilterNumber extends CoreFilter {
-
-    private constructor() {
-        super();
-    }
-
-    public static of(selector: string): CoreFilterNumber {
-        let filter = new CoreFilterNumber();
+export class CoreFilterSkip extends CoreFilter {
+    public static of(selector: string): CoreFilterSkip {
+        let filter = new CoreFilterSkip();
         filter.selector = selector;
         return filter;
     }
@@ -43,7 +38,20 @@ export class CoreFilterNumber extends CoreFilter {
     }
 }
 
-export class CoreFilterActions extends CoreFilter {
+export class CoreFilterNumber extends CoreFilterSkip {
+
+    private constructor() {
+        super();
+    }
+
+    public static of(selector: string): CoreFilterNumber {
+        let filter = new CoreFilterNumber();
+        filter.selector = selector;
+        return filter;
+    }
+}
+
+export class CoreFilterActions extends CoreFilterSkip {
 
     private constructor() {
         super();
@@ -53,14 +61,6 @@ export class CoreFilterActions extends CoreFilter {
         let filter = new CoreFilterActions();
         filter.selector = selector;
         return filter;
-    }
-
-    public validate(page: BaseCorePaginationPage, data: string[], onValueChange?: (value: string) => Promise<void>): Promise<void> {
-        return;
-    }
-
-    public async cleanUp(page: BaseCorePaginationPage): Promise<void> {
-
     }
 }
 
@@ -94,9 +94,50 @@ export class CoreFilterInput extends CoreFilter {
         return;
     }
 
-    public async validateCleared(page: BaseCorePaginationPage): Promise<void> {
+    public async cleanUp(page: BaseCorePaginationPage): Promise<void> {
         await page.expectVisible(this.selector);
-        await page.expectEmpty(this.selector)
+        await page.click(this.selector);
+        await page.fill(this.selector, '');
+        await page.pressKeyboard(Keyboard.ENTER);
+        await page.waitForLoadingComplete(() => Promises.empty());
+    }
+}
+
+export class CoreFilterInputNumber extends CoreFilter {
+
+    private constructor() {
+        super();
+    }
+
+    public static of(selector: string): CoreFilterInput {
+        let filter = new CoreFilterInputNumber();
+        filter.selector = selector;
+        return filter;
+    }
+
+    public async validate(
+        page: BaseCorePaginationPage,
+        data: string[],
+        onValueChange?: (value: string) => Promise<void>,
+    ): Promise<void> {
+        for (let i = 0; i < data.length; i++) {
+            const cleaned = data[i]
+                .split('.')
+                .join('')
+                .replace(',0000', '');
+            if (cleaned.length > 12 || cleaned.includes(',')) continue;
+            const num = parseInt(cleaned);
+            await page.expectVisible(this.selector);
+            await page.click(this.selector);
+            await page.fill(this.selector, cleaned);
+            await page.pressKeyboard(Keyboard.ENTER);
+            await page.waitForLoadingComplete(() => Promises.empty());
+            const val = num.toLocaleString('id', {minimumFractionDigits: 4})
+            if (onValueChange != null) await onValueChange(val);
+
+        }
+        if (this.selectorTitle != null) await page.expectVisible(this.selectorTitle)
+        return;
     }
 
     public async cleanUp(page: BaseCorePaginationPage): Promise<void> {

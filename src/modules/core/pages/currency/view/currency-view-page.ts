@@ -4,7 +4,7 @@ import {CoreAction, CoreActionClear, CoreActionRefresh} from "../../../objects/C
 import {
     CoreFilter,
     CoreFilterActions,
-    CoreFilterInput,
+    CoreFilterInput, CoreFilterInputNumber,
     CoreFilterNumber,
     CoreFilterSelect
 } from "../../../objects/CoreFilter";
@@ -26,7 +26,7 @@ export default class CurrencyViewPage extends BaseCorePaginationPage {
         CoreFilterInput.of(CurrencyViewLocator.inputFilterCurrencyName)
             .withTitle("Currency Name"),
         CoreFilterInput.of(CurrencyViewLocator.inputFilterCurrencySign),
-        CoreFilterInput.of(CurrencyViewLocator.inputFilterCurrencyRate)
+        CoreFilterInputNumber.of(CurrencyViewLocator.inputFilterCurrencyRate)
             .withTitle("Rate"),
         CoreFilterSelect.of(
             CurrencyViewLocator.selectFilterCurrencyActive,
