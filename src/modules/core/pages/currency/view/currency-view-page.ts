@@ -1,7 +1,13 @@
 import Element from "../../../../../base/objects/Element";
 import BaseCorePaginationPage from "../../../base/base-core-pagination-page";
 import {CoreAction, CoreActionClear, CoreActionRefresh} from "../../../objects/CoreAction";
-import {CoreFilter, CoreFilterInput, CoreFilterSelect} from "../../../objects/CoreFilter";
+import {
+    CoreFilter,
+    CoreFilterActions,
+    CoreFilterInput,
+    CoreFilterNumber,
+    CoreFilterSelect
+} from "../../../objects/CoreFilter";
 import CurrencyViewLocator from "./currency-view-locator";
 
 export default class CurrencyViewPage extends BaseCorePaginationPage {
@@ -16,15 +22,17 @@ export default class CurrencyViewPage extends BaseCorePaginationPage {
     ];
 
     withFilters = (): CoreFilter[] => [
+        CoreFilterNumber.of(CurrencyViewLocator.inputFilterCurrencyNumber),
         CoreFilterInput.of(CurrencyViewLocator.inputFilterCurrencyName)
             .withTitle("Currency Name"),
+        CoreFilterInput.of(CurrencyViewLocator.inputFilterCurrencySign),
         CoreFilterInput.of(CurrencyViewLocator.inputFilterCurrencyRate)
             .withTitle("Rate"),
-        CoreFilterInput.of(CurrencyViewLocator.inputFilterCurrencySign),
         CoreFilterSelect.of(
             CurrencyViewLocator.selectFilterCurrencyActive,
             CurrencyViewLocator.selectFilterCurrencyActiveResultsContainer
         ),
+        CoreFilterActions.of(CurrencyViewLocator.inputFilterCurrencyActions),
     ];
 
 

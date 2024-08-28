@@ -6,6 +6,7 @@ import CorePaginator from "../objects/CorePaginator";
 import CorePaginationData from "../objects/CorePaginationData";
 import CorePaginationRow from "../objects/CorePaginationRow";
 import CorePaginationItem from "../objects/CorePaginationItem";
+import assert = require("node:assert");
 
 export default abstract class BaseCorePaginationPage extends BaseCorePage {
     protected containerSelector = (): string => "//div[@id='w0-container']";
@@ -15,6 +16,7 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
     public itemCountLocator: Locator;
     public containerLocator: Locator;
     public filterLocator: Locator;
+    public columnLocator: Locator;
     public contentLocator: Locator;
     public emptyLocator: Locator;
     public loadingLocator: Locator;
@@ -23,8 +25,10 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
     public corePaginator: CorePaginator;
 
     private data: CorePaginationData;
+    private rows: CorePaginationRow[] = [];
     private items: CorePaginationItem[] = [];
     private itemCount: number = 0;
+    private columnFilterCount: number = 0;
     private columnCount: number = 0;
     private pageCount: number = 0;
     private limit: number = 20;
@@ -34,6 +38,7 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
         this.itemCountLocator = page.locator(this.itemCountSelector());
         this.containerLocator = page.locator(this.containerSelector());
         this.filterLocator = this.containerLocator.locator('#w0-filters');
+        this.columnLocator = this.containerLocator.locator('table').locator('thead').locator('tr').first().locator('th');
         this.contentLocator = this.containerLocator.locator('table').locator('tbody');
         this.emptyLocator = this.contentLocator
             .locator('tr')
@@ -51,23 +56,31 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
 
     async performCheckInitialElements(): Promise<void> {
         this.itemCount = Number(await this.itemCountLocator.textContent() ?? '0');
-        this.columnCount = await this.filterLocator.locator('td').count();
+        this.columnCount = await this.columnLocator.count();
+        this.columnFilterCount = await this.filterLocator.locator('td').count();
         this.pageCount = ~~(this.itemCount / this.limit) + (this.itemCount / this.limit > 0 ? 1 : 0);
-        this.data = new CorePaginationData(this.limit, this.pageCount, this.columnCount, this.itemCount);
+        this.data = new CorePaginationData(this.limit, this.pageCount, this.columnFilterCount, this.itemCount);
 
         await this.corePaginator.validate(this, async (page) => this.scanData(page));
-        for (const filter of this.withFilters()) await filter.validate(this);
-        await this.expectContentEmpty();
-        for (const action of this.withActions()) await action.validate(this);
+        for (let i = 0; i < this.withFilters().length; i++) {
+            const filter = this.withFilters()[i];
+            const data = this.rows
+                .map(value => value.items[i])
+                .map(value => value.content)
+                .filter((x, i, a) => a.indexOf(x) == i);
+
+            await filter.validate(this, data, async (value: string) => {
+                await this.wait(400);
+                const content = await this.rowsLocator.first().locator('td').nth(i).textContent();
+                assert(content.includes(value), `value: ${value} content: ${content}`)
+            });
+            await filter.cleanUp(this);
+
+        }
+
+        for (const action of this.withActions())
+            await action.validate(this);
         return super.performCheckInitialElements();
-    }
-
-    public async expectContentEmpty() {
-        await expect(this.emptyLocator).toBeVisible();
-    }
-
-    public async expectHasContent() {
-        await expect(this.emptyLocator).toBeHidden();
     }
 
     public async waitForLoadingComplete(
@@ -75,29 +88,32 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
         duration: number = 50,
         retry: number = 20,
     ): Promise<void> {
-        for (let i = 0; i < retry; i++) {
-            if (await this.loadingLocator.isHidden()) {
-                if (onComplete != null) await onComplete();
-                return;
-            }
-            await this.wait(duration);
-        }
+        await expect(this.loadingLocator).toBeHidden();
+        if (onComplete != null) await onComplete();
+
+        // for (let i = 0; i < retry; i++) {
+        //     if (await this.loadingLocator.isHidden()) {
+        //         if (onComplete != null) await onComplete();
+        //         return;
+        //     }
+        //     await this.wait(duration);
+        // }
     }
 
     public async scanData(page: number) {
         if (await this.emptyLocator.isVisible()) return;
         await expect(this.emptyLocator).toBeHidden();
-        await this.wait(100);
-        const rows = await this.contentLocator.locator('tr').all();
+        await this.wait(400);
+        const rows = await this.rowsLocator.all();
         for (let i = 0; i < rows.length; i++) {
             const rowData = new CorePaginationRow(this.columnCount);
             const columns = await rows[i].locator("td").all();
             for (let j = 0; j < columns.length; j++) {
-                const content = await columns[j].textContent();
-                const item = new CorePaginationItem(content);
+                const item = new CorePaginationItem(await columns[j].textContent());
                 rowData.addItem(item);
                 this.items.push(item);
             }
+            this.rows.push(rowData);
             this.data.pages[page].addRow(rowData);
         }
     }

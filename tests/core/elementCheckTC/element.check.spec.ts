@@ -4,6 +4,7 @@ import PurchaseOrderCreatePage from "../../../src/modules/core/pages/purchaseOrd
 import CurrencyViewPage from "../../../src/modules/core/pages/currency/view/currency-view-page";
 
 test('test-core', async ({page}) => {
+    test.setTimeout(100000);
     const loginPage = new LoginPage(page);
     await loginPage.navigateHere();
     await loginPage.performLogin();

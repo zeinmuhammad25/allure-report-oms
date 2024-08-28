@@ -17,7 +17,51 @@ export abstract class CoreFilter {
         return this;
     }
 
-    public abstract validate(page: BaseCorePaginationPage, onValueChange?: () => Promise<void>): Promise<void>;
+    public abstract validate(page: BaseCorePaginationPage, data: string[], onValueChange?: (value: string) => Promise<void>): Promise<void>;
+
+    public abstract cleanUp(page: BaseCorePaginationPage): Promise<void>;
+}
+
+export class CoreFilterNumber extends CoreFilter {
+
+    private constructor() {
+        super();
+    }
+
+    public static of(selector: string): CoreFilterNumber {
+        let filter = new CoreFilterNumber();
+        filter.selector = selector;
+        return filter;
+    }
+
+    public validate(page: BaseCorePaginationPage, data: string[], onValueChange?: (value: string) => Promise<void>): Promise<void> {
+        return;
+    }
+
+    public async cleanUp(page: BaseCorePaginationPage): Promise<void> {
+
+    }
+}
+
+export class CoreFilterActions extends CoreFilter {
+
+    private constructor() {
+        super();
+    }
+
+    public static of(selector: string): CoreFilterActions {
+        let filter = new CoreFilterActions();
+        filter.selector = selector;
+        return filter;
+    }
+
+    public validate(page: BaseCorePaginationPage, data: string[], onValueChange?: (value: string) => Promise<void>): Promise<void> {
+        return;
+    }
+
+    public async cleanUp(page: BaseCorePaginationPage): Promise<void> {
+
+    }
 }
 
 export class CoreFilterInput extends CoreFilter {
@@ -32,12 +76,20 @@ export class CoreFilterInput extends CoreFilter {
         return filter;
     }
 
-    public async validate(page: BaseCorePaginationPage, onValueChange?: () => Promise<void>): Promise<void> {
-        await page.expectVisible(this.selector);
-        await page.click(this.selector);
-        await page.fill(this.selector, "test abc");
-        await page.pressKeyboard(Keyboard.ENTER);
-        await page.waitForLoadingComplete(() => Promises.empty());
+    public async validate(
+        page: BaseCorePaginationPage,
+        data: string[],
+        onValueChange?: (value: string) => Promise<void>,
+    ): Promise<void> {
+        for (let i = 0; i < data.length; i++) {
+            await page.expectVisible(this.selector);
+            await page.click(this.selector);
+            await page.fill(this.selector, data[i]);
+            await page.pressKeyboard(Keyboard.ENTER);
+            await page.waitForLoadingComplete(() => Promises.empty());
+            if (onValueChange != null) await onValueChange(data[i]);
+
+        }
         if (this.selectorTitle != null) await page.expectVisible(this.selectorTitle)
         return;
     }
@@ -45,6 +97,14 @@ export class CoreFilterInput extends CoreFilter {
     public async validateCleared(page: BaseCorePaginationPage): Promise<void> {
         await page.expectVisible(this.selector);
         await page.expectEmpty(this.selector)
+    }
+
+    public async cleanUp(page: BaseCorePaginationPage): Promise<void> {
+        await page.expectVisible(this.selector);
+        await page.click(this.selector);
+        await page.fill(this.selector, '');
+        await page.pressKeyboard(Keyboard.ENTER);
+        await page.waitForLoadingComplete(() => Promises.empty());
     }
 }
 
@@ -59,15 +119,19 @@ export class CoreFilterSelect extends CoreFilter {
         return filter;
     }
 
-    public async validate(page: BaseCorePaginationPage, onValueChange?: () => Promise<void>): Promise<void> {
+    public async validate(page: BaseCorePaginationPage, data: string[], onValueChange?: (value: string) => Promise<void>): Promise<void> {
         await page.expectVisible(this.selector);
         await page.click(this.selector);
         await page.expectVisible(this.selectorContainer);
         const items = await page.getLocator(this.selectorContainer).locator('li').all();
         for (let i = 0; i < items.length; i++) {
-            let x = items[i];
             if (await page.isInvisible(this.selectorContainer)) await page.click(this.selector);
-            await page.waitForLoadingComplete(() => x.click());
+            await page.waitForLoadingComplete(() => items[i].click());
+        }
+
+        if (items.length > 0) {
+            if (await page.isInvisible(this.selectorContainer)) await page.click(this.selector);
+            await items[0].click();
         }
     }
 
@@ -75,6 +139,10 @@ export class CoreFilterSelect extends CoreFilter {
         await page.expectVisible(this.selector);
         const item = page.getLocator(this.selectorContainer).locator('li').first();
         await page.expectHasValue(this.selector, await item.textContent());
+    }
+
+    public async cleanUp(page: BaseCorePaginationPage): Promise<void> {
+
     }
 }
 

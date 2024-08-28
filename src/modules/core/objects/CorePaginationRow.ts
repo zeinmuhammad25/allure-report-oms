@@ -24,4 +24,8 @@ export default class CorePaginationRow {
     public canAddItem(): boolean {
         return this.countItem < this.countColumn;
     }
+
+    public getItem(position: number){
+        return this.items[position];
+    }
 }
