@@ -10,6 +10,11 @@ export default class CorePaginationRow {
 
     constructor(countColumn: number) {
         this.countColumn = countColumn;
+        this.items = [];
+    }
+
+    public addItem(item: CorePaginationItem) {
+        this.items.push(item);
     }
 
     public addItems(...items: CorePaginationItem[]) {

@@ -1,5 +1,6 @@
 import {expect, Locator, Page} from "@playwright/test";
 import BaseCorePaginationPage from "../base/base-core-pagination-page";
+import Promises from "../../../base/utils/promises";
 
 export default class CorePaginator {
     protected paginatorSelector = (): string => "//div[@class='kv-panel-pager']";
@@ -22,11 +23,9 @@ export default class CorePaginator {
 
     public async validate(page: BaseCorePaginationPage, onPageChanged?: (page: number) => Promise<void>): Promise<void> {
         this.activePage = 0;
+        if (onPageChanged != null) await onPageChanged(this.activePage);
         // do nothing if no paginator
-        if (await this.paginatorLocator.isHidden()) {
-            if (onPageChanged != null) await onPageChanged(this.activePage);
-            return;
-        }
+        if (await this.paginatorLocator.isHidden()) return;
 
         const pagesLocator = await this.pageLocator.all();
         const pageSize: number = pagesLocator.length;
@@ -50,19 +49,20 @@ export default class CorePaginator {
         for (let i = 3; i < pageSize - 2; i++) {
             this.activePage = i - 2;
             await pagesLocator[i].locator('a').click();
-            await page.waitForLoadingComplete();
-            if (onPageChanged != null) await onPageChanged(this.activePage);
-
             if (i == pageSize - 1) {
                 await expect(this.nextLocator).toHaveClass(regexDisabled);
                 await expect(this.lastLocator).toHaveClass(regexDisabled);
             }
-            await page.wait(1000);
+
+            await page.waitForLoadingComplete(async () => {
+                if (onPageChanged != null) await onPageChanged(this.activePage)
+            });
         }
 
         // restore to first page
         if (!await this.firstLocator.evaluate(on => on.classList.contains('disabled'))) {
             await this.firstLocator.locator('a').click();
+            await page.waitForLoadingComplete();
             this.activePage = 0;
         }
     }

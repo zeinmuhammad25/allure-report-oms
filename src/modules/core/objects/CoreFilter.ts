@@ -17,7 +17,7 @@ export abstract class CoreFilter {
         return this;
     }
 
-    public abstract validate(page: BaseCorePaginationPage): Promise<void>;
+    public abstract validate(page: BaseCorePaginationPage, onValueChange?: () => Promise<void>): Promise<void>;
 }
 
 export class CoreFilterInput extends CoreFilter {
@@ -32,7 +32,7 @@ export class CoreFilterInput extends CoreFilter {
         return filter;
     }
 
-    public async validate(page: BaseCorePaginationPage): Promise<void> {
+    public async validate(page: BaseCorePaginationPage, onValueChange?: () => Promise<void>): Promise<void> {
         await page.expectVisible(this.selector);
         await page.click(this.selector);
         await page.fill(this.selector, "test abc");
@@ -59,7 +59,7 @@ export class CoreFilterSelect extends CoreFilter {
         return filter;
     }
 
-    public async validate(page: BaseCorePaginationPage): Promise<void> {
+    public async validate(page: BaseCorePaginationPage, onValueChange?: () => Promise<void>): Promise<void> {
         await page.expectVisible(this.selector);
         await page.click(this.selector);
         await page.expectVisible(this.selectorContainer);

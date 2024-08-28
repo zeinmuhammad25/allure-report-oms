@@ -1,35 +1,24 @@
-import CorePaginationItem from "./CorePaginationItem";
 import CorePaginationPage from "./CorePaginationPage";
 import CorePaginationRow from "./CorePaginationRow";
 
 export default class CorePaginationData {
-    public limit: number = 10;
-    public count: number = 10;
+    public limit: number;
+    public countPage: number;
+    public countColumn: number;
+    public countItem: number;
     public pages: CorePaginationPage[] = [];
 
-    public pageCount = this.pages.length;
-
-
-    constructor(limit: number, count: number) {
+    public constructor(limit: number, countPage: number, countColumn: number, countItem: number) {
         this.limit = limit;
-        this.count = count;
-    }
-
-    public addRow(row: CorePaginationRow): CorePaginationData {
-        this.pages[this.findAvailablePage()].addRow(row);
-        return this;
-    }
-
-    public addItem(item: CorePaginationItem): CorePaginationData {
-        this.pages[this.findAvailablePage()].addItem(item);
-        return this;
-    }
-
-    private findAvailablePage(): number {
-        if (this.pages.length == 0 || !this.pages[this.pages.length - 1].canAddRow()) {
-            this.pages.push(new CorePaginationPage(this.limit));
+        this.countItem = countItem;
+        this.countColumn = countColumn;
+        this.countPage = countPage;
+        for (let i = 0; i < countPage; i++) {
+            this.pages.push(new CorePaginationPage(this.limit, this.countColumn, this.countItem));
         }
-        return this.pages.length - 1;
+    }
 
+    public addRow(page: number, row: CorePaginationRow) {
+        this.pages[page].addRow(row);
     }
 }
