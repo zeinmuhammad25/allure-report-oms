@@ -92,16 +92,19 @@ export default interface DashboardScenario extends BaseScenario {
     goToSpecialPrice(): Promise<SpecialPricePage>;
 
     //esbOrder
+    esbOrderAccordionCheck(): Promise<void>;
     goToBannerMarketing(): Promise<BannerMarketingPage>;
     goToSetting(): Promise<SettingPage>;
 
     //inventory
+    inventoryAccordionCheck(): Promise<void>;
     goToRawMaterial(): Promise<RawMaterialPage>;
     goToRawMaterialReport(): Promise<RawMaterialReportPage>;
     goToRawMaterialStock(): Promise<RawMaterialStockPage>;
     goToRawMaterialTransaction(): Promise<RawMaterialTransactionPage>;
 
     //onlinePlatform
+    onlinePlatformAccordionCheck(): Promise<void>;
     goToManageOnlineMenu(): Promise<ManageOnlineMenuPage>;
     goToPlatformIntegration(): Promise<PlatformIntegrationPage>;
 
@@ -122,6 +125,7 @@ export default interface DashboardScenario extends BaseScenario {
     goToPromotion(): Promise<PromotionPage>;
 
     //report
+    reportAccordionCheck(): Promise<void>;
     goToCancelAndVoid(): Promise<CancelAndVoidPage>;
     goToPayment(): Promise<PaymentPage>;
     goToProfitAndLoss(): Promise<ProfitAndLossPage>;

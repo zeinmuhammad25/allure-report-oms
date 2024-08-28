@@ -22,6 +22,23 @@ import MenuLocator from "../catalogue/menu/menu.locator";
 import BookkeepingReportPage from "../bookkeeping/bookkeepingReport/bookkeepingReport.page";
 import SalesModePage from "../catalogue/salesMode/salesMode.page";
 import SpecialPricePage from "../catalogue/specialPrice/specialPrice.page";
+import BannerMarketingPage from "../esbOrder/bannerMarketing/bannerMarketing.page";
+import SettingPage from "../esbOrder/setting/setting.page";
+import RawMaterialPage from "../inventory/rawMaterial/rawMaterial.page";
+import RawMaterialReportPage from "../inventory/rawMaterialReport/rawMaterialReport.page";
+import RawMaterialStockPage from "../inventory/rawMaterialStock/rawMaterialStock.page";
+import RawMaterialTransactionPage from "../inventory/rawMaterialTransaction/rawMaterialTransaction.page";
+import ManageOnlineMenuPage from "../onlinePlatform/manageOnlineMenu/manageOnlineMenu.page";
+import PlatformIntegrationPage from "../onlinePlatform/platformIntegration/platformIntegration.page";
+import PrinterPage from "../printerSetting/printer/printer.page";
+import MenuManagementPage from "../printerSetting/menuManagement/menuManagement.page";
+import CancelAndVoidPage from "../report/cancelAndVoid/cancelAndVoid.page";
+import PaymentPage from "../report/payment/payment.page";
+import ProfitAndLossPage from "../report/profitAndLoss/profitAndLoss.page";
+import ReportPromotionPage from "../report/promotion/reportPromotion.page";
+import SalesDetailPage from "../report/salesDetail/salesDetail.page";
+import SalesMenuPage from "../report/salesMenu/salesMenu.page";
+import SalesSummaryPage from "../report/salesSummary/salesSummary.page";
 
 
 export default class DashboardPage extends BasePosLitePage implements DashboardScenario {
@@ -70,6 +87,39 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
             await this.expectVisible(SidebarLocator.sidebarCatalogueHeadOpen);
         }
     }
+
+    async esbOrderAccordionCheck(): Promise<void> {
+        const isESBOrderVisible = await this.isVisible(SidebarLocator.sidebarESBOrderHeadClosed);
+        if (isESBOrderVisible) {
+            await this.click(SidebarLocator.sidebarESBOrderHeadClosed);
+            await this.expectVisible(SidebarLocator.sidebarESBOrderHeadOpen);
+        }
+    }
+
+    async inventoryAccordionCheck(): Promise<void> {
+        const isInventoryVisible = await this.isVisible(SidebarLocator.sidebarInventoryHeadClosed);
+        if (isInventoryVisible) {
+            await this.click(SidebarLocator.sidebarInventoryHeadClosed);
+            await this.expectVisible(SidebarLocator.sidebarInventoryHeadOpen);
+        }
+    }
+
+    async onlinePlatformAccordionCheck(): Promise<void> {
+        const isOnlinePlatformVisible = await this.isVisible(SidebarLocator.sidebarOnlinePlatformClosed);
+        if (isOnlinePlatformVisible) {
+            await this.click(SidebarLocator.sidebarOnlinePlatformClosed);
+            await this.expectVisible(SidebarLocator.sidebarOnlinePlatformOpen);
+        }
+    }
+
+    async reportAccordionCheck(): Promise<void> {
+        const isReportVisible = await this.isVisible(SidebarLocator.sidebarReportHeadClosed);
+        if (isReportVisible) {
+            await this.click(SidebarLocator.sidebarReportHeadClosed);
+            await this.expectVisible(SidebarLocator.sidebarReportHeadOpen);
+        }
+    }
+
 
     async goToBranch(): Promise<BranchPage> {
         await this.accountSettingAccordionCheck();
@@ -198,6 +248,124 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
 
         await this.catalogueAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarSpecialPrice, SpecialPricePage);
+
+    }
+
+    async goToBannerMarketing(): Promise<BannerMarketingPage> {
+
+        await this.esbOrderAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarESBOrderBannerMarketing, BannerMarketingPage);
+
+    }
+
+    async goToSetting(): Promise<SettingPage> {
+
+        await this.esbOrderAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarESBOrderSetting, SettingPage);
+
+    }
+
+    async goToRawMaterial(): Promise<RawMaterialPage> {
+
+        await this.inventoryAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarRawMaterial, RawMaterialPage);
+
+    }
+
+    async goToRawMaterialReport(): Promise<RawMaterialReportPage> {
+
+        await this.inventoryAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarRawMaterialReport, RawMaterialReportPage);
+
+    }
+
+    async goToRawMaterialStock(): Promise<RawMaterialStockPage> {
+
+        await this.inventoryAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarRawMaterialStock, RawMaterialStockPage);
+
+    }
+
+    async goToRawMaterialTransaction(): Promise<RawMaterialTransactionPage> {
+
+        await this.inventoryAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarRawMaterialTransaction, RawMaterialTransactionPage);
+
+    }
+
+    async goToManageOnlineMenu(): Promise<ManageOnlineMenuPage> {
+
+        await this.onlinePlatformAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarManageOnlineMenu, ManageOnlineMenuPage);
+
+    }
+
+    async goToPlatformIntegration(): Promise<PlatformIntegrationPage> {
+
+        await this.onlinePlatformAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarPlatformIntegration, PlatformIntegrationPage);
+
+    }
+
+    async goToPrinter(): Promise<PrinterPage> {
+
+        await this.printerSettingAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarPrinterSettingChild, PrinterPage);
+    }
+
+    async goToMenuManagement(): Promise<MenuManagementPage> {
+
+        await this.printerSettingAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarMenuManagement, MenuManagementPage);
+
+    }
+
+    async goToCancelAndVoid(): Promise<CancelAndVoidPage> {
+
+        await this.reportAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarCancelAndVoid, CancelAndVoidPage);
+
+    }
+
+    async goToPayment(): Promise<PaymentPage> {
+
+        await this.reportAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarPaymentReport, PaymentPage);
+
+    }
+
+    async goToProfitAndLoss(): Promise<ProfitAndLossPage> {
+
+        await this.reportAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarProfitAndLoss, ProfitAndLossPage);
+
+    }
+
+    async goToPromotionReport(): Promise<ReportPromotionPage> {
+
+        await this.reportAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarReportPromotion, ReportPromotionPage);
+
+    }
+
+    async goToSalesDetail(): Promise<SalesDetailPage> {
+
+        await this.reportAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarSalesDetail, SalesDetailPage);
+
+    }
+
+    async goToSalesMenu(): Promise<SalesMenuPage> {
+
+        await this.reportAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarSalesMenuReport, SalesMenuPage);
+
+    }
+
+    async goToSalesSummary(): Promise<SalesSummaryPage> {
+
+        await this.reportAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarSalesSummary, SalesSummaryPage);
 
     }
 

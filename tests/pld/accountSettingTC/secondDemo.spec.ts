@@ -20,11 +20,10 @@ test.describe.serial('Printer Tests', () => {
         await dashboardPage.goBackAndExpectGotoPage(DashboardPage);
 
 
-
     });
 
     test('Verify accountSetting modules', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
-        test.setTimeout(300000);
+        test.setTimeout(100000);
         let dashboardPage = new DashboardPage(page);
 
         const goBackToDashboard = async () => {
@@ -45,20 +44,17 @@ test.describe.serial('Printer Tests', () => {
         await goBackToDashboard();
         await dashboardPage.goToTableSetting();
         await goBackToDashboard();
-
-        // //rawMaterial
+        //rawMaterial
         await dashboardPage.goToBookkeepingInput();
         await goBackToDashboard();
         await dashboardPage.goToBookkeepingCategory();
         await goBackToDashboard();
-
-        // //attendance
+        //attendance
         await dashboardPage.goToAttendanceList();
         await goBackToDashboard();
         await dashboardPage.goToEmployeeData();
         await goBackToDashboard();
-
-        //catalogue
+        // //catalogue
         await dashboardPage.goToMenu();
         await goBackToDashboard();
         await dashboardPage.goToMenuNotes();
@@ -71,6 +67,44 @@ test.describe.serial('Printer Tests', () => {
         await goBackToDashboard();
         await dashboardPage.goToSpecialPrice();
         await goBackToDashboard();
+        //esbOrder
+        await dashboardPage.goToSetting();
+        await goBackToDashboard();
+        await dashboardPage.goToBannerMarketing();
+        await goBackToDashboard();
+        //inventori
+        await dashboardPage.goToRawMaterial();
+        await goBackToDashboard();
+        await dashboardPage.goToRawMaterialReport();
+        await goBackToDashboard();
+        await dashboardPage.goToRawMaterialStock();
+        await goBackToDashboard();
+        await dashboardPage.goToRawMaterialTransaction();
+        await goBackToDashboard();
+        //onlinePlatform
+        await dashboardPage.goToManageOnlineMenu();
+        await goBackToDashboard();
+        await dashboardPage.goToPlatformIntegration();
+        await goBackToDashboard();
+        //printerSetting
+        await dashboardPage.goToPrinter();
+        await goBackToDashboard();
+        await dashboardPage.goToMenuManagement();
+        await goBackToDashboard();
+        //report
+        await dashboardPage.goToCancelAndVoid();
+        await goBackToDashboard();
+        await dashboardPage.goToPayment();
+        await goBackToDashboard();
+        await dashboardPage.goToProfitAndLoss();
+        await goBackToDashboard();
+        await dashboardPage.goToPromotionReport();
+        await goBackToDashboard();
+        await dashboardPage.goToSalesDetail();
+        await goBackToDashboard();
+        await dashboardPage.goToSalesMenu();
+        await goBackToDashboard();
+        await dashboardPage.goToSalesSummary();
 
 
     });

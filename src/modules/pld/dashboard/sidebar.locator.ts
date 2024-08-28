@@ -37,12 +37,15 @@ export default class SidebarLocator extends BaseLocator {
 
     //report
     static sidebarReportHead: string = "//div[contains(text(),'Laporan')]";
+    static sidebarReportHeadClosed: string = "//div[contains(text(),'Laporan')]/ancestor::li[@ng-reflect-nz-open='false']";
+    static sidebarReportHeadOpen: string = "//div[contains(text(),'Laporan')]/ancestor::li[@ng-reflect-nz-open='true']";
     static sidebarCancelAndVoid: string = "//a[@ng-reflect-router-link='report/cancel-menu']";
     static sidebarPaymentReport: string = "//a[@ng-reflect-router-link='report/sales-payment']";
     static sidebarSalesDetail: string = "//a[@ng-reflect-router-link='report/sales-detail']";
     static sidebarSalesSummary: string = "//a[@ng-reflect-router-link='report/sales-summary']";
     static sidebarReportPromotion: string = "//a[@ng-reflect-router-link='report/promotion']";
     static sidebarProfitAndLoss: string = "//a[@ng-reflect-router-link='report/profit-loss']";
+    static sidebarSalesMenuReport: string = "//a[@ng-reflect-router-link='report/sales-menu']";
 
     //catalogue
     static sidebarCatalogueHead: string = "//div[contains(text(),'Pengaturan Menu')]";
@@ -88,6 +91,8 @@ export default class SidebarLocator extends BaseLocator {
 
     //onlinePlatform
     static sidebarOnlinePlatform: string = "//div[contains(text(),'Pesanan Online')]";
+    static sidebarOnlinePlatformClosed: string = "//div[contains(text(),'Pesanan Online')]/ancestor::li[@ng-reflect-nz-open='false']";
+    static sidebarOnlinePlatformOpen: string = "//div[contains(text(),'Pesanan Online')]/ancestor::li[@ng-reflect-nz-open='true']";
     static sidebarPlatformIntegration: string = "//a[@ng-reflect-router-link='online-platform/integration']";
     static sidebarManageOnlineMenu: string = "//a[@ng-reflect-router-link='online-platform/menu-setting']";
 
