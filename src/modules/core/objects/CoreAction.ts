@@ -26,6 +26,10 @@ export class CoreActionClear extends CoreAction {
         await page.click(this.selector);
         await page.waitForLoadingComplete();
     }
+
+    public async click(page: BaseCorePaginationPage): Promise<void> {
+        await page.click(this.selector);
+    }
 }
 
 export class CoreActionRefresh extends CoreAction {

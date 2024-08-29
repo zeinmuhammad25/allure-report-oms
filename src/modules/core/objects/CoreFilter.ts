@@ -40,9 +40,6 @@ export class CoreFilterSkip extends CoreFilter {
 
 export class CoreFilterNumber extends CoreFilterSkip {
 
-    private constructor() {
-        super();
-    }
 
     public static of(selector: string): CoreFilterNumber {
         let filter = new CoreFilterNumber();
@@ -53,9 +50,6 @@ export class CoreFilterNumber extends CoreFilterSkip {
 
 export class CoreFilterActions extends CoreFilterSkip {
 
-    private constructor() {
-        super();
-    }
 
     public static of(selector: string): CoreFilterActions {
         let filter = new CoreFilterActions();
@@ -65,10 +59,6 @@ export class CoreFilterActions extends CoreFilterSkip {
 }
 
 export class CoreFilterInput extends CoreFilter {
-
-    private constructor() {
-        super();
-    }
 
     public static of(selector: string): CoreFilterInput {
         let filter = new CoreFilterInput();
@@ -105,9 +95,6 @@ export class CoreFilterInput extends CoreFilter {
 
 export class CoreFilterInputNumber extends CoreFilter {
 
-    private constructor() {
-        super();
-    }
 
     public static of(selector: string): CoreFilterInput {
         let filter = new CoreFilterInputNumber();
@@ -176,14 +163,18 @@ export class CoreFilterSelect extends CoreFilter {
         }
     }
 
-    public async validateCleared(page: BaseCorePaginationPage): Promise<void> {
-        await page.expectVisible(this.selector);
-        const item = page.getLocator(this.selectorContainer).locator('li').first();
-        await page.expectHasValue(this.selector, await item.textContent());
-    }
-
     public async cleanUp(page: BaseCorePaginationPage): Promise<void> {
 
+    }
+
+    public async click(page: BaseCorePaginationPage, position: number) {
+        await page.expectVisible(this.selector);
+        await page.click(this.selector);
+        await page.expectVisible(this.selectorContainer);
+        const item = await page.getLocator(this.selectorContainer)
+            .locator('li')
+            .nth(position)
+            .click();
     }
 }
 

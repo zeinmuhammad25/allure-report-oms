@@ -24,14 +24,17 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this.urls.baseUrl();
     }
 
-    async navigateHere(): Promise<void> {
+    async navigateHere(performInitialCheck: boolean = true): Promise<void> {
         await this.navigateTo(this.pageUrl());
-        await this.performCheckInitialElements();
+        if (performInitialCheck) await this.performCheckInitialElements();
     }
 
-    public async gotoPage<P extends BasePage<T, U>>(pageCreator: new(page: Page, urls: T, configs: U) => P): Promise<P> {
+    public async gotoPage<P extends BasePage<T, U>>(
+        pageCreator: new(page: Page, urls: T, configs: U) => P,
+        performInitialCheck: boolean = true,
+    ): Promise<P> {
         let newPage: P = new pageCreator(this._page, this.urls, this.configs);
-        await newPage.navigateHere();
+        await newPage.navigateHere(performInitialCheck);
         return newPage;
     }
 
@@ -88,7 +91,6 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
     protected clickButtonByText(text: string): Promise<void> {
         console.log(`click button by text:  ${text}`);
         return this._page.getByRole('button', {name: text}).click();
-
     }
 
     public expectEnabled(selector: string): Promise<void> {

@@ -21,6 +21,9 @@ export default class CoreUrls extends BaseUrl {
             view: "purchase",
             create: "purchase/create",
         },
+        report: {
+            profitLoss: "report/report-profit-loss"
+        },
         master: {
             branch: {
                 view: "branch",

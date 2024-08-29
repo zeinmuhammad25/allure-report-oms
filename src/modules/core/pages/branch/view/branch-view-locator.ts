@@ -1,4 +1,6 @@
 export default class BranchViewLocator {
+    public static actionRefresh: string = "a#btn-toolbar-clear-filter";
+
     public static inputFilterBranchNumber: string = "div.w1-container > table > thead > tr > th >> nth=0";
     public static inputFilterBranchName: string = "//tr[@id='w1-filters']/td/input[@name='MsBranch[branchName]']";
     public static inputFilterBranchCodeName: string = "//tr[@id='w1-filters']/td/input[@name='MsBranch[branchCode]']";

@@ -9,8 +9,6 @@ import CorePaginationItem from "../objects/CorePaginationItem";
 import assert = require("node:assert");
 
 export default abstract class BaseCorePaginationPage extends BaseCorePage {
-    protected scrap: boolean;
-
     protected wCode: string = "w0";
     protected containerSelector = (): string => `//div[@id='${this.wCode}-container']`;
     protected loadingSelector = (): string => `//div[@class='kv-grid-loading' and @id='#${this.wCode}-container']`;
@@ -29,7 +27,7 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
     public corePaginator: CorePaginator;
 
     private data: CorePaginationData;
-    private rows: CorePaginationRow[] = [];
+    protected rows: CorePaginationRow[] = [];
     private items: CorePaginationItem[] = [];
     private itemCount: number = 0;
     private columnFilterCount: number = 0;
@@ -37,9 +35,9 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
     private pageCount: number = 0;
     private limit: number = 20;
 
-    public constructor(page: Page, scrap: boolean = false) {
+    public constructor(page: Page) {
         super(page);
-        this.scrap = scrap;
+        this.setupLocator();
     }
 
     abstract withActions(): CoreAction[];
@@ -47,17 +45,7 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
     abstract withFilters(): CoreFilter[];
 
     async performCheckInitialElements(): Promise<void> {
-        this.setupLocator();
-        this.itemCount = Number(await this.itemCountLocator.textContent() ?? '0');
-        this.columnCount = await this.columnLocator.count();
-        this.columnFilterCount = await this.filterLocator.locator('td').count();
-        this.pageCount = ~~(this.itemCount / this.limit) + (this.itemCount / this.limit > 0 ? 1 : 0);
-        this.data = new CorePaginationData(this.limit, this.pageCount, this.columnFilterCount, this.itemCount);
-
-        await this.corePaginator.validate(this, async (page) => this.scanData(page));
-
-        if (this.scrap) return;
-
+        await this.doScraping();
         for (let i = 0; i < this.withFilters().length; i++) {
             const filter = this.withFilters()[i];
             const data = this.rows
@@ -96,6 +84,18 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
         this.corePaginator = new CorePaginator(this._page);
     }
 
+    public async doScraping() {
+        this.setupLocator();
+        this.itemCount = Number(await this.itemCountLocator.textContent() ?? '0');
+        this.columnCount = await this.columnLocator.count();
+        this.columnFilterCount = await this.filterLocator.locator('td').count();
+        this.pageCount = ~~(this.itemCount / this.limit) + (this.itemCount / this.limit > 0 ? 1 : 0);
+        this.data = new CorePaginationData(this.limit, this.pageCount, this.columnFilterCount, this.itemCount);
+        this.rows = [];
+        await this.corePaginator.validate(this, async (page) => this.scanData(page));
+        return this;
+    }
+
     public async waitForLoadingComplete(
         onComplete?: () => Promise<void>,
         duration: number = 50,
@@ -116,7 +116,7 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
     public async scanData(page: number) {
         if (await this.emptyLocator.isVisible()) return;
         await expect(this.emptyLocator).toBeHidden();
-        await this.wait(400);
+        await this.wait(500);
         const rows = await this.rowsLocator.all();
         for (let i = 0; i < rows.length; i++) {
             const rowData = new CorePaginationRow(this.columnCount);
