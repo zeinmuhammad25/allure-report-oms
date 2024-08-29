@@ -52,5 +52,8 @@ export default class MenuLocator extends BaseLocator {
     static menuCancelPopup: string = "(//button[@class='button button-outline-red button-small button-block'])[1]";
     static menuSavePopup: string = "(//button[@class='button button-orange button-small button-block'])[1]";
 
+    //tooltipButton
+    static menuTooltipOkeButton: string = "//div[@class='introjs-tooltipbuttons']/a[text()='Oke']"
+
 
 }

@@ -3,7 +3,7 @@ import LoginPage from "../../../src/modules/core/pages/login/login-page";
 import PurchaseOrderCreatePage from "../../../src/modules/core/pages/purchaseOrder/create/purchase-order-create-page";
 import CurrencyViewPage from "../../../src/modules/core/pages/currency/view/currency-view-page";
 
-test('Login', async ({page}) => {
+test('test-core', async ({page}) => {
     const loginPage = new LoginPage(page);
     await loginPage.navigateHere();
     await loginPage.performLogin();

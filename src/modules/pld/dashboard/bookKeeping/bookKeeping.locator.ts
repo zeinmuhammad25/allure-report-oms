@@ -2,7 +2,7 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class BookKeepingLocator extends BaseLocator {
     //Statistic Pembukuan
-    static bookKeepingDropdown: string = "(//nz-select-item[@title='Ini Cabang 6 Bulan'])[1]";
+    static bookKeepingDropdown: string = "//nz-select[@nzplaceholder='Cari Berdasarkan Cabang' and @nzsize='large' and contains(@class, 'ant-select-lg')]";
     static thisWeekTab: string = "(//button[normalize-space()='Minggu Ini'])[1]";
     static thisMonthTab: string = "(//button[normalize-space()='Bulan Ini'])[1]";
     static threeMonthTab: string = "(//button[normalize-space()='3 Bulan'])[1]";

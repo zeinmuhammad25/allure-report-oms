@@ -35,6 +35,22 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return newPage;
     }
 
+    protected async clickAndExpectGotoPage<P extends BasePage<T, U>>(selector: string, pageCreator: new(page: Page, urls: T, configs: U) => P): Promise<P> {
+        await this._page.click(selector);
+        let newPage: P = new pageCreator(this._page, this.urls, this.configs);
+        await this.waitForUrl(newPage.pageUrl());
+        await newPage.performCheckInitialElements();
+        return newPage;
+    }
+
+    public async goBackAndExpectGotoPage<P extends BasePage<T, U>>(pageCreator: new(page: Page, urls: T, configs: U) => P): Promise<P> {
+        await this._page.goBack();
+        let newPage: P = new pageCreator(this._page, this.urls, this.configs);
+        await this.waitForUrl(newPage.pageUrl());
+        await newPage.performCheckInitialElements();
+        return newPage;
+    }
+
     public async performCheckInitialElements(): Promise<void> {
         let promises: Promise<void>[] = this.shouldHave().map(element => element.validate(this));
         await Promise.all(promises);
