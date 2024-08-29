@@ -95,6 +95,8 @@ export default interface DashboardScenario extends BaseScenario {
     //catalogue
     catalogueAccordionCheck(): Promise<void>;
 
+    handleMenuToolTip(): Promise<void>;
+
     goToCategory(): Promise<CategoryPage>;
 
     goToMenu(): Promise<MenuPage>;
