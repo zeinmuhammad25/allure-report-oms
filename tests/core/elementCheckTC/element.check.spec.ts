@@ -12,10 +12,10 @@ test('test-core', async ({page}) => {
     await loginPage.navigateHere();
     await loginPage.performLogin();
     let purchaseOrderCreatePage = await loginPage.gotoPage(PurchaseOrderCreatePage);
-    // await purchaseOrderCreatePage.performFieldValidation();
-    // let branchViewPage = await purchaseOrderCreatePage.gotoPage(BranchViewPage);
-    // let currencyViewPage = await branchViewPage.gotoPage(CurrencyViewPage);
-    // let supplierViewPage = await currencyViewPage.gotoPage(SupplierViewPage);
+    await purchaseOrderCreatePage.performFieldValidation();
+    let branchViewPage = await purchaseOrderCreatePage.gotoPage(BranchViewPage);
+    let currencyViewPage = await branchViewPage.gotoPage(CurrencyViewPage);
+    let supplierViewPage = await currencyViewPage.gotoPage(SupplierViewPage);
 
 });
 
@@ -29,7 +29,8 @@ test('test-branch', async ({page}) => {
 
     let profitLossPage = await branchViewPage.gotoPage(ProfitLossPage, false);
     await profitLossPage.validateBranch(branches);
-    let purchaseOrderCreatePage = await profitLossPage.gotoPage(PurchaseOrderCreatePage);
+
+    let purchaseOrderCreatePage = await profitLossPage.gotoPage(PurchaseOrderCreatePage, false);
     await purchaseOrderCreatePage.validateBranch(branches);
 
 });
