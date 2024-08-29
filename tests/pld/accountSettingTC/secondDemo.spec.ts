@@ -29,6 +29,15 @@ test.describe.serial('Printer Tests', () => {
         const goBackToDashboard = async () => {
             await dashboardPage.goBackAndExpectGotoPage(DashboardPage);
         };
+        //dashboard
+        await dashboardPage.goToStockMenu();
+        await goBackToDashboard();
+        await dashboardPage.goToBookKeeping();
+        await goBackToDashboard();
+        await dashboardPage.goToOnlinePayment();
+        await goBackToDashboard();
+
+
         //accountSetting
         await dashboardPage.goToBranch();
         await goBackToDashboard();
@@ -54,7 +63,7 @@ test.describe.serial('Printer Tests', () => {
         await goBackToDashboard();
         await dashboardPage.goToEmployeeData();
         await goBackToDashboard();
-        // //catalogue
+        //catalogue
         await dashboardPage.goToMenu();
         await goBackToDashboard();
         await dashboardPage.goToMenuNotes();
@@ -105,6 +114,19 @@ test.describe.serial('Printer Tests', () => {
         await dashboardPage.goToSalesMenu();
         await goBackToDashboard();
         await dashboardPage.goToSalesSummary();
+        await goBackToDashboard();
+
+        //userAccessControl
+        await dashboardPage.goToUserAccessControl();
+        await goBackToDashboard();
+        await dashboardPage.goToUserAccessBackend();
+        await goBackToDashboard();
+        await dashboardPage.goToUserAccessPOS();
+        await goBackToDashboard();
+
+        //promotion
+        await dashboardPage.goToPromotion();
+        await goBackToDashboard();
 
 
     });

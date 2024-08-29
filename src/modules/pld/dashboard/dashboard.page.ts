@@ -39,6 +39,13 @@ import ReportPromotionPage from "../report/promotion/reportPromotion.page";
 import SalesDetailPage from "../report/salesDetail/salesDetail.page";
 import SalesMenuPage from "../report/salesMenu/salesMenu.page";
 import SalesSummaryPage from "../report/salesSummary/salesSummary.page";
+import UserPage from "../userAccessControl/user/user.page";
+import UserAccessBackendPage from "../userAccessControl/userAccessBackend/userAccessBackend.page";
+import UserAccessPOSPage from "../userAccessControl/userAccessPOS/userAccessPOS.page";
+import StockMenuPage from "./stockMenu/stockMenu.page";
+import BookKeepingPage from "./bookKeeping/bookKeeping.page";
+import OnlinePaymentPage from "./onlinePayment/onlinePayment.page";
+import PromotionPage from "../promotion/promotion.page";
 
 
 export default class DashboardPage extends BasePosLitePage implements DashboardScenario {
@@ -46,6 +53,14 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
 
     shouldHave(): Element[] {
         return [];
+    }
+
+    async dashboardAccordionCheck(): Promise<void> {
+        const isDashboardVisible = await this.isVisible(SidebarLocator.sidebarDashboardClosed);
+        if (isDashboardVisible) {
+            await this.click(SidebarLocator.sidebarDashboardClosed);
+            await this.expectVisible(SidebarLocator.sidebarDashboardOpen);
+        }
     }
 
     async accountSettingAccordionCheck(): Promise<void> {
@@ -117,6 +132,14 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         if (isReportVisible) {
             await this.click(SidebarLocator.sidebarReportHeadClosed);
             await this.expectVisible(SidebarLocator.sidebarReportHeadOpen);
+        }
+    }
+
+    async userAccessAccordionCheck(): Promise<void> {
+        const isUserAccessVisible = await this.isVisible(SidebarLocator.sidebarUserAccessControlClosed);
+        if (isUserAccessVisible) {
+            await this.click(SidebarLocator.sidebarUserAccessControlClosed);
+            await this.expectVisible(SidebarLocator.sidebarUserAccessControlOpen);
         }
     }
 
@@ -366,6 +389,55 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
 
         await this.reportAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarSalesSummary, SalesSummaryPage);
+
+    }
+
+    async goToUserAccessControl(): Promise<UserPage> {
+
+        await this.userAccessAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarUser, UserPage);
+
+    }
+
+    async goToUserAccessBackend(): Promise<UserAccessBackendPage> {
+
+        await this.userAccessAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarUserAccessBackend, UserAccessBackendPage);
+
+
+    }
+
+    async goToUserAccessPOS(): Promise<UserAccessPOSPage> {
+
+        await this.userAccessAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarUserAccessPOS, UserAccessPOSPage);
+
+
+    }
+
+    async goToStockMenu(): Promise<StockMenuPage> {
+
+        await this.dashboardAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarStockMenu, StockMenuPage);
+
+    }
+    async goToBookKeeping(): Promise<BookKeepingPage> {
+
+        await this.dashboardAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarDashboardBookkeeping, BookKeepingPage);
+
+    }
+
+    async goToOnlinePayment(): Promise<OnlinePaymentPage> {
+
+        await this.dashboardAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarOnlinePayment, OnlinePaymentPage);
+
+    }
+
+    async goToPromotion(): Promise<PromotionPage> {
+        await this.expectVisible(SidebarLocator.)
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarOnlinePayment, OnlinePaymentPage);
 
     }
 

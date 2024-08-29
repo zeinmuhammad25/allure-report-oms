@@ -1,6 +1,4 @@
 import BaseScenario from "../../base/base-scenario";
-import DashboardPage from "./dashboard.page";
-import BusinessTipsPage from "./businessTips/businessTips.page";
 import BranchPage from "../accountSetting/branch/branch.page";
 import BrandPage from "../accountSetting/brand/brand.page";
 import CompanyPage from "../accountSetting/company/company.page";
@@ -49,76 +47,113 @@ import TopUpBalancePage from "../subscriptionInformation/topUpBalance/topUpBalan
 import UserPage from "../userAccessControl/user/user.page";
 import UserAccessBackendPage from "../userAccessControl/userAccessBackend/userAccessBackend.page";
 import UserAccessPOSPage from "../userAccessControl/userAccessPOS/userAccessPOS.page";
+import StockMenuPage from "./stockMenu/stockMenu.page";
+import BookKeepingPage from "./bookKeeping/bookKeeping.page";
+import OnlinePaymentPage from "./onlinePayment/onlinePayment.page";
 
 export default interface DashboardScenario extends BaseScenario {
 
 
     //dashboard
-    accountSettingAccordionCheck(): Promise<void>;
-    goToDashboard(): Promise<void>;
-    goToStockMenu(): Promise<DashboardPage>;
-    goToBookKeeping(): Promise<DashboardPage>;
-    goToBusinessTips(): Promise<DashboardPage>;
-    goToOnlinePayment(): Promise<DashboardPage>;
+    dashboardAccordionCheck(): Promise<void>;
+
+    goToStockMenu(): Promise<StockMenuPage>;
+
+    goToBookKeeping(): Promise<BookKeepingPage>;
+
+
+    goToOnlinePayment(): Promise<OnlinePaymentPage>;
 
     //accountSetting
+    accountSettingAccordionCheck(): Promise<void>;
+
     goToBranch(): Promise<BranchPage>;
+
     goToBrand(): Promise<BrandPage>;
+
     goToCompany(): Promise<CompanyPage>;
+
     goToGenerateOTP(): Promise<GenerateOTPPage>;
+
     goToNotificationEmail(): Promise<NotificationEmailPage>;
+
     goToPaymentMethod(): Promise<PaymentMethodPage>;
+
     goToTableSetting(): Promise<TableSettingPage>;
 
     //attendance
     attendanceAccordionCheck(): Promise<void>;
+
     goToAttendanceList(): Promise<AttendanceListPage>;
+
     goToEmployeeData(): Promise<EmployeeDataPage>;
 
     //bookkeeping
     bookkeepingAccordionCheck(): Promise<void>;
+
     goToBookkeepingCategory(): Promise<BookkeepingCategoryPage>;
+
     goToBookkeepingInput(): Promise<BookkeepingInputPage>;
+
     goToBookkeepingReport(): Promise<BookkeepingReportPage>;
 
     //catalogue
     catalogueAccordionCheck(): Promise<void>;
+
     goToCategory(): Promise<CategoryPage>;
+
     goToMenu(): Promise<MenuPage>;
+
     goToMenuBook(): Promise<MenuBookPage>;
+
     goToMenuNotes(): Promise<MenuNotesPage>;
+
     goToReasonCancel(): Promise<ReasonCancelPage>;
+
     goToSalesMode(): Promise<SalesModePage>;
+
     goToSpecialPrice(): Promise<SpecialPricePage>;
 
     //esbOrder
     esbOrderAccordionCheck(): Promise<void>;
+
     goToBannerMarketing(): Promise<BannerMarketingPage>;
+
     goToSetting(): Promise<SettingPage>;
 
     //inventory
     inventoryAccordionCheck(): Promise<void>;
+
     goToRawMaterial(): Promise<RawMaterialPage>;
+
     goToRawMaterialReport(): Promise<RawMaterialReportPage>;
+
     goToRawMaterialStock(): Promise<RawMaterialStockPage>;
+
     goToRawMaterialTransaction(): Promise<RawMaterialTransactionPage>;
 
     //onlinePlatform
     onlinePlatformAccordionCheck(): Promise<void>;
+
     goToManageOnlineMenu(): Promise<ManageOnlineMenuPage>;
+
     goToPlatformIntegration(): Promise<PlatformIntegrationPage>;
 
     //printerSetting
     printerSettingAccordionCheck(): Promise<void>;
+
     goToMenuManagement(): Promise<MenuManagementPage>;
+
     goToPrinter(): Promise<PrinterPage>;
 
     //profile
     goToProfile(): Promise<ProfilePage>;
+
     goToWithdrawalFundsInformation(): Promise<WithdrawalFundsInformationPage>;
 
     //promoCode
     goToPromoCode(): Promise<PromoCodePage>;
+
     goToPromoCodeHistory(): Promise<PromoCodeHistoryPage>;
 
     //promotion
@@ -126,26 +161,29 @@ export default interface DashboardScenario extends BaseScenario {
 
     //report
     reportAccordionCheck(): Promise<void>;
+
     goToCancelAndVoid(): Promise<CancelAndVoidPage>;
+
     goToPayment(): Promise<PaymentPage>;
+
     goToProfitAndLoss(): Promise<ProfitAndLossPage>;
+
     goToPromotionReport(): Promise<ReportPromotionPage>;
+
     goToSalesDetail(): Promise<SalesDetailPage>;
+
     goToSalesMenu(): Promise<SalesMenuPage>;
+
     goToSalesSummary(): Promise<SalesSummaryPage>;
 
-    //subscriptionInformation
-    goToKYCProcess(): Promise<KycProcessPage>;
-    goToOnboardingProcess(): Promise<OnboardingProcessPage>;
-    goToSubscriptionStatus(): Promise<SubscriptionStatusPage>;
-    goToTopUpBalance(): Promise<TopUpBalancePage>;
-
     //userAccessControl
+    userAccessAccordionCheck(): Promise<void>;
+
     goToUserAccessControl(): Promise<UserPage>;
+
     goToUserAccessBackend(): Promise<UserAccessBackendPage>;
+
     goToUserAccessPOS(): Promise<UserAccessPOSPage>;
-
-
 
 
 }
