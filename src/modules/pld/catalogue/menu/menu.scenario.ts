@@ -4,8 +4,8 @@ import MenuPackagePage from "./menuPackage/menuPackage.page";
 
 export default interface MenuScenario extends BaseScenario {
 
-    createSingleMenu(): Promise<MenuSinglePage>;
+    createMenuSingle(): Promise<MenuSinglePage>;
 
-    createPackageMenu(): Promise<MenuPackagePage>;
+    createMenuPackage(): Promise<MenuPackagePage>;
 }
 

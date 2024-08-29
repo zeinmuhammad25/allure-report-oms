@@ -2,12 +2,13 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class MenuLocator extends BaseLocator {
     // Locator on Menu Page
-    static singleMenuButton: string = "//button[@class='button button-orange button-small']";
-    static packageMenuButton: string = "//button[@id='tab-menupackage']";
-    static archiveMenuButton: string = "//button[@id='tab-menupackage']";
-    static importMenuButton: string = "//button[normalize-space()='Impor Menu']"
-    static exportMenuButton: string = "//button[normalize-space()='Ekspor Menu']"
-    static addMenuButton: string = "(//button[@id='i-menu1'])[1]";
+    static menuSingleTab: string = "//button[@class='button button-orange button-small']";
+    static menuPackageTab: string = "//button[@id='tab-menupackage']";
+    static menuArchiveButton: string = "//button[@class='button button-outline-grey button-small']";
+    static menuImportButton: string = "//button[normalize-space()='Impor Menu']"
+    static menuExportButton: string = "//button[normalize-space()='Ekspor Menu']"
+    static menuSingleAddButton: string = "//button[@class='button button-orange button-small']";
+    static menuPackageAddButton: string = "//button[normalize-space()='Tambah Menu Paket']";
     static menuDropdownField: string = "//body/app-layout/nz-layout/nz-layout/nz-content[@ng-reflect-ng-class='[object Object]']/div[@ng-reflect-ng-class='[object Object]']/app-menu/app-menu-index/div/div/div/div/div/app-tab-menu-index[@ng-reflect-uac-recipe='[object Object]']/div[1]/div[1]"
     static menuSearchField: string = "//input[@placeholder='Cari berdasarkan Menu']";
     static menuTotalCount: string = "//div[@class='page-total-container']";
