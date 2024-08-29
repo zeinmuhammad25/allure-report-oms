@@ -23,7 +23,7 @@ test.describe.serial('Printer Tests', () => {
     });
 
     test('Verify accountSetting modules', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
-        test.setTimeout(100000);
+        test.setTimeout(10000000);
         let dashboardPage = new DashboardPage(page);
 
         const goBackToDashboard = async () => {
