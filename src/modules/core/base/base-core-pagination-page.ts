@@ -9,9 +9,13 @@ import CorePaginationItem from "../objects/CorePaginationItem";
 import assert = require("node:assert");
 
 export default abstract class BaseCorePaginationPage extends BaseCorePage {
-    protected containerSelector = (): string => "//div[@id='w0-container']";
-    protected loadingSelector = (): string => "//div[@class='kv-grid-loading' and @id='#w0-container']";
+    protected scrap: boolean;
+
+    protected wCode: string = "w0";
+    protected containerSelector = (): string => `//div[@id='${this.wCode}-container']`;
+    protected loadingSelector = (): string => `//div[@class='kv-grid-loading' and @id='#${this.wCode}-container']`;
     protected itemCountSelector = (): string => "//div[@class='summary']//b>>nth=-1";
+    protected filterSelector = (): string => `#${this.wCode}-filters`;
 
     public itemCountLocator: Locator;
     public containerLocator: Locator;
@@ -33,21 +37,9 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
     private pageCount: number = 0;
     private limit: number = 20;
 
-    public constructor(page: Page) {
+    public constructor(page: Page, scrap: boolean = false) {
         super(page);
-        this.itemCountLocator = page.locator(this.itemCountSelector());
-        this.containerLocator = page.locator(this.containerSelector());
-        this.filterLocator = this.containerLocator.locator('#w0-filters');
-        this.columnLocator = this.containerLocator.locator('table').locator('thead').locator('tr').first().locator('th');
-        this.contentLocator = this.containerLocator.locator('table').locator('tbody');
-        this.emptyLocator = this.contentLocator
-            .locator('tr')
-            .locator('td')
-            .locator("//div[@class='empty']");
-        this.rowsLocator = this.contentLocator
-            .locator('tr')
-        this.loadingLocator = page.locator(this.loadingSelector());
-        this.corePaginator = new CorePaginator(page);
+        this.scrap = scrap;
     }
 
     abstract withActions(): CoreAction[];
@@ -55,6 +47,7 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
     abstract withFilters(): CoreFilter[];
 
     async performCheckInitialElements(): Promise<void> {
+        this.setupLocator();
         this.itemCount = Number(await this.itemCountLocator.textContent() ?? '0');
         this.columnCount = await this.columnLocator.count();
         this.columnFilterCount = await this.filterLocator.locator('td').count();
@@ -62,6 +55,9 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
         this.data = new CorePaginationData(this.limit, this.pageCount, this.columnFilterCount, this.itemCount);
 
         await this.corePaginator.validate(this, async (page) => this.scanData(page));
+
+        if (this.scrap) return;
+
         for (let i = 0; i < this.withFilters().length; i++) {
             const filter = this.withFilters()[i];
             const data = this.rows
@@ -74,7 +70,7 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
             await filter.validate(this, data, async (value: string) => {
                 await this.wait(400);
                 const content = await this.rowsLocator.first().locator('td').nth(i).textContent();
-                assert(content.includes(value), `value: ${value} content: ${content}`)
+                assert(content.includes(value), `filter value: ${value} content: ${content}`)
             });
             await filter.cleanUp(this);
         }
@@ -82,6 +78,22 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
         for (const action of this.withActions())
             await action.validate(this);
         return super.performCheckInitialElements();
+    }
+
+    private setupLocator() {
+        this.itemCountLocator = this._page.locator(this.itemCountSelector());
+        this.containerLocator = this._page.locator(this.containerSelector());
+        this.filterLocator = this.containerLocator.locator(this.filterSelector());
+        this.columnLocator = this.containerLocator.locator('table').locator('thead').locator('tr').first().locator('th');
+        this.contentLocator = this.containerLocator.locator('table').locator('tbody');
+        this.emptyLocator = this.contentLocator
+            .locator('tr')
+            .locator('td')
+            .locator("//div[@class='empty']");
+        this.rowsLocator = this.contentLocator
+            .locator('tr')
+        this.loadingLocator = this._page.locator(this.loadingSelector());
+        this.corePaginator = new CorePaginator(this._page);
     }
 
     public async waitForLoadingComplete(
