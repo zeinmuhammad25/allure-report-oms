@@ -1,4 +1,4 @@
-import BaseScenario from "../../base/base-scenario";
+import BaseScenario from "../../../base/base-scenario";
 import BranchPage from "../accountSetting/branch/branch.page";
 import BrandPage from "../accountSetting/brand/brand.page";
 import CompanyPage from "../accountSetting/company/company.page";
