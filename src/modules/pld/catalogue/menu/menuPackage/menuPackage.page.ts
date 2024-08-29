@@ -15,6 +15,16 @@ export default class MenuPackagePage extends BasePosLitePage implements MenuPack
 
             Element.ofSelector(MenuPackageLocator.menuPackageCreateCancelButton),
             Element.ofSelector(MenuPackageLocator.menuPackageCreateSaveButton),
+            Element.ofSelector(MenuPackageLocator.menuPackageNewHeadRadioButton),
+            Element.ofSelector(MenuPackageLocator.menuPackageExistingHeadRadioButton),
+            Element.ofSelector(MenuPackageLocator.menuPackageCategoryField),
+            Element.ofSelector(MenuPackageLocator.menuPackageNameField),
+            Element.ofSelector(MenuPackageLocator.menuPackageCodeField),
+            Element.ofSelector(MenuPackageLocator.menuPackageDescField),
+            Element.ofSelector(MenuPackageLocator.menuPackageServiceChargeRadioButton),
+            Element.ofSelector(MenuPackageLocator.menuPackageTaxRadioButton),
+            Element.ofSelector(MenuPackageLocator.menuPackageFOCRadioButton),
+            Element.ofSelector(MenuPackageLocator.menuPackageReplacementField)
 
 
         ];
