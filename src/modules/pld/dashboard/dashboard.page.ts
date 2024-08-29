@@ -49,7 +49,6 @@ import PromotionPage from "../promotion/promotion.page";
 import RemainingFundsPage from "../withdrawFunds/remainingFunds/remainingFunds.page";
 import HistoryPage from "../withdrawFunds/history/history.page";
 import ProfilePage from "../profile/profile.page";
-import ProfileLocator from "../profile/profile.locator";
 import DashboardLocator from "./dashboard.locator";
 
 
@@ -466,7 +465,7 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
 
     }
 
-    async goToProfile(): Promise<ProfilePage>{
+    async goToProfile(): Promise<ProfilePage> {
         await this.click(DashboardLocator.dashboardAccountDropdown);
         return this.clickAndExpectGotoPage(DashboardLocator.dashboardProfileDropdown, ProfilePage);
     }

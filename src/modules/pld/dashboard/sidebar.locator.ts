@@ -119,8 +119,5 @@ export default class SidebarLocator extends BaseLocator {
     //promotion
     static sidebarPromotion: string = "//a[@ng-reflect-router-link='promotion']";
 
-    //withdrawFunds
-
-
 
 }

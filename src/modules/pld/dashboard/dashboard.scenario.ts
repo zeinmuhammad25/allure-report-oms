@@ -29,9 +29,6 @@ import PlatformIntegrationPage from "../onlinePlatform/platformIntegration/platf
 import MenuManagementPage from "../printerSetting/menuManagement/menuManagement.page";
 import PrinterPage from "../printerSetting/printer/printer.page";
 import ProfilePage from "../profile/profile.page";
-import WithdrawalFundsInformationPage from "../profile/withdrawalFundsInformation/withdrawalFundsInformation.page";
-import PromoCodePage from "../promoCode/promoCode/promoCode.page";
-import PromoCodeHistoryPage from "../promoCode/promoCodeHistory/promoCodeHistory.page";
 import PromotionPage from "../promotion/promotion.page";
 import CancelAndVoidPage from "../report/cancelAndVoid/cancelAndVoid.page";
 import PaymentPage from "../report/payment/payment.page";
@@ -40,10 +37,6 @@ import ReportPromotionPage from "../report/promotion/reportPromotion.page";
 import SalesDetailPage from "../report/salesDetail/salesDetail.page";
 import SalesMenuPage from "../report/salesMenu/salesMenu.page";
 import SalesSummaryPage from "../report/salesSummary/salesSummary.page";
-import KycProcessPage from "../subscriptionInformation/kycProcess/kycProcess.page";
-import OnboardingProcessPage from "../subscriptionInformation/onboardingProcess/onboardingProcess.page";
-import SubscriptionStatusPage from "../subscriptionInformation/subscriptionStatus/subscriptionStatus.page";
-import TopUpBalancePage from "../subscriptionInformation/topUpBalance/topUpBalance.page";
 import UserPage from "../userAccessControl/user/user.page";
 import UserAccessBackendPage from "../userAccessControl/userAccessBackend/userAccessBackend.page";
 import UserAccessPOSPage from "../userAccessControl/userAccessPOS/userAccessPOS.page";
@@ -151,9 +144,11 @@ export default interface DashboardScenario extends BaseScenario {
     //profile
     goToProfile(): Promise<ProfilePage>;
 
-   //withdrawFunds
+    //withdrawFunds
     withdrawFundAccordionCheck(): Promise<void>;
+
     goToWithdrawHistory(): Promise<HistoryPage>;
+
     goToRemainingFunds(): Promise<RemainingFundsPage>;
 
     //promotion
