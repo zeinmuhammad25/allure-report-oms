@@ -70,6 +70,8 @@ export default class SidebarLocator extends BaseLocator {
 
     //userAccessControl
     static sidebarUserAccessControlHead: string = "//div[contains(text(),'Hak Akses')]";
+    static sidebarUserAccessControlClosed: string = "//div[contains(text(),'Hak Akses')]/ancestor::li[@ng-reflect-nz-open='false']";
+    static sidebarUserAccessControlOpen: string = "//div[contains(text(),'Hak Akses')]/ancestor::li[@ng-reflect-nz-open='true']";
     static sidebarUser: string = "//a[@ng-reflect-router-link='role/user']";
     static sidebarUserAccessBackend: string = "//a[@ng-reflect-router-link='role/user-role']";
     static sidebarUserAccessPOS: string = "//a[@ng-reflect-router-link='role/pos-user-role']";
