@@ -1,6 +1,6 @@
 import {test} from "@playwright/test";
-import LoginPage from "../../../src/modules/pld/login/login.page";
-import DashboardPage from "../../../src/modules/pld/dashboard/dashboard.page";
+import LoginPage from "../../src/modules/pld/login/login.page";
+import DashboardPage from "../../src/modules/pld/dashboard/dashboard.page";
 
 
 test.describe.serial('Printer Tests', () => {
