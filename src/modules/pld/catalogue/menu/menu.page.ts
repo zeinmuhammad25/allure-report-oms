@@ -2,6 +2,8 @@ import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
 import MenuScenario from "./menu.scenario";
 import MenuLocator from "./menu.locator";
+import MenuSinglePage from "./menuSingle/menuSingle.page";
+import MenuPackagePage from "./menuPackage/menuPackage.page";
 
 
 export default class MenuPage extends BasePosLitePage implements MenuScenario {
@@ -12,11 +14,12 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
     shouldHave(): Element[] {
         return [
 
-            Element.ofSelector(MenuLocator.singleMenuButton),
-            Element.ofSelector(MenuLocator.packageMenuButton),
-            Element.ofSelector(MenuLocator.archiveMenuButton),
-            Element.ofSelector(MenuLocator.importMenuButton),
-            Element.ofSelector(MenuLocator.exportMenuButton),
+            Element.ofSelector(MenuLocator.menuSingleTab),
+            Element.ofSelector(MenuLocator.menuPackageTab),
+            Element.ofSelector(MenuLocator.menuSingleAddButton),
+            Element.ofSelector(MenuLocator.menuArchiveButton),
+            Element.ofSelector(MenuLocator.menuImportButton),
+            Element.ofSelector(MenuLocator.menuExportButton),
             Element.ofSelector(MenuLocator.menuDropdownField),
             Element.ofSelector(MenuLocator.menuSearchField),
             Element.ofSelector(MenuLocator.menuTotalCount),
@@ -25,6 +28,18 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
             Element.ofSelector(MenuLocator.addRecipeButton),
             Element.ofSelector(MenuLocator.instructionButton),
         ];
+    }
+
+    async createMenuSingle(): Promise<MenuSinglePage> {
+
+        return this.clickAndExpectGotoPage(MenuLocator.menuSingleAddButton, MenuSinglePage);
+
+    }
+
+    async createMenuPackage(): Promise<MenuPackagePage> {
+
+        await this.click(MenuLocator.menuPackageTab);
+        return this.clickAndExpectGotoPage(MenuLocator.menuPackageAddButton, MenuPackagePage);
     }
 
 

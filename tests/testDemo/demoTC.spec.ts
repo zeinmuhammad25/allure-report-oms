@@ -52,7 +52,7 @@ test.describe.serial('Demo Test Case', () => {
     let loginPage: LoginPage;
 
 
-    test('aaaa', {tag: '@demoTest, @accountDemo'}, async ({page}) => {
+    test('Verify elements for all page with url', {tag: '@demoTest, @accountDemo'}, async ({page}) => {
         test.setTimeout(120000);
         loginPage = new LoginPage(page);
         await loginPage.navigateHere();
