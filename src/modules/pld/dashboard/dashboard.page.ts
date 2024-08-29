@@ -48,6 +48,9 @@ import OnlinePaymentPage from "./onlinePayment/onlinePayment.page";
 import PromotionPage from "../promotion/promotion.page";
 import RemainingFundsPage from "../withdrawFunds/remainingFunds/remainingFunds.page";
 import HistoryPage from "../withdrawFunds/history/history.page";
+import ProfilePage from "../profile/profile.page";
+import ProfileLocator from "../profile/profile.locator";
+import DashboardLocator from "./dashboard.locator";
 
 
 export default class DashboardPage extends BasePosLitePage implements DashboardScenario {
@@ -461,6 +464,11 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.withdrawFundAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarHistory, HistoryPage);
 
+    }
+
+    async goToProfile(): Promise<ProfilePage>{
+        await this.click(DashboardLocator.dashboardAccountDropdown);
+        return this.clickAndExpectGotoPage(DashboardLocator.dashboardProfileDropdown, ProfilePage);
     }
 
 

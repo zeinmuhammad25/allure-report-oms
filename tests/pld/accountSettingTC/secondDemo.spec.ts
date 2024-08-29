@@ -128,6 +128,16 @@ test.describe.serial('Printer Tests', () => {
         await dashboardPage.goToPromotion();
         await goBackToDashboard();
 
+        //withdrawFund
+        await dashboardPage.goToRemainingFunds();
+        await goBackToDashboard();
+        await dashboardPage.goToWithdrawHistory();
+        await goBackToDashboard();
+
+        //profile
+        await dashboardPage.goToProfile();
+        await goBackToDashboard();
+
 
     });
 

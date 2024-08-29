@@ -7,4 +7,8 @@ export default class DashboardLocator extends BaseLocator {
     static dropdownProfile: string = "//div[@nztrigger='click']"; //request dev for better ID
     static buttonProfile: string = "//li[@tabindex='0']"; //request dev for better ID
 
+    //accountDropdown
+    static dashboardAccountDropdown: string = "//div[@nzoverlayclassname='dropdown-account']";
+    static dashboardProfileDropdown: string = "//span[normalize-space()='Profil']";
+
 }
