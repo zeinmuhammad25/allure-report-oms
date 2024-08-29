@@ -3,7 +3,7 @@ import BaseLocator from "../../../../base/base-locator";
 export default class RawMaterialStockLocator extends BaseLocator {
 
     static rawMaterialStockFilter: string = "//button[@class='button-mobile button-outline-blue w-100']";
-    static rawMaterialStockDropdown: string = "//nz-select-item[@title='Ini Cabang 6 Bulan']";
+    static rawMaterialStockDropdown: string = "//nz-select[@nzplaceholder='Pilih Cabang' and @nzsize='large']";
     static rawMaterialStockSearch: string = "//nz-input-group[@class='ant-input-affix-wrapper ant-input-affix-wrapper-lg']";
     static rawMaterialStockDownloadButton: string = "//button[normalize-space()='Unduh']";
 

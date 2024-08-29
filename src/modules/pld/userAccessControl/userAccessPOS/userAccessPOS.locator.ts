@@ -5,7 +5,7 @@ export default class UserAccessPOSLocator extends BaseLocator {
     static userAccessPOSTab: string = "//div[@role='tab' and text()='Hak Akses POS']";
 
     static addUserAccessPOSButton: string = "//button[@routerlink='/role/pos-user-role/create']";
-    static userAccessPOSNameField: string = "#posRoleDesc";
+    static userAccessPOSNameField: string = "//span[normalize-space()='Nama Hak Akses POS']";
     static cancelButton: string = "//button[@routerlink='/role/pos-user-role/index']";
     static saveButton: string = "//button[text()=' Simpan ']";
 
