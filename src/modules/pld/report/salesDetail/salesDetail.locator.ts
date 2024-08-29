@@ -1,17 +1,17 @@
 import BaseLocator from "../../../../base/base-locator";
 
 export default class SalesDetailLocator extends BaseLocator {
-    static salesDateField: string = "(//input[@class='filter-calendar ng-untouched ng-valid ng-star-inserted ng-dirty'])[1]";
-    static salesCompanyField: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[1]";
-    static salesBrandField: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[2]";
-    static salesBranchField: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[3]";
-    static salesMode: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[4]";
-    static salesType: string = "(//nz-select-top-control[@class='ng-tns-c137-48 ant-select-selector'])[1]";
-    static paymentMethod: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[6]";
-    static transactionNumber: string = "(//input[@id='salesNum'])[1]";
-    static cashierName: string = "(//input[@id='cashierName'])[1]";
-    static salesViewButton: string = "(//button[normalize-space()='Tampilkan'])[1]";
-    static salesDownloadButton: string = "(//button[normalize-space()='Unduh'])[1]";
+    static salesDateField: string = "//input[@class='filter-calendar ng-untouched ng-valid ng-star-inserted ng-dirty']";
+    static salesCompanyField: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Perusahaan']//input[@autocomplete='off']";
+    static salesBrandField: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Brand']//input[@autocomplete='off']";
+    static salesBranchField: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Cabang']//input[@autocomplete='off']";
+    static salesMode: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Mode Penjuala']//input[@autocomplete='off']";
+    static salesType: string = "//nz-select-top-control[@ng-reflect-mode='multiple']";
+    static paymentMethod: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Metode Pembay']//input[@autocomplete='off']";
+    static transactionNumber: string = "//input[@id='salesNum']";
+    static cashierName: string = "//input[@id='cashierName']";
+    static salesViewButton: string = "//button[normalize-space()='Tampilkan']";
+    static salesDownloadButton: string = "//button[normalize-space()='Unduh']";
     static scrollUpButton: string = "(//div[@class='ant-back-top-inner ng-star-inserted'])[1]";
 
 //Date picker locator
