@@ -9,6 +9,14 @@ export default class SidebarLocator extends BaseLocator {
     static catalogue: string = "(//div[contains(text(),'Katalog')])[1]";
     static sidebarMenu: string = "//a[normalize-space()='Menu']";
 
+    //dashboard
+    static sidebarDashboardClosed: string = "//div[contains(text(),'Dashboard')]/ancestor::li[@ng-reflect-nz-open='false']";
+    static sidebarDashboardOpen: string = "//div[contains(text(),'Dashboard')]/ancestor::li[@ng-reflect-nz-open='true']";
+    static sidebarDashboardChild: string = "//a[normalize-space()='Dashboard']";
+    static sidebarStockMenu: string = "//a[normalize-space()='Stok Menu']";
+    static sidebarDashboardBookkeeping: string = "//a[normalize-space()='Pembukuan']";
+    static sidebarOnlinePayment: string = "//a[normalize-space()='Pembayaran Online']";
+
     //accountSetting
     static sidebarAccountSettingHead: string = "//div[contains(text(),'Pengaturan Cabang')]";
     static sidebarAccountSettingHeadClosed: string = "//div[contains(text(),'Pengaturan Cabang')]/ancestor::li[@ng-reflect-nz-open='false']";
@@ -49,8 +57,8 @@ export default class SidebarLocator extends BaseLocator {
 
     //catalogue
     static sidebarCatalogueHead: string = "//div[contains(text(),'Pengaturan Menu')]";
-    static sidebarCatalogueHeadOpen: string =  "//div[contains(text(),'Pengaturan Menu')]/ancestor::li[@ng-reflect-nz-open='true']";
-    static sidebarCatalogueHeadClosed: string =  "//div[contains(text(),'Pengaturan Menu')]/ancestor::li[@ng-reflect-nz-open='false']";
+    static sidebarCatalogueHeadOpen: string = "//div[contains(text(),'Pengaturan Menu')]/ancestor::li[@ng-reflect-nz-open='true']";
+    static sidebarCatalogueHeadClosed: string = "//div[contains(text(),'Pengaturan Menu')]/ancestor::li[@ng-reflect-nz-open='false']";
     static sidebarChildMenu: string = "//a[@ng-reflect-router-link='catalog/menu']";
     static sidebarChildCategory: string = "//a[@ng-reflect-router-link='catalog/menu-category']";
     static sidebarMenuBook: string = "//a[@ng-reflect-router-link='catalog/menu-template']";
@@ -100,11 +108,14 @@ export default class SidebarLocator extends BaseLocator {
 
     //bookkeeping
     static sidebarBookkeeping: string = "//div[contains(text(),'Pembukuan')]";
-    static sidebarBookkeepingOpen: string =  "//div[contains(text(),'Pembukuan')]/ancestor::li[@ng-reflect-nz-open='true']";
-    static sidebarBookkeepingClosed: string =  "//div[contains(text(),'Pembukuan')]/ancestor::li[@ng-reflect-nz-open='false']";
+    static sidebarBookkeepingOpen: string = "//div[contains(text(),'Pembukuan')]/ancestor::li[@ng-reflect-nz-open='true']";
+    static sidebarBookkeepingClosed: string = "//div[contains(text(),'Pembukuan')]/ancestor::li[@ng-reflect-nz-open='false']";
     static sidebarBookkeepingCategory: string = "//a[@ng-reflect-router-link='finance/charts-of-account']";
     static sidebarBookkeepingInput: string = "//a[@ng-reflect-router-link='finance/input-finance']";
     static sidebarBookkeepingReport: string = "//a[@ng-reflect-router-link='finance/profit-loss-report']";
+
+    //promotion
+    static sidebarPromotion: string = "//a[@ng-reflect-router-link='promotion']";
 
 
 }
