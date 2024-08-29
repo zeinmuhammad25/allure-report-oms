@@ -8,7 +8,7 @@ import SingleMenuScenario from "./singleMenu.scenario";
 export default class SingleMenuPage extends BasePosLitePage implements SingleMenuScenario {
 
 
-    pageUrl = (): string => Urls.singlemenu;
+    pageUrl = (): string => this.urls.get.catalogue.singleMenuUrl;
 
     shouldHave(): Element[] {
         return [
