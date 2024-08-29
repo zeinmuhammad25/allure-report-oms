@@ -22,7 +22,7 @@ test.describe.serial('Printer Tests', () => {
 
     });
 
-    test('Verify accountSetting modules', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+    test('Verify Element by clicking sidebar', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
         test.setTimeout(10000000);
         let dashboardPage = new DashboardPage(page);
 
