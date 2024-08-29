@@ -1,6 +1,6 @@
 import BaseLocator from "../../../../../base/base-locator";
 
-export default class SingleMenuLocator extends BaseLocator {
+export default class MenuSingleLocator extends BaseLocator {
     // Locator on Add Menu
     static menuCreateSaveButton: string = "//button[@id='btn-save']";
     static menuCreateCancelButton: string = "//button[@id='btn-cancel']";
