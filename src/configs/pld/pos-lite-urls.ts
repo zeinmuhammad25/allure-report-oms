@@ -46,7 +46,7 @@ export default class PosLiteUrls extends BaseUrl {
             salesModeUrl: "/esb-core-lite/catalog/sales-mode/index",
             specialPriceUrl: "/esb-core-lite/catalog/special-price/index",
             menuSingleUrl: "/esb-core-lite/catalog/menu/create",
-            menuPackageUrl: "/esb-core-lite-8/catalog/menu/create-package",
+            menuPackageUrl: "/esb-core-lite/catalog/menu/create-package",
         },
         login: {
             loginUrl: "/esb-core-lite/login",

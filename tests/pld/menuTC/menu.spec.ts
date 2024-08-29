@@ -15,11 +15,19 @@ test.describe.serial('Printer Tests', () => {
     });
 
 
-    test('Verify if user can create menu', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+    test('Verify if user can create menu single', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
         let dashboardPage = new DashboardPage(page);
         let menuPage = new MenuPage(page);
         await dashboardPage.goToMenu();
-        await menuPage.createMenu();
+        await menuPage.createMenuSingle();
+
+    });
+
+    test('Verify if user can create menu package', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+        let dashboardPage = new DashboardPage(page);
+        let menuPage = new MenuPage(page);
+        await dashboardPage.goToMenu();
+        await menuPage.createMenuPackage();
 
     });
 

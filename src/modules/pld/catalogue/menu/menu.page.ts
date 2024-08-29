@@ -30,13 +30,13 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
         ];
     }
 
-    async createMenu(): Promise<MenuSinglePage> {
+    async createMenuSingle(): Promise<MenuSinglePage> {
 
         return this.clickAndExpectGotoPage(MenuLocator.menuSingleAddButton, MenuSinglePage);
 
     }
 
-    async  createMenuPackage(): Promise<MenuPackagePage> {
+    async createMenuPackage(): Promise<MenuPackagePage> {
 
         await this.click(MenuLocator.menuPackageTab);
         return this.clickAndExpectGotoPage(MenuLocator.menuPackageAddButton, MenuPackagePage);

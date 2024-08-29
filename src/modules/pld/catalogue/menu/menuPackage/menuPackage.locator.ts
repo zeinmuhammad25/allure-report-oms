@@ -2,8 +2,8 @@ import BaseLocator from "../../../../../base/base-locator";
 
 export default class MenuPackageLocator extends BaseLocator {
     // Locator on Add Menu
-    static menuPackageCreateSaveButton: string = "//button[@id='btn-save']";
-    static menuPackageCreateCancelButton: string = "//button[@id='btn-cancel']";
+    static menuPackageCreateSaveButton: string = "//button[normalize-space()='Simpan']";
+    static menuPackageCreateCancelButton: string = "//button[normalize-space()='Batal']";
 
     //radioButton
     static menuPackageNewHeadRadioButton: string = "//span[normalize-space()='Buat Kepala Paket Baru']";
