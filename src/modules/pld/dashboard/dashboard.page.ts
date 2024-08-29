@@ -67,6 +67,14 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         }
     }
 
+    async handleMenuToolTip(): Promise<void> {
+        const isTooltipVisible = await this.isVisible(MenuLocator.menuTooltipOkeOrangeButton);
+        if (isTooltipVisible) {
+            await this.click(MenuLocator.menuTooltipOkeOrangeButton);
+        }
+    }
+
+
     async accountSettingAccordionCheck(): Promise<void> {
         const isAccountSettingVisible = await this.isVisible(SidebarLocator.sidebarAccountSettingHeadClosed);
         if (isAccountSettingVisible) {
@@ -243,8 +251,11 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
 
         await this.catalogueAccordionCheck();
         await this.click(SidebarLocator.sidebarChildMenu);
+        // await this.handleMenuToolTip();
         await this.expectVisible(MenuLocator.menuTooltipOkeButton);
-        await this.click(MenuLocator.menuTooltipOkeButton);
+        await this.click(MenuLocator.menuTooltipOkeOrangeButton)
+        // await this.expectVisible(MenuLocator.menuTooltipOkeButton);
+        // await this.click(MenuLocator.menuTooltipOkeButton);
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarChildMenu, MenuPage);
 
 
@@ -467,6 +478,7 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
 
     async goToProfile(): Promise<ProfilePage> {
         await this.click(DashboardLocator.dashboardAccountDropdown);
+        await this.expectVisible(DashboardLocator.dashboardProfileDropdown);
         return this.clickAndExpectGotoPage(DashboardLocator.dashboardProfileDropdown, ProfilePage);
     }
 
