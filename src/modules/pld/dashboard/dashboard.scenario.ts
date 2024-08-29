@@ -50,6 +50,8 @@ import UserAccessPOSPage from "../userAccessControl/userAccessPOS/userAccessPOS.
 import StockMenuPage from "./stockMenu/stockMenu.page";
 import BookKeepingPage from "./bookKeeping/bookKeeping.page";
 import OnlinePaymentPage from "./onlinePayment/onlinePayment.page";
+import HistoryPage from "../withdrawFunds/history/history.page";
+import RemainingFundsPage from "../withdrawFunds/remainingFunds/remainingFunds.page";
 
 export default interface DashboardScenario extends BaseScenario {
 
@@ -149,12 +151,10 @@ export default interface DashboardScenario extends BaseScenario {
     //profile
     goToProfile(): Promise<ProfilePage>;
 
-    goToWithdrawalFundsInformation(): Promise<WithdrawalFundsInformationPage>;
-
-    //promoCode
-    goToPromoCode(): Promise<PromoCodePage>;
-
-    goToPromoCodeHistory(): Promise<PromoCodeHistoryPage>;
+   //withdrawFunds
+    withdrawFundAccordionCheck(): Promise<void>;
+    goToWithdrawHistory(): Promise<HistoryPage>;
+    goToRemainingFunds(): Promise<RemainingFundsPage>;
 
     //promotion
     goToPromotion(): Promise<PromotionPage>;

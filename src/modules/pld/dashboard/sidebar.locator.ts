@@ -86,6 +86,8 @@ export default class SidebarLocator extends BaseLocator {
 
     //withdrawFunds
     static sidebarWithdrawFundsHead: string = "//div[contains(text(),'Penarikan Dana')]";
+    static sidebarWithdrawFundsClosed: string = "//div[contains(text(),'Penarikan Dana')]/ancestor::li[@ng-reflect-nz-open='false']";
+    static sidebarWithdrawFundsOpen: string = "//div[contains(text(),'Penarikan Dana')]/ancestor::li[@ng-reflect-nz-open='true']";
     static sidebarHistory: string = "//a[normalize-space()='Riwayat']";
     static sidebarRemainingFunds: string = "//a[normalize-space()='Sisa Dana']";
 
@@ -97,7 +99,7 @@ export default class SidebarLocator extends BaseLocator {
     static sidebarESBOrderBannerMarketing: string = "//a[@ng-reflect-router-link='esb-order/banner']";
 
     //promotion
-    static sidebarPromotionHead: string = "//a[@ng-reflect-router-link='promotion']";
+    static sidebarPromotionHead: string = "//li[@class='ant-menu-item ng-star-inserted']";
 
     //onlinePlatform
     static sidebarOnlinePlatform: string = "//div[contains(text(),'Pesanan Online')]";
@@ -116,6 +118,9 @@ export default class SidebarLocator extends BaseLocator {
 
     //promotion
     static sidebarPromotion: string = "//a[@ng-reflect-router-link='promotion']";
+
+    //withdrawFunds
+
 
 
 }

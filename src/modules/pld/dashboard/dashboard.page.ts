@@ -46,6 +46,8 @@ import StockMenuPage from "./stockMenu/stockMenu.page";
 import BookKeepingPage from "./bookKeeping/bookKeeping.page";
 import OnlinePaymentPage from "./onlinePayment/onlinePayment.page";
 import PromotionPage from "../promotion/promotion.page";
+import RemainingFundsPage from "../withdrawFunds/remainingFunds/remainingFunds.page";
+import HistoryPage from "../withdrawFunds/history/history.page";
 
 
 export default class DashboardPage extends BasePosLitePage implements DashboardScenario {
@@ -140,6 +142,14 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         if (isUserAccessVisible) {
             await this.click(SidebarLocator.sidebarUserAccessControlClosed);
             await this.expectVisible(SidebarLocator.sidebarUserAccessControlOpen);
+        }
+    }
+
+    async withdrawFundAccordionCheck(): Promise<void> {
+        const isWithdrawFundsVisible = await this.isVisible(SidebarLocator.sidebarWithdrawFundsClosed);
+        if (isWithdrawFundsVisible) {
+            await this.click(SidebarLocator.sidebarWithdrawFundsClosed);
+            await this.expectVisible(SidebarLocator.sidebarWithdrawFundsOpen);
         }
     }
 
@@ -421,6 +431,7 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarStockMenu, StockMenuPage);
 
     }
+
     async goToBookKeeping(): Promise<BookKeepingPage> {
 
         await this.dashboardAccordionCheck();
@@ -436,8 +447,19 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
     }
 
     async goToPromotion(): Promise<PromotionPage> {
-        await this.expectVisible(SidebarLocator.)
-        return this.clickAndExpectGotoPage(SidebarLocator.sidebarOnlinePayment, OnlinePaymentPage);
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarPromotionHead, PromotionPage);
+
+    }
+
+    async goToRemainingFunds(): Promise<RemainingFundsPage> {
+        await this.withdrawFundAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarRemainingFunds, RemainingFundsPage);
+
+    }
+
+    async goToWithdrawHistory(): Promise<HistoryPage> {
+        await this.withdrawFundAccordionCheck();
+        return this.clickAndExpectGotoPage(SidebarLocator.sidebarHistory, HistoryPage);
 
     }
 
