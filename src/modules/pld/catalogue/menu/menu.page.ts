@@ -2,6 +2,9 @@ import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
 import MenuScenario from "./menu.scenario";
 import MenuLocator from "./menu.locator";
+import CompanyPage from "../../accountSetting/company/company.page";
+import SidebarLocator from "../../dashboard/sidebar.locator";
+import MenuSinglePage from "./menuSingle/menuSingle.page";
 
 
 export default class MenuPage extends BasePosLitePage implements MenuScenario {
@@ -25,6 +28,12 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
             Element.ofSelector(MenuLocator.addRecipeButton),
             Element.ofSelector(MenuLocator.instructionButton),
         ];
+    }
+
+    async createMenu(): Promise<MenuSinglePage> {
+
+        return this.clickAndExpectGotoPage(MenuLocator.singleMenuButton, MenuSinglePage);
+
     }
 
 
