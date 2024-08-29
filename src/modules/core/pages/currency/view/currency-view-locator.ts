@@ -11,7 +11,6 @@ export default class CurrencyViewLocator {
 
     public static selectFilterCurrencyActive: string = "#select2-mscurrencyform-flagactive-container";
     public static selectFilterCurrencyActiveResultsContainer = "//ul[@id='select2-mscurrencyform-flagactive-results']";
-    public static selectFilterCurrencyActiveResultPrefix = "select2-mscurrencyform-flagactive-results";
 
     public static getLocatorFilterCurrencyOptions(index: number): string {
         return `//li[@id$='-${index}']`;

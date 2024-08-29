@@ -28,6 +28,9 @@ export default class CoreUrls extends BaseUrl {
             },
             currency: {
                 view: "currency",
+            },
+            supplier: {
+                view: "supplier",
             }
         }
     }

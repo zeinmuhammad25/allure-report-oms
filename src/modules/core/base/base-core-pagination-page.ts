@@ -65,13 +65,14 @@ export default abstract class BaseCorePaginationPage extends BaseCorePage {
         for (let i = 0; i < this.withFilters().length; i++) {
             const filter = this.withFilters()[i];
             const data = this.rows
-                .map(value => value.items[i])
-                .map(value => value.content)
+                .map(value => value.items[i].content)
+                // filter unique
                 .filter((x, i, a) => a.indexOf(x) == i)
+                // take first 5
                 .slice(0, Math.min(this.rows.length, 5));
 
             await filter.validate(this, data, async (value: string) => {
-                await this.wait(300);
+                await this.wait(400);
                 const content = await this.rowsLocator.first().locator('td').nth(i).textContent();
                 assert(content.includes(value), `value: ${value} content: ${content}`)
             });

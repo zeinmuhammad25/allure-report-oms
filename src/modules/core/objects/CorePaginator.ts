@@ -60,10 +60,10 @@ export default class CorePaginator {
         }
 
         // restore to first page
-        if (!await this.firstLocator.evaluate(on => on.classList.contains('disabled'))) {
+        if (this.activePage > 1) {
             await this.firstLocator.locator('a').click();
             await page.waitForLoadingComplete();
-            this.activePage = 0;
+            this.activePage = 1;
         }
     }
 }
