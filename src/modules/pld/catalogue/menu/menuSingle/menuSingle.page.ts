@@ -29,4 +29,6 @@ export default class MenuSinglePage extends BasePosLitePage implements MenuSingl
     }
 
 
+
+
 }

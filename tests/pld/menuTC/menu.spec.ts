@@ -19,7 +19,7 @@ test.describe.serial('Printer Tests', () => {
         let dashboardPage = new DashboardPage(page);
         let menuPage = new MenuPage(page);
         await dashboardPage.goToMenu();
-        await menuPage.createMenuSingle();
+        await menuPage.gotoMenuSingle();
 
     });
 
