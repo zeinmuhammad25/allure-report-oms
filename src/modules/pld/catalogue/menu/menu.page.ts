@@ -47,7 +47,9 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
         await this.click(MenuLocator.menuSearchField);
         await this.typeKeyboard(this.menuNameSearchData);
         await this.click(MenuLocator.menuSearchButton);
-        await this.expectVisible(MenuLocator.menuDeleteButton);
+        await this.click(MenuLocator.menuSingleDeleteButton);//tr[@class='ant-table-row ng-star-inserted']/td[@class='ant-table-cell'][2]
+        await this.click(MenuLocator.menuDeleteConfirmationButton);
+        await this.expectVisible(MenuLocator.menuDeleteSuccessNotification);
     }
 
     async cleanUpMenuPackage(): Promise<void> {
@@ -55,7 +57,7 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
         await this.click(MenuLocator.menuSearchMenuPackageField);
         await this.typeKeyboard(this.menuPackageNameData);
         await this.click(MenuLocator.menuSearchButton);
-        await this.click(MenuLocator.menuDeleteButton);
+        await this.click(MenuLocator.menuPackageDeleteButton);
         await this.click(MenuLocator.menuDeleteConfirmationButton);
         await this.expectVisible(MenuLocator.menuDeleteSuccessNotification);
     }

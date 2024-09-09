@@ -16,7 +16,8 @@ export default class MenuLocator extends BaseLocator {
     static menuTotalCount: string = "//div[@class='page-total-container']";
     static paginationNextButton: string = "//li[@title='Halaman Berikutnya']//button[@type='button']";
     static paginationPreviousButton: string = "//li[@title='Halaman Sebelumnya']//button[@type='button']";
-    static menuDeleteButton: string = "//tr[@class='ant-table-row ng-star-inserted']/td[@class='ant-table-cell']/div[@class='d-flex align-items-center justify-content-center gap-6']/button[@class='button button-red button-x-small button-icon']";
+    static menuSingleDeleteButton: string = "//tr[@class='ant-table-row ng-star-inserted']/td[@class='ant-table-cell'][2][contains(text(), 'Test Menu 01')]/following-sibling::td//button[@id='btn-delete']";
+    static menuPackageDeleteButton: string = "//tr[@class='ant-table-row ng-star-inserted']/td[@class='ant-table-cell']/div[@class='d-flex align-items-center justify-content-center gap-6']/button[@class='button button-red button-x-small button-icon']";
     static menuEditButton: string = "(//button)[11]";
     static menuDeletePopupImage: string = "//img[@class='img-fluid ng-star-inserted']";
     static menuDeleteConfirmationButton: string = "//button[@id='btn-modal-confirm']";
