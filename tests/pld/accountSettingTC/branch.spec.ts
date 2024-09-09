@@ -4,6 +4,8 @@ import BranchPage from "../../../src/modules/pld/accountSetting/branch/branch.pa
 import BranchTabMainPage from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabMain/branchTabMain.page";
 import BranchTabTransactionPage
     from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabTransaction/branchTabTransaction.page";
+import BranchTabSalesModePage
+    from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabSalesMode/branchTabSalesMode.page";
 
 
 test.describe.serial('Printer Tests', () => {
@@ -40,6 +42,17 @@ test.describe.serial('Printer Tests', () => {
         await branchPage.searchBranchData();
         await branchTabTransaction.navigateToBranchTab()
         await branchTabTransaction.makeSureOnlyCashChecked();
+
+    });
+
+    test('Verify if user can add new sales mode ', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+        const branchPage: BranchPage = new BranchPage(page);
+        const branchTabSalesModePage = new BranchTabSalesModePage(page);
+        await branchPage.navigateToBranchSetting();
+        await branchPage.searchBranchData();
+        await branchTabSalesModePage.navigateToSalesModeTab();
+        await branchTabSalesModePage.salesModeAddNew();
+        await branchTabSalesModePage.salesModeDelete();
 
     });
 

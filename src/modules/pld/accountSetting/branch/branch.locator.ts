@@ -18,5 +18,8 @@ export default class BranchLocator extends BaseLocator {
     static branchEditDataName: string = "//td[normalize-space()='Test Cabang Baru']";
     static branchOriginDataName: string = "//td[normalize-space()='Ini Cabang 6 Bulan']";
 
+    //branchTab
+    static branchTabSalesMode: string = "//div[@class='ng-star-inserted'][normalize-space()='Mode Penjualan']";
+
 
 }

@@ -44,21 +44,5 @@ export default class BranchTabMainPage extends BasePosLitePage implements Branch
 
     }
 
-    async performBranchTabMainElementCheck(): Promise<void> {
-        await this.click(BranchTabMainLocator.branchTabMain);
-        console.log('User is on branch tab main page');
-        await this.expectVisible(BranchTabMainLocator.branchTabNameField);
-        console.log('branch name field in main tab is present');
-        await this.expectVisible(BranchTabMainLocator.branchMainTabCodeField);
-        console.log('branch code field in main tab is present');
-        await this.expectVisible(BranchTabMainLocator.branchMainTabPhoneField);
-        console.log('branch phone number field in main tab is present');
-        await this.expectVisible(BranchTabMainLocator.branchTabSaveButton);
-        console.log('branch save button in main tab is present');
-        await this.expectVisible(BranchTabMainLocator.branchTabCancelButton);
-        console.log('branch cancel button in main tab is present');
-
-
-    }
 
 }
