@@ -4,5 +4,5 @@ export default interface BranchTabMainScenario extends BaseScenario {
 
     performResetBranchName(): Promise<void>;
 
-    performBranchTabMainElementCheck(): Promise<void>;
+    performEditBranchName(): Promise<void>;
 }
