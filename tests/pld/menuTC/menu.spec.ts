@@ -3,6 +3,7 @@ import LoginPage from "../../../src/modules/pld/login/login.page";
 import DashboardPage from "../../../src/modules/pld/dashboard/dashboard.page";
 import MenuPage from "../../../src/modules/pld/catalogue/menu/menu.page";
 import MenuSinglePage from "../../../src/modules/pld/catalogue/menu/menuSingle/menuSingle.page";
+import MenuPackagePage from "../../../src/modules/pld/catalogue/menu/menuPackage/menuPackage.page";
 
 
 test.describe.serial('Printer Tests', () => {
@@ -31,8 +32,14 @@ test.describe.serial('Printer Tests', () => {
     test('Verify if user can create menu package', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
         let dashboardPage = new DashboardPage(page);
         let menuPage = new MenuPage(page);
+        let menuPackagePage = new MenuPackagePage(page);
         await dashboardPage.goToMenu();
-        await menuPage.cleanUpMenuSingle();
+        await menuPage.goToMenuPackage();
+        await menuPackagePage.fillMenuPackageInformationForm();
+        await menuPackagePage.dismissTooltip();
+        await menuPackagePage.fillMenuPackageGroupForm();
+        await menuPackagePage.saveMenuPackage();
+        await menuPage.cleanUpMenuPackage();
 
     });
 

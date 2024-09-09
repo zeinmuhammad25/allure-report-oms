@@ -4,11 +4,11 @@ import MenuScenario from "./menu.scenario";
 import MenuLocator from "./menu.locator";
 import MenuSinglePage from "./menuSingle/menuSingle.page";
 import MenuPackagePage from "./menuPackage/menuPackage.page";
-import {Keyboard} from "../../../../base/constants/Keyboard";
 
 
 export default class MenuPage extends BasePosLitePage implements MenuScenario {
-    private menuNameSearchData = "Test Menu 01"
+    private menuNameSearchData = "Test Menu 01";
+    private menuPackageNameData = "Test Menu Package 01";
 
     pageUrl = (): string => this.urls.get.catalogue.menuUrl;
 
@@ -37,7 +37,7 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
 
     }
 
-    async createMenuPackage(): Promise<MenuPackagePage> {
+    async goToMenuPackage(): Promise<MenuPackagePage> {
 
         await this.click(MenuLocator.menuPackageTab);
         return this.clickAndExpectGotoPage(MenuLocator.menuPackageAddButton, MenuPackagePage);
@@ -46,11 +46,19 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
     async cleanUpMenuSingle(): Promise<void> {
         await this.click(MenuLocator.menuSearchField);
         await this.typeKeyboard(this.menuNameSearchData);
-        await this.click(MenuLocator.menuMagnifyingGlass);
+        await this.click(MenuLocator.menuSearchButton);
         await this.expectVisible(MenuLocator.menuDeleteButton);
     }
 
-
+    async cleanUpMenuPackage(): Promise<void> {
+        await this.click(MenuLocator.menuPackageTab);
+        await this.click(MenuLocator.menuSearchMenuPackageField);
+        await this.typeKeyboard(this.menuPackageNameData);
+        await this.click(MenuLocator.menuSearchButton);
+        await this.click(MenuLocator.menuDeleteButton);
+        await this.click(MenuLocator.menuDeleteConfirmationButton);
+        await this.expectVisible(MenuLocator.menuDeleteSuccessNotification);
+    }
 
 
 }

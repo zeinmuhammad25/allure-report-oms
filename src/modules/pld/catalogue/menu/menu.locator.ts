@@ -11,14 +11,16 @@ export default class MenuLocator extends BaseLocator {
     static menuPackageAddButton: string = "//button[normalize-space()='Tambah Menu Paket']";
     static menuDropdownField: string = "//body/app-layout/nz-layout/nz-layout/nz-content[@ng-reflect-ng-class='[object Object]']/div[@ng-reflect-ng-class='[object Object]']/app-menu/app-menu-index/div/div/div/div/div/app-tab-menu-index[@ng-reflect-uac-recipe='[object Object]']/div[1]/div[1]"
     static menuSearchField: string = "//input[@placeholder='Cari berdasarkan Menu']";
-    static menuMagnifyingGlass: string = "//span[@type='suffix']";
+    static menuSearchMenuPackageField: string = "//input[@placeholder='Cari berdasarkan kata kunci']";
+    static menuSearchButton: string = "//span[@type='suffix']";
     static menuTotalCount: string = "//div[@class='page-total-container']";
     static paginationNextButton: string = "//li[@title='Halaman Berikutnya']//button[@type='button']";
     static paginationPreviousButton: string = "//li[@title='Halaman Sebelumnya']//button[@type='button']";
-    static menuDeleteButton: string = "//tr[.//td[text()='1.'] and .//td[text()='Test Menu 01']]//button[@id='btn-delete']";
+    static menuDeleteButton: string = "//tr[@class='ant-table-row ng-star-inserted']/td[@class='ant-table-cell']/div[@class='d-flex align-items-center justify-content-center gap-6']/button[@class='button button-red button-x-small button-icon']";
     static menuEditButton: string = "(//button)[11]";
     static menuDeletePopupImage: string = "//img[@class='img-fluid ng-star-inserted']";
     static menuDeleteConfirmationButton: string = "//button[@id='btn-modal-confirm']";
+    static menuDeleteSuccessNotification: string = "//body//div//nz-notification-container//div//div[2]";
     static addRecipeButton: string = "//button[@class='esb-btn-sm-outline-secondary btn-recipe2 ng-star-inserted']";
 
     static instructionButton: string = "(//button[@class='button button-yellow button-small'])[1]";
