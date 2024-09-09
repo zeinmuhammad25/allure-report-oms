@@ -21,8 +21,10 @@ test.describe.serial('Printer Tests', () => {
         let menuPage = new MenuPage(page);
         let menuSinglePage = new MenuSinglePage(page);
         await dashboardPage.goToMenu();
+        await menuPage.cleanUpMenuSingle();
         await menuPage.gotoMenuSingle();
         await menuSinglePage.fillMenuInformation();
+        await menuPage.cleanUpMenuSingle();
 
     });
 
@@ -30,7 +32,7 @@ test.describe.serial('Printer Tests', () => {
         let dashboardPage = new DashboardPage(page);
         let menuPage = new MenuPage(page);
         await dashboardPage.goToMenu();
-        await menuPage.createMenuPackage();
+        await menuPage.cleanUpMenuSingle();
 
     });
 

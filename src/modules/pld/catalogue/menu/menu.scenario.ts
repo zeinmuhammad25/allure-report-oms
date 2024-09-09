@@ -7,5 +7,9 @@ export default interface MenuScenario extends BaseScenario {
     gotoMenuSingle(): Promise<MenuSinglePage>;
 
     createMenuPackage(): Promise<MenuPackagePage>;
+
+    cleanUpMenuSingle(): Promise<void>;
+
+    cleanUpMenuPackage(): Promise<void>;
 }
 

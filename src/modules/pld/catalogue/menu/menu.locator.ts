@@ -11,12 +11,16 @@ export default class MenuLocator extends BaseLocator {
     static menuPackageAddButton: string = "//button[normalize-space()='Tambah Menu Paket']";
     static menuDropdownField: string = "//body/app-layout/nz-layout/nz-layout/nz-content[@ng-reflect-ng-class='[object Object]']/div[@ng-reflect-ng-class='[object Object]']/app-menu/app-menu-index/div/div/div/div/div/app-tab-menu-index[@ng-reflect-uac-recipe='[object Object]']/div[1]/div[1]"
     static menuSearchField: string = "//input[@placeholder='Cari berdasarkan Menu']";
+    static menuMagnifyingGlass: string = "//span[@type='suffix']";
     static menuTotalCount: string = "//div[@class='page-total-container']";
     static paginationNextButton: string = "//li[@title='Halaman Berikutnya']//button[@type='button']";
     static paginationPreviousButton: string = "//li[@title='Halaman Sebelumnya']//button[@type='button']";
+    static menuDeleteButton: string = "//tr[.//td[text()='1.'] and .//td[text()='Test Menu 01']]//button[@id='btn-delete']";
+    static menuEditButton: string = "(//button)[11]";
+    static menuDeletePopupImage: string = "//img[@class='img-fluid ng-star-inserted']";
+    static menuDeleteConfirmationButton: string = "//button[@id='btn-modal-confirm']";
     static addRecipeButton: string = "//button[@class='esb-btn-sm-outline-secondary btn-recipe2 ng-star-inserted']";
-    static editMenuButton: string = "(//button)[11]";
-    static deleteMenuButton: string = "(//button)[12]";
+
     static instructionButton: string = "(//button[@class='button button-yellow button-small'])[1]";
 
 
