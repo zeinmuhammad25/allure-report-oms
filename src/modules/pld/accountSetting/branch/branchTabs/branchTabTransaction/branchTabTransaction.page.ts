@@ -40,7 +40,7 @@ export default class BranchTabTransactionPage extends BasePosLitePage implements
             BranchTabTransactionLocator.branchTabTransactionCheckBoxDana,
             BranchTabTransactionLocator.branchTabTransactionCheckBoxOVO,
             BranchTabTransactionLocator.branchTabTransactionCheckBoxGoPay,
-            BranchTabTransactionLocator.branchTabTransactionCheckBoxQRIS
+            BranchTabTransactionLocator.branchTabTransactionCheckBoxQRIS,
         ];
 
         const isCashChecked = await this.isChecked(BranchTabTransactionLocator.branchTabTransactionCheckBoxCash);
