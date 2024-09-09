@@ -7,7 +7,8 @@ import MenuPackagePage from "./menuPackage/menuPackage.page";
 
 
 export default class MenuPage extends BasePosLitePage implements MenuScenario {
-
+    private menuNameSearchData = "Test Menu 01";
+    private menuPackageNameData = "Test Menu Package 01";
 
     pageUrl = (): string => this.urls.get.catalogue.menuUrl;
 
@@ -30,16 +31,35 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
         ];
     }
 
-    async createMenuSingle(): Promise<MenuSinglePage> {
+    async gotoMenuSingle(): Promise<MenuSinglePage> {
 
         return this.clickAndExpectGotoPage(MenuLocator.menuSingleAddButton, MenuSinglePage);
 
     }
 
-    async createMenuPackage(): Promise<MenuPackagePage> {
+    async goToMenuPackage(): Promise<MenuPackagePage> {
 
         await this.click(MenuLocator.menuPackageTab);
         return this.clickAndExpectGotoPage(MenuLocator.menuPackageAddButton, MenuPackagePage);
+    }
+
+    async cleanUpMenuSingle(): Promise<void> {
+        await this.click(MenuLocator.menuSearchField);
+        await this.typeKeyboard(this.menuNameSearchData);
+        await this.click(MenuLocator.menuSearchButton);
+        await this.click(MenuLocator.menuSingleDeleteButton);//tr[@class='ant-table-row ng-star-inserted']/td[@class='ant-table-cell'][2]
+        await this.click(MenuLocator.menuDeleteConfirmationButton);
+        await this.expectVisible(MenuLocator.menuDeleteSuccessNotification);
+    }
+
+    async cleanUpMenuPackage(): Promise<void> {
+        await this.click(MenuLocator.menuPackageTab);
+        await this.click(MenuLocator.menuSearchMenuPackageField);
+        await this.typeKeyboard(this.menuPackageNameData);
+        await this.click(MenuLocator.menuSearchButton);
+        await this.click(MenuLocator.menuPackageDeleteButton);
+        await this.click(MenuLocator.menuDeleteConfirmationButton);
+        await this.expectVisible(MenuLocator.menuDeleteSuccessNotification);
     }
 
 
