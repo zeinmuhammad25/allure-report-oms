@@ -7,8 +7,9 @@ import MenuPackagePage from "./menuPackage/menuPackage.page";
 
 
 export default class MenuPage extends BasePosLitePage implements MenuScenario {
-    private menuNameSearchData = "Test Menu 01";
+    private menuSingleNameData = "Test Menu 01";
     private menuPackageNameData = "Test Menu Package 01";
+    private menuSingleNameUpdate    = "Test Menu Edit 01";
 
     pageUrl = (): string => this.urls.get.catalogue.menuUrl;
 
@@ -47,14 +48,14 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
     async cleanUpMenuSingle(): Promise<void> {
         while (true) {
             await this.clear(MenuLocator.menuSearchField);
-            await this.typeKeyboard(this.menuNameSearchData);
+            await this.typeKeyboard(this.menuSingleNameData);
             await this.click(MenuLocator.menuSearchButton);
             await this.wait(1000);
-            const menuDataIsVisible = await this.isVisible(MenuLocator.menuTestDataFirstRow);
+            const menuDataIsVisible = await this.isVisible(MenuLocator.menuSingleTestDataFirstRow);
             if (!menuDataIsVisible) {
                 break;
             }
-            await this.click(MenuLocator.menuDeleteTestDataButton);
+            await this.click(MenuLocator.menuSingleDeleteButton);
             await this.expectVisible(MenuLocator.menuDeletePopupImage);
             await this.click(MenuLocator.menuDeleteConfirmationButton);
             await this.wait(1000);
@@ -79,6 +80,33 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
             await this.wait(1000);
         }
     }
+
+    async editMenuSingle(): Promise<void> {
+        await this.clear(MenuLocator.menuSearchField);
+        await this.typeKeyboard(this.menuSingleNameData);
+        await this.click(MenuLocator.menuSearchButton);
+        await this.expectVisible(MenuLocator.menuSingleEditButton);
+        await this.click(MenuLocator.menuSingleEditButton);
+    }
+
+    async cleanUpMenuSingleUpdate(): Promise<void> {
+        while (true) {
+            await this.clear(MenuLocator.menuSearchField);
+            await this.typeKeyboard(this.menuSingleNameUpdate);
+            await this.click(MenuLocator.menuSearchButton);
+            await this.wait(1000);
+            const menuUpdateIsVisible = await this.isVisible(MenuLocator.menuSingleUpdateDataFirstRow);
+            if (!menuUpdateIsVisible) {
+                break;
+            }
+            await this.click(MenuLocator.menuSingleDeleteButton);
+            await this.expectVisible(MenuLocator.menuDeletePopupImage);
+            await this.click(MenuLocator.menuDeleteConfirmationButton);
+            await this.wait(1000);
+        }
+    }
+
+
 
 
 }
