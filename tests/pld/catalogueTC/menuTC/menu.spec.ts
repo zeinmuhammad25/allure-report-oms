@@ -31,6 +31,7 @@ test.describe.serial('Printer Tests', () => {
     });
 
     test('Verify if user can create menu package', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+        test.setTimeout(120000);
         let dashboardPage = new DashboardPage(page);
         let menuPage = new MenuPage(page);
         let menuPackagePage = new MenuPackagePage(page);

@@ -61,14 +61,23 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
         }
     }
 
+
     async cleanUpMenuPackage(): Promise<void> {
         await this.click(MenuLocator.menuPackageTab);
-        await this.click(MenuLocator.menuSearchMenuPackageField);
-        await this.typeKeyboard(this.menuPackageNameData);
-        await this.click(MenuLocator.menuSearchButton);
-        await this.click(MenuLocator.menuPackageDeleteButton);
-        await this.click(MenuLocator.menuDeleteConfirmationButton);
-        await this.expectVisible(MenuLocator.menuDeleteSuccessNotification);
+        while (true) {
+            await this.clear(MenuLocator.menuSearchMenuPackageField);
+            await this.typeKeyboard(this.menuPackageNameData);
+            await this.click(MenuLocator.menuSearchButton);
+            await this.wait(1000);
+            const menuPackageDataIsVisible = await this.isVisible(MenuLocator.menuPackageTestDataFirstRow);
+            if (!menuPackageDataIsVisible) {
+                break;
+            }
+            await this.click(MenuLocator.menuPackageDeleteButton);
+            await this.expectVisible(MenuLocator.menuDeletePopupImage);
+            await this.click(MenuLocator.menuDeleteConfirmationButton);
+            await this.wait(1000);
+        }
     }
 
 
