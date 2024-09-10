@@ -7,10 +7,16 @@ export default class MenuSingleLocator extends BaseLocator {
 
     //Buku Menu section
     static menuNameField: string = "//input[@placeholder='Contoh: Nasi Ayam Geprek Pedas']";
-    static menuCodeField: string = "(//input[@placeholder='Contoh: AYG01'])[1]";
+    static menuCodeField: string = "//input[@placeholder='Contoh: AYG01']";
     static menuCategoryField: string = "(//input[@placeholder='Isi Kategori Menu'])[1]";
-    static menuCategoryButton: string = "(//button[@class='button button-blue button-icon button-x-small ng-tns-c548-65 ng-star-inserted'])[1]";
-    static menuDescriptionField: string = "(//textarea[@placeholder='Deskripsikan menu andalan Anda dengan cara yang menarik untuk menggugah pelanggan memesan menu ini'])[1]";
+    static menuCategoryButton: string = "//input[@placeholder='Isi Kategori Menu']";
+    static menuCategoryEditButton: string = "//span[normalize-space()='Ubah']";
+    static menuCategoryOptionOne: string = "//div[contains(@class, 'list-content')]/div[contains(@class, 'list-content__item')][1]";
+    static menuCategoryOptionTwo: string = "//div[contains(@class, 'list-content')]/div[contains(@class, 'list-content__item')][2]";
+    static menuSubCategoryOptionOne: string = "//div[contains(@class, 'list-content')]/div[contains(@class, 'list-content__item')][1]";
+    static menuSubCategoryOptionTwo: string = "//div[contains(@class, 'list-content')]/div[contains(@class, 'list-content__item')][2]";
+    static menuCategorySaveButton: string = "//button[@class='button button-orange button-small button-block button-width ng-star-inserted']";
+    static menuDescriptionField: string = "//textarea[@placeholder='Deskripsikan menu andalan Anda dengan cara yang menarik untuk menggugah pelanggan memesan menu ini']";
     static menuAddBookButton: string = "//button[normalize-space()='Tambah Buku Menu']";
     static menuNewHeadPackageRadio: string = `//span[text()=' Buat Kepala Paket Baru ']/preceding-sibling::span/input`;
     static menuExistingHeadPackageRadio: string = `//span[text()=' Pakai Menu yang Tersedia ']/preceding-sibling::span/input`;

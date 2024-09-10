@@ -2,10 +2,15 @@ import BasePosLitePage from "../../../base-pos-lite-page";
 import Element from "../../../../../base/objects/Element";
 import MenuSingleScenario from "./menuSingle.scenario";
 import MenuSingleLocator from "./menuSingle.locator";
+import DateHelper from "../../../../../base/utils/DateHelper";
 
 
 export default class MenuSinglePage extends BasePosLitePage implements MenuSingleScenario {
-
+    private menuSingleName = "Test Menu 01";
+    private menuCode = DateHelper.getCurrentMillis().toString();
+    private menuCodeUpdate = `U${DateHelper.getCurrentMillis().toString()}`;
+    private menuDesc = "Test Desc 01";
+    private menuSingleUpdate = "Test Menu Edit 01";
 
     pageUrl = (): string => this.urls.get.catalogue.menuSingleUrl;
 
@@ -28,5 +33,34 @@ export default class MenuSinglePage extends BasePosLitePage implements MenuSingl
         ];
     }
 
+    async fillMenuInformation(): Promise<void> {
+
+        await this.clear(MenuSingleLocator.menuNameField);
+        await this.fill(MenuSingleLocator.menuNameField, this.menuSingleName);
+        await this.click(MenuSingleLocator.menuCategoryButton);
+        await this.click(MenuSingleLocator.menuCategoryOptionOne);
+        await this.click(MenuSingleLocator.menuSubCategoryOptionOne);
+        await this.click(MenuSingleLocator.menuCategorySaveButton);
+        await this.click(MenuSingleLocator.menuDescriptionField);
+        await this.typeKeyboard(this.menuDesc);
+        await this.clear(MenuSingleLocator.menuCodeField);
+        await this.fill(MenuSingleLocator.menuCodeField, this.menuCode);
+        await this.click(MenuSingleLocator.menuCreateSaveButton);
+
+    }
+
+    async updateMenuInformation(): Promise<void> {
+        await this.clear(MenuSingleLocator.menuNameField);
+        await this.fill(MenuSingleLocator.menuNameField, this.menuSingleUpdate);
+        await this.click(MenuSingleLocator.menuCategoryEditButton);
+        await this.click(MenuSingleLocator.menuCategoryOptionTwo);
+        await this.click(MenuSingleLocator.menuSubCategoryOptionTwo);
+        await this.click(MenuSingleLocator.menuCategorySaveButton);
+        await this.click(MenuSingleLocator.menuDescriptionField);
+        await this.typeKeyboard(this.menuDesc);
+        await this.clear(MenuSingleLocator.menuCodeField);
+        await this.fill(MenuSingleLocator.menuCodeField, this.menuCodeUpdate);
+        await this.click(MenuSingleLocator.menuCreateSaveButton);
+    }
 
 }
