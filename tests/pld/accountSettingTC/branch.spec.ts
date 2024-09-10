@@ -1,11 +1,14 @@
 import {test} from "@playwright/test";
 import LoginPage from "../../../src/modules/pld/login/login.page";
 import BranchPage from "../../../src/modules/pld/accountSetting/branch/branch.page";
-import BranchTabMainPage from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabMain/branchTabMain.page";
+import BranchTabMainPage
+    from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabMain/branchTabMain.page";
 import BranchTabTransactionPage
     from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabTransaction/branchTabTransaction.page";
 import BranchTabSalesModePage
     from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabSalesMode/branchTabSalesMode.page";
+import BranchTabSettingPOSPage
+    from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabSettingPOS/branchTabSettingPOS.page";
 
 
 test.describe.serial('Printer Tests', () => {
@@ -54,6 +57,29 @@ test.describe.serial('Printer Tests', () => {
         await branchTabSalesModePage.salesModeAddNew();
         await branchTabSalesModePage.salesModeDelete();
 
+    });
+
+
+    test('Verify if user can change the store close time by typing manually ', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+        const branchPage: BranchPage = new BranchPage(page);
+        const branchTabSettingPOS = new BranchTabSettingPOSPage(page);
+        await branchPage.navigateToBranchSetting();
+        await branchPage.searchBranchData();
+        await branchTabSettingPOS.resetStoreCloseTime();
+        await branchPage.searchBranchData();
+        await branchTabSettingPOS.navigateToTabSettingPOS();
+        await branchTabSettingPOS.adjustStoreCloseTimeManual();
+    });
+
+    test('Verify if user can update store close time by using time picker  ', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+        const branchPage: BranchPage = new BranchPage(page);
+        const branchTabSettingPOS = new BranchTabSettingPOSPage(page);
+        await branchPage.navigateToBranchSetting();
+        await branchPage.searchBranchData();
+        await branchTabSettingPOS.resetStoreCloseTime();
+        await branchPage.searchBranchData();
+        await branchTabSettingPOS.navigateToTabSettingPOS();
+        await branchTabSettingPOS.adjustStoreCloseNotification();
     });
 
 
