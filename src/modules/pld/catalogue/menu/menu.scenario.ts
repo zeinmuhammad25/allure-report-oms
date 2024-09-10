@@ -11,5 +11,9 @@ export default interface MenuScenario extends BaseScenario {
     cleanUpMenuSingle(): Promise<void>;
 
     cleanUpMenuPackage(): Promise<void>;
+
+    editMenuSingle(): Promise<void>;
+
+    cleanUpMenuSingleUpdate(): Promise<void>;
 }
 

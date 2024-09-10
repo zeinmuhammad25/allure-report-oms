@@ -14,11 +14,11 @@ export default class MenuLocator extends BaseLocator {
     static menuSearchMenuPackageField: string = "//input[@placeholder='Cari berdasarkan kata kunci']";
     static menuSearchButton: string = "//span[@type='suffix']";
     static menuTotalCount: string = "//div[@class='page-total-container']";
+
+    //dataTableLocator
     static paginationNextButton: string = "//li[@title='Halaman Berikutnya']//button[@type='button']";
     static paginationPreviousButton: string = "//li[@title='Halaman Sebelumnya']//button[@type='button']";
-    static menuSingleDeleteButton: string = "//tr[@class='ant-table-row ng-star-inserted']/td[@class='ant-table-cell'][2][contains(text(), 'Test Menu 01')]/following-sibling::td//button[@id='btn-delete']";
     static menuPackageDeleteButton: string = "//tr[@class='ant-table-row ng-star-inserted']/td[@class='ant-table-cell']/div[@class='d-flex align-items-center justify-content-center gap-6']/button[@class='button button-red button-x-small button-icon']";
-    static menuEditButton: string = "(//button)[11]";
     static menuDeletePopupImage: string = "//img[@class='img-fluid ng-star-inserted']";
     static menuDeleteConfirmationButton: string = "//button[@id='btn-modal-confirm']";
     static menuDeleteSuccessNotification: string = "//body//div//nz-notification-container//div//div[2]";
@@ -26,9 +26,11 @@ export default class MenuLocator extends BaseLocator {
 
     static instructionButton: string = "(//button[@class='button button-yellow button-small'])[1]";
 
-    //testData
-    static menuTestDataFirstRow: string = "//tr[td[@class='ant-table-cell' and text()='1.']]/td[@class='ant-table-cell'][2][text()='Test Menu 01']";
-    static menuDeleteTestDataButton: string = "//tr[td[@class='ant-table-cell' and text()='1.']]//button[@id='btn-delete']";
+    //testDataMenuSingle
+    static menuSingleTestDataFirstRow: string = "//tr[td[@class='ant-table-cell' and text()='1.']]/td[@class='ant-table-cell'][2][text()='Test Menu 01']";
+    static menuSingleUpdateDataFirstRow: string = "//tr[td[@class='ant-table-cell' and text()='1.']]/td[@class='ant-table-cell'][2][text()='Test Menu Edit 01']";
+    static menuSingleDeleteButton: string = "//tr[td[@class='ant-table-cell' and text()='1.']]//button[@id='btn-delete']";
+    static menuSingleEditButton: string = "//tr[td[@class='ant-table-cell' and text()='1.']]//button[@id='btn-update']";
 
     //testDataMenuPackage
     static menuPackageTestDataFirstRow: string = "//tr[td[@class='ant-table-cell' and text()='1.']]/td[@class='ant-table-cell'][2][text()='Test Menu Package 01']";
