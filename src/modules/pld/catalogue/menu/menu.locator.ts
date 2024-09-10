@@ -26,6 +26,10 @@ export default class MenuLocator extends BaseLocator {
 
     static instructionButton: string = "(//button[@class='button button-yellow button-small'])[1]";
 
+    //testData
+    static menuTestDataFirstRow: string = "//tr[td[@class='ant-table-cell' and text()='1.']]/td[@class='ant-table-cell'][2][text()='Test Menu 01']";
+    static menuDeleteTestDataButton: string = "//tr[td[@class='ant-table-cell' and text()='1.']]//button[@id='btn-delete']";
+
 
     //tooltipButton
     static menuTooltipOkeButton: string = "//div[@class='introjs-tooltipbuttons']/a[text()='Oke']"

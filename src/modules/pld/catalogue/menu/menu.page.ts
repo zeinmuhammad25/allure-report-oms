@@ -43,13 +43,22 @@ export default class MenuPage extends BasePosLitePage implements MenuScenario {
         return this.clickAndExpectGotoPage(MenuLocator.menuPackageAddButton, MenuPackagePage);
     }
 
+
     async cleanUpMenuSingle(): Promise<void> {
-        await this.click(MenuLocator.menuSearchField);
-        await this.typeKeyboard(this.menuNameSearchData);
-        await this.click(MenuLocator.menuSearchButton);
-        await this.click(MenuLocator.menuSingleDeleteButton);//tr[@class='ant-table-row ng-star-inserted']/td[@class='ant-table-cell'][2]
-        await this.click(MenuLocator.menuDeleteConfirmationButton);
-        await this.expectVisible(MenuLocator.menuDeleteSuccessNotification);
+        while (true) {
+            await this.clear(MenuLocator.menuSearchField);
+            await this.typeKeyboard(this.menuNameSearchData);
+            await this.click(MenuLocator.menuSearchButton);
+            await this.wait(1000);
+            const menuDataIsVisible = await this.isVisible(MenuLocator.menuTestDataFirstRow);
+            if (!menuDataIsVisible) {
+                break;
+            }
+            await this.click(MenuLocator.menuDeleteTestDataButton);
+            await this.expectVisible(MenuLocator.menuDeletePopupImage);
+            await this.click(MenuLocator.menuDeleteConfirmationButton);
+            await this.wait(1000);
+        }
     }
 
     async cleanUpMenuPackage(): Promise<void> {
