@@ -9,6 +9,8 @@ import BranchTabSalesModePage
     from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabSalesMode/branchTabSalesMode.page";
 import BranchTabSettingPOSPage
     from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabSettingPOS/branchTabSettingPOS.page";
+import BranchTabNotePage
+    from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabNote/branchTabNote.page";
 
 
 test.describe.serial('Printer Tests', () => {
@@ -80,6 +82,22 @@ test.describe.serial('Printer Tests', () => {
         await branchPage.searchBranchData();
         await branchTabSettingPOS.navigateToTabSettingPOS();
         await branchTabSettingPOS.adjustStoreCloseNotification();
+    });
+
+    test('Verify if user can change the branch footer ', {tag: '@smokeTest, @accountSetting'}, async ({page}) => {
+        const branchPage: BranchPage = new BranchPage(page);
+        const branchTabNotePage: BranchTabNotePage = new BranchTabNotePage(page);
+        await branchPage.navigateToBranchSetting();
+        await branchPage.searchBranchData();
+        await branchTabNotePage.navigateToBranchNoteTab();
+        await branchTabNotePage.cleanUpBranchNoteData();
+        await branchPage.searchBranchData();
+        await branchTabNotePage.navigateToBranchNoteTab();
+        await branchTabNotePage.editBranchNoteFooter();
+
+
+
+
     });
 
 
