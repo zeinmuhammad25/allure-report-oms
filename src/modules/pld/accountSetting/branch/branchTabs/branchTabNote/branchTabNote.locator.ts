@@ -7,8 +7,7 @@ export default class BranchTabNoteLocator extends BaseLocator {
     static branchNoteEditButton: string = "//span[@class='action-edit']";
     static branchNoteFooterTextField: string = "//textarea[@id='printingFooter']";
     static branchNoteSaveButton: string = "//button[@class='button button-orange button-small']";
-
-
-
-
+    static branchNoteFooterUpdateText: string = "//div[normalize-space()='Test Update Footer 01']";
+    static branchNoteFooterOriginText: string = "//div[normalize-space()='Powered by ESB']";
+    static branchNoteTabSaveButton: string = "//button[@class='button button-orange button-small ng-star-inserted']";
 }
