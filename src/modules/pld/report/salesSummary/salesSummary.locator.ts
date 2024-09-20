@@ -14,6 +14,7 @@ export default class SalesSummaryLocator extends BaseLocator {
     static salesBranchField: string = "(//input[contains(@class,'ant-select-selection-search-input')])[3]";
     static salesViewButton: string = "(//button[normalize-space()='Tampilkan'])[1]";
     static salesDownloadButton: string = "(//button[normalize-space()='Unduh'])[1]";
+    static salesDownloadConfirmButton: string = "//button[@class='btn btn-block btn-primary'][normalize-space()='Unduh']";
     static salesFilterOptionItem = (filterText:string): string => `//nz-option-item[@title='${filterText}']`
 
 

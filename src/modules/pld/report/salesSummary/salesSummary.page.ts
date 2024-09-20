@@ -43,7 +43,7 @@ export default class SalesSummaryPage extends BasePosLitePage implements SalesSu
         await this.click(SalesSummaryLocator.salesCompanyField);
         await this.expectVisible(SalesSummaryLocator.salesFilterOptionItem(this.company));
         await this.click(SalesSummaryLocator.salesFilterOptionItem(this.company));
-        await this.sleep(500);
+        await this.wait(500);
     }
 
 
@@ -109,6 +109,8 @@ export default class SalesSummaryPage extends BasePosLitePage implements SalesSu
         await this.fillFilterAndShowReport()
         await this.expectVisible(SalesSummaryLocator.salesDownloadButton);
         await this.click(SalesSummaryLocator.salesDownloadButton);
+        await this.expectVisible(SalesSummaryLocator.salesDownloadConfirmButton);
+        await this.clickAndExpectDownloadedFile(SalesSummaryLocator.salesDownloadConfirmButton, "LAPORAN_RANGKUMAN_PENJUALAN","xlsx");
     }
 
 }
