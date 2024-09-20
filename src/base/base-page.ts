@@ -92,17 +92,17 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
     }
 
     protected expectEnabled(selector: string): Promise<void> {
-        console.log(`expect enabled:  ${selector}`);
+        console.log(`check if enabled:  ${selector}`);
         return expect(this._page.locator(selector)).toBeEnabled();
     }
 
     protected expectDisabled(selector: string): Promise<void> {
-        console.log(`expect disabled:  ${selector}`);
+        console.log(`check if disabled:  ${selector}`);
         return expect(this._page.locator(selector)).toBeDisabled();
     }
 
-    public expectVisible(selector: string): Promise<void> {
-        console.log(`expect visible:  ${selector}`);
+    protected expectVisible(selector: string): Promise<void> {
+        console.log(`check if visible:  ${selector}`);
         return expect(this._page.locator(selector)).toBeVisible();
     }
 
@@ -210,6 +210,7 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.locator(selector).isEnabled();
     }
 
+
     protected isChecked(selector: string): Promise<boolean> {
         console.log(`check if checked:  ${selector}`);
         return this._page.locator(selector).isChecked();
@@ -228,5 +229,16 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
     protected isTextVisible(text: string): Promise<boolean> {
         console.log(`check if text visible:  ${text}`);
         return this._page.getByText(text).isVisible();
+    }
+
+    protected async clickAndExpectDownloadedFile(locator: string, filename: string, extension:string): Promise<void> {
+        console.log(`click : ${locator}`);
+        const [ download ] = await Promise.all([
+            this._page.waitForEvent('download'),
+            this._page.locator(locator).click(),
+        ]);
+        const downloadedFile = download.suggestedFilename()
+        console.log(`check if file Downloaded: ${filename}%${extension}`);
+        return expect(downloadedFile.startsWith(filename) && downloadedFile.endsWith(extension)).toBe(true);
     }
 }
