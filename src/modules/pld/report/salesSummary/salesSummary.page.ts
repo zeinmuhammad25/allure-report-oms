@@ -43,6 +43,7 @@ export default class SalesSummaryPage extends BasePosLitePage implements SalesSu
         await this.click(SalesSummaryLocator.salesCompanyField);
         await this.expectVisible(SalesSummaryLocator.salesFilterOptionItem(this.company));
         await this.click(SalesSummaryLocator.salesFilterOptionItem(this.company));
+        await this.sleep(500);
     }
 
 
