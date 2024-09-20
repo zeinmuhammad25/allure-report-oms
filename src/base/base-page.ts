@@ -122,6 +122,17 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
         return e.toBeDisabled();
     }
 
+    protected async clickAndExpectDownloadedFile(locator: string, filename: string, extension:string): Promise<void> {
+        console.log(`click : ${locator}`);
+        const [ download ] = await Promise.all([
+            this._page.waitForEvent('download'),
+            this._page.locator(locator).click(),
+        ]);
+        const downloadedFile = download.suggestedFilename()
+        console.log(`check if file Downloaded: ${filename}%${extension}`);
+        return expect(downloadedFile.startsWith(filename) && downloadedFile.endsWith(extension)).toBe(true);
+    }
+
     async wait(time: number) {
         return new Promise(resolve => setTimeout(resolve, time));
     }
@@ -152,10 +163,6 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
 
     protected isEnabled(selector: string): Promise<boolean> {
         return this._page.locator(selector).isEnabled();
-    }
-
-    protected sleep(forMilliSeconds: number): Promise<void> {
-        return new Promise((r) => setTimeout(r, forMilliSeconds));
     }
 
 }
