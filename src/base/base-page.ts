@@ -153,4 +153,9 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
     protected isEnabled(selector: string): Promise<boolean> {
         return this._page.locator(selector).isEnabled();
     }
+
+    protected sleep(forMilliSeconds: number): Promise<void> {
+        return new Promise((r) => setTimeout(r, forMilliSeconds));
+    }
+
 }
