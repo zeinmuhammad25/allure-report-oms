@@ -6,16 +6,21 @@ import PrinterCreateScenario from "./printerCreate.scenario";
 export default class PrinterCreatePage extends BasePosLitePage implements PrinterCreateScenario {
     private stationName = "Test Printer 01";
 
-    pageUrl = (): string => this.urls.get.login.loginUrl;
+    pageUrl = (): string => this.urls.get.printerSetting.printerCreateUrl;
 
     shouldHave(): Element[] {
         return [
             Element.ofSelector(PrinterCreateLocator.printerNameField),
-            Element.ofSelector(PrinterCreateLocator.printerNameSuggestion1),
-            Element.ofSelector(PrinterCreateLocator.printerNameSuggestion2),
-            Element.ofSelector(PrinterCreateLocator.printerNameSuggestion3),
             Element.ofSelector(PrinterCreateLocator.printerBranchDropdown),
             Element.ofSelector(PrinterCreateLocator.printerViewDropdown),
+            Element.ofSelector(PrinterCreateLocator.printerButtonSave),
+            Element.ofSelector(PrinterCreateLocator.printerButtonCancel),
+            Element.ofSelector(PrinterCreateLocator.printerNameSuggestionFirst),
+            Element.ofSelector(PrinterCreateLocator.printerNameSuggestionSecond),
+            Element.ofSelector(PrinterCreateLocator.printerNameSuggestionThird),
+            Element.ofSelector(PrinterCreateLocator.printerCreatePageTitle),
+            Element.ofText("Nama Station"),
+            Element.ofText("Tambah Printer"),
 
         ];
     }
@@ -29,7 +34,7 @@ export default class PrinterCreatePage extends BasePosLitePage implements Printe
         await this.expectVisible(PrinterCreateLocator.printerViewDropdown);
         await this.click(PrinterCreateLocator.printerViewDropdown);
         await this.click(PrinterCreateLocator.printerViewType1);
-        await this.click(PrinterCreateLocator.printerSaveButton);
+        await this.click(PrinterCreateLocator.printerButtonSave);
 
     }
 

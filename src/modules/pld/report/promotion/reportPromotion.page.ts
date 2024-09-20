@@ -6,7 +6,7 @@ import ReportPromotionLocator from "./reportPromotion.locator";
 export default class ReportPromotionPage extends BasePosLitePage implements ReportPromotionScenario {
 
 
-    pageUrl = (): string => '';
+    pageUrl = (): string => this.urls.get.report.promotionReportUrl;
 
     shouldHave(): Element[] {
         return [

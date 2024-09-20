@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import SalesSummaryScenario from "./salesSummary.scenario";
 import SalesSummaryLocator from "./salesSummary.locator";
@@ -10,7 +9,7 @@ export default class SalesSummaryPage extends BasePosLitePage implements SalesSu
     private branch = "Test Cabang Baru";
 
 
-    pageUrl = (): string => Urls.salessum;
+    pageUrl = (): string => this.urls.get.report.salesSummaryUrl;
 
     shouldHave(): Element[] {
         return [

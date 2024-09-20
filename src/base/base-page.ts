@@ -1,16 +1,19 @@
 import {expect, Page} from "@playwright/test";
-import Element, {ElementType} from "./objects/Element";
+import Element from "./objects/Element";
 import BaseScenario from "./base-scenario";
 import BaseUrl from "./base-url";
 import {Keyboard} from "./constants/Keyboard";
+import BaseConfigs from "./base-configs";
 
-export default abstract class BasePage<T extends BaseUrl> implements BaseScenario {
-    private _page: Page;
+export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs> implements BaseScenario {
+    private readonly _page: Page;
     protected urls: T;
+    protected configs: U;
 
-    protected constructor(page: Page, urls: T) {
+    protected constructor(page: Page, urls: T, configs: U) {
         this._page = page;
         this.urls = urls;
+        this.configs = configs;
     }
 
     abstract pageUrl: () => string;
@@ -26,23 +29,30 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
         await this.performCheckInitialElements();
     }
 
+    public async gotoPage<P extends BasePage<T, U>>(pageCreator: new(page: Page, urls: T, configs: U) => P): Promise<P> {
+        let newPage: P = new pageCreator(this._page, this.urls, this.configs);
+        await newPage.navigateHere();
+        return newPage;
+    }
+
+    protected async clickAndExpectGotoPage<P extends BasePage<T, U>>(selector: string, pageCreator: new(page: Page, urls: T, configs: U) => P): Promise<P> {
+        await this._page.click(selector);
+        let newPage: P = new pageCreator(this._page, this.urls, this.configs);
+        await this.waitForUrl(newPage.pageUrl());
+        await newPage.performCheckInitialElements();
+        return newPage;
+    }
+
+    public async goBackAndExpectGotoPage<P extends BasePage<T, U>>(pageCreator: new(page: Page, urls: T, configs: U) => P): Promise<P> {
+        await this._page.goBack();
+        let newPage: P = new pageCreator(this._page, this.urls, this.configs);
+        await this.waitForUrl(newPage.pageUrl());
+        await newPage.performCheckInitialElements();
+        return newPage;
+    }
+
     public async performCheckInitialElements(): Promise<void> {
-        let promises: Promise<any>[] = this.shouldHave().map(element => {
-            switch (element.type) {
-                case ElementType.TEXT:
-                    return this.expectTextVisible(element.value);
-                case ElementType.ELEMENT:
-                    return this.expectVisible(element.selector);
-                case ElementType.KEY_VALUE:
-                    return this.expectHasValue(element.selector, element.value);
-                case ElementType.BUTTON:
-                    return this.expectHasButton(element.selector, element.value, element.enabled);
-                case ElementType.LINK:
-                case ElementType.INPUT:
-                default:
-                    return new Promise<void>(resolve => resolve());
-            }
-        });
+        let promises: Promise<void>[] = this.shouldHave().map(element => element.validate(this));
         await Promise.all(promises);
     }
 
@@ -59,13 +69,13 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
         await expect(this._page.locator(fieldSelector)).toHaveValue('');
     }
 
-    protected async fill(selector: string, value: string): Promise<void> {
+    public async fill(selector: string, value: string): Promise<void> {
         console.log(`fill ${selector} with ${value}`);
         await this._page.fill(selector, value);
         await this.expectHasValue(selector, value);
     }
 
-    protected click(selector: string): Promise<void> {
+    public click(selector: string): Promise<void> {
         console.log(`click : ${selector}`);
         return this._page.click(selector);
     }
@@ -97,12 +107,12 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
     }
 
     protected expectInvisible(selector: string): Promise<void> {
-        console.log(`check if Invisible:  ${selector}`);
+        console.log(`expect Invisible:  ${selector}`);
         return expect(this._page.locator(selector)).toBeHidden();
     }
 
-    protected expectTextVisible(text: string, exact: boolean = false): Promise<void> {
-        console.log(`check if text visible:  ${text} | exact : ${exact}`);
+    public expectTextVisible(text: string, exact: boolean = false): Promise<void> {
+        console.log(`expect text visible:  ${text} | exact : ${exact}`);
         return expect(this._page.getByText(text, {exact: exact})).toBeVisible();
     }
 
@@ -111,15 +121,114 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
         return expect(this._page.getByText(text, {exact: exact})).toBeHidden();
     }
 
-    protected async expectHasValue(selector: string, value: string): Promise<void> {
+    public async expectHasValue(selector: string, value: string): Promise<void> {
         console.log(`check if : ${selector}  hasValue : ${value}`);
         return expect(this._page.locator(selector)).toHaveValue(value);
     }
 
-    protected async expectHasButton(selector: string, value: string, enabled: boolean = true): Promise<void> {
+    public async expectHasElement(...elements: Element[]) {
+        for (const element of elements) await element.validate(this);
+    }
+
+    public async expectHasButton(selector: string, value: string, enabled: boolean = true): Promise<void> {
         let e = expect(this._page.getByRole('button', {name: value}));
         if (enabled) return e.toBeEnabled();
         return e.toBeDisabled();
+    }
+
+    public async expectHasButtonWithID(selector: string, value: string, enabled: boolean = true): Promise<void> {
+        let e = expect(this._page.locator(selector, {hasText: value}));
+        if (enabled) return e.toBeEnabled();
+        return e.toBeDisabled();
+    }
+
+    public async waitForResponse(urlOrPredicate: string) {
+        console.log(`waiting for response API contain ${urlOrPredicate}`);
+        return this._page.waitForResponse(new RegExp('\\b' + urlOrPredicate + '\\b')).then(response => {
+            console.log("Response Received");
+            console.log(response.url());
+            console.log(response.ok());
+            console.log(response.status());
+            console.log(response.statusText());
+            return response;
+        });
+    }
+
+    public async waitForVisible(
+        selector: string,
+        onVisible: () => Promise<void>,
+        duration: number = 200,
+        retry: number = 5,
+    ): Promise<void> {
+        for (let i = 0; i < retry; i++) {
+            console.log(`waitForVisible: ${selector}, for ${duration * (i + 1)}`);
+            await this.wait(duration);
+            if (await this.isVisible(selector)) {
+                console.log(`waitForVisible: ${selector}, it's visible!`);
+                await onVisible();
+                return;
+            }
+        }
+        console.log(`waitForVisible: ${selector}, it's not visible!`);
+    }
+
+    public async waitForInvisible(
+        selector: string,
+        onVisible: () => Promise<void>,
+        duration: number = 100,
+        retry: number = 15,
+    ): Promise<void> {
+        for (let i = 0; i < retry; i++) {
+            console.log(`waitForInvisible: ${selector}, for ${duration * (i + 1)}`);
+            await this.wait(duration);
+            if (await this.isInvisible(selector)) {
+                console.log(`waitForInvisible: ${selector}, it's invisible!`);
+                await onVisible();
+                return;
+            }
+        }
+        console.log(`waitForInvisible: ${selector}, it's not invisible!`);
+    }
+
+    public pressKeyboard(...keys: Keyboard[]): Promise<void> {
+        return this._page.keyboard.press(keys.map(key => `${key}`).join("+"));
+    }
+
+    protected typeKeyboard(text: string): Promise<void> {
+        return this._page.keyboard.type(text);
+    }
+
+    protected waitForUrl(urlOrPredicate: string): Promise<void> {
+        return this._page.waitForURL(new RegExp('\\b' + urlOrPredicate + '\\b'));
+    }
+
+    public wait(milliseconds: number): Promise<void> {
+        return new Promise(resolve => setTimeout(resolve, milliseconds));
+    }
+
+    protected isEnabled(selector: string): Promise<boolean> {
+        return this._page.locator(selector).isEnabled();
+    }
+
+
+    protected isChecked(selector: string): Promise<boolean> {
+        console.log(`check if checked:  ${selector}`);
+        return this._page.locator(selector).isChecked();
+    }
+
+    protected isVisible(selector: string): Promise<boolean> {
+        console.log(`check if visible:  ${selector}`);
+        return this._page.locator(selector).isVisible();
+    }
+
+    protected isInvisible(selector: string): Promise<boolean> {
+        console.log(`check if visible:  ${selector}`);
+        return this._page.locator(selector).isHidden();
+    }
+
+    protected isTextVisible(text: string): Promise<boolean> {
+        console.log(`check if text visible:  ${text}`);
+        return this._page.getByText(text).isVisible();
     }
 
     protected async clickAndExpectDownloadedFile(locator: string, filename: string, extension:string): Promise<void> {
@@ -132,37 +241,4 @@ export default abstract class BasePage<T extends BaseUrl> implements BaseScenari
         console.log(`check if file Downloaded: ${filename}%${extension}`);
         return expect(downloadedFile.startsWith(filename) && downloadedFile.endsWith(extension)).toBe(true);
     }
-
-    async wait(time: number) {
-        return new Promise(resolve => setTimeout(resolve, time));
-    }
-
-    async waitForResponse(urlOrPredicate: string) {
-        console.log(`waiting for response API contain ${urlOrPredicate}`);
-        return this._page.waitForResponse(new RegExp('\\b' + urlOrPredicate + '\\b')).then(response => {
-            console.log("Response Received");
-            console.log(response.url());
-            console.log(response.ok());
-            console.log(response.status());
-            console.log(response.statusText());
-            return response;
-        });
-    }
-
-    protected pressKeyboard(...keys: Keyboard[]): Promise<void> {
-        return this._page.keyboard.type(keys.map(key => Keyboard[key]).join("+"));
-    }
-
-    protected typeKeyboard(text: string): Promise<void> {
-        return this._page.keyboard.type(text);
-    }
-
-    protected waitForUrl(urlOrPredicate: string): Promise<void> {
-        return this._page.waitForURL(new RegExp('\\b' + urlOrPredicate + '\\b'));
-    }
-
-    protected isEnabled(selector: string): Promise<boolean> {
-        return this._page.locator(selector).isEnabled();
-    }
-
 }

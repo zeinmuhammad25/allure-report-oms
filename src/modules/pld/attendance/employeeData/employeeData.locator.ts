@@ -1,9 +1,9 @@
 import BaseLocator from "../../../../base/base-locator";
 
 export default class EmployeeDataLocator extends BaseLocator {
-    static addEmployeeButton: string = "(//button[@class='button button-orange button-small tambah-cabang'])[1]";
-    static employeeDataDropdown: string = "(//div[@class='ant-col ant-col-xs-24 ant-col-md-6'])[1]";
-    static employeeSearchField: string = "(//nz-input-group[@class='ant-input-affix-wrapper ant-input-affix-wrapper-lg'])[1]";
+    static employeeAddButton: string = "//span[normalize-space()='Karyawan']";
+    static employeeNameDropdown: string = "//nz-select-item[@title='Nama Karyawan']";
+    static employeeSearchField: string = "//input[@placeholder='Cari berdasarkan Nama Karyawan']";
     static employeeNameOption: string = "(//nz-option-item[@title='Nama Karyawan'])[1]";
     static employeeIdOption: string = "(//nz-option-item[@title='ID Karyawan'])[1]";
     static employeeDataCount: string = "(//div[@class='page-total-container'])[1]";

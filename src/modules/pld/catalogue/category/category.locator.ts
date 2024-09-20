@@ -2,18 +2,18 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class CategoryLocator extends BaseLocator {
     static categoryTab: string = `//div[@role='tab' and text()='Kategori']`;
-    static subCategoryTab: string = `//div[@role='tab' and text()='Sub Kategori']`;
+    static categorySubTab: string = `//div[@role='tab' and text()='Sub Kategori']`;
 
     // Index Category
     static categoryNameColumn: string = `//nz-table-sorters/span[text() = ' Nama Kategori ']`;
-    static subCategoryNameColumn: string = `//nz-table-sorters/span[text() = ' Nama Sub Kategori ']`;
-    static statusNameColumn: string = `//th[text() = ' Status ']`;
+    static categorySubNameColumn: string = `//nz-table-sorters/span[text() = ' Nama Sub Kategori ']`;
+    static categoryStatusNameColumn: string = `//th[text() = ' Status ']`;
     static categoryNameSearch: string = `//input[@placeholder='Cari Berdasarkan Nama Kategori']`;
-    static subCategoryNameSearch: string = `//input[@placeholder='Cari Berdasarkan Nama Sub Kategori']`;
-    static statusSearch: string = `//nz-select[@nzplaceholder='Cari Berdasarkan Status']`;
-    static addCategoryButton: string = `#i-menucategory1`;
-    static setSubCategory: string = `//td[text()='Makanan']/following-sibling::td/button[text() = ' Terapkan Sub Kategori']`;
-    static editButton: string = `//td[text()='Makanan']/following-sibling::td/button[@nzplacement='bottomRight']`;
+    static categorySubNameSearch: string = `//input[@placeholder='Cari Berdasarkan Nama Sub Kategori']`;
+    static categoryStatusSearch: string = `//nz-select[@nzplaceholder='Cari Berdasarkan Status']`;
+    static categoryAddButton: string = `#i-menucategory1`;
+    static categorySetSub: string = `//td[text()='Makanan']/following-sibling::td/button[text() = ' Terapkan Sub Kategori']`;
+    static categoryEditButton: string = `//td[text()='Makanan']/following-sibling::td/button[@nzplacement='bottomRight']`;
 
 
     //      Add Category
@@ -24,9 +24,9 @@ export default class CategoryLocator extends BaseLocator {
     static categoryImageField: string = `#browse`;
     static addSubCategoryField: string = `#c-menucategory3`;
     static generateCodeButton: string = `(//form//span/button[@nztooltiptitle='Generate Kode'])[1]`;    //Request Unique selector, because its duplicate
-    static guideButton: string = `//app-guide-info`;
-    static cancelButton: string = `//button[text()=' Batal ' and @routerlink='/catalog/menu-category/index']`;
-    static saveButton: string = `#c-menucategory4`;
+    static categoryGuideButton: string = `//app-guide-info`;
+    static categoryCancelButton: string = `//button[text()=' Batal ' and @routerlink='/catalog/menu-category/index']`;
+    static categorySaveButton: string = `#c-menucategory4`;
 
 
     // Pop Up Add Sub Category

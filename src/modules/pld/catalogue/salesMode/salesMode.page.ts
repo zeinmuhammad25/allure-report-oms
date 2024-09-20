@@ -1,5 +1,4 @@
 import BasePosLitePage from "../../base-pos-lite-page";
-import Urls from "../../../../configs/urls";
 import Element from "../../../../base/objects/Element";
 import SalesModeScenario from "./salesMode.scenario";
 import SalesModeLocator from "./salesMode.locator";
@@ -8,9 +7,9 @@ import SalesModeLocator from "./salesMode.locator";
 export default class SalesModePage extends BasePosLitePage implements SalesModeScenario {
 
 
-    pageUrl = (): string => Urls.menu;
+    pageUrl = (): string => this.urls.get.catalogue.salesModeUrl;
 
-    // Real URL = https://dev7.esb.co.id/esb-core-lite/catalog/sales-mode/index
+
     shouldHave(): Element[] {
         return [
             Element.ofSelector(SalesModeLocator.archiveButton),
