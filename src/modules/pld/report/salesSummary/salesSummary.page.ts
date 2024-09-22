@@ -2,6 +2,7 @@ import BasePosLitePage from "../../base-pos-lite-page";
 import Element from "../../../../base/objects/Element";
 import SalesSummaryScenario from "./salesSummary.scenario";
 import SalesSummaryLocator from "./salesSummary.locator";
+import ReportLocator from "../report.locator";
 
 export default class SalesSummaryPage extends BasePosLitePage implements SalesSummaryScenario {
     private company = "Test QC 02";
@@ -23,10 +24,10 @@ export default class SalesSummaryPage extends BasePosLitePage implements SalesSu
     }
 
     private async navigateToSalesSummary(): Promise<void> {
-        await this.expectVisible(SalesSummaryLocator.reportSideBar);
-        await this.click(SalesSummaryLocator.reportSideBar);
-        await this.expectVisible(SalesSummaryLocator.reportSummarySideBar);
-        await this.click(SalesSummaryLocator.reportSummarySideBar);
+        await this.expectVisible(ReportLocator.reportSideBar);
+        await this.click(ReportLocator.reportSideBar);
+        await this.expectVisible(ReportLocator.reportSummarySideBar);
+        await this.click(ReportLocator.reportSummarySideBar);
     }
 
     private async inputOrderDateRange(): Promise<void> {

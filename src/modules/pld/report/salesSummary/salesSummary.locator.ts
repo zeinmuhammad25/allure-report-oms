@@ -1,12 +1,6 @@
 import BaseLocator from "../../../../base/base-locator";
 
 export default class SalesSummaryLocator extends BaseLocator {
-
-    // Navigation Button
-    static reportSideBar: string = "//div[contains(text(),'Laporan')]"
-    static reportSummarySideBar: string = "//a[normalize-space()='Rangkuman Penjualan']"
-
-
     // Filter
     static salesDateField: string = "(//input[@type='text'])[1]";
     static salesCompanyField: string = "(//input[contains(@class,'ant-select-selection-search-input')])[1]";
