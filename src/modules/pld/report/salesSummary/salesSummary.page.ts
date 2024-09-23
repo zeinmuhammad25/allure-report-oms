@@ -109,7 +109,8 @@ export default class SalesSummaryPage extends BasePosLitePage implements SalesSu
         await this.expectVisible(SalesSummaryLocator.salesDownloadButton);
         await this.click(SalesSummaryLocator.salesDownloadButton);
         await this.expectVisible(SalesSummaryLocator.salesDownloadConfirmButton);
-        await this.clickAndExpectDownloadedFile(SalesSummaryLocator.salesDownloadConfirmButton, "LAPORAN_RANGKUMAN_PENJUALAN","xlsx");
+        await this.click(SalesSummaryLocator.salesDownloadConfirmButton)
+        await this.expectDownloadFile("LAPORAN_RANGKUMAN_PENJUALAN", "xlsx");
     }
 
 }
