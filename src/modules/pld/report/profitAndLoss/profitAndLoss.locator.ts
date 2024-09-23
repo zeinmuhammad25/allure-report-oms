@@ -2,13 +2,27 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class ProfitAndLossLocator extends BaseLocator {
 
-    static periodFromDateField: string = "//div[@ng-reflect-ng-class='[object Object]']//app-profit-loss//app-profit-loss-index//div//div//div//div//div//div//nz-form-item//nz-form-control//div//div//nz-date-picker[@nzsize='large']//div//input[@placeholder='Pilih Periode Mulai']";
-    static periodToDateField: string = "//div[@ng-reflect-ng-class='[object Object]']//app-profit-loss//app-profit-loss-index//div//div//div//div//div//div//nz-form-item//nz-form-control//div//div//nz-date-picker[@nzsize='large']//div//input[@placeholder='Pilih Periode Selesai']";
-    static profitAndLossReportTypeDropdown: string = "//div[@ng-reflect-ng-class='[object Object]']//app-profit-loss//app-profit-loss-index//div//div//div//div//div//div//nz-form-item//nz-form-control//div//div//nz-select-item[@title='Perusahaan'][normalize-space()='Perusahaan']";
-    static profitAndLossCompanyDropdown: string = "//nz-input-group[@nzsize='large']//nz-input-group[@nzsize='large']//input[@placeholder='Pilih Usaha']";
-    static viewButton: string = "//button[@class='btn-md-primary full-width']";
+    static periodFromDateField: string = "(//nz-form-control)[1]//nz-date-picker";
+    static periodToDateField: string = "(//nz-form-control)[2]//nz-date-picker";
+    static profitAndLossReportTypeDropdown: string = "(//nz-form-control)[3]";
+    static profitAndLossCompanyDropdown: string = "(//nz-form-control)[4]";
+    static profitAndLossBranchDropdown: string = "(//nz-form-control)[5]";
+    static viewButton: string = "//button[normalize-space()='Tampilkan']";
+    static downloadButton: string = "//button[normalize-space()='Unduh']";
+    // Profit and Lost Card
+    static profitAndLostCard: string = "//div[@class='ant-col ant-col-xs-24 ant-col-md-17']"
 
-//Month Picker
+    // CompanyDrop
+    static companyTypeCompany: string = "//div[text()='Perusahaan']"
+    static companyTypeBranch: string = "//div[text()='Cabang']"
+
+    // Branch Dialog
+    static branchNameOption = (branchName:string): string => `//h4[normalize-space()='${branchName}']`
+    static branchDialogCancelButton: string = "//button[normalize-space()='Batal']";
+    static branchDialogApplyButton: string = "//button[normalize-space()='Pilih']";
+
+
+    //Month Picker
     static janDatePicker: string = "//div[normalize-space()='Jan']";
     static febDatePicker: string = "//div[normalize-space()='Feb']";
     static marDatePicker: string = "//div[normalize-space()='Mar']";
