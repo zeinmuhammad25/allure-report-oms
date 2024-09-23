@@ -3,7 +3,6 @@ import Element from "../../../../base/objects/Element";
 import PaymentLocator from "./payment.locator";
 import PaymentScenario from "./payment.scenario";
 import ReportLocator from "../report.locator";
-import SalesDetailLocator from "../salesDetail/salesDetail.locator";
 
 
 export default class PaymentPage extends BasePosLitePage implements PaymentScenario {
@@ -123,19 +122,23 @@ export default class PaymentPage extends BasePosLitePage implements PaymentScena
         await this.expectDownloadFile("LAPORAN_PEMBAYARAN", "xlsx");
     }
 
-    async validateFilterAndShowDataPaymentReport(): Promise<void> {
-        await this.navigateToPaymentReport()
-        await this.fillFilterAndShow(false)
-    }
-
-    async validateFilterAndShowDataDetailPaymentReport(): Promise<void> {
+    async validateFilterAndShowDataFromPaymentMethod(): Promise<void> {
         await this.navigateToPaymentReport()
         await this.fillFilterAndShow(true)
+        await this.expectVisible(PaymentLocator.salesFromPaymentMethodTitle);
     }
 
-    async validateDownloadDataDetailPayment(): Promise<void> {
+    async validateFilterAndShowDataSalesDetail(): Promise<void> {
         await this.navigateToPaymentReport()
         await this.fillFilterAndShow(true)
+        await this.expectVisible(PaymentLocator.salesDetailTitle);
+    }
+
+    async validateDownloadDataPaymentReport(): Promise<void> {
+        await this.navigateToPaymentReport()
+        await this.fillFilterAndShow(true)
+        await this.expectVisible(PaymentLocator.salesFromPaymentMethodTitle);
+        await this.expectVisible(PaymentLocator.salesDetailTitle);
         await this.downloadFile()
     }
 }

@@ -12,18 +12,18 @@ test.describe.serial("Payment Report Test", () => {
         await loginPage.performLoginSubs()
     })
 
-    test("Verify User can show and data payment by Payment Method", {tag: tag}, async ({page}) => {
+    test("Verify User can filter and show data from Payment Method", {tag: tag}, async ({page}) => {
         const paymentPage = new PaymentPage(page)
-        await paymentPage.validateFilterAndShowDataPaymentReport()
+        await paymentPage.validateFilterAndShowDataFromPaymentMethod()
     })
 
-    test("Verify User can show and data detail sales in Payment Report", {tag: tag}, async ({page}) => {
+    test("Verify User can filter and show data Sales Detail", {tag: tag}, async ({page}) => {
         const paymentPage = new PaymentPage(page)
-        await paymentPage.validateFilterAndShowDataDetailPaymentReport()
+        await paymentPage.validateFilterAndShowDataSalesDetail()
     })
 
     test("Verify User can filter, show, and download Payment Report data", {tag: tag}, async ({page}) => {
         const paymentPage = new PaymentPage(page)
-        await paymentPage.validateDownloadDataDetailPayment()
+        await paymentPage.validateDownloadDataPaymentReport()
     })
 })

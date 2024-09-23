@@ -59,6 +59,10 @@ export default class PaymentLocator extends BaseLocator {
     static esoQris: string = "(//div[normalize-space()='QRIS (ESO)'])[1]";
     static esoShopeePay: string = "(//div[normalize-space()='SHOPEEPAY (ESO)'])[1]";
 
+    //Payment Data
+    static salesFromPaymentMethodTitle = "//strong[normalize-space()='Penjualan Dari Metode Pembayaran']"
+    static salesDetailTitle = "//strong[normalize-space()='Detail Penjualan']"
+
     //Download
     static downloadDialogDownloadButton: string = "//button[@class='btn btn-block btn-primary'][normalize-space()='Unduh']";
     static downloadDialogCancelButton: string = "//button[@class='btn btn-block'][normalize-space()='Batal']";
