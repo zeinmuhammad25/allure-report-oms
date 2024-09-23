@@ -10,6 +10,7 @@ export default class SalesMenuLocator extends BaseLocator {
     static salesMenuReportTypeDropdown: string = "//nz-select-item[@title='Menu Per Periode']";
     static salesMenuSoldAmount: string = "//nz-select-item[@title='Semua']";
     static salesMenuViewButton: string = "//button[normalize-space()='Tampilkan']";
+    static filterOptionItem = (filterText:string): string => `//nz-option-item//div[text()='${filterText}']`
 
     //business field
     static businessField: string = "//input[@placeholder='Pilih Usaha']";
@@ -38,4 +39,7 @@ export default class SalesMenuLocator extends BaseLocator {
     static lastMonthFilter: string = "(//button[normalize-space()='Bulan ini'])[1]";
     static chooseDateButton: string = "(//button[normalize-space()='Pilih'])[1]";
     static cancelDateButton: string = "(//button[normalize-space()='Batal'])[1]";
+
+    // Data
+    static searchResultTotalData: string = "//h4[contains(text(),'Hasil pencarian ditampilkan')]"
 }
