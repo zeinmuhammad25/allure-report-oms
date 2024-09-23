@@ -30,7 +30,7 @@ export default class ReportPromotionPage extends BasePosLitePage implements Repo
     }
 
 
-    private async navigateToSalesSummary() {
+    private async navigateToReportPromotion() {
         await this.expectVisible(ReportLocator.reportSideBar);
         await this.click(ReportLocator.reportSideBar);
         await this.expectVisible(ReportLocator.promotionSideBar);
@@ -113,19 +113,19 @@ export default class ReportPromotionPage extends BasePosLitePage implements Repo
     }
 
     async validateListOfDataPromotion(): Promise<void> {
-        await this.navigateToSalesSummary()
+        await this.navigateToReportPromotion()
         await this.fillFilterAndShow()
         await this.expectVisible(ReportPromotionLocator.cardPromotionReport)
     }
 
     async validateDetailDataPromotion(): Promise<void> {
-        await this.navigateToSalesSummary()
+        await this.navigateToReportPromotion()
         await this.fillFilterAndShow()
         await this.expectVisible(ReportPromotionLocator.cardPromotionReport)
     }
 
     async validateDownloadDataPromotion(): Promise<void> {
-        await this.navigateToSalesSummary()
+        await this.navigateToReportPromotion()
         await this.fillFilterAndShow()
         await this.expectVisible(ReportPromotionLocator.cardPromotionReport)
         await this.downloadReportFile()
