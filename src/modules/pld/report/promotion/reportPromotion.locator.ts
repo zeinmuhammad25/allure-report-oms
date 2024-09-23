@@ -44,4 +44,8 @@ export default class ReportPromotionLocator extends BaseLocator {
     //Card promotion report
     static cardPromotionReport ="//div[@class='ant-col ant-col-xs-24 ng-star-inserted']//div[@class='card-body']"
 
+    //Download
+    static downloadDialogDownloadButton: string = "//button[@class='btn btn-block btn-primary'][normalize-space()='Unduh']";
+    static downloadDialogCancelButton: string = "//button[@class='btn btn-block'][normalize-space()='Batal']";
+
 }

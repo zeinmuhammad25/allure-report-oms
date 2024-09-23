@@ -107,6 +107,8 @@ export default class ReportPromotionPage extends BasePosLitePage implements Repo
 
     private async downloadReportFile() {
         await this.click(ReportPromotionLocator.salesDownloadButton)
+        await this.expectVisible(ReportPromotionLocator.downloadDialogDownloadButton)
+        await this.click(ReportPromotionLocator.downloadDialogDownloadButton)
         await this.expectDownloadFile('LAPORAN_PROMOSI', 'xlsx')
     }
 
