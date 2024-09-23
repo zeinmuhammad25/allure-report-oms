@@ -1,6 +1,5 @@
 import {test} from "@playwright/test";
 import LoginPage from "../../../src/modules/pld/login/login.page";
-import ProfitAndLossPage from "../../../src/modules/pld/report/profitAndLoss/profitAndLoss.page";
 import SalesMenuPage from "../../../src/modules/pld/report/salesMenu/salesMenu.page";
 
 test.describe.serial("Sales Menu Report Test", () => {
