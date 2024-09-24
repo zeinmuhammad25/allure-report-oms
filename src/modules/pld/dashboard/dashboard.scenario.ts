@@ -47,7 +47,17 @@ import HistoryPage from "../withdrawFunds/history/history.page";
 import RemainingFundsPage from "../withdrawFunds/remainingFunds/remainingFunds.page";
 
 export default interface DashboardScenario extends BaseScenario {
+    validateNetSalesDataOnDashboardSalesPerformance(): Promise<void>
 
+    validateTotalBillsDataOnDashboardSalesPerformance(): Promise<void>
+
+    validateAverageNetSalesPerBillDataOnDashboardSalesPerformance(): Promise<void>
+
+    validateTotalPaxDataOnDashboardSalesPerformance(): Promise<void>
+
+    validateAverageNetSalesPerPaxDataOnDashboardSalesPerformance(): Promise<void>
+
+    validatePendingSalesDataOnDashboardSalesPerformance(): Promise<void>
 
     //dashboard
     dashboardAccordionCheck(): Promise<void>;
