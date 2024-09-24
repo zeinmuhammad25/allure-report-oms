@@ -88,6 +88,7 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.click(DashboardLocator.companyField)
         await this.expectVisible(DashboardLocator.filterOptionItem(this.company))
         await this.click(DashboardLocator.filterOptionItem(this.company))
+        await this.wait(300)
     }
 
     private async inputBrand() {
