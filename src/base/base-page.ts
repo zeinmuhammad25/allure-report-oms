@@ -237,6 +237,13 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.getByText(text).isVisible();
     }
 
+    protected async expectDownloadFile(filename: string, extension:string): Promise<void> {
+        const download =  await this._page.waitForEvent('download');
+        const downloadedFile = download.suggestedFilename()
+        console.log(`check if file Downloaded: ${filename}%${extension}`);
+        return expect(downloadedFile.startsWith(filename) && downloadedFile.endsWith(extension)).toBe(true);
+    }
+
     public getLocator(selector: string) {
         return this._page.locator(selector);
     }

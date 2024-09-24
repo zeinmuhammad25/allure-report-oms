@@ -13,6 +13,7 @@ export default class SalesDetailLocator extends BaseLocator {
     static salesViewButton: string = "//button[normalize-space()='Tampilkan']";
     static salesDownloadButton: string = "//button[normalize-space()='Unduh']";
     static scrollUpButton: string = "(//div[@class='ant-back-top-inner ng-star-inserted'])[1]";
+    static salesFilterOptionItem = (filterText:string): string => `//nz-option-item[@title='${filterText}']`
 
 //Date picker locator
     static todayFilter: string = "(//button[normalize-space()='Hari ini'])[1]";
@@ -52,5 +53,10 @@ export default class SalesDetailLocator extends BaseLocator {
     static esoOvo: string = "(//div[normalize-space()='OVO (ESO)'])[1]";
     static esoQris: string = "(//div[normalize-space()='QRIS (ESO)'])[1]";
     static esoShopeePay: string = "(//div[normalize-space()='SHOPEEPAY (ESO)'])[1]";
+
+    //Download
+    static downloadDialogDownloadButton: string = "//button[@class='btn btn-block btn-primary'][normalize-space()='Unduh']";
+    static downloadDialogCancelButton: string = "//button[@class='btn btn-block'][normalize-space()='Batal']";
+
 
 }
