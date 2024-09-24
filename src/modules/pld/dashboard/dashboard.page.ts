@@ -56,6 +56,10 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
     private brand = "Test QC 02"
     private branch = "Test Cabang Baru"
     private apiSalesPerformance = "dashboard/sales-performance"
+    private apiFraudControl = "dashboard/sales-fraud-control"
+    private emptyMessageOtherTransaction = "Anda belum memiliki daftar transaksi untuk other cost"
+    private emptyMessageComplimentTransaction = "Anda belum memiliki daftar transaksi untuk komplimen"
+    private emptyMessageNonSalesTransaction = "Anda belum memiliki daftar transaksi untuk pembatalan"
 
     pageUrl = (): string => this.urls.get.dashboard.dashboardIndexUrl
 
@@ -71,17 +75,26 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
 
     private async filterByMonth() {
         await this.click(DashboardLocator.buttonMonth)
-        await this.waitForResponse(this.apiSalesPerformance)
+        await Promise.all([
+            this.waitForResponse(this.apiSalesPerformance),
+            this.waitForResponse(this.apiFraudControl)
+        ])
     }
 
     private async filterByDay() {
         await this.click(DashboardLocator.buttonDay)
-        await this.waitForResponse(this.apiSalesPerformance)
+        await Promise.all([
+            this.waitForResponse(this.apiSalesPerformance),
+            this.waitForResponse(this.apiFraudControl)
+        ])
     }
 
     private async search() {
         await this.click(DashboardLocator.buttonSearch)
-        await this.waitForResponse(this.apiSalesPerformance)
+        await Promise.all([
+            this.waitForResponse(this.apiSalesPerformance),
+            this.waitForResponse(this.apiFraudControl)
+        ])
     }
 
     private async inputCompany() {
@@ -110,6 +123,48 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.inputBrand()
         await this.inputBranch()
         await this.search()
+    }
+
+    async validateOtherCostTransactionDataOnDashboardFraudControl(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.otherCostTransactionButton)
+        await this.click(DashboardLocator.otherCostTransactionButton)
+        let isListEmpty = await this.isVisible(
+            DashboardLocator.checkDataEmptyByMessage(this.emptyMessageOtherTransaction)
+        )
+        if (!isListEmpty) {
+            // TODO : search an item
+        }
+        await this.expectVisible(DashboardLocator.fraudControlDialogCloseButton)
+        await this.click(DashboardLocator.fraudControlDialogCloseButton)
+    }
+
+    async validateComplimentTransactionDataOnDashboardFraudControl(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.complimentTransactionButton)
+        await this.click(DashboardLocator.complimentTransactionButton)
+        let isListEmpty = await this.isVisible(
+            DashboardLocator.checkDataEmptyByMessage(this.emptyMessageComplimentTransaction)
+        )
+        if (!isListEmpty) {
+            // TODO : search an item
+        }
+        await this.expectVisible(DashboardLocator.fraudControlDialogCloseButton)
+        await this.click(DashboardLocator.fraudControlDialogCloseButton)
+    }
+
+    async validateNonSalesTransactionDataOnDashboardFraudControl(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.nonSalesTransactionButton)
+        await this.click(DashboardLocator.nonSalesTransactionButton)
+        let isListEmpty = await this.isVisible(
+            DashboardLocator.checkDataEmptyByMessage(this.emptyMessageNonSalesTransaction)
+        )
+        if (!isListEmpty) {
+            // TODO : search an item
+        }
+        await this.expectVisible(DashboardLocator.fraudControlDialogCloseButton)
+        await this.click(DashboardLocator.fraudControlDialogCloseButton)
     }
 
     async validateNetSalesDataOnDashboardSalesPerformance(): Promise<void> {
