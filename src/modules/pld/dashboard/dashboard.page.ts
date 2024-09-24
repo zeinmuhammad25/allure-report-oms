@@ -51,12 +51,89 @@ import HistoryPage from "../withdrawFunds/history/history.page";
 import ProfilePage from "../profile/profile.page";
 import DashboardLocator from "./dashboard.locator";
 
-
 export default class DashboardPage extends BasePosLitePage implements DashboardScenario {
+    private company = "Test QC 02"
+    private brand = "Test QC 02"
+    private branch = "Test Cabang Baru"
+    private apiSalesPerformance = "dashboard/sales-performance"
+
     pageUrl = (): string => this.urls.get.dashboard.dashboardIndexUrl
 
     shouldHave(): Element[] {
-        return [];
+        return [
+            Element.ofSelector(DashboardLocator.companyField),
+            Element.ofSelector(DashboardLocator.brandField),
+            Element.ofSelector(DashboardLocator.branchField),
+            Element.ofSelector(DashboardLocator.buttonDay),
+            Element.ofSelector(DashboardLocator.buttonMonth),
+        ];
+    }
+
+    private async filterByMonth() {
+        await this.click(DashboardLocator.buttonMonth)
+        await this.waitForResponse(this.apiSalesPerformance)
+    }
+
+    private async filterByDay() {
+        await this.click(DashboardLocator.buttonDay)
+        await this.waitForResponse(this.apiSalesPerformance)
+    }
+
+    private async search() {
+        await this.click(DashboardLocator.buttonSearch)
+        await this.waitForResponse(this.apiSalesPerformance)
+    }
+
+    private async inputCompany() {
+        await this.click(DashboardLocator.companyField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.company))
+        await this.click(DashboardLocator.filterOptionItem(this.company))
+    }
+
+    private async inputBrand() {
+        await this.click(DashboardLocator.brandField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.brand))
+        await this.click(DashboardLocator.filterOptionItem(this.brand))
+    }
+
+    private async inputBranch() {
+        await this.click(DashboardLocator.branchField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.branch))
+        await this.click(DashboardLocator.filterOptionItem(this.branch))
+    }
+
+    private async fillFilterAndShowData() {
+        await this.filterByMonth()
+        await this.filterByDay()
+        await this.inputCompany()
+        await this.inputBrand()
+        await this.inputBranch()
+        await this.search()
+    }
+
+    async validateNetSalesDataOnDashboardSalesPerformance(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.netSalesData)
+    }
+    async validateTotalBillsDataOnDashboardSalesPerformance(): Promise<void> {
+await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.totalBillsData)
+    }
+    async validateAverageNetSalesPerBillDataOnDashboardSalesPerformance(): Promise<void> {
+await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.averageNetSalesPerBillData)
+    }
+    async validateTotalPaxDataOnDashboardSalesPerformance(): Promise<void> {
+await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.totalPaxData)
+    }
+    async validateAverageNetSalesPerPaxDataOnDashboardSalesPerformance(): Promise<void> {
+await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.averageNetSalesPerPaxData)
+    }
+    async validatePendingSalesDataOnDashboardSalesPerformance(): Promise<void> {
+await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.pendingSalesData)
     }
 
     async dashboardAccordionCheck(): Promise<void> {
@@ -481,6 +558,4 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.expectVisible(DashboardLocator.dashboardProfileDropdown);
         return this.clickAndExpectGotoPage(DashboardLocator.dashboardProfileDropdown, ProfilePage);
     }
-
-
 }
