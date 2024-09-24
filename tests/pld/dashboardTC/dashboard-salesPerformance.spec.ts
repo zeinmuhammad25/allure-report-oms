@@ -4,7 +4,7 @@ import {test} from "@playwright/test";
 
 test.describe.serial("Sales Profit and Lost Report Test", () => {
     let loginPage: LoginPage
-    const tag = '@smokeTest @report @profitAndLost'
+    const tag = '@smokeTest @dashboard @salesPerformance'
 
     test.beforeEach(async ({page}) => {
         loginPage = new LoginPage(page)
@@ -12,33 +12,51 @@ test.describe.serial("Sales Profit and Lost Report Test", () => {
         await loginPage.performLoginSubs()
     })
 
-    test("Verify User can filter and show data Net Sales of Dashboard Sales Perfomance", {tag: tag}, async ({page}) => {
-        const dashboardPage = new DashboardPage(page)
-        await dashboardPage.validateNetSalesDataOnDashboardSalesPerformance()
-    })
+    test(
+        "Verify User can filter and show data Net Sales of Dashboard Sales Perfomance",
+        {tag: tag},
+        async ({page}) => {
+            const dashboardPage = new DashboardPage(page)
+            await dashboardPage.validateNetSalesDataOnDashboardSalesPerformance()
+        })
 
-    test("Verify User can filter and show data Total Bills of Dashboard Sales Perfomance", {tag: tag}, async ({page}) => {
-        const dashboardPage = new DashboardPage(page)
-        await dashboardPage.validateTotalBillsDataOnDashboardSalesPerformance()
-    })
+    test(
+        "Verify User can filter and show data Total Bills of Dashboard Sales Perfomance",
+        {tag: tag},
+        async ({page}) => {
+            const dashboardPage = new DashboardPage(page)
+            await dashboardPage.validateTotalBillsDataOnDashboardSalesPerformance()
+        })
 
-    test("Verify User can filter and show data Bill Size of Dashboard Sales Perfomance", {tag: tag}, async ({page}) => {
-        const dashboardPage = new DashboardPage(page)
-        await dashboardPage.validateAverageNetSalesPerBillDataOnDashboardSalesPerformance()
-    })
+    test(
+        "Verify User can filter and show data Bill Size of Dashboard Sales Perfomance",
+        {tag: tag},
+        async ({page}) => {
+            const dashboardPage = new DashboardPage(page)
+            await dashboardPage.validateAverageNetSalesPerBillDataOnDashboardSalesPerformance()
+        })
 
-    test("Verify User can filter and show data Total Pax of Dashboard Sales Perfomance", {tag: tag}, async ({page}) => {
-        const dashboardPage = new DashboardPage(page)
-        await dashboardPage.validateTotalPaxDataOnDashboardSalesPerformance()
-    })
+    test(
+        "Verify User can filter and show data Total Pax of Dashboard Sales Perfomance",
+        {tag: tag},
+        async ({page}) => {
+            const dashboardPage = new DashboardPage(page)
+            await dashboardPage.validateTotalPaxDataOnDashboardSalesPerformance()
+        })
 
-    test("Verify User can filter,  and show Order Per Pax of Dashboard Sales Perfomance", {tag: tag}, async ({page}) => {
-        const dashboardPage = new DashboardPage(page)
-        await dashboardPage.validateAverageNetSalesPerPaxDataOnDashboardSalesPerformance()
-    })
+    test(
+        "Verify User can filter,  and show Order Per Pax of Dashboard Sales Perfomance",
+        {tag: tag},
+        async ({page}) => {
+            const dashboardPage = new DashboardPage(page)
+            await dashboardPage.validateAverageNetSalesPerPaxDataOnDashboardSalesPerformance()
+        })
 
-    test("Verify User can filter and show data Pending Sales of Dashboard Sales Perfomance", {tag: tag}, async ({page}) => {
-        const dashboardPage = new DashboardPage(page)
-        await dashboardPage.validatePendingSalesDataOnDashboardSalesPerformance()
-    })
+    test(
+        "Verify User can filter and show data Pending Sales of Dashboard Sales Perfomance",
+        {tag: tag},
+        async ({page}) => {
+            const dashboardPage = new DashboardPage(page)
+            await dashboardPage.validatePendingSalesDataOnDashboardSalesPerformance()
+        })
 })
