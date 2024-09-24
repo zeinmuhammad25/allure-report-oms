@@ -27,6 +27,12 @@ export default class CancelAndVoidLocator extends BaseLocator {
     static paymentMethod: string = "//nz-select-top-control[@ng-reflect-place-holder='Cari Berdasarkan Metode Pembay']//input[@autocomplete='off']";
     static viewButton: string = "//button[normalize-space()='Tampilkan']";
     static downloadButton: string = "//button[normalize-space()='Unduh']";
+    static filterOptionItem = (filterText:string): string => `//nz-option-item[@title='${filterText}']`
 
+    // Data
+    static cancelMenuReport : string = "//strong[text()='Laporan Menu Batal']"
 
+    //Download Dialog
+    static downloadDialogDownloadButton: string = "//button[@class='btn btn-block btn-primary'][normalize-space()='Unduh']";
+    static downloadDialogCancelButton: string = "//button[@class='btn btn-block'][normalize-space()='Batal']";
 }

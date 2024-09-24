@@ -2,16 +2,17 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class ReportPromotionLocator extends BaseLocator {
     static salesDateField: string = "(//input[@class='filter-calendar ng-untouched ng-valid ng-star-inserted ng-dirty'])[1]";
-    static salesCompanyField: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[1]";
-    static salesBrandField: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[2]";
-    static salesBranchField: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[3]";
-    static reportMode: string = "(//nz-select-item[@title='Laporan Per Nota'])[1]";
-    static promotionType: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[4]";
-    static promotionName: string = "(//input[@id='promotionName'])[1]";
-    static transactionNumber: string = "(//input[@id='salesNum'])[1]";
+    static salesCompanyField: string = "(//nz-select-top-control)[1]";
+    static salesBrandField: string = "(//nz-select-top-control)[2]";
+    static salesBranchField: string = "(//nz-select-top-control)[3]";
+    static reportMode: string = "(//nz-select-top-control)[4]";
+    static promotionType: string = "(//nz-select-top-control)[5]";
+    static promotionName: string = "//input[@id='promotionName']";
+    static transactionNumber: string = "//input[@id='salesNum']";
     static salesViewButton: string = "(//button[normalize-space()='Tampilkan'])[1]";
     static salesDownloadButton: string = "(//button[normalize-space()='Unduh'])[1]";
     static scrollUpButton: string = "(//div[@class='ant-back-top-inner ng-star-inserted'])[1]"
+    static filterOptionItem = (filterText:string): string => `//nz-option-item[@title='${filterText}']`
 
 //Date picker locator
     static todayFilter: string = "(//button[normalize-space()='Hari ini'])[1]";
@@ -40,5 +41,11 @@ export default class ReportPromotionLocator extends BaseLocator {
     static posLiteCustomDiscountRp: string = "(//div[normalize-space()='POS Lite - Diskon Custom (Rp)'])[1]";
     static posLiteFreeItem: string = "(//div[normalize-space()='POS Lite - Item Gratis'])[1]";
 
+    //Card promotion report
+    static cardPromotionReport ="//div[@class='ant-col ant-col-xs-24 ng-star-inserted']//div[@class='card-body']"
+
+    //Download
+    static downloadDialogDownloadButton: string = "//button[@class='btn btn-block btn-primary'][normalize-space()='Unduh']";
+    static downloadDialogCancelButton: string = "//button[@class='btn btn-block'][normalize-space()='Batal']";
 
 }

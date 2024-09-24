@@ -2,15 +2,17 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class PaymentLocator extends BaseLocator {
     static salesDateField: string = "(//input[@class='filter-calendar ng-untouched ng-valid ng-star-inserted ng-dirty'])[1]";
-    static salesCompanyField: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[1]";
-    static salesBrandField: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[2]";
-    static salesBranchField: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[3]";
-    static reportMode: string = "(//nz-select-item[@title='Mode Ringkasan'])[1]";
-    static paymentType: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[5]";
-    static paymentMethod: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[6]";
+    static salesCompanyField: string = "(//nz-select-top-control)[1]";
+    static salesBrandField: string = "(//nz-select-top-control)[2]";
+    static salesBranchField: string = "(//nz-select-top-control)[3]";
+    static reportMode: string = "(//nz-select-top-control)[4]";
+    static salesMode: string = "(//nz-select-top-control)[5]";
+    static paymentType: string = "(//nz-select-top-control)[6]";
+    static paymentMethod: string = "(//nz-select-top-control)[7]";
     static salesViewButton: string = "(//button[normalize-space()='Tampilkan'])[1]";
     static salesDownloadButton: string = "(//button[normalize-space()='Unduh'])[1]";
     static scrollUpButton: string = "(//div[@class='ant-back-top-inner ng-star-inserted'])[1]";
+    static filterOptionItem = (filterText:string): string => `//nz-option-item[@title='${filterText}']`
 
 //Date picker locator
     static todayFilter: string = "(//button[normalize-space()='Hari ini'])[1]";
@@ -26,9 +28,6 @@ export default class PaymentLocator extends BaseLocator {
 //Report mode locator
     static summaryMode: string = "(//div[contains(text(),'Mode Ringkasan')])[1]";
     static detailMode: string = "(//div[normalize-space()='Mode Detail'])[1]";
-
-//Locator after select detailMode
-    static salesMode: string = "(//input[@class='ant-select-selection-search-input ng-untouched ng-pristine ng-valid'])[4]";
 
 //Sales mode locator
     static dineIn: string = "(//div[normalize-space()='Dine in'])[1]";
@@ -59,5 +58,13 @@ export default class PaymentLocator extends BaseLocator {
     static esoOvo: string = "(//div[normalize-space()='OVO (ESO)'])[1]";
     static esoQris: string = "(//div[normalize-space()='QRIS (ESO)'])[1]";
     static esoShopeePay: string = "(//div[normalize-space()='SHOPEEPAY (ESO)'])[1]";
+
+    //Payment Data
+    static salesFromPaymentMethodTitle = "//strong[normalize-space()='Penjualan Dari Metode Pembayaran']"
+    static salesDetailTitle = "//strong[normalize-space()='Detail Penjualan']"
+
+    //Download
+    static downloadDialogDownloadButton: string = "//button[@class='btn btn-block btn-primary'][normalize-space()='Unduh']";
+    static downloadDialogCancelButton: string = "//button[@class='btn btn-block'][normalize-space()='Batal']";
 
 }

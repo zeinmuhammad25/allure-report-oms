@@ -6,7 +6,7 @@ import {Keyboard} from "./constants/Keyboard";
 import BaseConfigs from "./base-configs";
 
 export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs> implements BaseScenario {
-    private readonly _page: Page;
+    protected readonly _page: Page;
     protected urls: T;
     protected configs: U;
 
@@ -24,14 +24,17 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this.urls.baseUrl();
     }
 
-    async navigateHere(): Promise<void> {
+    async navigateHere(performInitialCheck: boolean = true): Promise<void> {
         await this.navigateTo(this.pageUrl());
-        await this.performCheckInitialElements();
+        if (performInitialCheck) await this.performCheckInitialElements();
     }
 
-    public async gotoPage<P extends BasePage<T, U>>(pageCreator: new(page: Page, urls: T, configs: U) => P): Promise<P> {
+    public async gotoPage<P extends BasePage<T, U>>(
+        pageCreator: new(page: Page, urls: T, configs: U) => P,
+        performInitialCheck: boolean = true,
+    ): Promise<P> {
         let newPage: P = new pageCreator(this._page, this.urls, this.configs);
-        await newPage.navigateHere();
+        await newPage.navigateHere(performInitialCheck);
         return newPage;
     }
 
@@ -88,21 +91,20 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
     protected clickButtonByText(text: string): Promise<void> {
         console.log(`click button by text:  ${text}`);
         return this._page.getByRole('button', {name: text}).click();
-
     }
 
-    protected expectEnabled(selector: string): Promise<void> {
-        console.log(`check if enabled:  ${selector}`);
+    public expectEnabled(selector: string): Promise<void> {
+        console.log(`expect enabled:  ${selector}`);
         return expect(this._page.locator(selector)).toBeEnabled();
     }
 
-    protected expectDisabled(selector: string): Promise<void> {
-        console.log(`check if disabled:  ${selector}`);
+    public expectDisabled(selector: string): Promise<void> {
+        console.log(`expect disabled:  ${selector}`);
         return expect(this._page.locator(selector)).toBeDisabled();
     }
 
-    protected expectVisible(selector: string): Promise<void> {
-        console.log(`check if visible:  ${selector}`);
+    public expectVisible(selector: string): Promise<void> {
+        console.log(`expect visible:  ${selector}`);
         return expect(this._page.locator(selector)).toBeVisible();
     }
 
@@ -124,6 +126,11 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
     public async expectHasValue(selector: string, value: string): Promise<void> {
         console.log(`check if : ${selector}  hasValue : ${value}`);
         return expect(this._page.locator(selector)).toHaveValue(value);
+    }
+
+    public async expectEmpty(selector: string): Promise<void> {
+        console.log(`check if : ${selector}  empty`);
+        return this.expectHasValue(selector, '');
     }
 
     public async expectHasElement(...elements: Element[]) {
@@ -210,7 +217,6 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.locator(selector).isEnabled();
     }
 
-
     protected isChecked(selector: string): Promise<boolean> {
         console.log(`check if checked:  ${selector}`);
         return this._page.locator(selector).isChecked();
@@ -221,7 +227,7 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.locator(selector).isVisible();
     }
 
-    protected isInvisible(selector: string): Promise<boolean> {
+    public isInvisible(selector: string): Promise<boolean> {
         console.log(`check if visible:  ${selector}`);
         return this._page.locator(selector).isHidden();
     }
@@ -236,5 +242,9 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         const downloadedFile = download.suggestedFilename()
         console.log(`check if file Downloaded: ${filename}%${extension}`);
         return expect(downloadedFile.startsWith(filename) && downloadedFile.endsWith(extension)).toBe(true);
+    }
+
+    public getLocator(selector: string) {
+        return this._page.locator(selector);
     }
 }
