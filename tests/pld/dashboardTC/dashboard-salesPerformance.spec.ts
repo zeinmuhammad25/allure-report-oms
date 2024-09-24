@@ -13,7 +13,7 @@ test.describe.serial("Sales Profit and Lost Report Test", () => {
     })
 
     test(
-        "Verify User can filter and show data Net Sales of Dashboard Sales Perfomance",
+        "Verify User can filter and show data Net Sales of Dashboard Sales Performance",
         {tag: tag},
         async ({page}) => {
             const dashboardPage = new DashboardPage(page)
@@ -21,7 +21,7 @@ test.describe.serial("Sales Profit and Lost Report Test", () => {
         })
 
     test(
-        "Verify User can filter and show data Total Bills of Dashboard Sales Perfomance",
+        "Verify User can filter and show data Total Bills of Dashboard Sales Performance",
         {tag: tag},
         async ({page}) => {
             const dashboardPage = new DashboardPage(page)
@@ -29,7 +29,7 @@ test.describe.serial("Sales Profit and Lost Report Test", () => {
         })
 
     test(
-        "Verify User can filter and show data Bill Size of Dashboard Sales Perfomance",
+        "Verify User can filter and show data Bill Size of Dashboard Sales Performance",
         {tag: tag},
         async ({page}) => {
             const dashboardPage = new DashboardPage(page)
@@ -37,7 +37,7 @@ test.describe.serial("Sales Profit and Lost Report Test", () => {
         })
 
     test(
-        "Verify User can filter and show data Total Pax of Dashboard Sales Perfomance",
+        "Verify User can filter and show data Total Pax of Dashboard Sales Performance",
         {tag: tag},
         async ({page}) => {
             const dashboardPage = new DashboardPage(page)
@@ -45,7 +45,7 @@ test.describe.serial("Sales Profit and Lost Report Test", () => {
         })
 
     test(
-        "Verify User can filter,  and show Order Per Pax of Dashboard Sales Perfomance",
+        "Verify User can filter,  and show Order Per Pax of Dashboard Sales Performance",
         {tag: tag},
         async ({page}) => {
             const dashboardPage = new DashboardPage(page)
@@ -53,7 +53,7 @@ test.describe.serial("Sales Profit and Lost Report Test", () => {
         })
 
     test(
-        "Verify User can filter and show data Pending Sales of Dashboard Sales Perfomance",
+        "Verify User can filter and show data Pending Sales of Dashboard Sales Performance",
         {tag: tag},
         async ({page}) => {
             const dashboardPage = new DashboardPage(page)
