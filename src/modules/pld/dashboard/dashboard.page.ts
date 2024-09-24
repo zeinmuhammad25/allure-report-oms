@@ -115,24 +115,29 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.netSalesData)
     }
+
     async validateTotalBillsDataOnDashboardSalesPerformance(): Promise<void> {
-await this.fillFilterAndShowData()
+        await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.totalBillsData)
     }
+
     async validateAverageNetSalesPerBillDataOnDashboardSalesPerformance(): Promise<void> {
-await this.fillFilterAndShowData()
+        await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.averageNetSalesPerBillData)
     }
+
     async validateTotalPaxDataOnDashboardSalesPerformance(): Promise<void> {
-await this.fillFilterAndShowData()
+        await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.totalPaxData)
     }
+
     async validateAverageNetSalesPerPaxDataOnDashboardSalesPerformance(): Promise<void> {
-await this.fillFilterAndShowData()
+        await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.averageNetSalesPerPaxData)
     }
+
     async validatePendingSalesDataOnDashboardSalesPerformance(): Promise<void> {
-await this.fillFilterAndShowData()
+        await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.pendingSalesData)
     }
 
@@ -252,80 +257,62 @@ await this.fillFilterAndShowData()
     }
 
     async goToCompany(): Promise<CompanyPage> {
-
         await this.accountSettingAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarAccountSettingCompany, CompanyPage);
-
     }
 
     async goToGenerateOTP(): Promise<GenerateOTPPage> {
-
         await this.accountSettingAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarAccountSettingGenerateOTP, GenerateOTPPage);
     }
 
     async goToNotificationEmail(): Promise<NotificationEmailPage> {
-
         await this.accountSettingAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarAccountSettingEmailNotification, NotificationEmailPage);
     }
 
     async goToPaymentMethod(): Promise<PaymentMethodPage> {
-
         await this.accountSettingAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarAccountSettingPayment, PaymentMethodPage);
     }
 
     async goToTableSetting(): Promise<TableSettingPage> {
-
         await this.accountSettingAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarAccountSettingTableSetting, TableSettingPage);
     }
 
     async goToAttendanceList(): Promise<AttendanceListPage> {
-
         await this.attendanceAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarAttendanceDataChild, AttendanceListPage);
     }
 
     async goToEmployeeData(): Promise<EmployeeDataPage> {
-
         await this.attendanceAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarEmployeeDataChild, EmployeeDataPage);
-
     }
 
     async goToBookkeepingCategory(): Promise<BookkeepingCategoryPage> {
-
         await this.bookkeepingAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarBookkeepingCategory, BookkeepingCategoryPage);
-
     }
 
     async goToBookkeepingInput(): Promise<BookkeepingInputPage> {
-
         await this.bookkeepingAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarBookkeepingInput, BookkeepingInputPage);
-
     }
 
     async goToBookkeepingReport(): Promise<BookkeepingReportPage> {
-
         await this.bookkeepingAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarBookkeepingReport, BookkeepingReportPage);
-
     }
 
 
     async goToCategory(): Promise<CategoryPage> {
-
         await this.catalogueAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarChildCategory, CategoryPage);
-
     }
 
     async goToMenu(): Promise<MenuPage> {
-
         await this.catalogueAccordionCheck();
         await this.click(SidebarLocator.sidebarChildMenu);
         // await this.handleMenuToolTip();
@@ -339,168 +326,122 @@ await this.fillFilterAndShowData()
     }
 
     async goToMenuBook(): Promise<MenuBookPage> {
-
         await this.catalogueAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarMenuBook, MenuBookPage);
-
     }
 
     async goToMenuNotes(): Promise<MenuNotesPage> {
-
         await this.catalogueAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarMenuNote, MenuNotesPage);
-
     }
 
     async goToReasonCancel(): Promise<ReasonCancelPage> {
-
         await this.catalogueAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarCancelReason, ReasonCancelPage);
-
     }
 
     async goToSalesMode(): Promise<SalesModePage> {
-
         await this.catalogueAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarSalesMode, SalesModePage);
-
     }
 
 
     async goToSpecialPrice(): Promise<SpecialPricePage> {
-
         await this.catalogueAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarSpecialPrice, SpecialPricePage);
-
     }
 
     async goToBannerMarketing(): Promise<BannerMarketingPage> {
-
         await this.esbOrderAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarESBOrderBannerMarketing, BannerMarketingPage);
-
     }
 
     async goToSetting(): Promise<SettingPage> {
-
         await this.esbOrderAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarESBOrderSetting, SettingPage);
-
     }
 
     async goToRawMaterial(): Promise<RawMaterialPage> {
-
         await this.inventoryAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarRawMaterial, RawMaterialPage);
-
     }
 
     async goToRawMaterialReport(): Promise<RawMaterialReportPage> {
-
         await this.inventoryAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarRawMaterialReport, RawMaterialReportPage);
-
     }
 
     async goToRawMaterialStock(): Promise<RawMaterialStockPage> {
-
         await this.inventoryAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarRawMaterialStock, RawMaterialStockPage);
-
     }
 
     async goToRawMaterialTransaction(): Promise<RawMaterialTransactionPage> {
-
         await this.inventoryAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarRawMaterialTransaction, RawMaterialTransactionPage);
-
     }
 
     async goToManageOnlineMenu(): Promise<ManageOnlineMenuPage> {
-
         await this.onlinePlatformAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarManageOnlineMenu, ManageOnlineMenuPage);
-
     }
 
     async goToPlatformIntegration(): Promise<PlatformIntegrationPage> {
-
         await this.onlinePlatformAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarPlatformIntegration, PlatformIntegrationPage);
-
     }
 
     async goToPrinter(): Promise<PrinterPage> {
-
         await this.printerSettingAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarPrinterSettingChild, PrinterPage);
     }
 
     async goToMenuManagement(): Promise<MenuManagementPage> {
-
         await this.printerSettingAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarMenuManagement, MenuManagementPage);
-
     }
 
     async goToCancelAndVoid(): Promise<CancelAndVoidPage> {
-
         await this.reportAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarCancelAndVoid, CancelAndVoidPage);
-
     }
 
     async goToPayment(): Promise<PaymentPage> {
-
         await this.reportAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarPaymentReport, PaymentPage);
-
     }
 
     async goToProfitAndLoss(): Promise<ProfitAndLossPage> {
-
         await this.reportAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarProfitAndLoss, ProfitAndLossPage);
-
     }
 
     async goToPromotionReport(): Promise<ReportPromotionPage> {
-
         await this.reportAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarReportPromotion, ReportPromotionPage);
-
     }
 
     async goToSalesDetail(): Promise<SalesDetailPage> {
-
         await this.reportAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarSalesDetail, SalesDetailPage);
-
     }
 
     async goToSalesMenu(): Promise<SalesMenuPage> {
-
         await this.reportAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarSalesMenuReport, SalesMenuPage);
-
     }
 
     async goToSalesSummary(): Promise<SalesSummaryPage> {
-
         await this.reportAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarSalesSummary, SalesSummaryPage);
-
     }
 
     async goToUserAccessControl(): Promise<UserPage> {
-
         await this.userAccessAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarUser, UserPage);
-
     }
 
     async goToUserAccessBackend(): Promise<UserAccessBackendPage> {
-
         await this.userAccessAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarUserAccessBackend, UserAccessBackendPage);
 
@@ -508,7 +449,6 @@ await this.fillFilterAndShowData()
     }
 
     async goToUserAccessPOS(): Promise<UserAccessPOSPage> {
-
         await this.userAccessAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarUserAccessPOS, UserAccessPOSPage);
 
@@ -516,41 +456,32 @@ await this.fillFilterAndShowData()
     }
 
     async goToStockMenu(): Promise<StockMenuPage> {
-
         await this.dashboardAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarStockMenu, StockMenuPage);
-
     }
 
     async goToBookKeeping(): Promise<BookKeepingPage> {
-
         await this.dashboardAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarDashboardBookkeeping, BookKeepingPage);
-
     }
 
     async goToOnlinePayment(): Promise<OnlinePaymentPage> {
-
         await this.dashboardAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarOnlinePayment, OnlinePaymentPage);
-
     }
 
     async goToPromotion(): Promise<PromotionPage> {
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarPromotionHead, PromotionPage);
-
     }
 
     async goToRemainingFunds(): Promise<RemainingFundsPage> {
         await this.withdrawFundAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarRemainingFunds, RemainingFundsPage);
-
     }
 
     async goToWithdrawHistory(): Promise<HistoryPage> {
         await this.withdrawFundAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarHistory, HistoryPage);
-
     }
 
     async goToProfile(): Promise<ProfilePage> {
