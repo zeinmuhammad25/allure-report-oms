@@ -38,10 +38,6 @@ export default class DashboardLocator extends BaseLocator {
 
 
     // Dashboard Composition
-    static salesBySalesMode: string = "//strong[text()='Penjualan Dari Mode Penjualan']"
-    static salesByPaymentMethod: string = "//strong[text()='Penjualan Dari Metode Pembayaran']"
-    static salesByCategory: string = "//strong[text()='Penjualan Dari Kategori']"
-    //Dashboard Composition
     static compositionSalesBySalesMode: string = "//strong[text()='Penjualan Dari Mode Penjualan']"
     static compositionSalesByPaymentMethod: string = "//strong[text()='Penjualan Dari Metode Pembayaran']"
     static compositionSalesByCategory: string = "//strong[text()='Penjualan Dari Kategori']"

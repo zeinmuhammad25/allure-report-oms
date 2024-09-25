@@ -270,9 +270,6 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
     private async fillFilterCompositionTopBranch() {
         await this.inputCompositionTopBranchCompanyField()
         await this.inputCompositionTopBranchBrandField()
-        // await this.inputCompositionTopBranchBranchField()
-        // await this.inputCompositionTopBranchValueTypeField()
-        // await this.inputCompositionTopBranchLimitField()
     }
 
     async validateTopMenuDataOnDashboardComposition(): Promise<void> {
@@ -508,8 +505,6 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         // await this.expectVisible(MenuLocator.menuTooltipOkeButton);
         // await this.click(MenuLocator.menuTooltipOkeButton);
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarChildMenu, MenuPage);
-
-
     }
 
     async goToMenuBook(): Promise<MenuBookPage> {
