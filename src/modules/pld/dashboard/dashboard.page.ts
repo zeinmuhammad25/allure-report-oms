@@ -138,6 +138,16 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.search()
     }
 
+    async validateSalesStatisticOnDashboard(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.salesStatistic)
+    }
+
+    async validateRawMaterialStockOnDashboard(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.rawMaterialStock)
+    }
+
     async validateOtherCostTransactionDataOnDashboardFraudControl(): Promise<void> {
         await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.otherCostTransactionButton)
