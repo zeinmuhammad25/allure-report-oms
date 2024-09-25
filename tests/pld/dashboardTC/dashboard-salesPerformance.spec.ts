@@ -2,7 +2,7 @@ import DashboardPage from "../../../src/modules/pld/dashboard/dashboard.page";
 import LoginPage from "../../../src/modules/pld/login/login.page";
 import {test} from "@playwright/test";
 
-test.describe.serial("Sales Profit and Lost Report Test", () => {
+test.describe.serial("Dashboard Sales Performance Test", () => {
     let loginPage: LoginPage
     const tag = '@smokeTest @dashboard @salesPerformance'
 
