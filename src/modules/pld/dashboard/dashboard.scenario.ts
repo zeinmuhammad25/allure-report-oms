@@ -47,6 +47,12 @@ import HistoryPage from "../withdrawFunds/history/history.page";
 import RemainingFundsPage from "../withdrawFunds/remainingFunds/remainingFunds.page";
 
 export default interface DashboardScenario extends BaseScenario {
+    validateSalesBySalesModeDataOnDashboardComposition(): Promise<void>
+
+    validateSalesByPaymentMethodDataOnDashboardComposition(): Promise<void>
+
+    validateSalesByCategoryDataOnDashboardComposition(): Promise<void>
+
     validateNetSalesDataOnDashboardSalesPerformance(): Promise<void>
 
     validateTotalBillsDataOnDashboardSalesPerformance(): Promise<void>

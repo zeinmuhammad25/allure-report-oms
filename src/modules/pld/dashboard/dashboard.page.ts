@@ -56,6 +56,7 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
     private brand = "Test QC 02"
     private branch = "Test Cabang Baru"
     private apiSalesPerformance = "dashboard/sales-performance"
+    private apiSalesComposition = "dashboard/sales-composition"
 
     pageUrl = (): string => this.urls.get.dashboard.dashboardIndexUrl
 
@@ -71,23 +72,33 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
 
     private async filterByMonth() {
         await this.click(DashboardLocator.buttonMonth)
-        await this.waitForResponse(this.apiSalesPerformance)
+        await Promise.all([
+            this.waitForResponse(this.apiSalesPerformance),
+            this.waitForResponse(this.apiSalesComposition)
+        ])
     }
 
     private async filterByDay() {
         await this.click(DashboardLocator.buttonDay)
-        await this.waitForResponse(this.apiSalesPerformance)
+        await Promise.all([
+            this.waitForResponse(this.apiSalesPerformance),
+            this.waitForResponse(this.apiSalesComposition)
+        ])
     }
 
     private async search() {
         await this.click(DashboardLocator.buttonSearch)
-        await this.waitForResponse(this.apiSalesPerformance)
+        await Promise.all([
+            this.waitForResponse(this.apiSalesPerformance),
+            this.waitForResponse(this.apiSalesComposition)
+        ])
     }
 
     private async inputCompany() {
         await this.click(DashboardLocator.companyField)
         await this.expectVisible(DashboardLocator.filterOptionItem(this.company))
         await this.click(DashboardLocator.filterOptionItem(this.company))
+        await this.wait(300)
     }
 
     private async inputBrand() {
@@ -111,28 +122,48 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.search()
     }
 
+    async validateSalesBySalesModeDataOnDashboardComposition(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.salesBySalesMode)
+    }
+
+    async validateSalesByPaymentMethodDataOnDashboardComposition(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.salesByPaymentMethod)
+    }
+
+    async validateSalesByCategoryDataOnDashboardComposition(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.salesByCategory)
+    }
+
     async validateNetSalesDataOnDashboardSalesPerformance(): Promise<void> {
         await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.netSalesData)
     }
+
     async validateTotalBillsDataOnDashboardSalesPerformance(): Promise<void> {
-await this.fillFilterAndShowData()
+        await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.totalBillsData)
     }
+
     async validateAverageNetSalesPerBillDataOnDashboardSalesPerformance(): Promise<void> {
-await this.fillFilterAndShowData()
+        await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.averageNetSalesPerBillData)
     }
+
     async validateTotalPaxDataOnDashboardSalesPerformance(): Promise<void> {
-await this.fillFilterAndShowData()
+        await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.totalPaxData)
     }
+
     async validateAverageNetSalesPerPaxDataOnDashboardSalesPerformance(): Promise<void> {
-await this.fillFilterAndShowData()
+        await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.averageNetSalesPerPaxData)
     }
+
     async validatePendingSalesDataOnDashboardSalesPerformance(): Promise<void> {
-await this.fillFilterAndShowData()
+        await this.fillFilterAndShowData()
         await this.expectVisible(DashboardLocator.pendingSalesData)
     }
 
