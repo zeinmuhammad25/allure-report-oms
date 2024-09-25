@@ -28,4 +28,9 @@ export default class DashboardLocator extends BaseLocator {
     static totalPaxData: string = this.getSalesPerformanceChild(4)
     static averageNetSalesPerPaxData: string = this.getSalesPerformanceChild(5)
     static pendingSalesData: string = this.getSalesPerformanceChild(6)
+
+    //Dashboard Composition
+    static salesBySalesMode: string = "//strong[text()='Penjualan Dari Mode Penjualan']"
+    static salesByPaymentMethod: string = "//strong[text()='Penjualan Dari Metode Pembayaran']"
+    static salesByCategory: string = "//strong[text()='Penjualan Dari Kategori']"
 }
