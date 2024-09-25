@@ -20,6 +20,13 @@ export default class DashboardLocator extends BaseLocator {
     static buttonSearch: string = "//button[contains(@class, 'btn-search')]";
     static filterOptionItem = (filterText: string): string => `//nz-option-item[@title='${filterText}']`
 
+    // Dashboard Sales Statistic
+    static salesStatistic: string = "//h6/strong[normalize-space()='Stok Bahan Baku']"
+
+    // Dashboard Raw Material Stock
+    static rawMaterialStock: string = "//h6/strong[normalize-space()='Stok Bahan Baku']"
+
+
     //Dashboard Sales Performance
     private static getSalesPerformanceChild = (child: number) => `(//div[contains(@class,'card-body')]//div[@class='card-row-two'])[${child}]`
     static netSalesData: string = this.getSalesPerformanceChild(1)
@@ -44,7 +51,7 @@ export default class DashboardLocator extends BaseLocator {
     static compositionSalesTopMenu: string = "//strong[text()='Menu Terlaris']"
     static compositionSalesTopBranch: string = "//strong[text()='Cabang Dengan Penjualan Terbaik']"
 
-    private static getTopSalesFilter = (index:number) => `(//div[@class='mt-2 ant-row']//nz-select-search)[${index}]`
+    private static getTopSalesFilter = (index: number) => `(//div[@class='mt-2 ant-row']//nz-select-search)[${index}]`
     static compositionTopMenuCategoryField: string = this.getTopSalesFilter(1)
     static compositionTopMenuSubCategoryField: string = this.getTopSalesFilter(2)
     static compositionTopMenuSalesModeField: string = this.getTopSalesFilter(3)
