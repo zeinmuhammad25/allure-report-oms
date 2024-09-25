@@ -55,8 +55,16 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
     private company = "Test QC 02"
     private brand = "Test QC 02"
     private branch = "Test Cabang Baru"
+
+    private category = 'Kategori Baru'
+    private subCategory = 'Sub Kategori Baru'
+    private salesMode = 'Dine In'
+    private valueType = 'Jumlah'
+    private limit = '20 Teratas'
+
     private apiSalesPerformance = "dashboard/sales-performance"
     private apiSalesComposition = "dashboard/sales-composition"
+    private apiSalesTopData = "dashboard/sales-top-data"
 
     pageUrl = (): string => this.urls.get.dashboard.dashboardIndexUrl
 
@@ -122,19 +130,122 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.search()
     }
 
+    private async inputCompositionTopMenuCategoryField() {
+        await this.expectVisible(DashboardLocator.compositionTopMenuCategoryField)
+        await this.click(DashboardLocator.compositionTopMenuCategoryField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.category))
+        await this.click(DashboardLocator.filterOptionItem(this.category))
+        await this.waitForResponse(this.apiSalesTopData)
+    }
+
+    private async inputCompositionTopMenuSubCategoryField() {
+        await this.expectVisible(DashboardLocator.compositionTopMenuSubCategoryField)
+        await this.click(DashboardLocator.compositionTopMenuSubCategoryField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.subCategory))
+        await this.click(DashboardLocator.filterOptionItem(this.subCategory))
+        await this.waitForResponse(this.apiSalesTopData)
+    }
+
+    private async inputCompositionTopMenuSalesModeField() {
+        await this.expectVisible(DashboardLocator.compositionTopMenuSalesModeField)
+        await this.click(DashboardLocator.compositionTopMenuSalesModeField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.salesMode))
+        await this.click(DashboardLocator.filterOptionItem(this.salesMode))
+        await this.waitForResponse(this.apiSalesTopData)
+    }
+
+    private async inputCompositionTopMenuValueTypeField() {
+        await this.expectVisible(DashboardLocator.compositionTopMenuValueTypeField)
+        await this.click(DashboardLocator.compositionTopMenuValueTypeField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.valueType))
+        await this.click(DashboardLocator.filterOptionItem(this.valueType))
+        await this.waitForResponse(this.apiSalesTopData)
+    }
+
+    private async inputCompositionTopMenuLimitField() {
+        await this.expectVisible(DashboardLocator.compositionTopMenuLimitField)
+        await this.click(DashboardLocator.compositionTopMenuLimitField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.limit))
+        await this.click(DashboardLocator.filterOptionItem(this.limit))
+        await this.waitForResponse(this.apiSalesTopData)
+    }
+
+    private async fillFilterCompositionTopMenu() {
+        await this.inputCompositionTopMenuCategoryField()
+        await this.inputCompositionTopMenuSubCategoryField()
+    }
+
+
+    private async inputCompositionTopBranchCompanyField() {
+        await this.expectVisible(DashboardLocator.compositionTopBranchCompanyField)
+        await this.click(DashboardLocator.compositionTopBranchCompanyField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.company))
+        await this.click(DashboardLocator.filterOptionItem(this.company))
+        await this.waitForResponse(this.apiSalesTopData)
+        await this.wait(200)
+    }
+
+    private async inputCompositionTopBranchBrandField() {
+        await this.expectVisible(DashboardLocator.compositionTopBranchBrandField)
+        await this.click(DashboardLocator.compositionTopBranchBrandField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.brand))
+        await this.click(DashboardLocator.filterOptionItem(this.brand))
+        await this.waitForResponse(this.apiSalesTopData)
+    }
+
+    private async inputCompositionTopBranchBranchField() {
+        await this.expectVisible(DashboardLocator.compositionTopBranchBranchField)
+        await this.click(DashboardLocator.compositionTopBranchBranchField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.branch))
+        await this.click(DashboardLocator.filterOptionItem(this.branch))
+        await this.waitForResponse(this.apiSalesTopData)
+    }
+
+    private async inputCompositionTopBranchValueTypeField() {
+        await this.expectVisible(DashboardLocator.compositionTopBranchValueTypeField)
+        await this.click(DashboardLocator.compositionTopBranchValueTypeField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.valueType))
+        await this.click(DashboardLocator.filterOptionItem(this.valueType))
+        await this.waitForResponse(this.apiSalesTopData)
+    }
+
+    private async inputCompositionTopBranchLimitField() {
+        await this.expectVisible(DashboardLocator.compositionTopBranchLimitField)
+        await this.click(DashboardLocator.compositionTopBranchLimitField)
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.limit))
+        await this.click(DashboardLocator.filterOptionItem(this.limit))
+        await this.waitForResponse(this.apiSalesTopData)
+    }
+
+    private async fillFilterCompositionTopBranch() {
+        await this.inputCompositionTopBranchCompanyField()
+        await this.inputCompositionTopBranchBrandField()
+        // await this.inputCompositionTopBranchBranchField()
+        // await this.inputCompositionTopBranchValueTypeField()
+        // await this.inputCompositionTopBranchLimitField()
+    }
+
+    async validateTopMenuDataOnDashboardComposition(): Promise<void> {
+        await this.fillFilterCompositionTopMenu()
+    }
+
+    async validateTopBranchDataOnDashboardComposition(): Promise<void> {
+        await this.fillFilterCompositionTopBranch()
+    }
+
     async validateSalesBySalesModeDataOnDashboardComposition(): Promise<void> {
         await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.salesBySalesMode)
+        await this.expectVisible(DashboardLocator.compositionSalesBySalesMode)
     }
 
     async validateSalesByPaymentMethodDataOnDashboardComposition(): Promise<void> {
         await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.salesByPaymentMethod)
+        await this.expectVisible(DashboardLocator.compositionSalesByPaymentMethod)
     }
 
     async validateSalesByCategoryDataOnDashboardComposition(): Promise<void> {
         await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.salesByCategory)
+        await this.expectVisible(DashboardLocator.compositionSalesByCategory)
     }
 
     async validateNetSalesDataOnDashboardSalesPerformance(): Promise<void> {
