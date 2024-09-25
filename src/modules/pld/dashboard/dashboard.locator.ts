@@ -18,7 +18,7 @@ export default class DashboardLocator extends BaseLocator {
     static buttonDay: string = "//nz-radio-group//span[normalize-space()='Hari']";
     static buttonMonth: string = "//nz-radio-group//span[normalize-space()='Bulan']";
     static buttonSearch: string = "//button[contains(@class, 'btn-search')]";
-    static filterOptionItem = (filterText:string): string => `//nz-option-item[@title='${filterText}']`
+    static filterOptionItem = (filterText: string): string => `//nz-option-item[@title='${filterText}']`
 
     //Dashboard Sales Performance
     private static getSalesPerformanceChild = (child: number) => `(//div[contains(@class,'card-body')]//div[@class='card-row-two'])[${child}]`
@@ -29,7 +29,15 @@ export default class DashboardLocator extends BaseLocator {
     static averageNetSalesPerPaxData: string = this.getSalesPerformanceChild(5)
     static pendingSalesData: string = this.getSalesPerformanceChild(6)
 
-    //Dashboard Composition
+    // Dashboard Fraud Control
+    static otherCostTransactionButton = "(//div[@class='card-row-one ml-2'])[1]//button"
+    static complimentTransactionButton = "(//div[@class='card-row-one ml-2'])[2]//button"
+    static nonSalesTransactionButton = "(//div[@class='card-row-one ml-2'])[3]//button"
+    static fraudControlDialogCloseButton = "//button[normalize-space()='Tutup']"
+    static checkDataEmptyByMessage = (message: string) => `//nz-empty//p[contains(text(),'${message}')]`
+
+
+    // Dashboard Composition
     static salesBySalesMode: string = "//strong[text()='Penjualan Dari Mode Penjualan']"
     static salesByPaymentMethod: string = "//strong[text()='Penjualan Dari Metode Pembayaran']"
     static salesByCategory: string = "//strong[text()='Penjualan Dari Kategori']"
