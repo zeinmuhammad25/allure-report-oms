@@ -35,4 +35,20 @@ test.describe.serial("Dashboard Composition Test", () => {
             const dashboardPage = new DashboardPage(page)
             await dashboardPage.validateSalesByCategoryDataOnDashboardComposition()
         })
+
+    test(
+        "Verify User can filter and show Top Menu Data of Dashboard Composition",
+        {tag: tag},
+        async ({page}) => {
+            const dashboardPage = new DashboardPage(page)
+            await dashboardPage.validateTopMenuDataOnDashboardComposition()
+        })
+
+    test(
+        "Verify User can filter and show Top Branch Data of Dashboard Composition",
+        {tag: tag},
+        async ({page}) => {
+            const dashboardPage = new DashboardPage(page)
+            await dashboardPage.validateTopBranchDataOnDashboardComposition()
+        })
 })

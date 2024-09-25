@@ -38,7 +38,21 @@ export default class DashboardLocator extends BaseLocator {
 
 
     // Dashboard Composition
-    static salesBySalesMode: string = "//strong[text()='Penjualan Dari Mode Penjualan']"
-    static salesByPaymentMethod: string = "//strong[text()='Penjualan Dari Metode Pembayaran']"
-    static salesByCategory: string = "//strong[text()='Penjualan Dari Kategori']"
+    static compositionSalesBySalesMode: string = "//strong[text()='Penjualan Dari Mode Penjualan']"
+    static compositionSalesByPaymentMethod: string = "//strong[text()='Penjualan Dari Metode Pembayaran']"
+    static compositionSalesByCategory: string = "//strong[text()='Penjualan Dari Kategori']"
+    static compositionSalesTopMenu: string = "//strong[text()='Menu Terlaris']"
+    static compositionSalesTopBranch: string = "//strong[text()='Cabang Dengan Penjualan Terbaik']"
+
+    private static getTopSalesFilter = (index:number) => `(//div[@class='mt-2 ant-row']//nz-select-search)[${index}]`
+    static compositionTopMenuCategoryField: string = this.getTopSalesFilter(1)
+    static compositionTopMenuSubCategoryField: string = this.getTopSalesFilter(2)
+    static compositionTopMenuSalesModeField: string = this.getTopSalesFilter(3)
+    static compositionTopMenuValueTypeField: string = this.getTopSalesFilter(4)
+    static compositionTopMenuLimitField: string = this.getTopSalesFilter(5)
+    static compositionTopBranchCompanyField: string = this.getTopSalesFilter(6)
+    static compositionTopBranchBrandField: string = this.getTopSalesFilter(7)
+    static compositionTopBranchBranchField: string = this.getTopSalesFilter(8)
+    static compositionTopBranchValueTypeField: string = this.getTopSalesFilter(9)
+    static compositionTopBranchLimitField: string = this.getTopSalesFilter(10)
 }
