@@ -36,4 +36,9 @@ export default class DashboardLocator extends BaseLocator {
     static fraudControlDialogCloseButton = "//button[normalize-space()='Tutup']"
     static checkDataEmptyByMessage = (message: string) => `//nz-empty//p[contains(text(),'${message}')]`
 
+
+    // Dashboard Composition
+    static salesBySalesMode: string = "//strong[text()='Penjualan Dari Mode Penjualan']"
+    static salesByPaymentMethod: string = "//strong[text()='Penjualan Dari Metode Pembayaran']"
+    static salesByCategory: string = "//strong[text()='Penjualan Dari Kategori']"
 }

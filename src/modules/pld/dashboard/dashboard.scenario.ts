@@ -53,6 +53,12 @@ export default interface DashboardScenario extends BaseScenario {
 
     validateNonSalesTransactionDataOnDashboardFraudControl(): Promise<void>
 
+    validateSalesBySalesModeDataOnDashboardComposition(): Promise<void>
+
+    validateSalesByPaymentMethodDataOnDashboardComposition(): Promise<void>
+
+    validateSalesByCategoryDataOnDashboardComposition(): Promise<void>
+
     validateNetSalesDataOnDashboardSalesPerformance(): Promise<void>
 
     validateTotalBillsDataOnDashboardSalesPerformance(): Promise<void>

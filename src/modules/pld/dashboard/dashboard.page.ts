@@ -55,11 +55,13 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
     private company = "Test QC 02"
     private brand = "Test QC 02"
     private branch = "Test Cabang Baru"
-    private apiSalesPerformance = "dashboard/sales-performance"
-    private apiFraudControl = "dashboard/sales-fraud-control"
     private emptyMessageOtherTransaction = "Anda belum memiliki daftar transaksi untuk other cost"
     private emptyMessageComplimentTransaction = "Anda belum memiliki daftar transaksi untuk komplimen"
     private emptyMessageNonSalesTransaction = "Anda belum memiliki daftar transaksi untuk pembatalan"
+
+    private apiSalesPerformance = "dashboard/sales-performance"
+    private apiSalesComposition = "dashboard/sales-composition"
+    private apiFraudControl = "dashboard/sales-fraud-control"
 
     pageUrl = (): string => this.urls.get.dashboard.dashboardIndexUrl
 
@@ -77,7 +79,8 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.click(DashboardLocator.buttonMonth)
         await Promise.all([
             this.waitForResponse(this.apiSalesPerformance),
-            this.waitForResponse(this.apiFraudControl)
+            this.waitForResponse(this.apiFraudControl),
+            this.waitForResponse(this.apiSalesComposition)
         ])
     }
 
@@ -85,7 +88,8 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.click(DashboardLocator.buttonDay)
         await Promise.all([
             this.waitForResponse(this.apiSalesPerformance),
-            this.waitForResponse(this.apiFraudControl)
+            this.waitForResponse(this.apiFraudControl),
+            this.waitForResponse(this.apiSalesComposition)
         ])
     }
 
@@ -93,7 +97,8 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.click(DashboardLocator.buttonSearch)
         await Promise.all([
             this.waitForResponse(this.apiSalesPerformance),
-            this.waitForResponse(this.apiFraudControl)
+            this.waitForResponse(this.apiFraudControl),
+            this.waitForResponse(this.apiSalesComposition)
         ])
     }
 
@@ -165,6 +170,21 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         }
         await this.expectVisible(DashboardLocator.fraudControlDialogCloseButton)
         await this.click(DashboardLocator.fraudControlDialogCloseButton)
+    }
+
+    async validateSalesBySalesModeDataOnDashboardComposition(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.salesBySalesMode)
+    }
+
+    async validateSalesByPaymentMethodDataOnDashboardComposition(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.salesByPaymentMethod)
+    }
+
+    async validateSalesByCategoryDataOnDashboardComposition(): Promise<void> {
+        await this.fillFilterAndShowData()
+        await this.expectVisible(DashboardLocator.salesByCategory)
     }
 
     async validateNetSalesDataOnDashboardSalesPerformance(): Promise<void> {
@@ -500,15 +520,11 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
     async goToUserAccessBackend(): Promise<UserAccessBackendPage> {
         await this.userAccessAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarUserAccessBackend, UserAccessBackendPage);
-
-
     }
 
     async goToUserAccessPOS(): Promise<UserAccessPOSPage> {
         await this.userAccessAccordionCheck();
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarUserAccessPOS, UserAccessPOSPage);
-
-
     }
 
     async goToStockMenu(): Promise<StockMenuPage> {
