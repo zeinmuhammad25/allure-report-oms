@@ -5,10 +5,7 @@ import StockMenuLocator from "./stockMenu.locator";
 
 
 export default class StockMenuPage extends BasePosLitePage implements StockMenuScenario {
-
-
     pageUrl = (): string => this.urls.get.dashboard.stockMenuUrl;
-
 
     shouldHave(): Element[] {
         return [
@@ -26,5 +23,26 @@ export default class StockMenuPage extends BasePosLitePage implements StockMenuS
         ];
     }
 
+    validateStatisticalIncomeDataOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateStatisticalExpenditureDataOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateStatisticalProfitDataOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateTransactionIncomeChartOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateTransactionExpenditureChartOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateTransactionProfitChartOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateSupplierChartOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
 
 }
