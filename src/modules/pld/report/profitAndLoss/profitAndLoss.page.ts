@@ -46,7 +46,7 @@ export default class ProfitAndLossPage extends BasePosLitePage implements Profit
         await this.wait(300)
     }
 
-    private async inputCompanyType(filterByBranch:boolean): Promise<void> {
+    private async inputCompanyType(filterByBranch: boolean): Promise<void> {
         await this.expectVisible(ProfitAndLossLocator.profitAndLossReportTypeDropdown)
         await this.click(ProfitAndLossLocator.profitAndLossReportTypeDropdown)
         await this.wait(300)
@@ -90,14 +90,17 @@ export default class ProfitAndLossPage extends BasePosLitePage implements Profit
         await this.navigateToProfitAndLost()
         await this.fillFilterAndShow(false)
         await this.expectVisible(ProfitAndLossLocator.profitAndLostCard);
-        await this.clickAndExpectDownloadedFile(ProfitAndLossLocator.downloadButton, 'Laporan Laba Rugi (Company)', 'pdf');
-
+        await this.expectVisible(ProfitAndLossLocator.downloadButton)
+        await this.click(ProfitAndLossLocator.downloadButton)
+        await this.expectDownloadFile('Laporan Laba Rugi (Company)', 'pdf');
     }
 
     async validateDataProfitAndLostByBranch(): Promise<void> {
         await this.navigateToProfitAndLost()
         await this.fillFilterAndShow(true)
         await this.expectVisible(ProfitAndLossLocator.profitAndLostCard);
-        await this.clickAndExpectDownloadedFile(ProfitAndLossLocator.downloadButton, 'Laporan Laba Rugi (Cabang)', 'pdf');
+        await this.expectVisible(ProfitAndLossLocator.downloadButton)
+        await this.click(ProfitAndLossLocator.downloadButton)
+        await this.expectDownloadFile('Laporan Laba Rugi (Cabang)', 'pdf');
     }
 }
