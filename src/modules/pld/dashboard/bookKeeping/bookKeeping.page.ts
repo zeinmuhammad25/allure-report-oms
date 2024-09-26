@@ -5,6 +5,27 @@ import BookKeepingLocator from "./bookKeeping.locator";
 
 
 export default class BookKeepingPage extends BasePosLitePage implements BookKeepingScenario {
+    validateStatisticalIncomeDataOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateStatisticalExpenditureDataOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateStatisticalProfitDataOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateTransactionIncomeChartOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateTransactionExpenditureChartOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateTransactionProfitChartOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    validateSupplierChartOnDashboardBookKeeping(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
     pageUrl = (): string => this.urls.get.dashboard.bookKeepingUrl;
 
     shouldHave(): Element[] {
