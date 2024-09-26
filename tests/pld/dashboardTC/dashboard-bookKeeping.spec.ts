@@ -2,7 +2,7 @@ import LoginPage from "../../../src/modules/pld/login/login.page";
 import {test} from "@playwright/test";
 import BookKeepingPage from "../../../src/modules/pld/dashboard/bookKeeping/bookKeeping.page";
 
-test.describe.serial("Dashboard Composition Test", () => {
+test.describe.serial("Dashboard Book Keeping Test", () => {
     let loginPage: LoginPage
     const tag = '@smokeTest @dashboard @bookKeeping'
 
@@ -69,7 +69,7 @@ test.describe.serial("Dashboard Composition Test", () => {
         })
 
     test(
-        "Verify User can filter and show Supplier Transaction Chart on Book Keeping Page",
+        "Verify User can filter and show Supplier Chart on Book Keeping Page",
         {tag: tag},
         async ({page}) => {
             const bookKeeping = new BookKeepingPage(page)
