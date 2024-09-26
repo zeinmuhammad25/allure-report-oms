@@ -6,9 +6,7 @@ import StockMenuLocator from "./stockMenu.locator";
 
 export default class StockMenuPage extends BasePosLitePage implements StockMenuScenario {
 
-
     pageUrl = (): string => this.urls.get.dashboard.stockMenuUrl;
-
 
     shouldHave(): Element[] {
         return [
@@ -22,9 +20,10 @@ export default class StockMenuPage extends BasePosLitePage implements StockMenuS
             Element.ofSelector(StockMenuLocator.statusColumn),
             Element.ofSelector(StockMenuLocator.availabilityColumn),
             Element.ofSelector(StockMenuLocator.remainingStockColumn),
-
         ];
     }
 
-
+    async validateDataOnDashboardStockMenu(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
 }
