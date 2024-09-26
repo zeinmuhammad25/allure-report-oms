@@ -3,8 +3,22 @@ import Element from "../../../../base/objects/Element";
 import OnlinePaymentScenario from "./onlinePayment.scenario";
 import OnlinePaymentLocator from "./onlinePayment.locator";
 
-
 export default class OnlinePaymentPage extends BasePosLitePage implements OnlinePaymentScenario {
+    validateSummaryPaymentDataOnDashboardOnlinePayment(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    validateDetailPaymentDataOnDashboardOnlinePayment(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    validateDailyPaymentDataOnDashboardOnlinePayment(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    validateDownloadDataOnDashboardOnlinePayment(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
 
 
     pageUrl = (): string => this.urls.get.dashboard.onlinePaymentUrl;
