@@ -7,6 +7,8 @@ export default interface BookKeepingScenario extends BaseScenario {
 
     validateStatisticalProfitDataOnDashboardBookKeeping(): Promise<void>
 
+    validateStatisticalMainSupplierDataOnDashboardBookKeeping(): Promise<void>
+
     validateTransactionIncomeChartOnDashboardBookKeeping(): Promise<void>
 
     validateTransactionExpenditureChartOnDashboardBookKeeping(): Promise<void>
