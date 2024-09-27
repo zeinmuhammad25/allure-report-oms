@@ -8,7 +8,8 @@ import ReportLocator from "../report.locator";
 export default class ProfitAndLossPage extends BasePosLitePage implements ProfitAndLossScenario {
     private company = "Test QC 02";
     private brand = "Test QC 02";
-    private branch = "Test Cabang Baru";
+    private branch = "Test Cabang Edit";
+    private apiProfitAndLost = "statistic-filter/list-profit-loss-report-mode";
 
     pageUrl = (): string => this.urls.get.report.profitAndLossUrl;
 
@@ -28,6 +29,7 @@ export default class ProfitAndLossPage extends BasePosLitePage implements Profit
         await this.click(ReportLocator.reportSideBar);
         await this.expectVisible(ReportLocator.profitAndLostSideBar);
         await this.click(ReportLocator.profitAndLostSideBar);
+        await this.waitForResponse(this.apiProfitAndLost)
     }
 
     private async inputPeriodFromDateField(): Promise<void> {
