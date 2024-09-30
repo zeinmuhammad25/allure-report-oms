@@ -2,8 +2,8 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class ProfitAndLossLocator extends BaseLocator {
 
-    static periodFromDateField: string = "(//nz-form-control)[1]//nz-date-picker";
-    static periodToDateField: string = "(//nz-form-control)[2]//nz-date-picker";
+    static periodFromDateField: string = "(//nz-date-picker[contains(@class, 'start-month')])[1]";
+    static periodToDateField: string = "(//nz-date-picker[contains(@class, 'end-month')])[1]";
     static profitAndLossReportTypeDropdown: string = "(//nz-form-control)[3]";
     static profitAndLossCompanyDropdown: string = "(//nz-form-control)[4]";
     static profitAndLossBranchDropdown: string = "(//nz-form-control)[5]";
