@@ -2,7 +2,7 @@ import Element from "../../../../base/objects/Element";
 import BaseEsoPage from "../../base/base-eso-page";
 import ModeScenario from "./mode.scenario";
 import ModeLocator from "./mode.locator";
-import {EsoMode} from "../../objects/modes";
+import {EsoMode} from "../../objects/esoMode";
 
 export default class ModePage extends BaseEsoPage implements ModeScenario {
     private branchCode : string = 'WYR';

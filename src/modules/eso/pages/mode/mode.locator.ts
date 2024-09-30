@@ -1,5 +1,5 @@
 import BaseLocator from "../../../../base/base-locator";
-import {EsoMode} from "../../objects/modes";
+import {EsoMode} from "../../objects/esoMode";
 
 export default class ModeLocator extends BaseLocator {
     static backButton: string = "//button[contains(@class, 'back-button')]";
