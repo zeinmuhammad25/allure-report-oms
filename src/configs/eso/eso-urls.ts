@@ -14,6 +14,7 @@ export default class EsoUrls extends BaseUrl {
     baseUrl = (): string => process.env.BASE_URL;
 
     public get = {
-        branchList : "https://qa7.esb.co.id/eso-qs/qa1"
+        branchList : "https://qa7.esb.co.id/eso-qs/qa1",
+        modePage : (branchCode:string)=>`https://qa7.esb.co.id/eso-qs/qa1/${branchCode}/mode`
     };
 }
