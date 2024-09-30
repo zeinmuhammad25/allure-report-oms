@@ -24,5 +24,7 @@ export default class StockMenuLocator extends BaseLocator {
     static stockQuantityMoreThan100Option: string = "(//span[text()='Jumlah Stok']/following-sibling::nz-radio-group//span[text()='>100'])[2]";
     static applyButton: string = "(//button[text()='Terapkan'])[2]";
     static resetButton: string = "(//button[text()='Reset'])[2]";
+    static firstDataNumber: string = "//tbody/tr//td[text()='1']"
 
+    static filterOptionItem = (filterText: string): string => `//nz-option-item[@title='${filterText}']`
 }
