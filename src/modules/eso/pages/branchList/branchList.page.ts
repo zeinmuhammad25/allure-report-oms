@@ -2,6 +2,7 @@ import BaseEsoPage from "../../base/base-eso-page";
 import BranchListScenario from "./branchList.scenario";
 import BranchListLocator from "./branchList.locator";
 import Element from "../../../../base/objects/Element";
+import {Language} from "../../objects/language";
 
 export default class BranchListPage extends BaseEsoPage implements BranchListScenario {
 
@@ -22,7 +23,7 @@ export default class BranchListPage extends BaseEsoPage implements BranchListSce
         throw new Error("Method not implemented.");
     }
 
-    async changeLanguage(useEnglish: boolean): Promise<void> {
+    async changeLanguage(language: Language): Promise<void> {
         throw new Error("Method not implemented.");
     }
 

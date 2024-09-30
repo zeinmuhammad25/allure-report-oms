@@ -3,9 +3,10 @@ import BaseEsoPage from "../../base/base-eso-page";
 import ModeScenario from "./mode.scenario";
 import ModeLocator from "./mode.locator";
 import {EsoMode} from "../../objects/esoMode";
+import {Language} from "../../objects/language";
 
 export default class ModePage extends BaseEsoPage implements ModeScenario {
-    private branchCode : string = 'WYR';
+    private branchCode: string = 'WYR';
 
     pageUrl = (): string => this.urls.get.modePage(this.branchCode);
 
@@ -19,15 +20,19 @@ export default class ModePage extends BaseEsoPage implements ModeScenario {
     selectMode(mode: EsoMode): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    changeLanguage(useEnglish: boolean): Promise<void> {
+
+    changeLanguage(language: Language): Promise<void> {
         throw new Error("Method not implemented.");
     }
+
     openCompanyBusinessHour(): Promise<void> {
         throw new Error("Method not implemented.");
     }
+
     contactUs(): Promise<void> {
         throw new Error("Method not implemented.");
     }
+
     visitUs(): Promise<void> {
         throw new Error("Method not implemented.");
     }
