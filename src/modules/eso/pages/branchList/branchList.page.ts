@@ -26,11 +26,11 @@ export default class BranchListPage extends BaseEsoPage implements BranchListSce
         throw new Error("Method not implemented.");
     }
 
-    async searchBranch(branchNmae: string): Promise<void> {
+    async searchBranch(branchName: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
-    async selectBranch(branchNmae: string): Promise<void> {
+    async selectBranch(branchName: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
