@@ -5,13 +5,13 @@ import PaymentPage from "../../../src/modules/pld/report/payment/payment.page";
 test.describe.serial("Branch List Test", () => {
     const tag = '@smokeTest @eso @branchList @language '
 
-    test("Should display that the language used in ESB Order Quick Service has successfully changed to Indonesian",
+    test("Verify user can display that the language used in ESB Order Quick Service has successfully changed to Indonesian",
         {tag: tag + '@positive'}, async ({page}) => {
             // TODO :
             //  Ubah bahasa menjadi bahasa indonesia (Bahasa pada esb order quick service menjadi bahasa indonesia)
         })
 
-    test("Should display that the language used in ESB Order Quick Service has successfully changed to English",
+    test("Verify user can display that the language used in ESB Order Quick Service has successfully changed to English",
         {tag: tag + '@positive'}, async ({page}) => {
             // TODO :
             //  Ubah bahasa menjadi bahasa english (Bahasa pada esb order quick service menjadi bahasa english)
