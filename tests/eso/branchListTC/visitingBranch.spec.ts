@@ -2,7 +2,7 @@ import {test} from "@playwright/test";
 import LoginPage from "../../../src/modules/pld/login/login.page";
 import PaymentPage from "../../../src/modules/pld/report/payment/payment.page";
 
-test.describe.serial("Payment Report Test", () => {
+test.describe.serial("Branch List Test", () => {
     const tag = '@smokeTest @eso @branchList @visitingBranch '
 
     test("Should successfully visit the branch via the branch list",

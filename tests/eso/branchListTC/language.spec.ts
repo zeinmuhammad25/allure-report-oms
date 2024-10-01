@@ -2,7 +2,7 @@ import {test} from "@playwright/test";
 import LoginPage from "../../../src/modules/pld/login/login.page";
 import PaymentPage from "../../../src/modules/pld/report/payment/payment.page";
 
-test.describe.serial("Payment Report Test", () => {
+test.describe.serial("Branch List Test", () => {
     const tag = '@smokeTest @eso @branchList @language '
 
     test("Should display that the language used in ESB Order Quick Service has successfully changed to Indonesian",
@@ -17,5 +17,3 @@ test.describe.serial("Payment Report Test", () => {
             //  Ubah bahasa menjadi bahasa english (Bahasa pada esb order quick service menjadi bahasa english)
         })
 })
-
-// Test suite
