@@ -6,7 +6,7 @@ import {EsoMode} from "../../objects/esoMode";
 import {Language} from "../../objects/language";
 
 export default class ModePage extends BaseEsoPage implements ModeScenario {
-    private branchCode: string = 'WYR';
+    private branchCode: string = 'SFF10';
 
     pageUrl = (): string => this.urls.get.modePage(this.branchCode);
 
