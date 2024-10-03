@@ -25,7 +25,7 @@ export default class WhatsappPage extends BaseEsoPage implements WhatsappScenari
 
     async performLoginWhatsAppSubs(): Promise<void> {
         await this.expectVisible(WhatsappLocator.phoneField)
-        await this.fill(WhatsappLocator.phoneField, this.phoneNumber)
+        await this.fillPhone(WhatsappLocator.phoneField, this.phoneNumber)
         await this.expectVisible(WhatsappLocator.sendButton)
         await this.click(WhatsappLocator.sendButton)
         await this.fillOtp()
