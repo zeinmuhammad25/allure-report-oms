@@ -1,7 +1,9 @@
 import BaseLocator from "../../../../../base/base-locator";
 
 export default class DeliveryAddressLocator extends BaseLocator {
-//div[text()='Use your current location']
-    //app-item-address//div[text()='home']
-    static example: string;
+    static searchField: string = "//input[@class='search-input']";
+    static backButton: string = "//button[contains(@class, 'back-button')]";
+    static addHomeAddress: string = "//li//div[text()=' Add Home Address ']";
+    static addOfficeAddress: string = "//li//div[text()=' Add Office Address ']";
+    static addOtherAddress: string = "//li//span[text()='Add Other Address']";
 }
