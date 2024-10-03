@@ -17,7 +17,6 @@ test.describe.serial("Branch List Test", () => {
 
     test("Verify user can display the order history data successfully",
         {tag: tag + '@positive'}, async ({page}) => {
-
             let whatsappPage = new WhatsappPage(page);
             let branchListPage = new BranchListPage(page);
             let historyPage = new HistoryPage(page);
@@ -45,10 +44,13 @@ test.describe.serial("Branch List Test", () => {
 
     test("Verify user can display the reservation history data successfully",
         {tag: tag + '@positive'}, async ({page}) => {
+            let whatsappPage = new WhatsappPage(page);
             let branchListPage = new BranchListPage(page);
             let historyPage = new HistoryPage(page);
 
-            await branchListPage.navigateHere();
+            await whatsappPage.navigateHere()
+            await whatsappPage.performLoginWhatsAppSubs()
+            await branchListPage.navigateHere()
 
             await branchListPage.gotoHistoryPage();
             await historyPage.showReservationHistory();
