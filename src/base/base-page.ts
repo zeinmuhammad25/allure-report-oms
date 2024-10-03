@@ -79,10 +79,10 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         await this.expectHasValue(selector, value);
     }
 
-    public async fillPhone(selector: string, value: string): Promise<void> {
+    public async fillPhone(selector: string, value: string, lastComplete:boolean = true): Promise<void> {
         console.log(`fill ${selector} with ${value}`);
         await this._page.fill(selector, value);
-        await this.expectHasValue(selector, Helper.formatPhoneNumber(value));
+        await this.expectHasValue(selector, Helper.formatPhoneNumber(value,lastComplete));
     }
 
     public click(selector: string): Promise<void> {
