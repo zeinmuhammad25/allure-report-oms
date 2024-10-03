@@ -8,7 +8,6 @@ import WhatsappPage from "../../../src/modules/eso/pages/login/whatsapp/whatsapp
 test.describe.serial("Branch List Test", () => {
     const tag = '@smokeTest @eso @branchList @location '
 
-
     const addressHome = 'BSD City';
     const addressOffice = 'Jakarta';
     const addressOther = 'Serpong';
@@ -106,68 +105,66 @@ test.describe.serial("Branch List Test", () => {
 
     test("Verify user can display that changing the home address location has been successfully saved",
         {tag: tag + '@positive'}, async ({page}) => {
-            // TODO :
-            //  Ubah Lokasi Alamat Rumah (Lokasi Alamat rumah berhasil diubah)
-            //  1. Klik section lokasi saat ini
-            //  2. Klik icon pencil pada kolom Rumah
-            //  3. Klik button ""Ubah Titik Peta""
-            //  4. Input lokasi ""Gading serpong""
-            //  5. Klik konfirmasi
-            //  6. Input kolom detail lokasi
-            //  7. Klik simpan alamat
+            let deliveryAddressPage = new DeliveryAddressPage(page);
+            let saveAddressPage = new SaveAddressPage(page);
+            let searchAddressPage = new SearchAddressPage(page);
+
+            await deliveryAddressPage.editAddress('home');
+            await saveAddressPage.changePoint();
+            await searchAddressPage.searchAddress('Gading serpong');
+            await searchAddressPage.selectAddressToAdd();
+            await saveAddressPage.inputAddressInfoField('Another Home');
+            await saveAddressPage.saveAddress();
         })
 
     test("Verify user can display that changing the office address location has been successfully saved",
         {tag: tag + '@positive'}, async ({page}) => {
-            // TODO :
-            //  Ubah Detail lokasi alamat kantor (Alamat kantor untuk detail lokasi berhasil diubah)
-            //  1. Klik section lokasi saat ini
-            //  2. Klik icon pencil pada kolom alamat kantor
-            //  3. Klik button ""Ubah Titik Peta""
-            //  4. Input lokasi ""Jakarta pusat""
-            //  5. Klik konfirmasi
-            //  6. Input kolom detail lokasi
-            //  7. Klik simpan alamat
+            let deliveryAddressPage = new DeliveryAddressPage(page);
+            let saveAddressPage = new SaveAddressPage(page);
+            let searchAddressPage = new SearchAddressPage(page);
+
+            await deliveryAddressPage.editAddress('office');
+            await saveAddressPage.changePoint();
+            await searchAddressPage.searchAddress('Jakarta pusat');
+            await searchAddressPage.selectAddressToAdd();
+            await saveAddressPage.inputAddressInfoField('Another Office');
+            await saveAddressPage.saveAddress();
         })
 
     test("Verify user can display that changing the other address location has been successfully saved",
         {tag: tag + '@positive'}, async ({page}) => {
-            // TODO :
-            //  Ubah Informasi Kontak pada alamat lainnya (Berhasil mengubah informasi kontak)
-            //  1. Klik section lokasi saat ini
-            //  2. Klik icon pencil pada kolom alamat lainnya
-            //  3. Klik button ""Ubah Titik Peta""
-            //  4. Input lokasi ""Pamulang""
-            //  5. Klik konfirmasi
-            //  6. Input kolom detail lokasi
-            //  7. Klik simpan alamat
+
+            let deliveryAddressPage = new DeliveryAddressPage(page);
+            let saveAddressPage = new SaveAddressPage(page);
+            let searchAddressPage = new SearchAddressPage(page);
+
+            await deliveryAddressPage.editAddress(label);
+            await saveAddressPage.changePoint();
+            await searchAddressPage.searchAddress('Pamulang');
+            await searchAddressPage.selectAddressToAdd();
+            await saveAddressPage.inputAddressInfoField('My Other Place');
+            await saveAddressPage.saveAddress();
         })
 
     test("Verify user can display that the home address has been successfully deleted",
         {tag: tag + '@negative'}, async ({page}) => {
-            // TODO :
-            //  Hapus Alamat rumah yang terdaftar (Alamat rumah berhasil dihapus
-            //  1. Klik section lokasi saat ini
-            //  2. Klik icon trash pada kolom alamat rumah
-            //  3. Pada button pilihan "Ingin hapus alamatmu?" pilih "Hapus"
+            let deliveryAddressPage = new DeliveryAddressPage(page);
+            await deliveryAddressPage.deleteAddress('home');
+            await deliveryAddressPage.confirmDelete();
         })
 
     test("Verify user can display that the office address has been successfully deleted",
         {tag: tag + '@negative'}, async ({page}) => {
-            // TODO :
-            //  Hapus Alamat Kantor yang terdaftar (Alamat kantor berhasil dihapus)
-            //  1. Klik section lokasi saat ini
-            //  2. Klik icon trash pada kolom alamat kantor
-            //  3. Pada button pilihan "Ingin hapus alamatmu?" pilih "Hapus"
+            let deliveryAddressPage = new DeliveryAddressPage(page);
+            await deliveryAddressPage.deleteAddress('office');
+            await deliveryAddressPage.confirmDelete();
         })
 
     test("Verify user can display that the other address has been successfully deleted",
         {tag: tag + '@negative'}, async ({page}) => {
-            // TODO :
-            //  Hapus Alamat lainnya yang terdaftar (Alamat lainnya berhasil dihapus)
-            //  1. Klik section lokasi saat ini
-            //  2. Klik icon trash pada kolom alamat lainnya
-            //  3. Pada button pilihan ""Ingin hapus alamatmu? pilih "Hapus"
+            let deliveryAddressPage = new DeliveryAddressPage(page);
+            await deliveryAddressPage.deleteAddress(label);
+            await deliveryAddressPage.confirmDelete();
         })
 
     test("Verify user can display a popup to activate GPS",
@@ -175,14 +172,6 @@ test.describe.serial("Branch List Test", () => {
             // TODO :
             //  Buka halaman branch list dengan kondisi tidak mengaktifkan gps
             //  1. Verifikasi muncul popup untuk mengkatifkan gps
+            //  Notes: cannot simulate click allow location
         })
 })
-
-
-
-
-
-
-
-
-

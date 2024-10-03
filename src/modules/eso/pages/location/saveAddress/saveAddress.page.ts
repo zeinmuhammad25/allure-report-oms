@@ -3,6 +3,7 @@ import SaveAddressScenario from "./saveAddress.scenario";
 import Element from "../../../../../base/objects/Element";
 import SaveAddressLocator from "./saveAddress.locator";
 import DeliveryAddressPage from "../deliveryAddress/deliveryAddress.page";
+import SearchAddressPage from "../searchAddress/searchAddress.page";
 
 export default class SaveAddressPage extends BaseEsoPage implements SaveAddressScenario {
     pageUrl = (): string => this.urls.get.saveAddress;
@@ -42,5 +43,10 @@ export default class SaveAddressPage extends BaseEsoPage implements SaveAddressS
 
     async goBack(): Promise<void> {
         throw new Error("Method not implemented.");
+    }
+
+    async changePoint(): Promise<void> {
+        await this.expectVisible(SaveAddressLocator.changeMapPointButton)
+        await this.clickAndExpectGotoPage(SaveAddressLocator.changeMapPointButton, SearchAddressPage)
     }
 }

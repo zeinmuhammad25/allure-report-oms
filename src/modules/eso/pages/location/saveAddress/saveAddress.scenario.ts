@@ -11,5 +11,7 @@ export default interface SaveAddressScenario extends BaseScenario {
 
     saveAddress(): Promise<void>
 
+    changePoint(): Promise<void>
+
     goBack(): Promise<void>
 }
