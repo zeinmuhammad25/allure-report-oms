@@ -11,12 +11,13 @@ export default class EsoUrls extends BaseUrl {
         return this._instance || (this._instance = new this());
     }
 
-    baseUrl = (): string => process.env.BASE_URL;
+    baseUrl = (): string => process.env.ESO_BASE_URL;
 
     public get = {
         branchList: "/eso-qs/qa1",
-        loginWhatsapp: "/eso-qs/login/whatsapp",
+        loginWhatsapp: (branchCode: string) => `/eso-qs/login/whatsapp?company=QA1&branch=${branchCode}&mode=dinein&ref=%2FQA1%2FSFF10%2Forder%3Fmode%3Ddinein`,
         history: "/eso-qs/history",
+        deliveryAddress: "/delivery-address",
 
         modePage: (branchCode: string) => `/eso-qs/qa1/${branchCode}/mode`,
         homePage: (branchCode: string, mode: string) => `/eso-qs/QA1/${branchCode}/home?mode=${mode}`,
