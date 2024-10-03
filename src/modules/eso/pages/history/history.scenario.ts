@@ -8,4 +8,8 @@ export default interface HistoryScenario extends BaseScenario {
     selectItem(): Promise<void>
 
     reorder(): Promise<void>
+
+    hasHistoryItems(): Promise<void>
+
+    hasEmptyHistoryItems(): Promise<void>
 }
