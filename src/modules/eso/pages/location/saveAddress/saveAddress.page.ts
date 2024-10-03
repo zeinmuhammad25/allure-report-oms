@@ -14,6 +14,7 @@ export default class SaveAddressPage extends BaseEsoPage implements SaveAddressS
     }
 
     async inputLabelField(label: string): Promise<void> {
+        await this.wait(300)
         await this.expectVisible(SaveAddressLocator.labelField);
         await this.fill(SaveAddressLocator.labelField, label);
     }
