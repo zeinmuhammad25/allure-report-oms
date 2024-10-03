@@ -2,34 +2,44 @@ import BaseEsoPage from "../../../base/base-eso-page";
 import SaveAddressScenario from "./saveAddress.scenario";
 import Element from "../../../../../base/objects/Element";
 import SaveAddressLocator from "./saveAddress.locator";
+import DeliveryAddressPage from "../deliveryAddress/deliveryAddress.page";
 
 export default class SaveAddressPage extends BaseEsoPage implements SaveAddressScenario {
-    pageUrl: () => string;
+    pageUrl = (): string => this.urls.get.saveAddress;
 
     shouldHave(): Element[] {
         return [
-            Element.ofSelector(SaveAddressLocator.labelField),
             Element.ofSelector(SaveAddressLocator.addressField),
         ]
     }
 
-    inputLabelField(label: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async inputLabelField(label: string): Promise<void> {
+        await this.expectVisible(SaveAddressLocator.labelField);
+        await this.fill(SaveAddressLocator.labelField, label);
     }
 
-    inputAddressInfoField(info: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async inputAddressInfoField(info: string): Promise<void> {
+        await this.expectVisible(SaveAddressLocator.addressField);
+        await this.fill(SaveAddressLocator.addressField, info);
     }
 
-    inputNameField(name: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async inputNameField(name: string): Promise<void> {
+        await this.expectVisible(SaveAddressLocator.nameField);
+        await this.fill(SaveAddressLocator.nameField, name);
     }
 
-    inputPhoneField(phone: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async inputPhoneField(phone: string): Promise<void> {
+        await this.expectVisible(SaveAddressLocator.phoneField);
+        await this.fillPhone(SaveAddressLocator.phoneField, phone, false);
     }
 
-    goBack(): Promise<void> {
+
+    async saveAddress(): Promise<void> {
+        await this.expectVisible(SaveAddressLocator.saveButton)
+        await this.clickAndExpectGotoPage(SaveAddressLocator.saveButton, DeliveryAddressPage)
+    }
+
+    async goBack(): Promise<void> {
         throw new Error("Method not implemented.");
     }
 }

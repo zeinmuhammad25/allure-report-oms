@@ -6,4 +6,5 @@ export default class SaveAddressLocator extends BaseLocator {
     static addressField: string = "//input[@id='addressInfo']";
     static nameField: string = "//input[@id='name']";
     static phoneField: string = "//input[@id='phoneNumber']";
+    static saveButton: string = "//button[@type='submit']";
 }
