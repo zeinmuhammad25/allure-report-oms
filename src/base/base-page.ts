@@ -4,6 +4,7 @@ import BaseScenario from "./base-scenario";
 import BaseUrl from "./base-url";
 import {Keyboard} from "./constants/Keyboard";
 import BaseConfigs from "./base-configs";
+import Helper from "./utils/helper";
 
 export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs> implements BaseScenario {
     protected readonly _page: Page;
@@ -76,6 +77,12 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         console.log(`fill ${selector} with ${value}`);
         await this._page.fill(selector, value);
         await this.expectHasValue(selector, value);
+    }
+
+    public async fillPhone(selector: string, value: string, lastComplete:boolean = true): Promise<void> {
+        console.log(`fill ${selector} with ${value}`);
+        await this._page.fill(selector, value);
+        await this.expectHasValue(selector, Helper.formatPhoneNumber(value,lastComplete));
     }
 
     public click(selector: string): Promise<void> {
@@ -237,8 +244,8 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.getByText(text).isVisible();
     }
 
-    protected async expectDownloadFile(filename: string, extension:string): Promise<void> {
-        const download =  await this._page.waitForEvent('download');
+    protected async expectDownloadFile(filename: string, extension: string): Promise<void> {
+        const download = await this._page.waitForEvent('download');
         const downloadedFile = download.suggestedFilename()
         console.log(`check if file Downloaded: ${filename}%${extension}`);
         return expect(downloadedFile.startsWith(filename) && downloadedFile.endsWith(extension)).toBe(true);
@@ -247,4 +254,45 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
     public getLocator(selector: string) {
         return this._page.locator(selector);
     }
+
+    public async setGeoLocation(latitude: number, longitude: number): Promise<void> {
+        await this._page.context().setGeolocation({latitude: latitude, longitude: longitude});
+        await this._page.context().grantPermissions(['geolocation']);
+    }
+
+    public async expectHasOneElement(selector: string) {
+        console.log(`expect only one element:  ${selector}`);
+        return expect(this._page.locator(selector).count()).toBe(1);
+    }
+
+    public async expectHasElements(selector: string) {
+        console.log(`expect one or more element:  ${selector}`);
+        return expect(await this._page.locator(selector).count()).toBeGreaterThanOrEqual(1)
+    }
+
+    public async expectHasEmptyElement(selector: string) {
+        console.log(`expect empty element:  ${selector}`);
+        return expect(await this._page.locator(selector).count()).toBe(0);
+    }
+
+    public async setLocalStorage(key: string, value: string): Promise<void> {
+        console.log(`set local storage key: ${key} and value : ${value} `);
+        return this._page.evaluate(({key, value}) => localStorage.setItem(key, value), ({key, value}));
+    }
+
+    public async getLocalStorage(key: string) {
+        console.log(`get local storage key: ${key}`);
+        return this._page.evaluate((key) => localStorage.getItem(key), key);
+    }
+
+    public async removeLocalStorage(key: string) {
+        console.log(`remove local storage key: ${key}`);
+        return this._page.evaluate((key) => localStorage.removeItem(key), key);
+    }
+
+    public async clearLocalStorage() {
+        console.log(`remove all local storage`);
+        return this._page.evaluate(() => localStorage.clear())
+    }
+
 }

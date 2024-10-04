@@ -4,7 +4,7 @@ import EsoConfigs from "../../../configs/eso/eso-configs";
 import {Page} from "@playwright/test";
 
 export default abstract class BaseEsoPage extends BasePage<EsoUrls, EsoConfigs> {
-    protected constructor(page: Page) {
+    public constructor(page: Page) {
         super(page, EsoUrls.Instance, EsoConfigs.Instance);
     }
 }

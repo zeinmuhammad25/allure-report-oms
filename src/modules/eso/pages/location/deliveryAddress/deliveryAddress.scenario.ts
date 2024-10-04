@@ -1,7 +1,9 @@
 import BaseScenario from "../../../../../base/base-scenario";
 
 export default interface DeliveryAddressScenario extends BaseScenario {
-    searchLocation(label: string): Promise<void>
+    gotoSearchAddress(label: string): Promise<void>
+
+    addHomeAddress(): Promise<void>
 
     selectAddress(label: string): Promise<void>
 

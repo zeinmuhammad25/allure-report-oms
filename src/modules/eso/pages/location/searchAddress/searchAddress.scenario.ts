@@ -6,4 +6,12 @@ export default interface SearchAddressScenario extends BaseScenario {
     saveAddress(): Promise<void>
 
     selectAddress(): Promise<void>
+
+    selectAddressToAdd(): Promise<void>
+
+    hasSuggestions(): Promise<void>
+
+    hasEmptySuggestions(): Promise<void>
+
+    selectCurrentGPSLocation(): Promise<void>
 }

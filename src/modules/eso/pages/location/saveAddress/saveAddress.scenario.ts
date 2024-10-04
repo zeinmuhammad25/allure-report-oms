@@ -9,5 +9,9 @@ export default interface SaveAddressScenario extends BaseScenario {
 
     inputPhoneField(phone: string): Promise<void>
 
+    saveAddress(): Promise<void>
+
+    changePoint(): Promise<void>
+
     goBack(): Promise<void>
 }
