@@ -1,6 +1,4 @@
 import {test} from "@playwright/test";
-import LoginPage from "../../../src/modules/pld/login/login.page";
-import PaymentPage from "../../../src/modules/pld/report/payment/payment.page";
 import BranchListPage from "../../../src/modules/eso/pages/branchList/branchList.page";
 import ModePage from "../../../src/modules/eso/pages/mode/mode.page";
 

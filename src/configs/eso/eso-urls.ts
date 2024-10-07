@@ -18,7 +18,7 @@ export default class EsoUrls extends BaseUrl {
         searchAddress: "/search-address",
         saveAddress: "/save-address",
         deliveryAddress: "/delivery-address",
-
+        reservation: "/QA1/SFF10/reservation",
         loginWhatsapp: (branchCode: string) => `/login/whatsapp?company=QA1&branch=${branchCode}&mode=dinein&ref=%2FQA1%2FSFF10%2Forder%3Fmode%3Ddinein`,
         history: "/history",
         modePage: (branchCode: string) => `/qa1/${branchCode}/mode`,
