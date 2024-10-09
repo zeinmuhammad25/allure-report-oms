@@ -79,10 +79,10 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         await this.expectHasValue(selector, value);
     }
 
-    public async fillPhone(selector: string, value: string, lastComplete:boolean = true): Promise<void> {
+    public async fillPhone(selector: string, value: string, lastComplete: boolean = true): Promise<void> {
         console.log(`fill ${selector} with ${value}`);
         await this._page.fill(selector, value);
-        await this.expectHasValue(selector, Helper.formatPhoneNumber(value,lastComplete));
+        await this.expectHasValue(selector, Helper.formatPhoneNumber(value, lastComplete));
     }
 
     public click(selector: string): Promise<void> {
@@ -293,6 +293,14 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
     public async clearLocalStorage() {
         console.log(`remove all local storage`);
         return this._page.evaluate(() => localStorage.clear())
+    }
+
+    public async expectOpenNewTab(url: string) {
+        const newTabPromise = this._page.waitForEvent("popup");
+        const newTab = await newTabPromise;
+        await newTab.waitForLoadState();
+        console.log(`open url in new tab: ${url}`);
+        await expect(newTab).toHaveURL(url);
     }
 
 }
