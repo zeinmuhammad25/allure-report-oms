@@ -16,5 +16,7 @@ export default class PaymentLocator extends BaseLocator {
     static paymentMethodRadioButton = (paymentMethod:PaymentMethod) : string => `//mat-radio-button[@id='payment-method-list-radio-${paymentMethod}']`;
     static paymentTotalButton: string = "mat-icon";
     static addPromotionButton: string = "//button[@id='p-promo-voucher']";
+    static ovoSendButton: string = "//button[@type='submit']";
+    static ovoConfirmationOkButton: string = "//button//*[contains(text(),'Ok')]";
 
 }

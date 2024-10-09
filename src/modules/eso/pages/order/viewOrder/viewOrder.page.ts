@@ -13,12 +13,13 @@ export default class ViewOrderPage extends BaseEsoPage implements ViewOrderScena
         ]
     }
 
-    goBack(): Promise<void> {
+    async goBack(): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
-    continueToPayment(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async continueToPayment(): Promise<void> {
+        await this.expectVisible(ViewOrderLocator.confirmButton)
+        await this.click(ViewOrderLocator.confirmButton)
     }
 
 }

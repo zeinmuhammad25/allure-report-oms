@@ -3,10 +3,13 @@ import BranchListPage from "../../../src/modules/eso/pages/branchList/branchList
 import DeliveryAddressPage from "../../../src/modules/eso/pages/location/deliveryAddress/deliveryAddress.page";
 import SearchAddressPage from "../../../src/modules/eso/pages/location/searchAddress/searchAddress.page";
 import SaveAddressPage from "../../../src/modules/eso/pages/location/saveAddress/saveAddress.page";
-import WhatsappPage from "../../../src/modules/eso/pages/login/whatsapp/whatsapp.page";
+import ModePage from "../../../src/modules/eso/pages/mode/mode.page";
+import OrderPage from "../../../src/modules/eso/pages/order/order.page";
+import {EsoMode} from "../../../src/modules/eso/objects/esoMode";
 
 test.describe.serial("Branch List Test", () => {
     const tag = '@smokeTest @eso @branchList @location '
+    let orderPage: OrderPage;
 
     const addressHome = 'BSD City';
     const addressOffice = 'Jakarta';
@@ -14,18 +17,29 @@ test.describe.serial("Branch List Test", () => {
     const label = 'Other location';
     const addressInfo = 'lantai 2';
     const name = 'Tester';
-    const phoneNumber = '82111111111';
+    const phoneNumber = "83806992528";
+    const password = "abcd123";
+    const brancName = "Denny's Kasablanka";
 
     let branchListPage: BranchListPage;
 
     test.beforeEach(async ({page}) => {
         branchListPage = new BranchListPage(page);
-        let whatsappPage = new WhatsappPage(page);
+        orderPage = new OrderPage(page)
+        let modePage = new ModePage(page);
 
-        await whatsappPage.navigateHere();
-        await whatsappPage.performLoginWhatsAppSubs();
+
         await branchListPage.navigateHere();
-        await branchListPage.gotoLocationPage()
+        await branchListPage.wait(300);
+        await branchListPage.searchBranch(brancName);
+        await branchListPage.selectBranch(brancName);
+        await modePage.performCheckInitialElements();
+        await modePage.selectMode(EsoMode.DineIn);
+        await orderPage.inputTable(1);
+        await orderPage.performApplyMembershipSubs(phoneNumber, password);
+        await branchListPage.navigateHere();
+        await branchListPage.gotoLocationPage();
+
     })
 
     test("Verify user can display the selected address according to the current location",
@@ -72,6 +86,31 @@ test.describe.serial("Branch List Test", () => {
             await saveAddressPage.saveAddress();
         })
 
+    test("Verify user can display that changing the home address location has been successfully saved",
+        {tag: tag + '@positive'}, async ({page}) => {
+            let deliveryAddressPage = new DeliveryAddressPage(page);
+            let saveAddressPage = new SaveAddressPage(page);
+            let searchAddressPage = new SearchAddressPage(page);
+
+            await deliveryAddressPage.editAddress('home');
+            await saveAddressPage.wait(300);
+            await saveAddressPage.wait(300);
+            await saveAddressPage.changePoint();
+            await searchAddressPage.searchAddress('Gading serpong');
+            await searchAddressPage.selectAddressToAdd();
+            await saveAddressPage.inputAddressInfoField('Another Home');
+            await saveAddressPage.inputNameField(name);
+            await saveAddressPage.inputPhoneField(phoneNumber);
+            await saveAddressPage.saveAddress();
+        })
+
+    test("Verify user can display that the home address has been successfully deleted",
+        {tag: tag + '@negative'}, async ({page}) => {
+            let deliveryAddressPage = new DeliveryAddressPage(page);
+            await deliveryAddressPage.deleteAddress('home');
+            await deliveryAddressPage.confirmDelete();
+        })
+
     test("Verify user can display that the office address has been successfully saved",
         {tag: tag + '@positive'}, async ({page}) => {
             let deliveryAddressPage = new DeliveryAddressPage(page);
@@ -85,6 +124,28 @@ test.describe.serial("Branch List Test", () => {
             await saveAddressPage.inputNameField(name);
             await saveAddressPage.inputPhoneField(phoneNumber);
             await saveAddressPage.saveAddress();
+        })
+
+    test("Verify user can display that changing the office address location has been successfully saved",
+        {tag: tag + '@positive'}, async ({page}) => {
+            let deliveryAddressPage = new DeliveryAddressPage(page);
+            let saveAddressPage = new SaveAddressPage(page);
+            let searchAddressPage = new SearchAddressPage(page);
+
+            await deliveryAddressPage.editAddress('office');
+            await saveAddressPage.wait(300);
+            await saveAddressPage.changePoint();
+            await searchAddressPage.searchAddress('Jakarta pusat');
+            await searchAddressPage.selectAddressToAdd();
+            await saveAddressPage.inputAddressInfoField('Another Office');
+            await saveAddressPage.saveAddress();
+        })
+
+    test("Verify user can display that the office address has been successfully deleted",
+        {tag: tag + '@negative'}, async ({page}) => {
+            let deliveryAddressPage = new DeliveryAddressPage(page);
+            await deliveryAddressPage.deleteAddress('office');
+            await deliveryAddressPage.confirmDelete();
         })
 
     test("Verify user can display that the other address has been successfully saved",
@@ -103,34 +164,6 @@ test.describe.serial("Branch List Test", () => {
             await saveAddressPage.saveAddress();
         })
 
-    test("Verify user can display that changing the home address location has been successfully saved",
-        {tag: tag + '@positive'}, async ({page}) => {
-            let deliveryAddressPage = new DeliveryAddressPage(page);
-            let saveAddressPage = new SaveAddressPage(page);
-            let searchAddressPage = new SearchAddressPage(page);
-
-            await deliveryAddressPage.editAddress('home');
-            await saveAddressPage.changePoint();
-            await searchAddressPage.searchAddress('Gading serpong');
-            await searchAddressPage.selectAddressToAdd();
-            await saveAddressPage.inputAddressInfoField('Another Home');
-            await saveAddressPage.saveAddress();
-        })
-
-    test("Verify user can display that changing the office address location has been successfully saved",
-        {tag: tag + '@positive'}, async ({page}) => {
-            let deliveryAddressPage = new DeliveryAddressPage(page);
-            let saveAddressPage = new SaveAddressPage(page);
-            let searchAddressPage = new SearchAddressPage(page);
-
-            await deliveryAddressPage.editAddress('office');
-            await saveAddressPage.changePoint();
-            await searchAddressPage.searchAddress('Jakarta pusat');
-            await searchAddressPage.selectAddressToAdd();
-            await saveAddressPage.inputAddressInfoField('Another Office');
-            await saveAddressPage.saveAddress();
-        })
-
     test("Verify user can display that changing the other address location has been successfully saved",
         {tag: tag + '@positive'}, async ({page}) => {
 
@@ -139,25 +172,12 @@ test.describe.serial("Branch List Test", () => {
             let searchAddressPage = new SearchAddressPage(page);
 
             await deliveryAddressPage.editAddress(label);
+            await saveAddressPage.wait(300);
             await saveAddressPage.changePoint();
             await searchAddressPage.searchAddress('Pamulang');
             await searchAddressPage.selectAddressToAdd();
             await saveAddressPage.inputAddressInfoField('My Other Place');
             await saveAddressPage.saveAddress();
-        })
-
-    test("Verify user can display that the home address has been successfully deleted",
-        {tag: tag + '@negative'}, async ({page}) => {
-            let deliveryAddressPage = new DeliveryAddressPage(page);
-            await deliveryAddressPage.deleteAddress('home');
-            await deliveryAddressPage.confirmDelete();
-        })
-
-    test("Verify user can display that the office address has been successfully deleted",
-        {tag: tag + '@negative'}, async ({page}) => {
-            let deliveryAddressPage = new DeliveryAddressPage(page);
-            await deliveryAddressPage.deleteAddress('office');
-            await deliveryAddressPage.confirmDelete();
         })
 
     test("Verify user can display that the other address has been successfully deleted",

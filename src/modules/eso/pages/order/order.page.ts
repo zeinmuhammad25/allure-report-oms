@@ -102,6 +102,7 @@ export default class OrderPage extends BaseEsoPage implements OrderScenario {
         await this.inputPhoneNumberMembership(phone);
         await this.inputPasswordMembership(pass);
         await this.submitMembership();
+        await this.wait(300);
     }
 
     async expectFailedApplyMembership(): Promise<void> {

@@ -60,6 +60,10 @@ export default class BranchListPage extends BaseEsoPage implements BranchListSce
     async gotoHistoryPage(): Promise<void> {
         await this.expectVisible(BranchListLocator.historyButton);
         await this.clickAndExpectGotoPage(BranchListLocator.historyButton, HistoryPage);
+        await Promise.all([
+            this.waitForResponse('/v1/user/order'),
+            this.waitForResponse('/v1/user/reservation')
+        ])
     }
 
     private async setLanguage(language: Language) {
