@@ -20,8 +20,8 @@ export default class HistoryPage extends BaseEsoPage implements HistoryScenario 
     }
 
     async showReservationHistory(): Promise<void> {
-        await this.expectVisible(HistoryLocator.orderTab);
-        await this.click(HistoryLocator.orderTab);
+        await this.expectVisible(HistoryLocator.reservationTab);
+        await this.click(HistoryLocator.reservationTab);
     }
 
     async selectItem(): Promise<void> {
