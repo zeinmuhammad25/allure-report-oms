@@ -1,6 +1,7 @@
 export enum EsoMode {
     DineIn = 'dinein',
     Reservation = 'reservation',
-    TakeAway = 'takeaway',
+    PickUp = 'takeaway',
+    Delivery = 'delivery',
     Custom = 'custom',
 }
