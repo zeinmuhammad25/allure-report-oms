@@ -17,8 +17,9 @@ export default class ModePage extends BaseEsoPage implements ModeScenario {
         ]
     }
 
-    selectMode(mode: EsoMode): Promise<void> {
-        throw new Error("Method not implemented.");
+    async selectMode(mode: EsoMode): Promise<void> {
+        await this.expectVisible(ModeLocator.buttonMode(mode))
+        await this.click(ModeLocator.buttonMode(mode))
     }
 
     changeLanguage(language: Language): Promise<void> {
