@@ -3,10 +3,12 @@ import BaseEsoPage from "../../base/base-eso-page";
 import PaymentScenario from "./payment.scenario";
 import PaymentLocator from "./payment.locator";
 import {PaymentMethod} from "../../objects/paymentMethod";
+import OrderSummaryPage from "../order/orderSummary/orderSummary.page";
 
 export default class PaymentPage extends BaseEsoPage implements PaymentScenario {
     private apiPaymentValidate: string = '/eso-api/web/qsv1/payment/validate';
     private apiPromotion: string = '/eso-api/web/qsv1/promotion';
+    private apiChceckItem: string = '/eso-api/web/qsv1/order/check-items';
     pageUrl: () => string;
 
     shouldHave(): Element[] {
@@ -67,5 +69,18 @@ export default class PaymentPage extends BaseEsoPage implements PaymentScenario 
         await this.expectVisible(PaymentLocator.payConfirmButton);
         await this.click(PaymentLocator.payConfirmButton);
         await this.waitForResponse(this.apiPaymentValidate);
+    }
+
+    async confirmPaymentOvo(): Promise<void> {
+        await this.expectVisible(PaymentLocator.payButton);
+        await this.click(PaymentLocator.payButton);
+        await this.expectVisible(PaymentLocator.payConfirmButton);
+        await this.click(PaymentLocator.payConfirmButton);
+        await this.waitForResponse(this.apiChceckItem);
+        await this.expectVisible(PaymentLocator.ovoSendButton);
+        await this.click(PaymentLocator.ovoSendButton);
+        await this.waitForUrl('/ovo-confirmation');
+        await this.click(PaymentLocator.ovoConfirmationOkButton);
+        await this.wait(300);
     }
 }

@@ -13,17 +13,15 @@ export default class SearchAddressPage extends BaseEsoPage implements SearchAddr
 
     shouldHave(): Element[] {
         return [
-            Element.ofSelector(SearchAddressLocator.saveButton),
-            Element.ofSelector(SearchAddressLocator.selectButton),
             Element.ofSelector(SearchAddressLocator.searchField),
         ]
     }
 
     async searchAddress(address: string): Promise<void> {
-        await this.expectVisible(SearchAddressLocator.searchField)
-        await this.wait(300)
-        await this.fill(SearchAddressLocator.searchField, address)
-        await this.waitForResponse(this.apiSearch)
+        await this.expectVisible(SearchAddressLocator.searchField);
+        await this.wait(300);
+        await this.fill(SearchAddressLocator.searchField, address);
+        await this.waitForResponse(this.apiSearch);
     }
 
     async saveAddress(): Promise<void> {
@@ -31,10 +29,11 @@ export default class SearchAddressPage extends BaseEsoPage implements SearchAddr
     }
 
     async selectAddressToAdd(): Promise<void> {
-        await this.expectVisible(SearchAddressLocator.selectSuggestionByIndex(1))
-        await this.click(SearchAddressLocator.selectSuggestionByIndex(1))
-        await this.expectVisible(SearchAddressLocator.confirmButton)
-        await this.clickAndExpectGotoPage(SearchAddressLocator.confirmButton, SaveAddressPage)
+        await this.expectVisible(SearchAddressLocator.selectSuggestionByIndex(1));
+        await this.click(SearchAddressLocator.selectSuggestionByIndex(1));
+        await this.expectVisible(SearchAddressLocator.confirmButton);
+        await this.clickAndExpectGotoPage(SearchAddressLocator.confirmButton, SaveAddressPage);
+        await this.wait(300);
     }
 
     async selectAddress(): Promise<void> {

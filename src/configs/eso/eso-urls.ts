@@ -23,6 +23,7 @@ export default class EsoUrls extends BaseUrl {
         history: "/history",
         modePage: (branchCode: string) => `/qa1/${branchCode}/mode`,
         homePage: (branchCode: string, mode: string) => `/QA1/${branchCode}/home?mode=${mode}`,
-        orderPage: (branchCode: string, mode: string, categoryID: number) => `/QA1/${branchCode}/order?mode=${mode}&category=${categoryID}`
+        orderPage: (branchCode: string, mode: string, categoryID: number) => `/QA1/${branchCode}/order?mode=${mode}&category=${categoryID}`,
+        orderSummary: (branchCode: string) => `/QA1/${branchCode}/order-summary`
     };
 }
