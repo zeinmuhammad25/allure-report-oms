@@ -22,5 +22,25 @@ export default interface OrderScenario extends BaseScenario {
 
     goToLoginPage(): Promise<void>
 
+    openSideBar(): Promise<void>
+
+    openMembershipForm(): Promise<void>
+
+    inputPhoneNumberMembership(phone: string): Promise<void>
+
+    inputPasswordMembership(pass: string): Promise<void>
+
+    inputTable(tableNumber: number): Promise<void>
+
+    changeLanguage(language: Language): Promise<void>
+
+    submitMembership(): Promise<void>
+
+    loginGoogle(): Promise<void>
+
+    loginFacebook(): Promise<void>
+
+    performApplyMembershipSubs(phone: string, pass: string): Promise<void>
+
     goBack(): Promise<void>
 }
