@@ -6,9 +6,9 @@ export default interface OrderScenario extends BaseScenario {
 
     addMenu(menuID: number): Promise<void>;
 
-    increaseQty(menuID: number): Promise<void>;
+    increaseQty(menuID: number, times: number): Promise<void>;
 
-    decreaseQty(menuID: number): Promise<void>;
+    decreaseQty(menuID: number, times: number): Promise<void>;
 
     goToSearch(): Promise<void>;
 

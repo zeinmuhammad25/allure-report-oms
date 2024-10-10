@@ -28,14 +28,22 @@ export default class OrderPage extends BaseEsoPage implements OrderScenario {
         await this.click(OrderLocator.addButton(menuID));
     }
 
-    async increaseQty(menuID: number): Promise<void> {
-        await this.expectVisible(OrderLocator.plusButton(menuID));
-        await this.click(OrderLocator.plusButton(menuID));
+    async increaseQty(menuID: number, times: number = 1): Promise<void> {
+        if (times > 0) {
+            for (let i = 0; i < times; i++) {
+                await this.expectVisible(OrderLocator.plusButton(menuID));
+                await this.click(OrderLocator.plusButton(menuID));
+            }
+        }
     }
 
-    async decreaseQty(menuID: number): Promise<void> {
-        await this.expectVisible(OrderLocator.minusButton(menuID));
-        await this.click(OrderLocator.minusButton(menuID));
+    async decreaseQty(menuID: number, times: number = 1): Promise<void> {
+        if (times > 0) {
+            for (let i = 0; i < times; i++) {
+                await this.expectVisible(OrderLocator.minusButton(menuID));
+                await this.click(OrderLocator.minusButton(menuID));
+            }
+        }
     }
 
     async goToSearch(): Promise<void> {
@@ -114,7 +122,7 @@ export default class OrderPage extends BaseEsoPage implements OrderScenario {
         await this.expectVisible(OrderLocator.membershipLoginButton);
         await this.click(OrderLocator.membershipLoginButton);
         await this.waitForResponse(this.apiValidateLogin);
-        await this.expectVisible(OrderLocator.errorMessage)
+        await this.expectVisible(OrderLocator.errorMessage);
     }
 
     async inputTable(tableNumber: number): Promise<void> {
