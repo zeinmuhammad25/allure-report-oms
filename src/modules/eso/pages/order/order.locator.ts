@@ -17,7 +17,7 @@ export default class OrderLocator extends BaseLocator {
     static phoneField: string = "//input[@id='whatsAppNumber']";
     static passwordField: string = "//input[@placeholder='Password']";
     static membershipLoginButton: string = "//button//span[contains(text(),'Log In')]";
-    static errorMessage: string = "//mat-error[@id='mat-mdc-error-6']";
+    static errorMessage: string = "//mat-error";
     static tableField: string = "//input[@id='table-name-input']";
     static tableSaveButton: string = "//button[@id='submit-table-button']";
 
@@ -38,6 +38,7 @@ export default class OrderLocator extends BaseLocator {
     static checkOutButton: string = "//div[@id='checkoutButton']";
     static paymentTotalButton: string = "//div[@id='checkoutButton']";
     static applyPromoAndVoucherButton: string = "//mat-icon[text()='expand_more']";
+    static sidebarCloseButton: string = "//button[@aria-label='close-button']";
 
 
 }

@@ -4,43 +4,47 @@ import {Language} from "../../objects/language";
 
 export default interface OrderScenario extends BaseScenario {
 
-    addMenu(menuID: number): Promise<void>
+    addMenu(menuID: number): Promise<void>;
 
-    increaseQty(menuID: number): Promise<void>
+    increaseQty(menuID: number): Promise<void>;
 
-    decreaseQty(menuID: number): Promise<void>
+    decreaseQty(menuID: number): Promise<void>;
 
-    goToSearch(): Promise<void>
+    goToSearch(): Promise<void>;
 
-    goToViewOrder(): Promise<void>
+    goToViewOrder(): Promise<void>;
 
-    goToBranchDetail(): Promise<void>
+    goToBranchDetail(): Promise<void>;
 
-    goToOrderHistory(): Promise<void>
+    goToOrderHistory(): Promise<void>;
 
-    goToPrivacyPolicy(): Promise<void>
+    goToPrivacyPolicy(): Promise<void>;
 
-    goToLoginPage(): Promise<void>
+    goToLoginPage(): Promise<void>;
 
-    openSideBar(): Promise<void>
+    openSideBar(): Promise<void>;
 
-    openMembershipForm(): Promise<void>
+    openMembershipForm(): Promise<void>;
 
-    inputPhoneNumberMembership(phone: string): Promise<void>
+    inputPhoneNumberMembership(phone: string): Promise<void>;
 
-    inputPasswordMembership(pass: string): Promise<void>
+    inputPasswordMembership(pass: string): Promise<void>;
 
-    inputTable(tableNumber: number): Promise<void>
+    inputTable(tableNumber: number): Promise<void>;
 
-    changeLanguage(language: Language): Promise<void>
+    changeLanguage(language: Language): Promise<void>;
 
-    submitMembership(): Promise<void>
+    submitMembership(): Promise<void>;
 
-    loginGoogle(): Promise<void>
+    loginGoogle(): Promise<void>;
 
-    loginFacebook(): Promise<void>
+    loginFacebook(): Promise<void>;
 
-    performApplyMembershipSubs(phone: string, pass: string): Promise<void>
+    performApplyMembershipSubs(phone: string, pass: string): Promise<void>;
 
-    goBack(): Promise<void>
+    expectInvalidInputOnApplyMembership(): Promise<void>;
+
+    submitWithExpectationFailedResult(): Promise<void>;
+
+    goBack(): Promise<void>;
 }
