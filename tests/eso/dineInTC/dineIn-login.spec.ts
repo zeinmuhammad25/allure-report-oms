@@ -128,6 +128,6 @@ test.describe.serial("Dine In Test", () => {
             await orderPage.openMembershipForm();
             await orderPage.inputPhoneNumberMembership(invalidPhoneNumber);
             await orderPage.inputPasswordMembership(password);
-            await orderPage.submitWithExpectaitionFailedResult();
+            await orderPage.submitWithExpectationFailedResult();
         });
 });
