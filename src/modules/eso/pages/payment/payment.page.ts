@@ -63,12 +63,12 @@ export default class PaymentPage extends BaseEsoPage implements PaymentScenario 
         await this.click(PaymentLocator.paymentTotalButton);
     }
 
-    async confirmPayment(): Promise<void> {
+    async confirmPayment(waitForResponse:string = this.apiPaymentValidate): Promise<void> {
         await this.expectVisible(PaymentLocator.payButton);
         await this.click(PaymentLocator.payButton);
         await this.expectVisible(PaymentLocator.payConfirmButton);
         await this.click(PaymentLocator.payConfirmButton);
-        await this.waitForResponse(this.apiPaymentValidate);
+        await this.waitForResponse(waitForResponse);
     }
 
     async confirmPaymentOvo(): Promise<void> {
