@@ -170,4 +170,9 @@ export default class OrderPage extends BaseEsoPage implements OrderScenario {
     async loginFacebook(): Promise<void> {
         throw new Error("Method not implemented.");
     }
+
+    async closeMembershipLoop(): Promise<void>  {
+        await this.expectVisible(OrderLocator.membershipCloseButton);
+        await this.click(OrderLocator.membershipCloseButton);
+    }
 }
