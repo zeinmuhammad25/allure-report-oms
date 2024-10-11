@@ -37,8 +37,8 @@ export default class PaymentPage extends BaseEsoPage implements PaymentScenario 
         await this.fill(PaymentLocator.tableNameField, tableNumber);
     }
 
-    async selectPaymentType(cash: boolean = false): Promise<void> {
-        if (cash) {
+    async selectPaymentType(online: boolean = false): Promise<void> {
+        if (online) {
             await this.expectVisible(PaymentLocator.onlinePaymentButton);
             await this.click(PaymentLocator.onlinePaymentButton);
         } else {
