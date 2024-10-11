@@ -39,6 +39,7 @@ export default class OrderLocator extends BaseLocator {
     static paymentTotalButton: string = "//div[@id='checkoutButton']";
     static applyPromoAndVoucherButton: string = "//mat-icon[text()='expand_more']";
     static sidebarCloseButton: string = "//button[@aria-label='close-button']";
+    static membershipCloseButton: string = "//button[contains(@class,'account-close-button')]";
 
 
 }

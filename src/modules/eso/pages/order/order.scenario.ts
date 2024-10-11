@@ -47,4 +47,6 @@ export default interface OrderScenario extends BaseScenario {
     submitWithExpectationFailedResult(): Promise<void>;
 
     goBack(): Promise<void>;
+
+    closeMembershipLoop(): Promise<void>;
 }
