@@ -11,96 +11,63 @@ export default class PosOmsUrls extends BaseUrl {
         return this._instance || (this._instance = new this());
     }
 
-    baseUrl = (): string => process.env.BASE_URL;
+    baseUrl = (): string => process.env.OMS_URL;
 
     public get = {
-        account: {
-            forgotPassword: "forgotPassword urlnya apa",
-            logout: "logout urlnya apa",
-            profile: "/esb-core-lite/profile",
-        },
-        accountSetting: {
-            branchUrl: "/esb-core-lite/account-setting/branch/index",
-            brandUrl: "/esb-core-lite/account-setting/brand/index",
-            companyUrl: "/esb-core-lite/account-setting/company/index",
-            generateOTPUrl: "/esb-core-lite/account-setting/otp/create",
-            notificationEmailUrl: "/esb-core-lite/account-setting/email-recipient/index",
-            paymentMethodUrl: "/esb-core-lite/account-setting/payment-method/index",
-            tableSettingUrl: "/esb-core-lite/account-setting/table/index",
-        },
-        attendance: {
-            attendanceListUrl: "/esb-core-lite/attendance/report/index",
-            employeeDataUrl: "/esb-core-lite/attendance/employee/index",
-        },
-        bookkeeping: {
-            bookkeepingCategoryUrl: "/esb-core-lite/finance/charts-of-account/index",
-            bookkeepingInputUrl: "/esb-core-lite/finance/input-finance/index",
-            bookkeepingReportUrl: "/esb-core-lite/finance/profit-loss-report/index",
-        },
-        catalogue: {
-            categoryUrl: "/esb-core-lite/catalog/menu-category/index",
-            menuUrl: "/esb-core-lite/catalog/menu/index",
-            menuBookUrl: "/esb-core-lite/catalog/menu-template/index",
-            menuNotesUrl: "/esb-core-lite/catalog/notes-category/index",
-            reasonCancelUrl: "/esb-core-lite/catalog/cancel-reason/index",
-            salesModeUrl: "/esb-core-lite/catalog/sales-mode/index",
-            specialPriceUrl: "/esb-core-lite/catalog/special-price/index",
-            menuSingleUrl: "/esb-core-lite/catalog/menu/create",
-            menuPackageUrl: "/esb-core-lite/catalog/menu/create-package",
-        },
-        login: {
-            loginUrl: "/esb-core-lite/login",
-        },
-        dashboard: {
-            dashboardIndexUrl: "/esb-core-lite/dashboard/index",
-            bookKeepingUrl: "/esb-core-lite/dashboard/accounting",
-            businessTipsUrl: "/esb-core-lite/dashboard/stock-recommendation",
-            onlinePaymentUrl: "/esb-core-lite/dashboard/online-fund/index",
-            stockMenuUrl: "/esb-core-lite/dashboard/stock-menu/index",
 
+        terminalId:{
+            terminalList: "/en/terminal-list",
         },
-        esbOrder: {
-            bannerMarketingUrl: "/esb-core-lite/esb-order/banner/index",
-            settingUrl: "/esb-core-lite/esb-order/setting/index",
+        // general pos fungsi untuk form general pada pos seperti login,startday dan endday
+        generalPos:{
+            loginPage:"/en/login",
+            startShift:"/en/shift",
+            endOfDay:"/en/shift",
         },
-        groupList: {
-            groupListUrl: "/esb-core-lite/role/user/index",
+
+        tableList:{
+            orderDineIn:"/en/table",
+            dineInPayment:"/en/table/payment",
+            quickService:"/en/table/take-away",
+            qsPayment:"/en/table/take-away/payment",
         },
-        inventory: {
-            rawMaterialUrl: "/esb-core-lite/inventory/product/index",
-            rawMaterialReportUrl: "/esb-core-lite/inventory/report/index",
-            rawMaterialStockUrl: "/esb-core-lite/inventory/product-inquiry/index",
-            rawMaterialTransactionUrl: "/esb-core-lite/inventory/transaction/index",
+
+        salesRecapitulation:{
+            recapitulationPage:"/en/sales",
         },
-        onlinePlatform: {
-            platformIntegrationUrl: "/esb-core-lite/online-platform/integration/index",
-            manageOnlineMenuUrl: "/esb-core-lite/online-platform/menu-setting/index",
+
+        regularMember:{
+            indexMember:"/en/member",
+            addMember:"/en/member/add",
+            editMember:"/en/member/edit",
         },
-        printerSetting: {
-            menuManagementUrl: "/esb-core-lite/printer-setting/branch-menu/index",
-            printerUrl: "/esb-core-lite/printer-setting/station/index",
-            printerCreateUrl: "/esb-core-lite/printer-setting/station/create",
+
+        regularMemberDeposit:{
+            indexDeposit:"/en/member-deposit",
+            addDeposit:"/en/member-deposit/add",
         },
-        promotion: {
-            promotionUrl: "/esb-core-lite/promotion/index",
+
+        regularMemberWithdrawal:{
+            indexWithdrawal:"/en/member-withdrawal",
+            addWithdrawal:"/en/member-withdrawal/add",
         },
-        report: {
-            cancelAndVoidUrl: "/esb-core-lite/report/cancel-menu/index",
-            paymentReportUrl: "/esb-core-lite/report/sales-payment/index",
-            profitAndLossUrl: "/esb-core-lite/report/profit-loss/index",
-            promotionReportUrl: "/esb-core-lite/report/promotion/index",
-            salesDetailUrl: "/esb-core-lite/report/sales-detail/index",
-            salesMenuUrl: "/esb-core-lite/report/sales-menu/index",
-            salesSummaryUrl: "/esb-core-lite/report/sales-summary/index",
+
+        toolsSettingPos:{
+            toolIndex:"/en/tools",
         },
-        userAccessControl: {
-            userUrl: "/esb-core-lite/role/user/index",
-            userAccessBackendUrl: "/esb-core-lite/role/user-role/index",
-            userAccessPOSUrl: "/esb-core-lite/role/pos-user-role/index",
+
+        othersMenuPos:{
+            shiftLogList:"/en/shift-log",
+            branchMenuList:"/en/branch-menu",
+            soldOutLimitInfo:"/en/branch-menu/sold-out-limit-info",
+            station:"/en/station",
         },
-        withdrawFunds: {
-            historyUrl: "/esb-core-lite/disbursement/disbursement-report-history/index",
-            remainingFunds: "/esb-core-lite/disbursement/disbursement-report/index",
-        },
+
+        // account: {
+        //     forgotPassword: "forgotPassword urlnya apa",
+        //     logout: "logout urlnya apa",
+        //     profile: "/esb-core-lite/profile",
+        // },
+
     };
 }
