@@ -5,7 +5,7 @@ import OrderPage from "../../../src/modules/eso/pages/order/order.page";
 import {EsoMode} from "../../../src/modules/eso/objects/esoMode";
 
 test.describe.serial("Pick Up Test", () => {
-    const tag = '@smokeTest @eso @pickUp @login '
+    const tag = "@smokeTest @eso @pickUp @login ";
     let branchListPage: BranchListPage;
     let modePage: ModePage;
     let orderPage: OrderPage;
@@ -22,26 +22,26 @@ test.describe.serial("Pick Up Test", () => {
         await modePage.selectMode(EsoMode.PickUp);
         await modePage.performCheckInitialElements();
         await orderPage.openSideBar();
-    })
+    });
 
     test("Verify user can successfully navigate to the pickup page using guest mode",
-        {tag: tag + '@positive'}, async ({page}) => {
+        {tag: tag + "@positive"}, async ({page}) => {
             // Already done in test before each
-        })
+        });
 
 
     test("Verify user can successfully login to ESB order pickup mode using Membership Loop account",
-        {tag: tag + '@positive'}, async ({page}) => {
-            const phoneNumber = '083806992528';
-            const password = 'abcd123';
-            await orderPage.openMembershipForm()
-            await orderPage.inputPhoneNumberMembership(phoneNumber)
-            await orderPage.inputPasswordMembership(password)
-            await orderPage.submitMembership()
-        })
+        {tag: tag + "@positive"}, async ({page}) => {
+            const phoneNumber = "083806992528";
+            const password = "abcd123";
+            await orderPage.openMembershipForm();
+            await orderPage.inputPhoneNumberMembership(phoneNumber);
+            await orderPage.inputPasswordMembership(password);
+            await orderPage.submitMembership();
+        });
 
     test("Verify user can successfully login to Ayomakan and open pickup mode",
-        {tag: tag + '@positive'}, async ({page}) => {
+        {tag: tag + "@positive"}, async ({page}) => {
             //TODO:
             // Login
             // 1. Kunjungi web ayomakan
@@ -50,15 +50,15 @@ test.describe.serial("Pick Up Test", () => {
             // 4. Verifiksi login berhasil
             // Blocker :
             // dependency ayomakan
-        })
+        });
 
     test("Verify user cannot login using Membership Loop account",
-        {tag: tag + '@negative'}, async ({page}) => {
-            const phoneNumber = '083806992528';
-            const password = 'abcd123';
-            await orderPage.openMembershipForm()
-            await orderPage.inputPhoneNumberMembership(phoneNumber)
-            await orderPage.inputPasswordMembership(password)
+        {tag: tag + "@negative"}, async ({page}) => {
+            const phoneNumber = "083806992528";
+            const password = "abcd123";
+            await orderPage.openMembershipForm();
+            await orderPage.inputPhoneNumberMembership(phoneNumber);
+            await orderPage.inputPasswordMembership(password);
             await orderPage.closeMembershipLoop();
-        })
-})
+        });
+});
