@@ -132,6 +132,15 @@ export default class OrderPage extends BaseEsoPage implements OrderScenario {
         await this.click(OrderLocator.tableSaveButton);
     }
 
+    async inputRoom(roomNumber: string): Promise<void> {
+        await this.expectVisible(OrderLocator.formRoomField);
+        await this.click(OrderLocator.formRoomField);
+        await this.expectVisible(OrderLocator.roomField);
+        await this.fill(OrderLocator.roomField, roomNumber);
+        await this.expectVisible(OrderLocator.roomSubmitButton);
+        await this.click(OrderLocator.roomSubmitButton);
+    }
+
 
     async changeLanguage(language: Language): Promise<void> {
         await this.setLanguage(language);

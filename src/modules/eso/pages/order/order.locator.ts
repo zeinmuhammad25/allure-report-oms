@@ -19,7 +19,10 @@ export default class OrderLocator extends BaseLocator {
     static membershipLoginButton: string = "//button//span[contains(text(),'Log In')]";
     static errorMessage: string = "//mat-error";
     static tableField: string = "//input[@id='table-name-input']";
+    static formRoomField: string = "//mat-form-field";
+    static roomField: string = "//input[@placeholder='Room Number']";
     static tableSaveButton: string = "//button[@id='submit-table-button']";
+    static roomSubmitButton: string = "//button[@type='submit']";
 
     //Language Dialog
     static idLanguage: string = "//app-language-dialog//div[text()=' Indonesia ']";
