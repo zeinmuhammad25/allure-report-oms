@@ -39,24 +39,6 @@ test.describe.serial("Dine In Test", () => {
             await orderPage.inputTable(1);
         });
 
-    test("Verify user successfully login to ESB order dine-in mode using Google account  ",
-        {tag: tag + "@positive"}, async ({page}) => {
-            //TODO :
-            // Login
-            // 7. Klik icon google
-            // Blocker :
-            // No icon google.
-        });
-
-    test("Verify user successfully login to ESB order dine-in mode using Facebook account  ",
-        {tag: tag + "@positive"}, async ({page}) => {
-            //TODO :
-            // Login
-            // 7. Klik icon facebook
-            // Blocker :
-            // No icon facebook.
-        });
-
     test("Verify user successfully login to ESB order dine-in mode using Membership Loop account  ",
         {tag: tag + "@positive"}, async ({page}) => {
             let branchList = new BranchListPage(page);
@@ -88,26 +70,6 @@ test.describe.serial("Dine In Test", () => {
             // 4. Verifiksi login berhasil
             // Blocker :
             // Depend on ayomakan.
-        });
-
-    test("Verify user fail to login using Google account  ",
-        {tag: tag + "@negative"}, async ({page}) => {
-            //TODO :
-            // Login
-            // 7. Klik icon google
-            // 8. Klik icon close pada pop up
-            // Blocker :
-            // No icon google.
-        });
-
-    test("Verify user fail to login using Facebook account  ",
-        {tag: tag + "@negative"}, async ({page}) => {
-            //TODO :
-            // Login
-            // 7. Klik icon facebook
-            // 8. Klik icon close pada pop up
-            // Blocker :
-            // No icon facebook.
         });
 
     test("Verify user fail to login using Membership Loop account  ",
