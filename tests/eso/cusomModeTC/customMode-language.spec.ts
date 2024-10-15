@@ -1,33 +1,42 @@
 import {test} from "@playwright/test";
+import OrderPage from "../../../src/modules/eso/pages/order/order.page";
+import BranchListPage from "../../../src/modules/eso/pages/branchList/branchList.page";
+import ModePage from "../../../src/modules/eso/pages/mode/mode.page";
+import {EsoMode} from "../../../src/modules/eso/objects/esoMode";
+import {Language} from "../../../src/modules/eso/objects/language";
 
 test.describe.serial("Custom Mode Test", () => {
-    const tag = '@smokeTest @eso @customMode @language '
+    const tag = "@smokeTest @eso @customMode @language ";
+
+    let orderPage: OrderPage;
+
+    test.beforeEach(async ({page}) => {
+        let branchList = new BranchListPage(page);
+        let modePage = new ModePage(page);
+        orderPage = new OrderPage(page);
+
+        const branchName = "Denny's Kasablanka";
+
+        await branchList.navigateHere();
+        await branchList.wait(300);
+        await branchList.searchBranch(branchName);
+        await branchList.selectBranch(branchName);
+        await modePage.performCheckInitialElements();
+        await modePage.selectMode(EsoMode.Custom);
+        await orderPage.inputRoom("Meeting room");
+    });
 
     test("Verify user can successfully set the language to Indonesian",
-        {tag: tag + '@positive'}, async ({page}) => {
-            //TODO:
-            // Language
-            // 1. Buka eso dengan url https://qa7.esb.co.id/eso-qs/qa1
-            // 2. Pilih outlet
-            // 3. Pilih mode custome
-            // 4. Masukkan nomor meja
-            // 5. Klik simpan
-            // 6. Klik side bar
-            // 7. Klik button language
-            // 8. Pilih indonesia
-        })
+        {tag: tag + "@positive"}, async ({page}) => {
+            await orderPage.openSideBar();
+            await orderPage.changeLanguage(Language.Indonesia);
+        });
 
     test("Verify user can successfully set the language to English",
-        {tag: tag + '@positive'}, async ({page}) => {
-            //TODO:
-            // Language
-            // 1. Buka eso dengan url https://qa7.esb.co.id/eso-qs/qa1
-            // 2. Pilih outlet
-            // 3. Pilih mode custome
-            // 4. Masukkan nomor meja
-            // 5. Klik simpan
-            // 6. Klik side bar
-            // 7. Klik button language
-            // 8. Pilih english
-        })
-})
+        {tag: tag + "@positive"}, async ({page}) => {
+            await orderPage.openSideBar();
+            await orderPage.changeLanguage(Language.Indonesia);
+            await orderPage.openSideBar();
+            await orderPage.changeLanguage(Language.English);
+        });
+});
