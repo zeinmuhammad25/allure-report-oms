@@ -226,7 +226,7 @@ test.describe.serial("Dine In Test", () => {
             // 9. Klik section promo dan vocher
             // 10. Apply promo Persen All Category 35%
             // 11. Payment menggunakan qris
-            // Block :
+            // Blocker :
             // How to make it cannot be used?
 
             let viewOrderPage = new ViewOrderPage(page);
@@ -286,7 +286,7 @@ test.describe.serial("Dine In Test", () => {
             // 9. Klik section promo dan vocher
             // 10. Apply promo Persen Menu Category 10%
             // 11. Payment menggunakan dana
-            // Block :
+            // Blocker :
             // How to make it cannot be used?
 
             let viewOrderPage = new ViewOrderPage(page);
@@ -317,7 +317,7 @@ test.describe.serial("Dine In Test", () => {
             // 9. Klik section promo dan vocher
             // 10. Apply promo spesial price
             // 11. Pilih payment ovo
-            // Block :
+            // Blocker :
             // There is no promo special price
 
             let viewOrderPage = new ViewOrderPage(page);
@@ -348,7 +348,7 @@ test.describe.serial("Dine In Test", () => {
             // 9. Klik section promo dan vocher
             // 10. Apply 3 vocher online type amount
             // 11. Payment menggunakan shopee
-            // Block :
+            // Blocker :
             // Only available for Mobile
 
             let viewOrderPage = new ViewOrderPage(page);
@@ -463,6 +463,8 @@ test.describe.serial("Dine In Test", () => {
             // 9. Klik section promo dan vocher
             // 10. Apply 1 vocher offline
             // 11. Payment menggunakan ovo
+            // Blocker :
+            //
             let viewOrderPage = new ViewOrderPage(page);
             let paymentPage = new PaymentPage(page);
             let promotionPage = new PromotionPage(page);
