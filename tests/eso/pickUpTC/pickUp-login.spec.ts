@@ -6,6 +6,10 @@ import {EsoMode} from "../../../src/modules/eso/objects/esoMode";
 
 test.describe.serial("Pick Up Test", () => {
     const tag = "@smokeTest @eso @pickUp @login ";
+
+    const phoneNumber = process.env.ESO_LOOP_MEMBER_USER;
+    const password = process.env.ESO_LOOP_MEMBER_PASS;
+
     let branchListPage: BranchListPage;
     let modePage: ModePage;
     let orderPage: OrderPage;
@@ -32,8 +36,6 @@ test.describe.serial("Pick Up Test", () => {
 
     test("Verify user can successfully login to ESB order pickup mode using Membership Loop account",
         {tag: tag + "@positive"}, async ({page}) => {
-            const phoneNumber = "083806992528";
-            const password = "abcd123";
             await orderPage.openMembershipForm();
             await orderPage.inputPhoneNumberMembership(phoneNumber);
             await orderPage.inputPasswordMembership(password);
@@ -54,10 +56,10 @@ test.describe.serial("Pick Up Test", () => {
 
     test("Verify user cannot login using Membership Loop account",
         {tag: tag + "@negative"}, async ({page}) => {
-            const phoneNumber = "083806992528";
-            const password = "abcd123";
+            const invalidPhoneNumber = "083806992526";
+
             await orderPage.openMembershipForm();
-            await orderPage.inputPhoneNumberMembership(phoneNumber);
+            await orderPage.inputPhoneNumberMembership(invalidPhoneNumber);
             await orderPage.inputPasswordMembership(password);
             await orderPage.closeMembershipLoop();
         });
