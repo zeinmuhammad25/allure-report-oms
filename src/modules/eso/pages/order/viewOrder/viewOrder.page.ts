@@ -2,6 +2,7 @@ import Element from "../../../../../base/objects/Element";
 import BaseEsoPage from "../../../base/base-eso-page";
 import ViewOrderScenario from "./viewOrder.scenario";
 import ViewOrderLocator from "./viewOrder.locator";
+import {DeliveryCourier} from "../../../objects/deliveryCourier";
 
 export default class ViewOrderPage extends BaseEsoPage implements ViewOrderScenario {
     pageUrl: () => string;
@@ -31,4 +32,10 @@ export default class ViewOrderPage extends BaseEsoPage implements ViewOrderScena
         await this.click(ViewOrderLocator.updateButton);
     }
 
+    async selectCourierButton(courier: DeliveryCourier) {
+        await this.expectVisible(ViewOrderLocator.buttonCourier);
+        await this.click(ViewOrderLocator.buttonCourier);
+        await this.expectVisible(ViewOrderLocator.courierOption(courier));
+        await this.click(ViewOrderLocator.courierOption(courier));
+    }
 }

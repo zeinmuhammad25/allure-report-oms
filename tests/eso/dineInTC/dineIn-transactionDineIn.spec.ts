@@ -14,8 +14,8 @@ test.describe.serial("Dine In Test", () => {
 
     let orderPage: OrderPage;
     const branchName = "Denny's Kasablanka";
-    const phoneNumber = "083806992528";
-    const password = "abcd123";
+    const phoneNumber = process.env.ESO_LOOP_MEMBER_USER;
+    const password = process.env.ESO_LOOP_MEMBER_PASS;
 
     const loginMembership = async (page: Page, loginAsGuestFirst: boolean = false): Promise<void> => {
         let branchList = new BranchListPage(page);

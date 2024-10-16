@@ -10,8 +10,8 @@ test.describe.serial("Dine In Test", () => {
 
     let orderPage: OrderPage;
     const branchName = "Denny's Kasablanka";
-    const phoneNumber = "083806992528";
-    const password = "abcd123";
+    const phoneNumber = process.env.ESO_LOOP_MEMBER_USER;
+    const password = process.env.ESO_LOOP_MEMBER_PASS;
 
     test.beforeEach(async ({page}) => {
         let branchList = new BranchListPage(page);
@@ -45,9 +45,6 @@ test.describe.serial("Dine In Test", () => {
             let modePage = new ModePage(page);
             orderPage = new OrderPage(page);
 
-            const phoneNumber = "083806992528";
-            const password = "abcd123";
-
             await branchList.searchBranch(branchName);
             await branchList.selectBranch(branchName);
             await modePage.performCheckInitialElements();
@@ -79,7 +76,6 @@ test.describe.serial("Dine In Test", () => {
             orderPage = new OrderPage(page);
 
             const invalidPhoneNumber = "083811111111";
-            const password = "abcd123";
 
             await branchList.searchBranch(branchName);
             await branchList.selectBranch(branchName);

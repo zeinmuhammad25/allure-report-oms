@@ -2,11 +2,12 @@ import {test} from "@playwright/test";
 import BranchListPage from "../../../src/modules/eso/pages/branchList/branchList.page";
 import ModePage from "../../../src/modules/eso/pages/mode/mode.page";
 import {EsoMode} from "../../../src/modules/eso/objects/esoMode";
-import WhatsappPage from "../../../src/modules/eso/pages/login/whatsapp/whatsapp.page";
 import OrderPage from "../../../src/modules/eso/pages/order/order.page";
 
 test.describe.serial("Delivery Test", () => {
     const tag = "@smokeTest @eso @delivery @applyMembership ";
+    const phoneNumber = process.env.ESO_LOOP_MEMBER_USER;
+    const password = process.env.ESO_LOOP_MEMBER_PASS;
 
     test.beforeEach(async ({page}) => {
         let branchListPage = new BranchListPage(page);
@@ -23,10 +24,6 @@ test.describe.serial("Delivery Test", () => {
     test("Verify user can successfully apply membership loop in delivery mode",
         {tag: tag + "@positive"}, async ({page}) => {
             let orderPage = new OrderPage(page);
-
-            const phoneNumber = "083806992528";
-            const password = "abcd123";
-
             await orderPage.performApplyMembershipSubs(phoneNumber, password);
         });
 
@@ -34,7 +31,6 @@ test.describe.serial("Delivery Test", () => {
         {tag: tag + "@negative"}, async ({page}) => {
             let orderPage = new OrderPage(page);
             const invalidPhoneNumber = "084806992528";
-            const password = "abcd123";
 
             await orderPage.openSideBar();
             await orderPage.openMembershipForm();
