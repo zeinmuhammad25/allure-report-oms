@@ -17,6 +17,4 @@ export default class BranchListLocator extends BaseLocator {
     static idLanguage: string = "//app-language-dialog//div[text()=' Indonesia ']";
     static enLanguage: string = "//app-language-dialog//div[text()=' English ']";
     static languageCloseButton: string = "//app-language-dialog//i[@class='icon-svg ic-close close-dialog bg-grey-800 scale-2x']";
-
-
 }

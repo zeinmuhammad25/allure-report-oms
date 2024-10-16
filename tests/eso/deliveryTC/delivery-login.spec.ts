@@ -6,6 +6,10 @@ import {EsoMode} from "../../../src/modules/eso/objects/esoMode";
 
 test.describe.serial("Delivery Test", () => {
     const tag = "@smokeTest @eso @delivery @login ";
+
+    const phoneNumber = process.env.ESO_LOOP_MEMBER_USER;
+    const password = process.env.ESO_LOOP_MEMBER_PASS;
+
     let branchListPage: BranchListPage;
     let modePage: ModePage;
     let orderPage: OrderPage;
@@ -22,6 +26,7 @@ test.describe.serial("Delivery Test", () => {
         await modePage.selectMode(EsoMode.Delivery);
         await modePage.performCheckInitialElements();
         await orderPage.openSideBar();
+
     });
 
     test("Verify user can successfully access the delivery page using a guest account",
@@ -31,8 +36,6 @@ test.describe.serial("Delivery Test", () => {
 
     test("Verify user can successfully log in to ESB order in delivery mode using a membership loop account",
         {tag: tag + "@positive"}, async ({page}) => {
-            const phoneNumber = "083806992528";
-            const password = "abcd123";
             await orderPage.openMembershipForm();
             await orderPage.inputPhoneNumberMembership(phoneNumber);
             await orderPage.inputPasswordMembership(password);
@@ -53,10 +56,10 @@ test.describe.serial("Delivery Test", () => {
 
     test("Verify user cannot log in using a membership loop account",
         {tag: tag + "@negative"}, async ({page}) => {
-            const phoneNumber = "083806992528";
-            const password = "abcd123";
+            const invalidPhoneNumber = "083806992527";
+
             await orderPage.openMembershipForm();
-            await orderPage.inputPhoneNumberMembership(phoneNumber);
+            await orderPage.inputPhoneNumberMembership(invalidPhoneNumber);
             await orderPage.inputPasswordMembership(password);
             await orderPage.closeMembershipLoop();
         });
