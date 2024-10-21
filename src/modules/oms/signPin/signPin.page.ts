@@ -3,24 +3,16 @@ import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SignPinLocator from "./signPin.locator";
 
-export  default class SignPinPage extends BaseOmsPage implements signPinScenario {
+export default class SignPinPage extends BaseOmsPage implements signPinScenario {
 
     pageUrl = (): string => this.urls.get.generalPos.loginPage;
 
     shouldHave(): Element[] {
         return [
             Element.ofSelector(SignPinLocator.fieldPin),
-            Element.ofSelector(SignPinLocator.buttonPin1),
-            Element.ofSelector(SignPinLocator.buttonPin2),
-            Element.ofSelector(SignPinLocator.buttonPin3),
-            Element.ofSelector(SignPinLocator.buttonPin4),
-            Element.ofSelector(SignPinLocator.buttonPin5),
-            Element.ofSelector(SignPinLocator.buttonPin6),
-            Element.ofSelector(SignPinLocator.buttonPin7),
-            Element.ofSelector(SignPinLocator.buttonPin8),
-            Element.ofSelector(SignPinLocator.buttonPin9),
-            Element.ofSelector(SignPinLocator.buttonPin0),
-            Element.ofSelector(SignPinLocator.buttonClr),
+            Element.ofSelector(SignPinLocator.buttonPin(1)),
+            Element.ofSelector(SignPinLocator.buttonPin(2)),
+            Element.ofSelector(SignPinLocator.buttonPin("CLR")),
             Element.ofSelector(SignPinLocator.buttonSignIn),
             Element.ofSelector(SignPinLocator.quickServiceListBtn),
             Element.ofSelector(SignPinLocator.tableListSingIn1),
@@ -33,5 +25,30 @@ export  default class SignPinPage extends BaseOmsPage implements signPinScenario
         ];
     }
 
+    async inputPinByTouch(pin: string): Promise<void> {
+
+        const pinArray = pin.split("")
+
+        for (let i = 0; i < pinArray.length; i++) {
+            await this.expectVisible(SignPinLocator.buttonPin(Number(pinArray[i])));
+            await this.click(SignPinLocator.buttonPin(Number(pinArray[i])));
+        }
+    }
+
+    async inputPinByKeyboard(pin: string): Promise<void> {
+        await this.expectVisible(SignPinLocator.fieldPin);
+        await this.click(SignPinLocator.fieldPin);
+        await this.fill(SignPinLocator.fieldPin, pin);
+    }
+
+    async clearPin(): Promise<void> {
+        await this.expectVisible(SignPinLocator.buttonPin("CLR"));
+        await this.click(SignPinLocator.buttonPin("CLR"));
+    }
+
+    async submitPin() {
+        await this.expectVisible(SignPinLocator.buttonSignIn);
+        await this.click(SignPinLocator.buttonSignIn);
+    }
 }
 
