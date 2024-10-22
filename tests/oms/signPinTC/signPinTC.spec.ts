@@ -6,9 +6,9 @@ import TerminalIDPage from "../../../src/modules/oms/terminalID/terminalID.page"
 test.describe.serial("Landing Page", () => {
 
     test.beforeEach(async ({page}) => {
-        let termianlIdPage = new TerminalIDPage(page);
-        await termianlIdPage.navigateHere()
-        await termianlIdPage.performTerminalID()
+        let terminalIdPage = new TerminalIDPage(page);
+        await terminalIdPage.navigateHere()
+        await terminalIdPage.performTerminalID()
     })
 
     test("Validate Logic when User input valid/registered pin login",
