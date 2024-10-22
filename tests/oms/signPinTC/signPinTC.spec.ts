@@ -7,16 +7,16 @@ test.describe.serial("Landing Page", () => {
 
     test.beforeEach(async ({page}) => {
         let terminalIdPage = new TerminalIDPage(page);
-        await terminalIdPage.navigateHere()
-        await terminalIdPage.performTerminalID()
+        await terminalIdPage.navigateHere();
+        await terminalIdPage.performTerminalID();
     })
 
     test("Validate Logic when User input valid/registered pin login",
         {tag: "@smokeTest @oms @signPin @positive"}, async ({page}) => {
             let signPinPage = new SignPinPage(page);
 
-            await signPinPage.inputPinByTouch("22")
-            await signPinPage.submitPin()
+            await signPinPage.inputPinByTouch("22");
+            await signPinPage.submitPin();
         }
     )
 })
