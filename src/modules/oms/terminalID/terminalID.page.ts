@@ -6,7 +6,7 @@ import TerminalIDLocator from "./terminalID.locator";
 export default class TerminalIDPage extends BaseOmsPage implements TerminalIDScenario {
 
 
-    pageUrl = (): string => this.urls.get.generalPos.loginPage;
+    pageUrl = (): string => this.urls.get.terminalId.terminalList;
 
     // Real URL =
     shouldHave(): Element[] {
