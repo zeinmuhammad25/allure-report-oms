@@ -1,5 +1,5 @@
 import {test} from "@playwright/test";
-import SignPinPage from "../../src/modules/oms/signPin/signPin.page";
+import SignPinPage from "../../../src/modules/oms/signPin/signPin.page";
 
 test.describe.serial("Landing Page", () => {
 
