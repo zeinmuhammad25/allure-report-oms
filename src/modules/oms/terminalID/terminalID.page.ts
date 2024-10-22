@@ -2,9 +2,6 @@ import TerminalIDScenario from "./terminalID.scenario";
 import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import TerminalIDLocator from "./terminalID.locator";
-import SignPinLocator from "../signPin/signPin.locator";
-import PromotionScenario from "../../pld/promotion/promotion.scenario";
-
 
 export default class TerminalIDPage extends BaseOmsPage implements TerminalIDScenario {
 
@@ -29,29 +26,30 @@ export default class TerminalIDPage extends BaseOmsPage implements TerminalIDSce
 
     }
 
-    async applyTerminalID(): Promise<void>{
+    async applyTerminalID(): Promise<void> {
         await this.expectVisible(TerminalIDLocator.btnApplyTerminalID);
         await this.click(TerminalIDLocator.btnApplyTerminalID);
     }
 
-    async claimTerminalID(): Promise<void>{
+    async claimTerminalID(): Promise<void> {
         await this.expectVisible(TerminalIDLocator.btnClaimTerminalID);
         await this.click(TerminalIDLocator.btnClaimTerminalID);
 
     }
-    async inputNotesTerminalID(): Promise<void>{
+
+    async inputNotesTerminalID(): Promise<void> {
         await this.expectVisible(TerminalIDLocator.btnInputNotesTerminalID);
         await this.click(TerminalIDLocator.btnInputNotesTerminalID);
         await this.fill(TerminalIDLocator.btnInputNotesTerminalID, "Oms1");
 
     }
 
-    async saveTerminalID(): Promise<void>{
+    async saveTerminalID(): Promise<void> {
         await this.expectVisible(TerminalIDLocator.btnSaveTerminalID);
         await this.click(TerminalIDLocator.btnSaveTerminalID);
     }
 
-    async performTerminalID(): Promise<void>{
+    async performTerminalID(): Promise<void> {
         await this.expectVisible(TerminalIDLocator.getTerminalID(1));
         await this.click(TerminalIDLocator.getTerminalID(1));
         await this.expectVisible(TerminalIDLocator.btnApplyTerminalID);
