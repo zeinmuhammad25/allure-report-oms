@@ -14,6 +14,9 @@ export default class SignPinPage extends BaseOmsPage implements signPinScenario 
             Element.ofSelector(SignPinLocator.buttonPin(2)),
             Element.ofSelector(SignPinLocator.buttonPin("CLR")),
             Element.ofSelector(SignPinLocator.buttonSignIn),
+            Element.ofSelector(SignPinLocator.validationSignInUserYes),
+            Element.ofSelector(SignPinLocator.validationSignInUserNo),
+            Element.ofSelector(SignPinLocator.userNotFoundPopup),
             Element.ofSelector(SignPinLocator.quickServiceListBtn),
             Element.ofSelector(SignPinLocator.tableListSingIn1),
             Element.ofSelector(SignPinLocator.tableListSingIn2),
@@ -46,9 +49,26 @@ export default class SignPinPage extends BaseOmsPage implements signPinScenario 
         await this.click(SignPinLocator.buttonPin("CLR"));
     }
 
-    async submitPin() {
+    async submitPinValidateStartDayYes(): Promise<void> {
         await this.expectVisible(SignPinLocator.buttonSignIn);
         await this.click(SignPinLocator.buttonSignIn);
+        await this.click(SignPinLocator.validationSignInUserYes);
+        await this.expectVisible(SignPinLocator.pageStartShift);
     }
+
+    async submitPinValidateStartDayNo(): Promise<void> {
+        await this.expectVisible(SignPinLocator.buttonSignIn);
+        await this.click(SignPinLocator.buttonSignIn);
+        await this.click(SignPinLocator.validationSignInUserNo);
+        await this.expectVisible(SignPinLocator.buttonSignIn);
+    }
+
+    async submitPinNoUnregisteredUser(): Promise<void> {
+        await this.expectVisible(SignPinLocator.buttonSignIn);
+        await this.click(SignPinLocator.buttonSignIn);
+        await this.expectVisible(SignPinLocator.userNotFoundPopup);
+        await this.click(SignPinLocator.userNotFoundPopup);
+    }
+
 }
 
