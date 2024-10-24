@@ -5,6 +5,7 @@ export default class StartDayLocator extends BaseLocator {
 
     static startingCash: string = "//input[@placeholder='e.g. 200.000']";
     static getLocatorStartDay = (key: string): string => `//span[normalize-space()='${key}']`;
+    //----List key----//
     //-Start Shift
     //-Yes
     //-No
