@@ -69,10 +69,12 @@ test.describe.serial("Terminal ID Test", () => {
             await terminalIdPage.claimTerminalID();
             await terminalIdPage.inputNotesTerminalID("");
             await terminalIdPage.expectDisabled(TerminalIDLocator.btnSaveTerminalID);
-
+            await terminalIdPage.expectVisible(TerminalIDLocator.btnCancelTerminalID);
 
         }
     )
 })
+
+
 
 
