@@ -37,16 +37,16 @@ export default class TerminalIDPage extends BaseOmsPage implements TerminalIDSce
 
     }
 
-    async inputNotesTerminalID(): Promise<void> {
+    async inputNotesTerminalID(note: string): Promise<void> {
         await this.expectVisible(TerminalIDLocator.btnInputNotesTerminalID);
-        await this.click(TerminalIDLocator.btnInputNotesTerminalID);
-        await this.fill(TerminalIDLocator.btnInputNotesTerminalID, "Oms1");
+        await this.fill(TerminalIDLocator.btnInputNotesTerminalID, note);
 
     }
 
     async saveTerminalID(): Promise<void> {
         await this.expectVisible(TerminalIDLocator.btnSaveTerminalID);
         await this.click(TerminalIDLocator.btnSaveTerminalID);
+        await this.waitForUrl("/en/login");
     }
 
     async performTerminalID(): Promise<void> {
@@ -62,4 +62,5 @@ export default class TerminalIDPage extends BaseOmsPage implements TerminalIDSce
         await this.expectVisible(TerminalIDLocator.btnSaveTerminalID);
         await this.click(TerminalIDLocator.btnSaveTerminalID);
     }
+
 }

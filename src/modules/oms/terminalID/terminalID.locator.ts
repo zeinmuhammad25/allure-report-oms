@@ -9,6 +9,7 @@ export default class TerminalIDLocator extends BaseLocator {
     static btnClaimTerminalID: string = "//span[normalize-space()='Claim']";
     static btnSaveTerminalID: string = "//span[normalize-space()='Save']";
     static btnInputNotesTerminalID: string = "//input[@placeholder='Input notes']";
+    static verifySuccessApplyTerminalID: string = "//a[normalize-space()='OPEN']";
 
 
 }

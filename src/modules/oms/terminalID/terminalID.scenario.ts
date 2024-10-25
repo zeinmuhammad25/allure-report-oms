@@ -8,8 +8,6 @@ export default interface TerminalIDScenario extends BaseScenario {
 
     claimTerminalID(): Promise<void>
 
-    inputNotesTerminalID(): Promise<void>
-
     saveTerminalID(): Promise<void>
 
 
