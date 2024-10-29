@@ -18,9 +18,9 @@ export default class StartDayPage extends BaseOmsPage implements StartDayScenari
         ];
     }
 
-    async inputStartingCash(): Promise<void> {
+    async inputStartingCash(inputCash: string): Promise<void> {
         await this.expectVisible(StartDayLocator.startingCash);
-        await this.fill(StartDayLocator.startingCash, "20.000");
+        await this.fill(StartDayLocator.startingCash, inputCash);
         await this.click(StartDayLocator.escapeKeyboard);
 
 
@@ -32,6 +32,12 @@ export default class StartDayPage extends BaseOmsPage implements StartDayScenari
         await this.expectVisible(StartDayLocator.getLocatorStartDay("Yes"));
         await this.click(StartDayLocator.getLocatorStartDay("Yes"));
 
+    }
+
+    async popUpShiftInZero(): Promise<void> {
+        await this.expectVisible(StartDayLocator.getLocatorStartDay("Start Shift"));
+        await this.click(StartDayLocator.getLocatorStartDay("Start Shift"));
+        await this.expectTextVisible("Shift In Total less than 0", true);
 
     }
 
@@ -52,6 +58,7 @@ export default class StartDayPage extends BaseOmsPage implements StartDayScenari
         };
 
         await this.waitForVisible(StartDayLocator.notificationSuccess, onVisible, 10000, 5);
+        await this.waitForResponse("/table");
 
 
     }
