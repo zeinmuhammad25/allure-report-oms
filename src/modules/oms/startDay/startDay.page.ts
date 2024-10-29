@@ -52,6 +52,7 @@ export default class StartDayPage extends BaseOmsPage implements StartDayScenari
         };
 
         await this.waitForVisible(StartDayLocator.notificationSuccess, onVisible, 10000, 5);
+        await this.waitForResponse("/table");
 
 
     }
