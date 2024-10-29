@@ -21,12 +21,35 @@ test.describe.serial("Start Day Test", () => {
         {tag: "@smokeTest @oms @StartDay @positive"}, async ({page}) => {
             let startDay = new StartDayPage(page);
 
-            await startDay.inputStartingCash();
+            await startDay.inputStartingCash("20.000");
             await startDay.confirmStartingCash();
             await startDay.notificationSuccessStartDay();
 
         }
     )
 
+    test("Validate Logic when User Not input Starting Cash",
+        {tag: "@smokeTest @oms @StartDay @negative"}, async ({page}) => {
+            let startDay = new StartDayPage(page);
+
+            await startDay.inputStartingCash("");
+            await startDay.popUpShiftInZero();
+
+        }
+    )
+
+    test("Validate Logic when User input Value 0 in Starting Cash",
+        {tag: "@smokeTest @oms @StartDay @negative"}, async ({page}) => {
+            let startDay = new StartDayPage(page);
+
+            await startDay.inputStartingCash("0");
+            await startDay.popUpShiftInZero();
+
+        }
+    )
+
 
 })
+
+
+
