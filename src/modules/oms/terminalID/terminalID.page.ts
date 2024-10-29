@@ -46,7 +46,7 @@ export default class TerminalIDPage extends BaseOmsPage implements TerminalIDSce
     async saveTerminalID(): Promise<void> {
         await this.expectVisible(TerminalIDLocator.btnSaveTerminalID);
         await this.click(TerminalIDLocator.btnSaveTerminalID);
-        await this.waitForResponse("/login")
+        await this.waitForResponse("/login");
     }
 
     async performTerminalID(): Promise<void> {
