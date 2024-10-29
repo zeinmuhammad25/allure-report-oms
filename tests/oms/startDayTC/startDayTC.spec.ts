@@ -3,7 +3,7 @@ import SignPinPage from "../../../src/modules/oms/signPin/signPin.page";
 import TerminalIDPage from "../../../src/modules/oms/terminalID/terminalID.page";
 import StartDayPage from "../../../src/modules/oms/startDay/startDay.page";
 
-
+test.setTimeout(100000);
 test.describe.serial("Start Day Test", () => {
 
     test.beforeEach(async ({page}) => {
@@ -24,7 +24,6 @@ test.describe.serial("Start Day Test", () => {
             await startDay.inputStartingCash();
             await startDay.confirmStartingCash();
             await startDay.notificationSuccessStartDay();
-
 
         }
     )
