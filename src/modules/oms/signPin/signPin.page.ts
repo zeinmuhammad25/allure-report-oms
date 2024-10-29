@@ -2,6 +2,8 @@ import signPinScenario from "./signPin.scenario";
 import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SignPinLocator from "./signPin.locator";
+import StartDayLocator from "../startDay/startDay.locator";
+import DineInLocator from "../tableList/orderingDineIn/dineIn.locator";
 
 export default class SignPinPage extends BaseOmsPage implements signPinScenario {
 
@@ -69,6 +71,39 @@ export default class SignPinPage extends BaseOmsPage implements signPinScenario 
         await this.expectVisible(SignPinLocator.userNotFoundPopup);
         await this.click(SignPinLocator.userNotFoundPopup);
     }
+
+    async submitPin(): Promise<void> {
+        await this.click(SignPinLocator.buttonSignIn);
+        await this.click(SignPinLocator.validationSignInUserYes);
+    }
+
+    // async validatePinWithStartOrder(): Promise<void> {
+    //     await this.click(SignPinLocator.buttonSignIn);
+    //     await this.click(SignPinLocator.validationSignInUserYes);
+    //     await this.waitForResponse("/shift");
+    //     const isTableAcRoomVisible = await this.isVisible(DineInLocator.sectionTableAcRoom);
+    //     console.log(
+    //         "cek error" + isTableAcRoomVisible
+    //     )
+    //     if (!isTableAcRoomVisible) {
+    //         await this.wait(300)
+    //         await this.expectVisible(StartDayLocator.startingCash);
+    //         await this.fill(StartDayLocator.startingCash, "20.000");
+    //         await this.click(StartDayLocator.escapeKeyboard);
+    //         await this.click(StartDayLocator.getLocatorStartDay("Start Shift"));
+    //         await this.wait(1000);
+    //         await this.click(StartDayLocator.getLocatorStartDay("Yes"));
+    //         await this.waitForResponse("/table");
+    //         await this.expectVisible(StartDayLocator.getLocatorStartDay("Ok"));
+    //         await this.click(StartDayLocator.getLocatorStartDay("Ok"));
+    //
+    //     }
+    //     // else {
+    //     //     await this.click(DineInLocator.sectionTableAcRoom);
+    //     // }
+    //
+    // }
+
 
 }
 
