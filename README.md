@@ -78,6 +78,12 @@ medusa/
     node --version
     npm --version
     ```
+
+1. Verify Node.js Installation:
+    ```bash
+    ping google.com -t
+    ```
+   
 2. Verify Playwright Installation:
     ```bash
    npx playwright --version
@@ -118,7 +124,7 @@ BASE_URL=https://dev7.esb.co.id
   Playwright can run tests in headless mode by changing the headless option in `playwright.config.ts` to `true`.
 ```typescript
 
-headless: true,
+headless: true
 
 ```
 
@@ -132,7 +138,7 @@ projects: [
         use: { ...devices['Desktop Chrome'] },
     },
     
-],
+]
 ```
 
 ## Writing Tests
