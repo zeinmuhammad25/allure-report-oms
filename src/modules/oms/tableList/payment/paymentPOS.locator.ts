@@ -15,7 +15,7 @@ export default class PaymentPOSLocator extends BaseLocator {
     static getLocatorPaymentMethod = (paymentMethod: PaymentList): string => `//span[contains(text(),'${paymentMethod}')]`;
 
     //sectionPaymentCash
-    static buttonPayFullAmount = "//div[@class='d-flex ng-star-inserted']//span[1]//button[1]";
+    static buttonPayCashFullAmount = "//div[@class='d-flex ng-star-inserted']//span[1]//button[1]";
     static inputCashAmount = "//input[@placeholder='e.g. 200.000']";
     static buttonClearCashAmount = "//i[@class='glyphicon glyphicon-repeat']";
 
