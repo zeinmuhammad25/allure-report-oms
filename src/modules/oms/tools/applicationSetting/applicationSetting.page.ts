@@ -28,7 +28,7 @@ export default class ApplicationSettingPage extends BaseOmsPage implements Appli
         ];
     }
 
-    async UserSetAllSetting(): Promise<void> {
+    async userSetAllSetting(): Promise<void> {
         await this.click(ApplicationSettingLocator.buttonTool);
         await this.click(ApplicationSettingLocator.buttonApplicationSetting);
         await this.click(ApplicationSettingLocator.selectDefaultStation("KASIR"));
@@ -47,14 +47,14 @@ export default class ApplicationSettingPage extends BaseOmsPage implements Appli
         await this.click(ApplicationSettingLocator.buttonSaveSetting);
     }
 
-    async UserSetStation(): Promise<void> {
+    async userSetStation(): Promise<void> {
         await this.click(ApplicationSettingLocator.buttonTool);
         await this.click(ApplicationSettingLocator.buttonApplicationSetting);
         await this.click(ApplicationSettingLocator.selectDefaultStation("KASIR"));
         await this.click(ApplicationSettingLocator.buttonSaveSetting);
     }
 
-    async UserSetWaringTime(): Promise<void> {
+    async userSetWaringTime(): Promise<void> {
         await this.click(ApplicationSettingLocator.buttonTool);
         await this.click(ApplicationSettingLocator.buttonApplicationSetting);
         await this.fill(ApplicationSettingLocator.inputTimeFirstWarning, "2");
@@ -62,7 +62,7 @@ export default class ApplicationSettingPage extends BaseOmsPage implements Appli
         await this.click(ApplicationSettingLocator.buttonSaveSetting);
     }
 
-    async UserSetSalesMode(): Promise<void> {
+    async userSetSalesMode(): Promise<void> {
         await this.click(ApplicationSettingLocator.buttonTool);
         await this.click(ApplicationSettingLocator.buttonApplicationSetting);
         await this.click(ApplicationSettingLocator.selectSalesModeForDineIn("AT EXCLUSIVE"));
@@ -70,7 +70,7 @@ export default class ApplicationSettingPage extends BaseOmsPage implements Appli
         await this.click(ApplicationSettingLocator.buttonSaveSetting);
     }
 
-    async UserSetSelfOrderServer(): Promise<void> {
+    async userSetSelfOrderServer(): Promise<void> {
         await this.click(ApplicationSettingLocator.buttonTool);
         await this.click(ApplicationSettingLocator.buttonApplicationSetting);
         await this.click(ApplicationSettingLocator.checkboxSelfOrderServer);
