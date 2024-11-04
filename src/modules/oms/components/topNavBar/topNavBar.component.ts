@@ -28,44 +28,44 @@ export default class TopNavBarComponent extends BaseOmsPage implements TopNavBar
         ];
     }
 
-    async UserViewProfile(): Promise<void> {
+    async userViewProfile(): Promise<void> {
         await this.expectVisible(TopNavBarLocator.profileButton);
         await this.click(TopNavBarLocator.profileButton);
 
     }
 
-    async UserSignOut(): Promise<void> {
+    async userSignOut(): Promise<void> {
         await this.expectVisible(TopNavBarLocator.signOutButton);
         await this.click(TopNavBarLocator.signOutButton);
     }
 
-    async UserViewProfileAndSignOut(): Promise<void> {
+    async userViewProfileAndSignOut(): Promise<void> {
         await this.expectVisible(TopNavBarLocator.profileButton);
         await this.click(TopNavBarLocator.profileButton);
         await this.click(TopNavBarLocator.signOutButton);
     }
 
-    async UserViewEsbOrderReportFullService(): Promise<void> {
+    async userViewEsbOrderReportFullService(): Promise<void> {
         await this.click(TopNavBarLocator.errorLog);
         await this.click(TopNavBarLocator.buttonSelectLog("ESB ORDER"));
         await this.click(TopNavBarLocator.buttonSelectEsbOrderReport("Full Service"));
         await this.click(TopNavBarLocator.buttonSyncOrCloseLog("Close Log"));
     }
 
-    async UserViewEsbOrderReportQuickService(): Promise<void> {
+    async userViewEsbOrderReportQuickService(): Promise<void> {
         await this.click(TopNavBarLocator.errorLog);
         await this.click(TopNavBarLocator.buttonSelectLog("ESB ORDER"));
         await this.click(TopNavBarLocator.buttonSelectEsbOrderReport("Quick Service"));
         await this.click(TopNavBarLocator.buttonSyncOrCloseLog("Close Log"));
     }
 
-    async UserViewErrorReport(): Promise<void> {
+    async userViewErrorReport(): Promise<void> {
         await this.click(TopNavBarLocator.errorLog);
         await this.click(TopNavBarLocator.buttonSelectLog("ERROR REPORT"));
         await this.click(TopNavBarLocator.buttonSyncOrCloseLog("Close Log"));
     }
 
-    async UserViewEsbOrderReportFullServiceIFManyData(): Promise<void> {
+    async userViewEsbOrderReportFullServiceIFManyData(): Promise<void> {
         await this.click(TopNavBarLocator.errorLog);
         await this.click(TopNavBarLocator.buttonSelectLog("ESB ORDER"));
         await this.click(TopNavBarLocator.buttonSelectEsbOrderReport("Full Service"));
@@ -74,7 +74,7 @@ export default class TopNavBarComponent extends BaseOmsPage implements TopNavBar
         await this.click(TopNavBarLocator.buttonSyncOrCloseLog("Close Log"));
     }
 
-    async UserViewEsbOrderReportQuickServiceIFManyData(): Promise<void> {
+    async userViewEsbOrderReportQuickServiceIFManyData(): Promise<void> {
         await this.click(TopNavBarLocator.errorLog);
         await this.click(TopNavBarLocator.buttonSelectLog("ESB ORDER"));
         await this.click(TopNavBarLocator.buttonSelectEsbOrderReport("Quick Service"));
@@ -83,7 +83,7 @@ export default class TopNavBarComponent extends BaseOmsPage implements TopNavBar
         await this.click(TopNavBarLocator.buttonSyncOrCloseLog("Close Log"));
     }
 
-    async UserViewErrorReportIFManyData(): Promise<void> {
+    async userViewErrorReportIFManyData(): Promise<void> {
         await this.click(TopNavBarLocator.errorLog);
         await this.click(TopNavBarLocator.buttonSelectLog("ERROR REPORT"));
         await this.click(TopNavBarLocator.buttonNextSectionLog);
@@ -91,7 +91,7 @@ export default class TopNavBarComponent extends BaseOmsPage implements TopNavBar
         await this.click(TopNavBarLocator.buttonSyncOrCloseLog("Close Log"));
     }
 
-    async UserSyncUserViaLog(): Promise<void> {
+    async userSyncUserViaLog(): Promise<void> {
         await this.click(TopNavBarLocator.errorLog);
         await this.click(TopNavBarLocator.buttonSyncOrCloseLog("SYNC USER"));
         await this.click(TopNavBarLocator.popupVerifySyncUser("Yes"));
