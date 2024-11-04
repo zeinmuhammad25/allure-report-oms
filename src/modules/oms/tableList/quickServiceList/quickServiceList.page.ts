@@ -17,7 +17,7 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
         throw new Error("Method not implemented");
     }
 
-    async EditOrderQuickService(): Promise<void> {
+    async editOrderQuickService(): Promise<void> {
         throw new Error("Method not implemented");
     }
 }
