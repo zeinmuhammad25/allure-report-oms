@@ -7,7 +7,24 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
     pageUrl: () => string;
 
     shouldHave(): Element[] {
+        return [];
+    }
+
+    async searchPromotion(keyword: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
+
+    async selectPromotion(promotionID: string): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    async selectPromotionType(promotionType: string): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    async gotoPromotionPage(type: "first" | "previous" | "next" | "last"): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
 
 }
