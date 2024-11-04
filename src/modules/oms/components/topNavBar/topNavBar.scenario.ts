@@ -2,24 +2,24 @@ import BaseScenario from "../../../../base/base-scenario";
 
 export default interface topNavBarScenario extends BaseScenario {
 
-    UserViewProfile(): Promise<void>;
+    userViewProfile(): Promise<void>;
 
-    UserSignOut(): Promise<void>;
+    userSignOut(): Promise<void>;
 
-    UserViewProfileAndSignOut(): Promise<void>;
+    userViewProfileAndSignOut(): Promise<void>;
 
-    UserViewEsbOrderReportFullService(): Promise<void>;
+    userViewEsbOrderReportFullService(): Promise<void>;
 
-    UserViewEsbOrderReportQuickService(): Promise<void>;
+    userViewEsbOrderReportQuickService(): Promise<void>;
 
-    UserViewErrorReport(): Promise<void>;
+    userViewErrorReport(): Promise<void>;
 
-    UserViewEsbOrderReportFullServiceIFManyData(): Promise<void>;
+    userViewEsbOrderReportFullServiceIFManyData(): Promise<void>;
 
-    UserViewEsbOrderReportQuickServiceIFManyData(): Promise<void>;
+    userViewEsbOrderReportQuickServiceIFManyData(): Promise<void>;
 
-    UserViewErrorReportIFManyData(): Promise<void>;
+    userViewErrorReportIFManyData(): Promise<void>;
 
-    UserSyncUserViaLog(): Promise<void>;
+    userSyncUserViaLog(): Promise<void>;
 
 }
