@@ -1,0 +1,8 @@
+import BaseLocator from "../../../base/base-locator";
+
+export default class ToolsLocator extends BaseLocator {
+    static tableButton = (tableName: string): string =>
+        `//app-grid-table-merge//button//span[normalize-space()='${tableName}']`;
+    static buttonCancle = "//app-table-merge//button[normalize-space()='Cancel']";
+    static buttonApply = "//app-table-merge//button[normalize-space()='Apply']";
+}
