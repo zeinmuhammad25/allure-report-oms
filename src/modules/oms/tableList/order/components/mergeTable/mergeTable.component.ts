@@ -6,6 +6,14 @@ export default class MergeTableComponent extends BaseOmsPage implements MergeTab
     pageUrl: () => string;
 
     shouldHave(): Element[] {
+        return [];
+    }
+
+    async selectRoom(roomName: string): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    async selectTable(tableName: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
 }
