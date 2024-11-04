@@ -1,14 +1,14 @@
 import BaseScenario from "../../../../base/base-scenario";
 
 export default interface ApplicationSettingScenario extends BaseScenario {
-    UserSetAllSetting(): Promise<void>;
+    userSetAllSetting(): Promise<void>;
 
-    UserSetStation(): Promise<void>;
+    userSetStation(): Promise<void>;
 
-    UserSetWaringTime(): Promise<void>;
+    userSetWaringTime(): Promise<void>;
 
-    UserSetSalesMode(): Promise<void>;
+    userSetSalesMode(): Promise<void>;
 
-    UserSetSelfOrderServer(): Promise<void>;
+    userSetSelfOrderServer(): Promise<void>;
 
 }
