@@ -12,8 +12,8 @@ export default class AddOrderComponent extends BaseOmsPage implements AddOrderSc
             Element.ofSelector(AddOrderLocator.refreshButton),
             Element.ofSelector(AddOrderLocator.nextPageItemList),
             Element.ofSelector(AddOrderLocator.backPageItemList),
-            Element.ofSelector(AddOrderLocator.addOrderLocatorButtonNext),
-            Element.ofSelector(AddOrderLocator.addOrderLocatorButtonBack),
+            Element.ofSelector(AddOrderLocator.buttonNext),
+            Element.ofSelector(AddOrderLocator.buttonBack),
             Element.ofSelector(AddOrderLocator.applyButton),
             Element.ofSelector(AddOrderLocator.cancelButton)
         ];
