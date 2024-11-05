@@ -9,6 +9,9 @@ export default class AddOrderLocator extends BaseLocator {
     static backPageItemList: string = "//div[@class='d-flex']//i[@class='glyphicon glyphicon-arrow-left']";
     private static buttonModifier = (menuName: string, icon: string): string =>
         `//div[span[normalize-space() = '${menuName}']]/following-sibling::div//i[@class='glyphicon glyphicon-${icon}']`;
+    static buttonQtyPlusByMenu = (menuName: string): string => this.buttonModifier(menuName, "plus");
+    static buttonQtyMinusByMenu = (menuName: string): string => this.buttonModifier(menuName, "minus");
+    static buttonAddNotesByMenu = (menuName: string): string => this.buttonModifier(menuName, "pencil");
     static buttonNext: string = `//span[normalize-space()='Next']`;
     static buttonBack: string = `//span[normalize-space()='Back']`;
     static applyButton: string = "//span[normalize-space()='Apply']";
