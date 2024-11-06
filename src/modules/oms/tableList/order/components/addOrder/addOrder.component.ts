@@ -1,5 +1,5 @@
-import Element from "../../../../base/objects/Element";
-import BaseOmsPage from "../../base-oms-page";
+import Element from "../../../../../../base/objects/Element";
+import BaseOmsPage from "../../../../base-oms-page";
 import AddOrderLocator from "./addOrder.locator";
 import AddOrderScenario from "./addOrder.scenario";
 
