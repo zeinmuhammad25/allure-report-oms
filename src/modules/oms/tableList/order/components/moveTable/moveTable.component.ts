@@ -1,8 +1,8 @@
-import Element from "../../../../base/objects/Element";
-import BaseOmsPage from "../../base-oms-page";
+import Element from "../../../../../../base/objects/Element";
+import BaseOmsPage from "../../../../base-oms-page";
 import MoveTableScenario from "./moveTable.scenario";
 import MoveTableLocator from "./moveTable.locator";
-import ApplicationSettingLocator from "../../tools/applicationSetting/applicationSetting.locator";
+import ApplicationSettingLocator from "../../../../tools/applicationSetting/applicationSetting.locator";
 
 export default class MoveTableComponent extends BaseOmsPage implements MoveTableScenario {
     pageUrl: () => string;
