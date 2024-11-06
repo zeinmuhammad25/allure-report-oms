@@ -1,5 +1,5 @@
-import Element from "../../../../base/objects/Element";
-import BaseOmsPage from "../../base-oms-page";
+import Element from "../../../../../../base/objects/Element";
+import BaseOmsPage from "../../../../base-oms-page";
 import LinkTableScenario from "./linkTable.scenario";
 import LinkTableLocator from "./linkTable.locator";
 
