@@ -29,12 +29,55 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
 
     }
 
-    async userSelectMoveTableToTable(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async autoMoveTable(): Promise<void> {
+        await this.click(MoveTableLocator.moveTableSelect("AC ROOM"));
+        await this.waitForResponse("/table");
+        const hasTable = await this.isVisible(MoveTableLocator.buttonActiveTable);
+        if (hasTable) {
+            await this.click(MoveTableLocator.buttonActiveTable);
+            await this.click(MoveTableLocator.buttonApplyOrCancel("Apply"));
+        } else {
+            await this.expectVisible(MoveTableLocator.buttonBackToRoom);
+            await this.click(MoveTableLocator.buttonBackToRoom);
+
+            await this.click(MoveTableLocator.moveTableSelect("SMOKING ROOM"));
+            await this.waitForResponse("/table");
+            const hasTable = await this.isVisible(MoveTableLocator.buttonActiveTable);
+            if (hasTable) {
+                await this.click(MoveTableLocator.buttonActiveTable);
+                await this.click(MoveTableLocator.buttonApplyOrCancel("Apply"));
+            } else {
+                await this.expectVisible(MoveTableLocator.buttonApplyOrCancel("Cancel"));
+                await this.click(MoveTableLocator.buttonApplyOrCancel("Cancel"));
+            }
+        }
+
     }
 
-    async userSelectMoveQuickServiceToTable(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async selectTableAndCancelInAcRoom(): Promise<void> {
+        await this.click(MoveTableLocator.moveTableSelect("AC ROOM"));
+        await this.waitForResponse("/table");
+        await this.expectVisible(MoveTableLocator.buttonActiveTable);
+        await this.click(MoveTableLocator.buttonActiveTable);
+        await this.wait(1000);
+        await this.click(MoveTableLocator.buttonApplyOrCancel("Cancel"));
+
     }
+
+    async selectTableAndCancelInSmokingRoom(): Promise<void> {
+        await this.click(MoveTableLocator.moveTableSelect("SMOKING ROOM"));
+        await this.waitForResponse("/table");
+        await this.expectVisible(MoveTableLocator.buttonActiveTable);
+        await this.click(MoveTableLocator.buttonActiveTable);
+        await this.wait(1000);
+        await this.click(MoveTableLocator.buttonApplyOrCancel("Cancel"));
+
+    }
+
+    async cancelMoveTableBackTableList(): Promise<void> {
+        await this.click(MoveTableLocator.buttonApplyOrCancel("Cancel"));
+        await this.click(MoveTableLocator.buttonBackToTableList);
+    }
+
 
 }
