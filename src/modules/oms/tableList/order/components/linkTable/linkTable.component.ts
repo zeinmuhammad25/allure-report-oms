@@ -12,64 +12,52 @@ export default class LinkTableComponent extends BaseOmsPage implements LinkTable
             Element.ofSelector(LinkTableLocator.buttonNextPage),
             Element.ofSelector(LinkTableLocator.buttonBackPage),
             Element.ofSelector(LinkTableLocator.applyButton),
-            Element.ofSelector(LinkTableLocator.CancelButton),
-            Element.ofSelector(LinkTableLocator.selectTableList('AC 1')),
-            Element.ofSelector(LinkTableLocator.selectTableList('AC 2')),
-            Element.ofSelector(LinkTableLocator.selectTableList('AC 3')),
-            Element.ofSelector(LinkTableLocator.selectTableList('AC 4')),
-            Element.ofSelector(LinkTableLocator.selectTableList('SR 1')),
-            Element.ofSelector(LinkTableLocator.selectTableList('SR 2')),
-            Element.ofSelector(LinkTableLocator.selectTableList('SR 3')),
-            Element.ofSelector(LinkTableLocator.selectTableList('SR 4')),
+            Element.ofSelector(LinkTableLocator.cancelButton),
+            Element.ofSelector(LinkTableLocator.selectTableList("AC 1")),
+            Element.ofSelector(LinkTableLocator.selectTableList("AC 2")),
+            Element.ofSelector(LinkTableLocator.selectTableList("AC 3")),
+            Element.ofSelector(LinkTableLocator.selectTableList("AC 4")),
+            Element.ofSelector(LinkTableLocator.selectTableList("SR 1")),
+            Element.ofSelector(LinkTableLocator.selectTableList("SR 2")),
+            Element.ofSelector(LinkTableLocator.selectTableList("SR 3")),
+            Element.ofSelector(LinkTableLocator.selectTableList("SR 4"))
 
         ];
 
     }
 
-    async userSingleLinkTable(): Promise<void> {
+    async singleLinkTable(): Promise<void> {
         await this.click(LinkTableLocator.buttonLinkTable);
         await this.expectVisible(LinkTableLocator.popupPage);
-        if (await this.isInvisible(LinkTableLocator.selectTableList('AC 1'))) {
-            await this.click(LinkTableLocator.selectTableList('AC 1'));
-            await this.click(LinkTableLocator.applyButton);
-        } else if (await this.isInvisible(LinkTableLocator.selectTableList('AC 2'))) {
-            await this.click(LinkTableLocator.selectTableList('AC 2'));
-            await this.click(LinkTableLocator.CancelButton);
-        } else if (await this.isInvisible(LinkTableLocator.selectTableList('AC 3'))) {
-            await this.click(LinkTableLocator.selectTableList('AC 3'));
-            await this.click(LinkTableLocator.applyButton);
-        } else if (await this.isInvisible(LinkTableLocator.selectTableList('AC 4'))) {
-            await this.click(LinkTableLocator.selectTableList('AC 4'));
-            await this.click(LinkTableLocator.applyButton);
-        } else if (await this.isInvisible(LinkTableLocator.selectTableList('SR 1'))) {
-            await this.click(LinkTableLocator.selectTableList('SR 1'));
-            await this.click(LinkTableLocator.applyButton);
-        } else if (await this.isInvisible(LinkTableLocator.selectTableList('SR 2'))) {
-            await this.click(LinkTableLocator.selectTableList('SR 2'));
-            await this.click(LinkTableLocator.applyButton);
-        } else if (await this.isInvisible(LinkTableLocator.selectTableList('SR 3'))) {
-            await this.click(LinkTableLocator.selectTableList('SR 3'));
-            await this.click(LinkTableLocator.applyButton);
-        } else if (await this.isInvisible(LinkTableLocator.selectTableList('SR 4'))) {
-            await this.click(LinkTableLocator.selectTableList('SR 4'));
-            await this.click(LinkTableLocator.applyButton);
-        } else {
-            await this.click(LinkTableLocator.CancelButton);
-        }
-
+        await this.isVisible(LinkTableLocator.buttonActiveTable);
+        await this.click(LinkTableLocator.buttonActiveTable);
+        await this.click(LinkTableLocator.applyButton);
     }
 
     async userMultiLinkTable(): Promise<void> {
-        throw new Error("Method not implemented.");
+        await this.click(LinkTableLocator.buttonLinkTable);
+        await this.expectVisible(LinkTableLocator.popupPage);
+        let i=0;
+        let isElementPresent = true;
+        while (isElementPresent){
+            const selector = `(//app-table-link//app-grid-table-link//button[not(@disabled)]/span/div)[${i + 1}]`;
+            isElementPresent = await this.isVisible(selector)
+            if (isElementPresent) {
+                await this.click(selector)
+                i++;
+            }
+            await this.wait(500)
+        }
+        await this.click(LinkTableLocator.applyButton);
     }
 
-    async userUnLinkTable(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async userCancelLink():Promise<void>{
+        await this.click(LinkTableLocator.buttonLinkTable);
+        await this.expectVisible(LinkTableLocator.popupPage);
+        await this.isVisible(LinkTableLocator.buttonActiveTable);
+        await this.click(LinkTableLocator.cancelButton);
     }
 
-    async userLinkTableMultiData(): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
 
 
 }
