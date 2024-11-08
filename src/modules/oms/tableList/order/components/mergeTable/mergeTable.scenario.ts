@@ -1,6 +1,6 @@
 import BaseScenario from "../../../../../../base/base-scenario";
 
-export default interface Book extends BaseScenario {
+export default interface MergeTableScenario extends BaseScenario {
     selectRoom(roomName: string): Promise<void>;
 
     selectTable(tableName: string): Promise<void>;
