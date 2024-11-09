@@ -247,4 +247,38 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
     public getLocator(selector: string) {
         return this._page.locator(selector);
     }
+
+    public async makeApiRequest(endpoint: string, options: { method?: string, headers?: Record<string, string>, body?: any } = {}):
+        Promise<{ status: number; statusText: string; data: T }> {
+        console.log(`Making API request to: ${endpoint}`);
+        const { method = "GET", headers = {}, body } = options;
+        return this._page.evaluate(async ({ endpoint, method, headers, body }) => {
+            try {
+                const response = await fetch(endpoint, {
+                    method,
+                    headers,
+                    body: body ? JSON.stringify(body) : undefined,
+                });
+
+                const contentType = response.headers.get("content-type");
+                let data;
+
+                if (contentType && contentType.includes("application/json")) {
+                    data = await response.json();
+                } else {
+                    data = await response.text();
+                }
+
+                return {
+                    status: response.status,
+                    statusText: response.statusText,
+                    data,
+                };
+            } catch (error) {
+                console.error("Error during API request:", error);
+                throw error;
+            }
+        }, { endpoint: this.baseUrl + endpoint, method, headers, body });
+    }
+
 }
