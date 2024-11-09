@@ -11,6 +11,6 @@ export default class LinkTableLocator extends BaseLocator {
     static applyButton: string = "//span[normalize-space()='Apply']";
     static cancelButton: string = "//div[@class='modal-footer']//button[@type='button']//span[1]";
     static buttonActiveTable:string="(//app-table-link//app-grid-table-link//button[not(@disabled)]/span/div)[2]"
-    static selectTableList = (selectTableLink: string): string => `//app-grid-table-link//button//div[normalize-space()='${selectTableLink}]']`;
+    static selectTableList = (selectTableLink: string): string => `//app-grid-table-link//button//div[normalize-space()='${selectTableLink}']`;
 
 }
