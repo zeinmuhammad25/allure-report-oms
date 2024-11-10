@@ -31,14 +31,28 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
 
     }
 
+    async paymentInputAmount(inputAmount: string): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.inputPaymentAmount);
+        await this.fill(PaymentPOSLocator.inputPaymentAmount, inputAmount);
+        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+    }
+
+    async paymentGetOutstandingAmount(): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.buttonGetOutstandingPayment);
+        await this.click(PaymentPOSLocator.buttonGetOutstandingPayment);
+    }
+
     async paymentCashFullAmount(): Promise<void> {
         await this.expectVisible(PaymentPOSLocator.buttonPayCashFullAmount);
         await this.click(PaymentPOSLocator.buttonPayCashFullAmount);
     }
 
-    async paymentCashInputAmount(inputAmount: string): Promise<void> {
-        await this.expectVisible(PaymentPOSLocator.inputCashAmount);
-        await this.fill(PaymentPOSLocator.inputCashAmount, inputAmount);
+    async paymentDebitBCA(inputField: PaymentObject, value: string): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.getLocatorInputPaymentDebit(inputField));
+        await this.fill(PaymentPOSLocator.getLocatorInputPaymentDebit(inputField), value);
+        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
     }
 
 
