@@ -1,7 +1,7 @@
 import BaseOmsPage from "../../base-oms-page";
 import Element from "../../../../base/objects/Element";
 import PaymentPosScenario from "./paymentPOS.scenario";
-import {PaymentList} from "./PaymentList";
+import {PaymentObject} from "./PaymentObject";
 import PaymentPOSLocator from "./paymentPOS.locator";
 
 export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosScenario {
@@ -13,16 +13,33 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         ];
     }
 
-    async paymentType(paymentType: PaymentList): Promise<void> {
+    async paymentType(paymentType: PaymentObject): Promise<void> {
         await this.expectVisible(PaymentPOSLocator.getLocatorPaymentType(paymentType));
         await this.click(PaymentPOSLocator.getLocatorPaymentType(paymentType));
 
     }
 
-    async paymentMethod(paymentMethod: PaymentList): Promise<void> {
+    async paymentMethod(paymentMethod: PaymentObject): Promise<void> {
         await this.expectVisible(PaymentPOSLocator.getLocatorPaymentType(paymentMethod));
         await this.click(PaymentPOSLocator.getLocatorPaymentType(paymentMethod));
 
     }
+
+    async actionPayment(actionPayment: PaymentObject): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.getLocatorPaymentMethod(actionPayment));
+        await this.click(PaymentPOSLocator.getLocatorPaymentMethod(actionPayment));
+
+    }
+
+    async paymentCashFullAmount(): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.buttonPayCashFullAmount);
+        await this.click(PaymentPOSLocator.buttonPayCashFullAmount);
+    }
+
+    async paymentCashInputAmount(inputAmount: string): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.inputCashAmount);
+        await this.fill(PaymentPOSLocator.inputCashAmount, inputAmount);
+    }
+
 
 }
