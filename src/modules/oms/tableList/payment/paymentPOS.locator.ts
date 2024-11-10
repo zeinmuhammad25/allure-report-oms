@@ -8,6 +8,8 @@ export default class PaymentPOSLocator extends BaseLocator {
     static buttonEmployeeMode = "//i[@class='glyphicon glyphicon-credit-card']";
     static buttonAddPromo = "//span[contains(text(),'ADD PROMO')]";
     static escapeKeyboard = "//div[@class='modal-header bg-primary']";
+    static inputPaymentAmount = "//input[@placeholder='e.g. 200.000']";
+    static buttonGetOutstandingPayment = "//span[normalize-space()='Get Outstanding']";
 
     static getLocatorButtonAction = (actionPayment: PaymentObject): string => `//span[normalize-space()='${actionPayment}']`;
     static getLocatorButtonArrow = (actionArrow: PaymentObject): string => `//i[@class='glyphicon glyphicon-arrow-${actionArrow}']`;
