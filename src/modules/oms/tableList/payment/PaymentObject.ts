@@ -14,7 +14,7 @@ export enum PaymentObject {
 
     // Payment Method: Specifies detailed methods used for payment
     CashPayment = "CASH PAYMENT",
-    QrisShopeePayPayment = "ShopeePay xendit",
+    DebitBca = "BCA Debit",
     QrisEsbPayment = "Qris ESB",
     OvoPayment = "OVO Xendit POS",
     DanaPayment = "Dana Xendit POS",
