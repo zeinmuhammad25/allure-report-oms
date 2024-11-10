@@ -18,7 +18,6 @@ export default class PaymentPOSLocator extends BaseLocator {
 
     //sectionPaymentCash
     static buttonPayCashFullAmount = "//div[@class='d-flex ng-star-inserted']//span[1]//button[1]";
-    static inputCashAmount = "//input[@placeholder='e.g. 200.000']";
     static buttonClearCashAmount = "//i[@class='glyphicon glyphicon-repeat']";
 
     //sectionPaymentDebit
@@ -26,7 +25,6 @@ export default class PaymentPOSLocator extends BaseLocator {
 
     //sectionOtherVoucher
     static inputOtherVoucherCode = "//input[@class='form-control pos-number ng-pristine ng-valid ng-touched']";
-    static inputOtherVoucherAmount = "//input[@placeholder='e.g. 200.000']";
     static inputOtherVoucherNotes = "//textarea[@class='form-control ng-untouched ng-pristine ng-valid']";
 
     //sectionVoucher
@@ -36,9 +34,7 @@ export default class PaymentPOSLocator extends BaseLocator {
 
     //sectionCompliment
     static inputComplimentPercentage = "//input[@placeholder='e.g. 50']";
-    static inputComplimentAmount = "//input[@placeholder='e.g. 200.000']";
     static inputComplimentNotes = "//textarea[@class='form-control ng-untouched ng-pristine ng-valid']";
-    static buttonGetOutstandingCompliment = "//span[normalize-space()='Get Outstanding']";
 
     //sectionOtherCost
     static inputOtherCostNotes = "//textarea[@class='form-control input-text-notes ng-pristine ng-valid ng-touched']";
