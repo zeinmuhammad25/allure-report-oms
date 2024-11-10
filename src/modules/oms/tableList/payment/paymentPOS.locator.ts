@@ -21,6 +21,9 @@ export default class PaymentPOSLocator extends BaseLocator {
     static inputCashAmount = "//input[@placeholder='e.g. 200.000']";
     static buttonClearCashAmount = "//i[@class='glyphicon glyphicon-repeat']";
 
+    //sectionPaymentDebit
+    static getLocatorInputPaymentDebit = (inputField: PaymentObject): string => `//input[@placeholder='${inputField}']`;
+
     //sectionOtherVoucher
     static inputOtherVoucherCode = "//input[@class='form-control pos-number ng-pristine ng-valid ng-touched']";
     static inputOtherVoucherAmount = "//input[@placeholder='e.g. 200.000']";
