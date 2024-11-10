@@ -39,5 +39,13 @@ export enum PaymentObject {
     CancelPayment = "Cancel",
     ApplyPayment = "Apply",
     ProcessPayment = "Process",
-    ClosePayment = "Close"
+    ClosePayment = "Close",
+
+    // Payment Debit: Action input in payment debit process
+    InputCardNumber = "First 6 digit and last 4 digit of card number",
+    InputVerificationCode = "Verification code from EDC",
+    InputBankName = "Name of the bank that issued the card",
+    InputAccountName = "Name on the card",
+    InputSelfOrderId = "Self Order ID"
+
 }
