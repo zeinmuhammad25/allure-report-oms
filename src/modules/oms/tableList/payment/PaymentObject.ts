@@ -1,5 +1,9 @@
-export enum PaymentList {
-    //Payment Type
+/**
+ * Enum to define payment types, payment methods,
+ * button directions, and payment actions used in the application.
+ */
+export enum PaymentObject {
+    // Payment Type: Defines the main types of payment methods
     Cash = "CASH",
     Card = "CARD",
     Compliment = "COMPLIMENT",
@@ -8,7 +12,7 @@ export enum PaymentList {
     MemberDeposit = "MEMBER DEPOSIT",
     OtherCost = "OTHER COST",
 
-    //Payment Method
+    // Payment Method: Specifies detailed methods used for payment
     CashPayment = "CASH PAYMENT",
     QrisShopeePayPayment = "ShopeePay xendit",
     QrisEsbPayment = "Qris ESB",
@@ -23,5 +27,17 @@ export enum PaymentList {
     MemberDepositPayment = "Member Deposit (Internal)",
     OtherCostPayment = "FOC Employee",
 
+    // Button Arrow: Defines directional buttons used in navigation
+    Up = "up",
+    Down = "down",
+    Left = "left",
+    Right = "right",
 
+    // Action Payment: Actions related to the payment process
+    PurchaseVoucher = "Purchase Voucher",
+    SavePayment = "Save Payment",
+    CancelPayment = "Cancel",
+    ApplyPayment = "Apply",
+    ProcessPayment = "Process",
+    ClosePayment = "Close"
 }
