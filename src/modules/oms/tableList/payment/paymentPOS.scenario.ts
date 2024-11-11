@@ -1,10 +1,38 @@
 import BaseScenario from "../../../../base/base-scenario";
-import {PaymentList} from "./PaymentList";
+import {PaymentObject} from "./PaymentObject";
 
 export default interface PaymentPosScenario extends BaseScenario {
 
-    paymentType(paymentType: PaymentList): Promise<void>;
+    paymentType(paymentType: PaymentObject): Promise<void>;
 
-    paymentMethod(paymentMethod: PaymentList): Promise<void>;
+    paymentMethod(paymentMethod: PaymentObject): Promise<void>;
+
+    actionPayment(actionPayment: PaymentObject): Promise<void>;
+
+    paymentInputAmount(inputAmount: string): Promise<void>;
+
+    paymentGetOutstandingAmount(): Promise<void>;
+
+    paymentCashFullAmount(): Promise<void>;
+
+    paymentDebitBCA(inputField: PaymentObject, value: string): Promise<void>;
+
+    paymentQrisShopee(): Promise<void>;
+
+    paymentQrisEsb(): Promise<void>;
+
+    paymentComplimentGetOutstanding(notes: string): Promise<void>;
+
+    paymentComplimentPercentage(percentage: number, notes: string): Promise<void>;
+
+    paymentVoucher(): Promise<void>;
+
+    paymentOtherVoucherSubtotal(): Promise<void>;
+
+    paymentOtherVoucherGrandTotal(): Promise<void>;
+
+    paymentMemberDeposit(): Promise<void>;
+
+    paymentOtherCost(notes: string): Promise<void>;
 
 }
