@@ -44,49 +44,49 @@ export default class SynchronizeDataPage extends BaseOmsPage implements Synchron
         await this.expectVisible(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncMasterSettings));
         await this.click(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncMasterSettings));
         await this.click(SynchronizeDataLocator.buttonSynchronize);
-        await this.expectTextVisibleTimout("Synchronization process has completed", true, 60000);
+        await this.expectTextVisibleTimout("Synchronization process has completed", true, 30000);
     }
 
     async synchronizeDataMember(): Promise<void> {
         await this.expectVisible(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncMember));
         await this.click(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncMember));
         await this.click(SynchronizeDataLocator.buttonSynchronize);
-        await this.expectTextVisibleTimout("Synchronization process has completed", true, 60000);
+        await this.expectTextVisibleTimout("Synchronization process has completed", true, 30000);
     }
 
     async synchronizeDataPromotion(): Promise<void> {
         await this.expectVisible(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncPromotion));
         await this.click(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncPromotion));
         await this.click(SynchronizeDataLocator.buttonSynchronize);
-        await this.expectTextVisibleTimout("Synchronization process has completed", true, 60000);
+        await this.expectTextVisibleTimout("Synchronization process has completed", true, 30000);
     }
 
     async synchronizeDataTable(): Promise<void> {
         await this.expectVisible(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncTable));
         await this.click(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncTable));
         await this.click(SynchronizeDataLocator.buttonSynchronize);
-        await this.expectTextVisibleTimout("Synchronization process has completed", true, 60000);
+        await this.expectTextVisibleTimout("Synchronization process has completed", true, 30000);
     }
 
     async synchronizeDataMenu(): Promise<void> {
         await this.expectVisible(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncMenu));
         await this.click(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncMenu));
         await this.click(SynchronizeDataLocator.buttonSynchronize);
-        await this.expectTextVisibleTimout("Synchronization process has completed", true, 60000);
+        await this.expectTextVisibleTimout("Synchronization process has completed", true, 30000);
     }
 
     async synchronizeDataSales(): Promise<void> {
         await this.expectVisible(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncSales));
         await this.click(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncSales));
         await this.click(SynchronizeDataLocator.buttonSynchronize);
-        await this.expectTextVisibleTimout("Synchronization process has completed", true, 60000);
+        await this.expectTextVisibleTimout("Synchronization process has completed", true, 30000);
     }
 
     async synchronizeDataUser(): Promise<void> {
         await this.expectVisible(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncUser));
         await this.click(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncUser));
         await this.click(SynchronizeDataLocator.buttonSynchronize);
-        await this.expectTextVisibleTimout("Synchronization process has completed", true, 60000);
+        await this.expectTextVisibleTimout("Synchronization process has completed", true, 30000);
     }
 
 }
