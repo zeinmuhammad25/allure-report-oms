@@ -118,6 +118,13 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return expect(this._page.getByText(text, {exact: exact})).toBeVisible();
     }
 
+    public async expectTextVisibleTimout(text: string, exact: boolean = false, timeout: number = 10000): Promise<void> {
+        console.log(`Expecting text visible: '${text}' | exact: ${exact}`);
+        const locator = this._page.getByText(text, {exact});
+        await locator.waitFor({state: "visible", timeout});
+        return expect(locator).toBeVisible();
+    }
+
     protected expectTextInvisible(text: string, exact: boolean = false): Promise<void> {
         console.log(`check if text visible:  ${text} | exact : ${exact}`);
         return expect(this._page.getByText(text, {exact: exact})).toBeHidden();
