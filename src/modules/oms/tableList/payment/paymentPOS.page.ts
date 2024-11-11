@@ -55,5 +55,56 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         await this.click(PaymentPOSLocator.escapeKeyboard);
     }
 
+    async paymentQrisShopee(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    async paymentQrisEsb(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    async paymentComplimentGetOutstanding(notes: string): Promise<void> {
+        await this.paymentGetOutstandingAmount();
+        await this.expectVisible(PaymentPOSLocator.inputComplimentNotes);
+        await this.fill(PaymentPOSLocator.inputComplimentNotes, notes);
+        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+
+    }
+
+    async paymentComplimentPercentage(percentage: number, notes: string): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.inputComplimentPercentage);
+        await this.fill(PaymentPOSLocator.inputComplimentPercentage, percentage.toString());
+        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+        await this.expectVisible(PaymentPOSLocator.inputComplimentNotes);
+        await this.fill(PaymentPOSLocator.inputComplimentNotes, notes);
+        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+    }
+
+    async paymentVocuher(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    async paymentOtherVoucherSubotal(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    async paymentOtherVoucherSubotalrGrandTotal(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    async paymentMemberDeposit(): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
+    async paymentOtherCost(notes: string): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.inputOtherCostNotes);
+        await this.fill(PaymentPOSLocator.inputOtherCostNotes, notes);
+        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+    }
+
 
 }
