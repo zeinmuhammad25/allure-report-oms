@@ -87,11 +87,11 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         throw new Error("Method not implemented.");
     }
 
-    async paymentOtherVoucherSubotal(): Promise<void> {
+    async paymentOtherVoucherSubtotal(): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
-    async paymentOtherVoucherSubotalrGrandTotal(): Promise<void> {
+    async paymentOtherVoucherGrandTotal(): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
