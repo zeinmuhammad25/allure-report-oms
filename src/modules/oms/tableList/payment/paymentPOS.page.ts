@@ -83,7 +83,7 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         await this.click(PaymentPOSLocator.escapeKeyboard);
     }
 
-    async paymentVocuher(): Promise<void> {
+    async paymentVoucher(): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
