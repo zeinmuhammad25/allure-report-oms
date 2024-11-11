@@ -1,15 +1,18 @@
 import BaseScenario from "../../../../../../base/base-scenario";
 
 export default interface AddOrderScenario extends BaseScenario {
-    addOneMenuDetailPackage(): Promise<void>;
+    addOneMenuDetailPackage(menuName:string,qty:number): Promise<void>;
 
     addMultiMenuDetailPackage(): Promise<void>;
 
-    addNotesMenuDetailPackage(): Promise<void>;
+    addNotesMenuDetailPackage(menuName:string,qty:number): Promise<void>;
 
-    minusQtyInDetailMenuPackage(): Promise<void>;
+    minusQtyInDetailMenuPackage(menuName:string,qty:number): Promise<void>;
 
-    addMaxQtyInOneMenuDetailPackage(): Promise<void>;
+    addMaxQtyInOneMenuDetailPackage(menuName:string,qty:number): Promise<void>;
 
-    addMenuDetailPackageViaSearch(): Promise<void>;
+    cancelAddMenuDetailPackage(): Promise<void>;
+
+    // inputNotes(notes: string): Promise<void>;
+
 }
