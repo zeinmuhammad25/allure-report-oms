@@ -34,9 +34,9 @@ export default class PaymentPOSLocator extends BaseLocator {
 
     //sectionCompliment
     static inputComplimentPercentage = "//input[@placeholder='e.g. 50']";
-    static inputComplimentNotes = "//textarea[@class='form-control ng-untouched ng-pristine ng-valid']";
+    static inputComplimentNotes = "//div[contains(@class, 'area-text-notes')]//textarea";
 
     //sectionOtherCost
-    static inputOtherCostNotes = "//textarea[@class='form-control input-text-notes ng-pristine ng-valid ng-touched']";
+    static inputOtherCostNotes = "//textarea[contains(@class, 'input-text-notes')]";
 
 }
