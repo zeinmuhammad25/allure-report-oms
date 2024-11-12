@@ -20,7 +20,7 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
     }
 
     async moveItemToSectionDineIn(): Promise<void> {
-        throw new Error("Method not implemented.");
+        //TODO throw new Error("Method not implemented.");
     }
 
     async moveSelectAllItemMenu(): Promise<void> {
