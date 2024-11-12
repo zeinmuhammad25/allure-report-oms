@@ -1,5 +1,5 @@
-import BaseScenario from "../../../../../base/base-scenario";
+import BaseScenario from "../../../../base/base-scenario";
 
 export default interface TroubleshootScenario extends BaseScenario {
-
+    testPrint(): Promise<void>;
 }
