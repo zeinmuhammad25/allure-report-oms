@@ -1,12 +1,26 @@
 import Element from "../../../../../../base/objects/Element";
 import BaseOmsPage from "../../../../base-oms-page";
 import MoveItemScenario from "./moveItem.scenario";
+import MoveItemLocator from "./moveItem.locator";
 
 export default class MoveItemComponents extends BaseOmsPage implements MoveItemScenario {
     pageUrl: () => string;
 
     shouldHave(): Element[] {
         return [];
+    }
+
+    async moveItemToSectionQuickService(): Promise<void> {
+        await this.expectVisible(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
+        await this.click(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
+        await this.expectVisible(MoveItemLocator.buttonNewQuickService);
+        await this.click(MoveItemLocator.buttonNewQuickService);
+        await this.expectVisible(MoveItemLocator.getLocatorButtonActionFooter("Next"));
+        await this.click(MoveItemLocator.getLocatorButtonActionFooter("Next"));
+    }
+
+    async moveItemToSectionDineIn(): Promise<void> {
+        throw new Error("Method not implemented.");
     }
 
     async moveSelectAllItemMenu(): Promise<void> {
@@ -26,7 +40,7 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
         await this.click(MoveItemLocator.buttonApplyBookTable);
     }
 
-    async actionVerifyMenu(menuName: string): Promise<void> {
+    async actionVerifyMenuDisplay(menuName: string): Promise<void> {
         await this.wait(5000);
         const buttonYes = await this.isVisible(MoveItemLocator.buttonYes);
         if (buttonYes) {
@@ -50,19 +64,6 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
         await this.click(MoveItemLocator.buttonPlusMenu(menuName));
     }
 
-    async moveItemToSectionDineIn(): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-
-    async moveItemToSectionQuickService(): Promise<void> {
-        await this.expectVisible(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
-        await this.click(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
-        await this.expectVisible(MoveItemLocator.buttonNewQuickService);
-        await this.click(MoveItemLocator.buttonNewQuickService);
-        await this.expectVisible(MoveItemLocator.getLocatorButtonActionFooter("Next"));
-        await this.click(MoveItemLocator.getLocatorButtonActionFooter("Next"));
-    }
-
     async verifyPreviousQty(menuName: string): Promise<void> {
         const locator = MoveItemLocator.verifyQtyMenu(menuName);
         await this.expectVisible(locator);
@@ -84,5 +85,4 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
             console.log(`Menu quantity for "${menuName}" successfully reduced from ${previousQty} to ${currentQty}.`);
         }
     }
-
 }
