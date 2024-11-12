@@ -55,7 +55,34 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
     }
 
     async moveItemToSectionQuickService(): Promise<void> {
-        throw new Error("Method not implemented.");
+        await this.expectVisible(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
+        await this.click(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
+        await this.expectVisible(MoveItemLocator.buttonNewQuickService);
+        await this.click(MoveItemLocator.buttonNewQuickService);
+        await this.expectVisible(MoveItemLocator.getLocatorButtonActionFooter("Next"));
+        await this.click(MoveItemLocator.getLocatorButtonActionFooter("Next"));
+    }
+
+    async verifyPreviousQty(menuName: string): Promise<void> {
+        const locator = MoveItemLocator.verifyQtyMenu(menuName);
+        await this.expectVisible(locator);
+        const isQtyVisible = await this.isVisible(locator);
+        if (!isQtyVisible) {
+            throw new Error(`Quantity menu element for menu "${menuName}" is not visible.`);
+        }
+    }
+
+    async verifyCurrentQty(menuName: string, previousQty: number): Promise<void> {
+        const locator = MoveItemLocator.verifyQtyMenu(menuName);
+        await this.expectVisible(locator);
+        await this.wait(5000);
+        const qtyText = await this.getLocator(locator).innerText();
+        const currentQty = parseInt(qtyText.trim(), 10);
+        if (currentQty === previousQty) {
+            throw new Error(`Menu quantity for "${menuName}" did not decrease. Still shows ${currentQty}.`);
+        } else {
+            console.log(`Menu quantity for "${menuName}" successfully reduced from ${previousQty} to ${currentQty}.`);
+        }
     }
 
 }
