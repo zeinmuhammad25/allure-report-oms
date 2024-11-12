@@ -2,6 +2,8 @@ import Element from "../../../../../../base/objects/Element";
 import BaseOmsPage from "../../../../base-oms-page";
 import AddOrderLocator from "./addOrder.locator";
 import AddOrderScenario from "./addOrder.scenario";
+import AddMenuModel from "../../addMenu.model";
+
 
 export default class AddOrderComponent extends BaseOmsPage implements AddOrderScenario {
     pageUrl: () => string;
@@ -15,32 +17,51 @@ export default class AddOrderComponent extends BaseOmsPage implements AddOrderSc
             Element.ofSelector(AddOrderLocator.buttonNext),
             Element.ofSelector(AddOrderLocator.buttonBack),
             Element.ofSelector(AddOrderLocator.applyButton),
-            Element.ofSelector(AddOrderLocator.cancelButton),
+            Element.ofSelector(AddOrderLocator.cancelButton)
         ];
     }
 
-    async addOneMenuDetailPackage(): Promise<void> {
-        throw new Error("Method not implemented.");
+    private async menuModifier(menuOrder: AddMenuModel): Promise<void> {
+
+        let qty: number = menuOrder.qty == "max" ? 10 : menuOrder.qty;
+        if (qty < 0) {
+            qty = qty * -1;
+
+            for (let i = 0; i < qty; i++) {
+                await this.click(AddOrderLocator.buttonQtyMinusByMenu(menuOrder.menuName));
+            }
+        } else {
+            for (let i = 0; i < qty; i++) {
+                await this.click(AddOrderLocator.buttonQtyPlusByMenu(menuOrder.menuName));
+            }
+        }
+
+        if (menuOrder.notes != null && menuOrder.notes != "") {
+            await this.click(AddOrderLocator.buttonAddNotesByMenu(menuOrder.menuName));
+            await this.click(AddOrderLocator.fieldNotes);
+            await this.fill(AddOrderLocator.fieldNotes, menuOrder.notes);
+            await this.expectVisible(AddOrderLocator.popUpNotes);
+            await this.click(AddOrderLocator.popUpNotes);
+            await this.expectVisible(AddOrderLocator.buttonApplyNotes);
+            await this.click(AddOrderLocator.buttonApplyNotes);
+        }
     }
 
-    async addMultiMenuDetailPackage(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async modifyMenuDetailPackage(menuOrder: AddMenuModel[]): Promise<void> {
+        await this.waitForResponse("/get-menu-package");
+        for (let i = 0; i < menuOrder.length; i++) {
+            await this.menuModifier(menuOrder[i]);
+        }
     }
 
-    async addNotesMenuDetailPackage(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async applyMenuDetailPackage(): Promise<void> {
+        await this.expectVisible(AddOrderLocator.applyButton);
+        await this.click(AddOrderLocator.cancelButton);
     }
 
-    async minusQtyInDetailMenuPackage(): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-
-    async addMaxQtyInOneMenuDetailPackage(): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-
-    async addMenuDetailPackageViaSearch(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async cancelMenuDetailPackage(): Promise<void> {
+        await this.expectVisible(AddOrderLocator.cancelButton);
+        await this.click(AddOrderLocator.cancelButton);
     }
 
 }
