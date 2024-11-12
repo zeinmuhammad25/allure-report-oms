@@ -4,5 +4,8 @@ export default interface MergeTableScenario extends BaseScenario {
     selectRoom(roomName: string): Promise<void>;
 
     selectTable(tableName: string): Promise<void>;
-    
+
+    applyMergeTable(): Promise<void>;
+
+    cancelMergeTable(): Promise<void>;
 }
