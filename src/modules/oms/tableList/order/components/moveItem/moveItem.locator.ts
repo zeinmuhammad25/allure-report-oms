@@ -4,8 +4,8 @@ export default class MoveItemLocator extends BaseLocator {
 
     static sectionDineIn = "//span[normalize-space()='Dine In']";
     static sectionQuickService = "//span[normalize-space()='Quick Service']";
-    static destinationTable = (tableManagementName: string): string =>
-        `//span[normalize-space()='${tableManagementName}']']`;
+    static getLocatorDestinationTable = (tableManagementName: string): string =>
+        `//span[normalize-space()='${tableManagementName}']`;
     static tableName = (tableName: string): string => `//button[.//div[normalize-space(text())='${tableName}']]`;
     static buttonActionFooter = (actionName: string): string => `//button[normalize-space(.)='${actionName}']`;
     static buttonNewQuickService = "//span[normalize-space()='New Quick Service']";
