@@ -6,8 +6,8 @@ export default class MoveItemLocator extends BaseLocator {
     static sectionQuickService = "//span[normalize-space()='Quick Service']";
     static getLocatorDestinationTable = (tableManagementName: string): string =>
         `//span[normalize-space()='${tableManagementName}']`;
-    static tableName = (tableName: string): string => `//button[.//div[normalize-space(text())='${tableName}']]`;
-    static buttonActionFooter = (actionName: string): string => `//button[normalize-space(.)='${actionName}']`;
+    static tableName = (tableName: string): string => `//button[.//div[normalize-space()='${tableName}']]`;
+    static buttonActionFooter = (actionName: string): string => `//button[normalize-space()='${actionName}']`;
     static buttonNewQuickService = "//span[normalize-space()='New Quick Service']";
     static buttonSelectAll = "//span[normalize-space()='Select All']";
     static buttonYes = "//span[normalize-space()='Yes']";
