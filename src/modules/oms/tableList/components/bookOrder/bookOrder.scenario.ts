@@ -12,4 +12,10 @@ export default interface BookOrderScenario extends BaseScenario {
     setTimeOut(timeOut: number): Promise<void>;
 
     setCustomerPhoneNumber(phoneNumber: string): Promise<void>;
+
+    bookTable(): Promise<void>;
+
+    bookAndOrder(): Promise<void>;
+
+    skipCustomerPhoneNumber(): Promise<void>;
 }
