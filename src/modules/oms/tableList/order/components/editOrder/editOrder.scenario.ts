@@ -1,9 +1,21 @@
 import BaseScenario from "../../../../../../base/base-scenario";
 
 export default interface EditOrderScenario extends BaseScenario {
-    editOrderQty(): Promise<void>;
+    editQtyInput(qtyMenu: string): Promise<void>;
 
-    inputNotesMenu(): Promise<void>;
+    editQtySelector(qtySelect: number): Promise<void>;
 
-    applyPromotionMenu(): Promise<void>;
+    inputNotesMenu(notesMenu: string): Promise<void>;
+
+    applyPromotionMenu(promotionName: string): Promise<void>;
+
+    searchPromotionMenu(promotionName: string): Promise<void>;
+
+    searchPackageItems(menuName: string): Promise<void>;
+
+    actionButtonFooter(actionName: string): Promise<void>;
+
+    actionPlusPackageItems(menuName: string): Promise<void>;
+
+    actionMinusPackageItems(menuName: string): Promise<void>;
 }
