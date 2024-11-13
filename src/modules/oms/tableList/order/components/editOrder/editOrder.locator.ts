@@ -4,10 +4,7 @@ export default class EditOrderLocator extends BaseLocator {
 
     static inputQtyMenu = "//input[@placeholder='e.g. 1']";
     static inputNotesMenu = "//textarea[@class='form-control input-text-notes ng-untouched ng-pristine ng-valid']";
-    static buttonCancel = "//button[span[normalize-space()='Cancel']]";
-    static buttonApply = "//button[span[normalize-space()='Apply']]";
-    static buttonNext = "//button[span[normalize-space()='Next']]";
-    static buttonBack = "//button[span[normalize-space()='Back']]";
+    static getLocatorActionButtonFooter = (actionName: string): string => `//button[span[normalize-space()='${actionName}']]`;
     static buttonClearNotesMenu = "//span[normalize-space()='Clear']";
     static buttonArrowLeft = "//div[@class='d-flex justify-content-end']//i[@class='glyphicon glyphicon-arrow-left']";
     static buttonArrowRight = "//div[@class='d-flex justify-content-end']//i[@class='glyphicon glyphicon-arrow-right']";
