@@ -14,5 +14,12 @@ export default class EditOrderLocator extends BaseLocator {
     static searchPromotionMenu = "//input[@placeholder='Search....']";
     static searchMenuPackage = "//input[@placeholder='Search menu']";
     static promotionType = (promoTypeName: string): string => `//span[normalize-space()='${promoTypeName}']`;
-    static QtyMenu = (qtyMenu: number): string => `//span[normalize-space()='${qtyMenu}']`;
+    static getLocatorPromotionName = (label: string): string => `//td[normalize-space()='${label}']`;
+    static qtyMenu = (qtyMenu: number): string => `//span[normalize-space()='${qtyMenu}']`;
+
+    private static buttonActionMenu = (menuName: string, action: string): string =>
+        `//div[span[normalize-space() = '${menuName}']]/following-sibling::div//i[@class='glyphicon glyphicon-${action}']`;
+    static buttonPlusMenu = (menuName: string): string => this.buttonActionMenu(menuName, "plus");
+    static buttonMinusMenu = (menuName: string): string => this.buttonActionMenu(menuName, "minus");
+    static buttonAddNotesMenu = (menuName: string): string => this.buttonActionMenu(menuName, "pencil");
 }
