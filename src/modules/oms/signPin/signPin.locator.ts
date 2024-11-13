@@ -10,7 +10,6 @@ export default class SignPinLocator extends BaseLocator {
     static validationSignInUserNo: string = "//span[normalize-space()='No']";
     static userNotFoundPopup: string = "//span[normalize-space()='Ok']";
 
-
     //Quick service Section
     static quickServiceListBtn: string = "//span[contains(text(),'QUICK SERVICE')]";
     static tableListSingIn1: string = "//span[contains(text(),'AC ROOM')]";
