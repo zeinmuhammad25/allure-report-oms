@@ -12,7 +12,9 @@ export default class OrderLocator extends BaseLocator {
     static editTablePaxField: string = "(//app-number-input//input)[1]";
     static editTableTimeOutField: string = "(//app-number-input//input)[2]";
 
-    static menuButton = (menu: string): string => `//app-grid-menu//button//div[normalize-space()='${menu}']`;
+
+    static categoryButton = (category: string): string => `//app-grid-menu//button//div[normalize-space()='${category}']`;
+    static menuButton = (menu: string): string => `//app-grid-menu//button//div[contains(text(),'${menu}')]`;
     static deleteMenuButton = (menu: string): string =>
         `//app-order-list//div[span[normalize-space()='${menu}']]`
         + "/following-sibling::div//button[//i[@class='glyphicon glyphicon-remove']]";
