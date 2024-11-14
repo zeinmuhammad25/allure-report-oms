@@ -21,8 +21,10 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
         await this.fill(PromotionListLocator.searchPromoField, keyword);
     }
 
-    async selectPromotion(promotionID: string): Promise<void> {
-        // No Data need more data to simulate element
+    async selectPromotion(promotionName: string): Promise<void> {
+        await this.expectVisible(PromotionListLocator.promotionByName(promotionName));
+        await this.click(PromotionListLocator.promotionByName(promotionName));
+        await this.click(PromotionListLocator.applyButton);
     }
 
     async selectPromotionType(promotionType: string): Promise<void> {
@@ -30,7 +32,6 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
         await this.click(PromotionListLocator.promotionTypeDropdown);
         await this.expectVisible(PromotionListLocator.promotionTypeOption(promotionType));
         await this.click(PromotionListLocator.promotionTypeOption(promotionType));
-        await this.click(PromotionListLocator.applyButton);
     }
 
     async gotoPromotionPage(type: "first" | "previous" | "next" | "last"): Promise<void> {

@@ -9,4 +9,5 @@ export default class PromotionListLocator extends BaseLocator {
     static promotionTypeDropdown: string = "//app-promo-edit//mat-select";
     static promotionTypeOption = (type: string): string => `//mat-option//span[normalize-space()='${type}']`;
     static searchPromoField: string = `//app-promo-table//input`;
+    static promotionByName = (promotionName: string) => `//tr//td[normalize-space()='${promotionName}']`;
 }
