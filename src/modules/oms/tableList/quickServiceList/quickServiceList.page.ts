@@ -14,6 +14,7 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
     }
 
     async addOrderQuickService(): Promise<void> {
+        await this.click(QuickServiceListLocator.sectionQuickService);
         await this.expectVisible(QuickServiceListLocator.buttonAddQuickService);
         await this.click(QuickServiceListLocator.buttonAddQuickService);
 
