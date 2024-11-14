@@ -122,12 +122,69 @@ export default class MenuList {
             name: "AT MENU PAKET",
             atMenuPaketMurah: {
                 name: "AT MENU PAKET MURAH",
-                shortName: "AT MENU PAKET MURAH"
+                shortName: "AT MENU PAKET MURAH",
+                package: {
+                    name: "ISIAN PAKET MURAH",
+                    bataviaBlended700ml: {
+                        name: "[21+] Batavia Blended 700ml",
+                        shortName: "[21+] Batavia Blended 700ml"
+                    },
+                    baileysOriginal700ml: {
+                        name: "[21+] Baileys Original 700ml",
+                        shortName: "[21+] Baileys Original 700ml"
+                    },
+                    captainMorgan200ml: {
+                        name: "[21+] Captain Morgan 200ml",
+                        shortName: "[21+] Captain Morgan 200ml"
+                    },
+                    icelandVodka250ml: {
+                        name: "[21+] Iceland Vodka 250ml",
+                        shortName: "[21+] Iceland Vodka 250ml"
+                    }
+                }
             },
             atMenuPaketMahal: {
                 name: "AT MENU PAKET MAHAL",
-                shortName: "AT MENU PAKET MAHAL"
+                shortName: "AT MENU PAKET MAHAL",
+                package: {
+                    name: "ISIAN PAKET MAHAL",
+                    bombaySapphireDryGin750ml: {
+                        name: "[21+] Bombay Sapphire Dry Gin 750ml",
+                        shortName: "[21+] Bombay Sapphire Dry Gin "
+                    },
+                    gilbeysWhisky350ml: {
+                        name: "[21+] Gilbeys Whisky 350ml",
+                        shortName: "[21+] Gilbeys Whisky 350ml"
+                    },
+                    sababayWhiteVelvet750ml: {
+                        name: "[21+] Sababay White Velvet 750ml",
+                        shortName: "[21+] Sababay White Velvet 750"
+                    },
+                    sprite250ml: {
+                        name: "Sprite 250ml",
+                        shortName: "Sprite 250ml"
+                    }
+                }
             }
         }
+    };
+
+    public static categoryDetail = {
+        ...this.anggur,
+        ...this.whisky,
+        ...this.atCategory
+    };
+
+    public static menus = {
+        ...this.anggur.minumanAnggur,
+        ...this.whisky.minumanWhisky,
+        ...this.atCategory.atMenuPaket,
+        ...this.atCategory.atMenuBiasa,
+        ...this.atCategory.atMenuExtra
+    };
+
+    public static menuPackages = {
+        ...this.atCategory.atMenuPaket.atMenuPaketMahal.package,
+        ...this.atCategory.atMenuPaket.atMenuPaketMurah.package
     };
 }
