@@ -39,6 +39,11 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.click(OrderLocator.editTableButton);
     }
 
+    async addPromotion(): Promise<void> {
+        await this.expectVisible(OrderLocator.addPromotionButton);
+        await this.click(OrderLocator.addPromotionButton);
+    }
+
     async selectCategoryMenu(categoryName: string): Promise<void> {
         await this.expectVisible(OrderLocator.categoryButton(categoryName));
         await this.click(OrderLocator.categoryButton(categoryName));

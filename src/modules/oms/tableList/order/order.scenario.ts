@@ -8,6 +8,8 @@ export default interface OrderScenario extends BaseScenario {
 
     editTable(qty: number, timeOut: number): Promise<void>;
 
+    addPromotion(): Promise<void>;
+
     // Menu Action
     selectCategoryMenu(categoryName: string): Promise<void>;
 
