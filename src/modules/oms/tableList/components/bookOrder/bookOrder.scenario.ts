@@ -17,5 +17,9 @@ export default interface BookOrderScenario extends BaseScenario {
 
     bookAndOrder(): Promise<void>;
 
+    applyQuickService(): Promise<void>;
+
+    scanQuickService(): Promise<void>;
+
     skipCustomerPhoneNumber(): Promise<void>;
 }
