@@ -150,7 +150,7 @@ export default class MenuList {
                     name: "ISIAN PAKET MAHAL",
                     bombaySapphireDryGin750ml: {
                         name: "[21+] Bombay Sapphire Dry Gin 750ml",
-                        shortName: "[21+] Bombay Sapphire Dry Gin "
+                        shortName: "[21+] Bombay Sapphire Dry Gin"
                     },
                     gilbeysWhisky350ml: {
                         name: "[21+] Gilbeys Whisky 350ml",
