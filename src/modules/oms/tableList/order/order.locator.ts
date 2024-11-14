@@ -11,6 +11,7 @@ export default class OrderLocator extends BaseLocator {
     static editTableApplyButton: string = "//app-table-open//button//span[normalize-space()='Apply']";
     static editTablePaxField: string = "(//app-number-input//input)[1]";
     static editTableTimeOutField: string = "(//app-number-input//input)[2]";
+    static addPromotionButton: string = "//app-order//button[span[normalize-space()='Add Promotion']]";
 
 
     static categoryButton = (category: string): string => `//app-grid-menu//button//div[normalize-space()='${category}']`;
