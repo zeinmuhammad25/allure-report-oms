@@ -8,98 +8,98 @@ export default class SideNavBarComponents extends BaseOmsPage implements SideNav
 
     shouldHave(): Element[] {
         return [
-            Element.ofSelector(SideNavBarLocator.getLocatorHideNavBar("/table")),
-            Element.ofSelector(SideNavBarLocator.getLocatorHideNavBar("/ezo-delivery")),
-            Element.ofSelector(SideNavBarLocator.getLocatorHideNavBar("/ezo-delivery-booking"))
+            Element.ofSelector(SideNavBarLocator.getSideNavBarButtons("/table")),
+            Element.ofSelector(SideNavBarLocator.getSideNavBarButtons("/ezo-delivery")),
+            Element.ofSelector(SideNavBarLocator.getSideNavBarButtons("/ezo-delivery-booking"))
         ];
     }
 
     async gotoPageTableList(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.getLocatorHideNavBar("/table"));
-        await this.click(SideNavBarLocator.getLocatorHideNavBar("/table"));
+        await this.expectVisible(SideNavBarLocator.getSideNavBarButtons("/table"));
+        await this.click(SideNavBarLocator.getSideNavBarButtons("/table"));
         await this.waitForResponse("/table");
     }
 
     async gotoPageEsbOrderDashboard(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.getLocatorHideNavBar("/ezo-delivery"));
-        await this.click(SideNavBarLocator.getLocatorHideNavBar("/ezo-delivery"));
+        await this.expectVisible(SideNavBarLocator.getSideNavBarButtons("/ezo-delivery"));
+        await this.click(SideNavBarLocator.getSideNavBarButtons("/ezo-delivery"));
         await this.waitForResponse("/ezo-delivery-pos");
 
     }
 
     async gotoPageEsbOrderDeliveryHistory(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.getLocatorHideNavBar("/ezo-delivery-booking"));
-        await this.click(SideNavBarLocator.getLocatorHideNavBar("/ezo-delivery-booking"));
+        await this.expectVisible(SideNavBarLocator.getSideNavBarButtons("/ezo-delivery-booking"));
+        await this.click(SideNavBarLocator.getSideNavBarButtons("/ezo-delivery-booking"));
         await this.waitForResponse("/ezo-delivery-pos");
     }
 
     async gotoPagePickupDeliveryDashboard(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.getLocatorHideNavBar("/pickup-delivery-dashboard"));
-        await this.click(SideNavBarLocator.getLocatorHideNavBar("/pickup-delivery-dashboard"));
+        await this.expectVisible(SideNavBarLocator.getSideNavBarButtons("/pickup-delivery-dashboard"));
+        await this.click(SideNavBarLocator.getSideNavBarButtons("/pickup-delivery-dashboard"));
         await this.waitForResponse("/ezo-delivery-pos");
     }
 
     async gotoPageSalesRecapitulation(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.getLocatorHideNavBar("/sales"));
-        await this.click(SideNavBarLocator.getLocatorHideNavBar("/sales"));
+        await this.expectVisible(SideNavBarLocator.getSideNavBarButtons("/sales"));
+        await this.click(SideNavBarLocator.getSideNavBarButtons("/sales"));
         await this.waitForResponse("/sales");
     }
 
     async gotoPageRegularMember(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.getLocatorHideNavBar("/member"));
-        await this.click(SideNavBarLocator.getLocatorHideNavBar("/member"));
+        await this.expectVisible(SideNavBarLocator.getSideNavBarButtons("/member"));
+        await this.click(SideNavBarLocator.getSideNavBarButtons("/member"));
         await this.waitForResponse("/member");
     }
 
     async gotoPageRegularMemberDeposit(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.getLocatorHideNavBar("/member-deposit"));
-        await this.click(SideNavBarLocator.getLocatorHideNavBar("/member-deposit"));
+        await this.expectVisible(SideNavBarLocator.getSideNavBarButtons("/member-deposit"));
+        await this.click(SideNavBarLocator.getSideNavBarButtons("/member-deposit"));
         await this.waitForResponse("/deposit");
     }
 
     async gotoPageTools(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.getLocatorHideNavBar("/tools"));
-        await this.click(SideNavBarLocator.getLocatorHideNavBar("/tools"));
+        await this.expectVisible(SideNavBarLocator.getSideNavBarButtons("/tools"));
+        await this.click(SideNavBarLocator.getSideNavBarButtons("/tools"));
         await this.expectTextVisible("Troubleshoot", true);
         await this.expectTextVisible("Application Setting", true);
         await this.expectTextVisible("Synchronize Data", true);
     }
 
     async gotoPageRegularMemberWithdrawal(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.hideNavBarOthers);
-        await this.click(SideNavBarLocator.hideNavBarOthers);
+        await this.expectVisible(SideNavBarLocator.sideNavBarOthersButton);
+        await this.click(SideNavBarLocator.sideNavBarOthersButton);
         await this.expectVisible(SideNavBarLocator.menuSectionOther("Regular Member Withdrawal"));
         await this.click(SideNavBarLocator.menuSectionOther("Regular Member Withdrawal"));
         await this.waitForResponse("/withdrawal");
     }
 
     async gotoPageDayStartEnd(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.hideNavBarOthers);
-        await this.click(SideNavBarLocator.hideNavBarOthers);
+        await this.expectVisible(SideNavBarLocator.sideNavBarOthersButton);
+        await this.click(SideNavBarLocator.sideNavBarOthersButton);
         await this.expectVisible(SideNavBarLocator.menuSectionOther("Day Start / End"));
         await this.click(SideNavBarLocator.menuSectionOther("Day Start / End"));
         await this.waitForResponse("/current");
     }
 
     async gotoPageDayShiftLog(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.hideNavBarOthers);
-        await this.click(SideNavBarLocator.hideNavBarOthers);
+        await this.expectVisible(SideNavBarLocator.sideNavBarOthersButton);
+        await this.click(SideNavBarLocator.sideNavBarOthersButton);
         await this.expectVisible(SideNavBarLocator.menuSectionOther("Shift Log"));
         await this.click(SideNavBarLocator.menuSectionOther("Shift Log"));
         await this.waitForResponse("/shift");
     }
 
     async gotoPageBranchMenu(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.hideNavBarOthers);
-        await this.click(SideNavBarLocator.hideNavBarOthers);
+        await this.expectVisible(SideNavBarLocator.sideNavBarOthersButton);
+        await this.click(SideNavBarLocator.sideNavBarOthersButton);
         await this.expectVisible(SideNavBarLocator.menuSectionOther("Branch Menu"));
         await this.click(SideNavBarLocator.menuSectionOther("Branch Menu"));
         await this.waitForResponse("branch-menu");
     }
 
     async gotoPageStation(): Promise<void> {
-        await this.expectVisible(SideNavBarLocator.hideNavBarOthers);
-        await this.click(SideNavBarLocator.hideNavBarOthers);
+        await this.expectVisible(SideNavBarLocator.sideNavBarOthersButton);
+        await this.click(SideNavBarLocator.sideNavBarOthersButton);
         await this.expectVisible(SideNavBarLocator.menuSectionOther("Station"));
         await this.click(SideNavBarLocator.menuSectionOther("Station"));
         await this.expectTextVisible("Station Management", true);
