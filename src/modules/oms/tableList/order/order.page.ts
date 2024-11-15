@@ -67,7 +67,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     async saveOrder(): Promise<void> {
         await this.expectVisible(OrderLocator.saveOrderButton);
         await this.click(OrderLocator.saveOrderButton);
-        await this.waitForResponse("/order/update");
+        await this.waitForResponse("/order");
     }
 
     async gotoPayment(): Promise<void> {
