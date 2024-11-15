@@ -127,6 +127,38 @@ test.describe.serial("Quick Service Promotion", () => {
         }
     );
 
+    test("[TC_0204056] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu Category",
+        {tag: tags + "@positive"}, async ({page}) => {
+            let bookOrder = new BookOrderComponent(page);
+            let orderPage = new OrderPage(page);
+            let addOrderComponent = new AddOrderComponent(page);
+            let promotionListComponent = new PromotionListComponent(page);
+            await bookOrder.setPax(2);
+            await bookOrder.selectSalesMode("AT EXCLUSIVE");
+            await bookOrder.applyQuickService();
+            await bookOrder.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
+            ]);
+            await addOrderComponent.wait(2000);
+            await addOrderComponent.applyMenuDetailPackage();
+            await orderPage.wait(2000);
+            await orderPage.addPromotion();
+            await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY");
+            await orderPage.wait(6000);
+            await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY");
+            await orderPage.saveOrder();
+
+        }
+    );
+
 
 
 
