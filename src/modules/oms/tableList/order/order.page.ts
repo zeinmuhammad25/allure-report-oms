@@ -56,7 +56,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
 
     async selectMenu(menuName: string, qty?: number): Promise<void> {
         await this.expectVisible(OrderLocator.menuButton(menuName));
-        if (typeof qty !== "undefined") {
+        if (typeof qty === "number") {
             for (let i = 0; i < qty; i++) {
                 await this.click(OrderLocator.menuButton(menuName));
                 await this.wait(200);
