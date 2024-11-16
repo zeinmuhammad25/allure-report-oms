@@ -11,6 +11,7 @@ export enum PaymentObject {
     OtherVoucher = "OTHER VOUCHER",
     MemberDeposit = "MEMBER DEPOSIT",
     OtherCost = "OTHER COST",
+    AddPromo = "ADD PROMO",
 
     // Payment Method: Specifies detailed methods used for payment
     CashPayment = "CASH PAYMENT",
