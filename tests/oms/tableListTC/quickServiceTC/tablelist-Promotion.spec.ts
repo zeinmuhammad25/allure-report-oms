@@ -40,7 +40,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name,6);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
@@ -70,8 +70,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name,2);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name,4);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
@@ -104,8 +104,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name,4);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name,8);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
@@ -136,7 +136,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name,6);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
@@ -167,8 +167,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name,2);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
@@ -201,9 +200,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name,4);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name,4);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
@@ -242,16 +240,9 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name,3);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name,3);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name,4);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
@@ -282,12 +273,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name,6);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
@@ -319,18 +305,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name,5);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name,6);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
@@ -363,18 +339,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name,12);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
@@ -407,9 +372,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name,4);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
@@ -439,17 +402,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name,5);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name,4);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
@@ -467,7 +421,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.saveOrder();
 
         }
-    );test("[TC_0204065] Validate Logic When User Apply Promotion Head - Order Pages - Open Bill Dicount Rp",
+    );
+    test("[TC_0204065] Validate Logic When User Apply Promotion Head - Order Pages - Open Bill Dicount Rp",
         {tag: tags + "@positive"}, async ({page}) => {
             let bookOrder = new BookOrderComponent(page);
             let orderPage = new OrderPage(page);
@@ -479,8 +434,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name,3);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name,6);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 3);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 6);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
@@ -494,7 +449,39 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.addPromotion();
             await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT RP");
-            await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT RP",1000000);
+            await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT RP", 1000000);
+            await orderPage.saveOrder();
+
+        }
+    );
+    test("[TC_0204066] Validate Logic When User Apply Promotion Head - Order Pages - Open Bill Dicount %",
+        {tag: tags + "@positive"}, async ({page}) => {
+            let bookOrder = new BookOrderComponent(page);
+            let orderPage = new OrderPage(page);
+            let addOrderComponent = new AddOrderComponent(page);
+            let promotionListComponent = new PromotionListComponent(page);
+            await bookOrder.setPax(2);
+            await bookOrder.selectSalesMode("AT EXCLUSIVE");
+            await bookOrder.applyQuickService();
+            await bookOrder.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 3);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 6);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: "test 124"}
+            ]);
+            await addOrderComponent.wait(2000);
+            await addOrderComponent.applyMenuDetailPackage();
+            await orderPage.wait(2000);
+            await orderPage.addPromotion();
+            await orderPage.wait(2000);
+            await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT %");
+            await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT %", 10);
             await orderPage.saveOrder();
 
         }
