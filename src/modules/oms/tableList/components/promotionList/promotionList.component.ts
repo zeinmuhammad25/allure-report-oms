@@ -2,6 +2,7 @@ import PromotionListScenario from "./promotionList.scenario";
 import BaseOmsPage from "../../../base-oms-page";
 import Element from "../../../../../base/objects/Element";
 import PromotionListLocator from "./promotionList.locator";
+import {type} from "node:os";
 
 
 export default class PromotionListComponent extends BaseOmsPage implements PromotionListScenario {
@@ -21,9 +22,17 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
         await this.fill(PromotionListLocator.searchPromoField, keyword);
     }
 
-    async selectPromotion(promotionName: string): Promise<void> {
+    async selectPromotion(promotionName: string, qty?: number): Promise<void> {
         await this.expectVisible(PromotionListLocator.promotionByName(promotionName));
         await this.click(PromotionListLocator.promotionByName(promotionName));
+        await this.wait(200);
+        const hasOpenBillDialog = await this.isVisible(PromotionListLocator.openBillDiscountPanel);
+        if (hasOpenBillDialog && typeof qty === "number") {
+            await this.expectVisible(PromotionListLocator.openBillDiscountField);
+            await this.click(PromotionListLocator.openBillDiscountField);
+            await this.fill(PromotionListLocator.openBillDiscountField, qty.toString());
+            await this.click(PromotionListLocator.openBillDiscountApplyButton);
+        }
         await this.click(PromotionListLocator.applyButton);
     }
 
