@@ -28,6 +28,14 @@ export default interface OrderScenario extends BaseScenario {
 
     printChecker(): Promise<void>;
 
+    mergeTable(): Promise<void>;
+
+    moveTable(): Promise<void>;
+
+    moveItem(): Promise<void>;
+
+    linkTable(): Promise<void>;
+
     cancelTable(notes: string): Promise<void>;
 
 }

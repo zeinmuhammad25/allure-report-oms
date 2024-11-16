@@ -8,6 +8,6 @@ export default class PromotionListLocator extends BaseLocator {
         `//app-promo-edit//button[contains(@class, 'mat-paginator-navigation-${type}')]`;
     static promotionTypeDropdown: string = "//app-promo-edit//mat-select";
     static promotionTypeOption = (type: string): string => `//mat-option//span[normalize-space()='${type}']`;
-    static searchPromoField: string = `//app-promo-table//input`;
+    static searchPromoField: string = `//app-promo-table//input[@placeholder='Search....']`;
     static promotionByName = (promotionName: string) => `//tr//td[normalize-space()='${promotionName}']`;
 }

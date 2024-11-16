@@ -54,9 +54,16 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.click(OrderLocator.categoryButton(categoryDetailName));
     }
 
-    async selectMenu(menuName: string): Promise<void> {
+    async selectMenu(menuName: string, qty?: number): Promise<void> {
         await this.expectVisible(OrderLocator.menuButton(menuName));
-        await this.click(OrderLocator.menuButton(menuName));
+        if (typeof qty !== "undefined") {
+            for (let i = 0; i < qty; i++) {
+                await this.click(OrderLocator.menuButton(menuName));
+                await this.wait(200);
+            }
+        } else {
+            await this.click(OrderLocator.menuButton(menuName));
+        }
     }
 
     async deleteMenu(menuName: string): Promise<void> {
@@ -86,6 +93,26 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.expectVisible(OrderLocator.printCheckerButton);
         await this.click(OrderLocator.printCheckerButton);
         await this.waitForResponse("/order/print-all-checker");
+    }
+
+    async mergeTable(): Promise<void> {
+        await this.expectVisible(OrderLocator.mergeTableButton);
+        await this.click(OrderLocator.mergeTableButton);
+    }
+
+    async moveTable(): Promise<void> {
+        await this.expectVisible(OrderLocator.moveTableButton);
+        await this.click(OrderLocator.moveTableButton);
+    }
+
+    async moveItem(): Promise<void> {
+        await this.expectVisible(OrderLocator.moveItemButton);
+        await this.click(OrderLocator.moveItemButton);
+    }
+
+    async linkTable(): Promise<void> {
+        await this.expectVisible(OrderLocator.linkTableButton);
+        await this.click(OrderLocator.linkTableButton);
     }
 
     async cancelTable(notes: string): Promise<void> {
