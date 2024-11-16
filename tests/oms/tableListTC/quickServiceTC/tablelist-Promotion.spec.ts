@@ -494,7 +494,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.addPromotion();
             await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT RP");
-            await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT RP",20000);
+            await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT RP",1000000);
             await orderPage.saveOrder();
 
         }
