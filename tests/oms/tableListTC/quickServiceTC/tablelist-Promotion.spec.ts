@@ -7,7 +7,7 @@ import OrderPage from "../../../../src/modules/oms/tableList/order/order.page";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import AddOrderComponent from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.component";
 import PromotionListComponent
-        from "../../../../src/modules/oms/tableList/components/promotionList/promotionList.component";
+    from "../../../../src/modules/oms/tableList/components/promotionList/promotionList.component";
 import PaymentPOSPage from "../../../../src/modules/oms/tableList/payment/paymentPOS.page";
 import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
 
@@ -513,13 +513,10 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.wait(2000);
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
-            await paymentPOSPage.paymentType(PaymentObject.AddPromo)
+            await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("BILL DISCOUNT RP");
             await promotionListComponent.selectPromotion("BILL DISCOUNT RP");
             await paymentPOSPage.wait(1000);
-            // await orderPage.wait(2000);
-            // await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT %");
-            // await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT %", 10);
 
         }
     );
