@@ -23,13 +23,9 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
     }
 
     private formatNumber(value: number): string {
-        const formatNumber = (numStr: string): string => {
-            const number = parseInt(numStr, 10);
-            return new Intl.NumberFormat("de-DE").format(number);
-        };
-
-        return formatNumber(value.toString());
-    }
+        const number = parseInt(value.toString(), 10);
+        return new Intl.NumberFormat("de-DE").format(number);
+    };
 
     async selectPromotion(promotionName: string, value?: number): Promise<void> {
         await this.expectVisible(PromotionListLocator.promotionByName(promotionName));
