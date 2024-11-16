@@ -560,7 +560,7 @@ test.describe.serial("Quick Service Promotion", () => {
 
         }
     );
-test("[TC_0204069] Validate Logic When User Apply Promotion Head - Payment Pages - Discount % Menu",
+    test("[TC_0204069] Validate Logic When User Apply Promotion Head - Payment Pages - Discount % Menu",
         {tag: tags + "@positive"}, async ({page}) => {
             let bookOrder = new BookOrderComponent(page);
             let orderPage = new OrderPage(page);
@@ -595,6 +595,89 @@ test("[TC_0204069] Validate Logic When User Apply Promotion Head - Payment Pages
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISCOUNT % MENU");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU");
+            await paymentPOSPage.wait(1000);
+
+        }
+    );
+    test("[TC_0204070] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount % Menu Category",
+        {tag: tags + "@positive"}, async ({page}) => {
+            let bookOrder = new BookOrderComponent(page);
+            let orderPage = new OrderPage(page);
+            let addOrderComponent = new AddOrderComponent(page);
+            let promotionListComponent = new PromotionListComponent(page);
+            let paymentPOSPage = new PaymentPOSPage(page);
+            await bookOrder.setPax(2);
+            await bookOrder.selectSalesMode("AT EXCLUSIVE");
+            await bookOrder.applyQuickService();
+            await bookOrder.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 5);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: "test 124"}
+            ]);
+            await addOrderComponent.wait(2000);
+            await addOrderComponent.applyMenuDetailPackage();
+            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 2, notes: "test 124"},
+                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: "test 124"}
+            ]);
+            await addOrderComponent.wait(2000);
+            await addOrderComponent.applyMenuDetailPackage();
+            await orderPage.wait(2000);
+            await orderPage.saveOrder();
+            await paymentPOSPage.wait(1000);
+            await paymentPOSPage.paymentType(PaymentObject.AddPromo);
+            await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY");
+            await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY");
+            await paymentPOSPage.wait(1000);
+
+        }
+    ); test("[TC_0204071] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount % Menu Category Detail",
+        {tag: tags + "@positive"}, async ({page}) => {
+            let bookOrder = new BookOrderComponent(page);
+            let orderPage = new OrderPage(page);
+            let addOrderComponent = new AddOrderComponent(page);
+            let promotionListComponent = new PromotionListComponent(page);
+            let paymentPOSPage = new PaymentPOSPage(page);
+            await bookOrder.setPax(2);
+            await bookOrder.selectSalesMode("AT EXCLUSIVE");
+            await bookOrder.applyQuickService();
+            await bookOrder.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 2);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 5);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
+            ]);
+            await addOrderComponent.wait(2000);
+            await addOrderComponent.applyMenuDetailPackage();
+            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 6, notes: null},
+                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: null}
+            ]);
+            await addOrderComponent.wait(2000);
+            await addOrderComponent.applyMenuDetailPackage();
+            await orderPage.wait(2000);
+            await orderPage.saveOrder();
+            await paymentPOSPage.wait(1000);
+            await paymentPOSPage.paymentType(PaymentObject.AddPromo);
+            await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY DETAIL");
+            await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY DETAIL");
             await paymentPOSPage.wait(1000);
 
         }
