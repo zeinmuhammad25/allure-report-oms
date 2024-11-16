@@ -39,6 +39,11 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.click(OrderLocator.editTableButton);
     }
 
+    async addPromotion(): Promise<void> {
+        await this.expectVisible(OrderLocator.addPromotionButton);
+        await this.click(OrderLocator.addPromotionButton);
+    }
+
     async selectCategoryMenu(categoryName: string): Promise<void> {
         await this.expectVisible(OrderLocator.categoryButton(categoryName));
         await this.click(OrderLocator.categoryButton(categoryName));
@@ -81,6 +86,26 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.expectVisible(OrderLocator.printCheckerButton);
         await this.click(OrderLocator.printCheckerButton);
         await this.waitForResponse("/order/print-all-checker");
+    }
+
+    async mergeTable(): Promise<void> {
+        await this.expectVisible(OrderLocator.mergeTableButton);
+        await this.click(OrderLocator.mergeTableButton);
+    }
+
+    async moveTable(): Promise<void> {
+        await this.expectVisible(OrderLocator.moveTableButton);
+        await this.click(OrderLocator.moveTableButton);
+    }
+
+    async moveItem(): Promise<void> {
+        await this.expectVisible(OrderLocator.moveItemButton);
+        await this.click(OrderLocator.moveItemButton);
+    }
+
+    async linkTable(): Promise<void> {
+        await this.expectVisible(OrderLocator.linkTableButton);
+        await this.click(OrderLocator.linkTableButton);
     }
 
     async cancelTable(notes: string): Promise<void> {

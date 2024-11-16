@@ -8,6 +8,8 @@ export default interface OrderScenario extends BaseScenario {
 
     editTable(qty: number, timeOut: number): Promise<void>;
 
+    addPromotion(): Promise<void>;
+
     // Menu Action
     selectCategoryMenu(categoryName: string): Promise<void>;
 
@@ -25,6 +27,14 @@ export default interface OrderScenario extends BaseScenario {
     printBill(): Promise<void>;
 
     printChecker(): Promise<void>;
+
+    mergeTable(): Promise<void>;
+
+    moveTable(): Promise<void>;
+
+    moveItem(): Promise<void>;
+
+    linkTable(): Promise<void>;
 
     cancelTable(notes: string): Promise<void>;
 

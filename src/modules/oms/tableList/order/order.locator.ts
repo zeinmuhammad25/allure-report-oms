@@ -11,6 +11,7 @@ export default class OrderLocator extends BaseLocator {
     static editTableApplyButton: string = "//app-table-open//button//span[normalize-space()='Apply']";
     static editTablePaxField: string = "(//app-number-input//input)[1]";
     static editTableTimeOutField: string = "(//app-number-input//input)[2]";
+    static addPromotionButton: string = "//button[span[normalize-space()='Add Promotion']]";
 
 
     static categoryButton = (category: string): string => `//app-grid-menu//button//div[normalize-space()='${category}']`;
@@ -23,6 +24,12 @@ export default class OrderLocator extends BaseLocator {
     static saveOrderButton: string = this.bottomButton("Save Order");
     static printBillButton: string = this.bottomButton("Print Bill");
     static printCheckerButton: string = this.bottomButton("Checker");
+
+    static mergeTableButton: string = this.bottomButton("Merge Table");
+    static moveTableButton: string = this.bottomButton("Move Table");
+    static moveItemButton: string = this.bottomButton("Move Item");
+    static linkTableButton: string = this.bottomButton("Link Table");
+
     static cancelTableButton: string = this.bottomButton("Cancel Table");
     static cancelTablePanel: string = "//app-table-cancel";
     static cancelReasonTextArea: string = "//app-table-cancel//textarea";
