@@ -1,10 +1,43 @@
 import {test} from "@playwright/test";
+import PromotionListComponent
+    from "../../../../src/modules/oms/tableList/components/promotionList/promotionList.component";
+import BookOrderComponent from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.component";
+import OrderPage from "../../../../src/modules/oms/tableList/order/order.page";
+import AddOrderComponent from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.component";
+import TerminalIDPage from "../../../../src/modules/oms/terminalID/terminalID.page";
+import SignPinPage from "../../../../src/modules/oms/signPin/signPin.page";
+import QuickServiceListPage from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.page";
+import SideNavBarComponents from "../../../../src/modules/oms/components/sideNavBar/sideNavBar.components";
+import MenuList from "../../../../src/modules/oms/objects/menuList";
 
 test.setTimeout(100000);
-test.describe.serial("Start Day Test", () => {
+test.describe.serial("Quick Service Move Table", () => {
     const tags = "@smokeTest @oms @moveTable ";
 
+    let bookOrderComponent: BookOrderComponent;
+    let orderPage: OrderPage;
+    let addOrderComponent: AddOrderComponent;
+    let promotionListComponent: PromotionListComponent;
+    let terminalIdPage: TerminalIDPage;
+    let signPinPage: SignPinPage;
+    let quickServiceListPage: QuickServiceListPage;
+    let sideNavBarComponents: SideNavBarComponents;
+
     test.beforeEach(async ({page}) => {
+        bookOrderComponent = new BookOrderComponent(page);
+        orderPage = new OrderPage(page);
+        addOrderComponent = new AddOrderComponent(page);
+        promotionListComponent = new PromotionListComponent(page);
+        terminalIdPage = new TerminalIDPage(page);
+        signPinPage = new SignPinPage(page);
+        quickServiceListPage = new QuickServiceListPage(page);
+        sideNavBarComponents = new SideNavBarComponents(page);
+
+        await terminalIdPage.navigateHere();
+        await terminalIdPage.performTerminalID();
+        await signPinPage.inputPinByTouch("22");
+        await signPinPage.submitPin();
+        await quickServiceListPage.addOrderQuickService();
     });
 
 
@@ -23,6 +56,27 @@ test.describe.serial("Start Day Test", () => {
             //     6. Click button Move Table
             //     7. Choose table
             //     8. Click button Apply
+
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: "max", notes: "test"}
+            ]);
+            await addOrderComponent.wait(300);
+            await addOrderComponent.applyMenuDetailPackage();
+            await orderPage.wait(300);
+            await orderPage.addPromotion();
+            await promotionListComponent.selectPromotion("BILL DISCOUNT RP");
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
         }
     );
 
@@ -127,6 +181,3 @@ test.describe.serial("Start Day Test", () => {
     );
 
 });
-
-
-
