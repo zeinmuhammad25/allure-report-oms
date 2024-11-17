@@ -34,6 +34,11 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
 
     }
 
+    async selectTopSalesNum(): Promise<void> {
+        await this.expectVisible(QuickServiceListLocator.firstQuickServiceRow);
+        await this.click(QuickServiceListLocator.firstQuickServiceRow);
+    }
+
     async clickTopSalesNum(): Promise<void> {
         const salesNums = await this.fetchSalesNums();
         if (salesNums.length === 0) {
