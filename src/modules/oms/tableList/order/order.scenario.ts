@@ -15,7 +15,7 @@ export default interface OrderScenario extends BaseScenario {
 
     selectCategoryDetailMenu(categoryDetailName: string): Promise<void>;
 
-    selectMenu(menuName: string): Promise<void>;
+    selectMenu(menuName: string, qty?: number): Promise<void>;
 
     deleteMenu(menuName: string): Promise<void>;
 
