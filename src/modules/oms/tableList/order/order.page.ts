@@ -101,8 +101,12 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async moveTable(): Promise<void> {
-        await this.expectVisible(OrderLocator.moveTableButton);
-        await this.click(OrderLocator.moveTableButton);
+        const locatorMoveTable = await this.isVisible(OrderLocator.moveTableButton)
+            ? OrderLocator.moveTableButton
+            : OrderLocator.moveToTableButton;
+
+        await this.expectVisible(locatorMoveTable);
+        await this.click(locatorMoveTable);
     }
 
     async moveItem(): Promise<void> {

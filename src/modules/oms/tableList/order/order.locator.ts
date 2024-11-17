@@ -27,6 +27,7 @@ export default class OrderLocator extends BaseLocator {
 
     static mergeTableButton: string = this.bottomButton("Merge Table");
     static moveTableButton: string = this.bottomButton("Move Table");
+    static moveToTableButton: string = this.bottomButton("Move to Table");
     static moveItemButton: string = this.bottomButton("Move Item");
     static linkTableButton: string = this.bottomButton("Link Table");
 
