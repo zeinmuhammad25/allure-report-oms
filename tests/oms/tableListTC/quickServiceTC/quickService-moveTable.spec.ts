@@ -125,23 +125,27 @@ test.describe.serial("Quick Service Move Table", () => {
             //     3. Order menu
             //     4. Click Save Order
             //     5. Click transaction Quick Service again
+            //  Blocker : Depend on backend
         }
     );
 
     test("[TC_0204099] Validate Logic when User can cancel Move Table action with button Cancel",
         {tag: tags + "@positive"}, async ({page}) => {
-            // TODO:
-            //  Precondition:
-            //     POS
-            //     1. Open POS
             //  Steps:
-            //     1. Create transaction Quick Service
-            //     2. Choose Sales Mode
-            //     3. Order menu
-            //     4. Click Save Order
-            //     5. Click transaction Quick Service again
-            //     6. Click button Move Table
-            //     7. Click button Cancel
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectTopSalesNum();
+            await orderPage.moveTable();
+            await moveTableComponent.cancelMoveTableBackTableList();
         }
     );
 
