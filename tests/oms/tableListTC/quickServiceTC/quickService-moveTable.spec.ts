@@ -53,7 +53,7 @@ test.describe.serial("Quick Service Move Table", () => {
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectTopSalesNum();
+            await quickServiceListPage.selectSalesNum("last");
             await orderPage.moveTable();
             await moveTableComponent.autoMoveTable();
         }
@@ -83,7 +83,7 @@ test.describe.serial("Quick Service Move Table", () => {
             await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
             await orderPage.saveOrder();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectTopSalesNum();
+            await quickServiceListPage.selectSalesNum("last");
             await orderPage.moveTable();
             await moveTableComponent.selectRoom(Table.acRoom.name);
             await moveTableComponent.disableButtonByLabel(Table.acRoom.ac3.name);
@@ -104,7 +104,7 @@ test.describe.serial("Quick Service Move Table", () => {
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectTopSalesNum();
+            await quickServiceListPage.selectSalesNum("last");
             await orderPage.moveTable();
             await moveTableComponent.selectRoom(Table.acRoom.name);
             await moveTableComponent.disableButtonByLabel("Apply");
@@ -143,7 +143,7 @@ test.describe.serial("Quick Service Move Table", () => {
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectTopSalesNum();
+            await quickServiceListPage.selectSalesNum("last");
             await orderPage.moveTable();
             await moveTableComponent.cancelMoveTableBackTableList();
         }
@@ -151,32 +151,30 @@ test.describe.serial("Quick Service Move Table", () => {
 
     test("[TC_0204100] Validate Logic when User can Move Table from Quick Service to Dine-In while having no ordered items",
         {tag: tags + "@positive"}, async ({page}) => {
-            // TODO:
-            //  Precondition:
-            //     POS
-            //     1. Open POS
             //  Steps:
-            //     1. Create transaction Quick Service
-            //     2. Choose Sales Mode
-            //     3. Order menu
-            //     4. Click Save Order
-            //     5. Click transaction Quick Service again
-            //     6. Click button Move Table
-            //     7. Choose table
-            //     8. Click button Apply
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectSalesNum("last");
+            await orderPage.moveTable();
+            await moveTableComponent.autoMoveTable();
         }
     );
 
     test("[TC_0204101] Validate Logic when User cannot Move Table from Quick Service to Dine-In while having no ordered items and not saving order first",
         {tag: tags + "@negative"}, async ({page}) => {
-            // TODO:
-            //  Precondition:
-            //     POS
-            //     1. Open POS
             //  Steps:
-            //     1. Create transaction Quick Service
-            //     2. Choose Sales Mode
-            //     3. Order menu
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.expectDisabledMoveTable();
         }
     );
 
