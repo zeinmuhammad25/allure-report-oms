@@ -21,6 +21,7 @@ export default class OrderLocator extends BaseLocator {
         + "/following-sibling::div//button[//i[@class='glyphicon glyphicon-remove']]";
 
     private static bottomButton = (label: string): string => `//button[normalize-space()='${label}']`;
+    private static bottomDisabledButton = (label: string): string => `//button[@disabled and normalize-space()='${label}']`;
     static saveOrderButton: string = this.bottomButton("Save Order");
     static printBillButton: string = this.bottomButton("Print Bill");
     static printCheckerButton: string = this.bottomButton("Checker");
@@ -28,6 +29,8 @@ export default class OrderLocator extends BaseLocator {
     static mergeTableButton: string = this.bottomButton("Merge Table");
     static moveTableButton: string = this.bottomButton("Move Table");
     static moveToTableButton: string = this.bottomButton("Move to Table");
+    static moveTableDisabledButton: string = this.bottomDisabledButton("Move Table");
+    static moveToTableDisabledButton: string = this.bottomDisabledButton("Move to Table");
     static moveItemButton: string = this.bottomButton("Move Item");
     static linkTableButton: string = this.bottomButton("Link Table");
 
