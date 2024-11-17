@@ -8,6 +8,7 @@ import SideNavBarComponents from "../../../../src/modules/oms/components/sideNav
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import TableListPage from "../../../../src/modules/oms/tableList/tableList.page";
 import MoveTableComponent from "../../../../src/modules/oms/tableList/order/components/moveTable/moveTable.component";
+import Table from "../../../../src/modules/oms/objects/table";
 
 test.setTimeout(100000);
 test.describe.serial("Quick Service Move Table", () => {
@@ -60,19 +61,32 @@ test.describe.serial("Quick Service Move Table", () => {
 
     test("[TC_0204096] Validate Logic when user cannot Move Table from Quick Service to Dine-In filled table",
         {tag: tags + "@negative"}, async ({page}) => {
-            // TODO:
+
             //  Precondition:
-            //     POS
-            //     1. Open POS
-            //     2. Open table 3 Dine In
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.bookAndOrder();
+            await bookOrderComponent.skipCustomerPhoneNumber();
             //  Steps:
-            //     1. Create transaction Quick Service
-            //     2. Choose Sales Mode
-            //     3. Order menu
-            //     4. Click Save Order
-            //     5. Click transaction Quick Service again
-            //     6. Click button Move Table
-            //     7. Choose table 3
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await orderPage.saveOrder();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectTopSalesNum();
+            await orderPage.moveTable();
+            await moveTableComponent.selectRoom(Table.acRoom.name);
+            await moveTableComponent.disableButtonByLabel(Table.acRoom.ac3.name);
         }
     );
 
