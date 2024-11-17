@@ -32,6 +32,8 @@ export default interface OrderScenario extends BaseScenario {
 
     moveTable(): Promise<void>;
 
+    expectDisabledMoveTable(): Promise<void>;
+
     moveItem(): Promise<void>;
 
     linkTable(): Promise<void>;

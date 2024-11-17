@@ -2,9 +2,10 @@ import Element from "../../../../../../base/objects/Element";
 import BaseOmsPage from "../../../../base-oms-page";
 import MoveTableScenario from "./moveTable.scenario";
 import MoveTableLocator from "./moveTable.locator";
-import ApplicationSettingLocator from "../../../../tools/applicationSetting/applicationSetting.locator";
+import Table from "../../../../objects/table";
 
 export default class MoveTableComponent extends BaseOmsPage implements MoveTableScenario {
+
     pageUrl: () => string;
 
     shouldHave(): Element[] {
@@ -25,12 +26,24 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
             Element.ofSelector(MoveTableLocator.buttonApplyOrCancel("Apply")),
             Element.ofSelector(MoveTableLocator.buttonApplyOrCancel("Cancel"))
         ];
+    }
 
+    async selectRoom(roomName: string): Promise<void> {
+        await this.click(MoveTableLocator.moveTableSelect(roomName));
+        await this.waitForResponse("/table");
+    }
 
+    async selectTable(tableName: string): Promise<void> {
+        await this.expectVisible(MoveTableLocator.moveTableSelect(tableName));
+        await this.click(MoveTableLocator.moveTableSelect(tableName));
+    }
+
+    async disableButtonByLabel(label: string): Promise<void> {
+        await this.expectVisible(MoveTableLocator.disableButtonByLabel(label));
     }
 
     async autoMoveTable(): Promise<void> {
-        await this.click(MoveTableLocator.moveTableSelect("AC ROOM"));
+        await this.click(MoveTableLocator.moveTableSelect(Table.acRoom.name));
         await this.waitForResponse("/table");
         const hasTable = await this.isVisible(MoveTableLocator.buttonActiveTable);
         if (hasTable) {
@@ -40,7 +53,7 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
             await this.expectVisible(MoveTableLocator.buttonBackToRoom);
             await this.click(MoveTableLocator.buttonBackToRoom);
 
-            await this.click(MoveTableLocator.moveTableSelect("SMOKING ROOM"));
+            await this.click(MoveTableLocator.moveTableSelect(Table.smokingRoom.name));
             await this.waitForResponse("/table");
             const hasTable = await this.isVisible(MoveTableLocator.buttonActiveTable);
             if (hasTable) {
@@ -51,27 +64,24 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
                 await this.click(MoveTableLocator.buttonApplyOrCancel("Cancel"));
             }
         }
-
     }
 
     async selectTableAndCancelInAcRoom(): Promise<void> {
-        await this.click(MoveTableLocator.moveTableSelect("AC ROOM"));
+        await this.click(MoveTableLocator.moveTableSelect(Table.acRoom.name));
         await this.waitForResponse("/table");
         await this.expectVisible(MoveTableLocator.buttonActiveTable);
         await this.click(MoveTableLocator.buttonActiveTable);
         await this.wait(1000);
         await this.click(MoveTableLocator.buttonApplyOrCancel("Cancel"));
-
     }
 
     async selectTableAndCancelInSmokingRoom(): Promise<void> {
-        await this.click(MoveTableLocator.moveTableSelect("SMOKING ROOM"));
+        await this.click(MoveTableLocator.moveTableSelect(Table.smokingRoom.name));
         await this.waitForResponse("/table");
         await this.expectVisible(MoveTableLocator.buttonActiveTable);
         await this.click(MoveTableLocator.buttonActiveTable);
         await this.wait(1000);
         await this.click(MoveTableLocator.buttonApplyOrCancel("Cancel"));
-
     }
 
     async cancelMoveTableBackTableList(): Promise<void> {
