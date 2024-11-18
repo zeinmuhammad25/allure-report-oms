@@ -1,14 +1,14 @@
 import {test} from "@playwright/test";
-import MenuList from "../../../src/modules/oms/objects/menuList";
-import OrderPage from "../../../src/modules/oms/tableList/order/order.page";
-import TerminalIDPage from "../../../src/modules/oms/terminalID/terminalID.page";
-import SignPinPage from "../../../src/modules/oms/signPin/signPin.page";
-import BookOrderComponent from "../../../src/modules/oms/tableList/components/bookOrder/bookOrder.component";
-import TableListPage from "../../../src/modules/oms/tableList/tableList.page";
-import QuickServiceListPage from "../../../src/modules/oms/tableList/quickServiceList/quickServiceList.page";
-import EditOrderComponents from "../../../src/modules/oms/tableList/order/components/editOrder/editOrder.components";
-import AddOrderComponent from "../../../src/modules/oms/tableList/order/components/addOrder/addOrder.component";
-import SideNavBarComponents from "../../../src/modules/oms/components/sideNavBar/sideNavBar.components";
+import MenuList from "../../../../src/modules/oms/objects/menuList";
+import OrderPage from "../../../../src/modules/oms/tableList/order/order.page";
+import TerminalIDPage from "../../../../src/modules/oms/terminalID/terminalID.page";
+import SignPinPage from "../../../../src/modules/oms/signPin/signPin.page";
+import BookOrderComponent from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.component";
+import TableListPage from "../../../../src/modules/oms/tableList/tableList.page";
+import QuickServiceListPage from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.page";
+import EditOrderComponents from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.components";
+import AddOrderComponent from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.component";
+import SideNavBarComponents from "../../../../src/modules/oms/components/sideNavBar/sideNavBar.components";
 
 test.describe.serial("Quick Service Add Order", () => {
     const tag = "@smokeTest @oms @quickService @addOrder ";
