@@ -40,4 +40,10 @@ export default interface OrderScenario extends BaseScenario {
 
     cancelTable(notes: string): Promise<void>;
 
+    clickMenuDetail(menu: string): Promise<void>;
+
+    cancelMenuAfterSave(notes: string): Promise<void>;
+
+    confirmationCloseTable(action: "Yes" | "No"): Promise<void>;
+
 }

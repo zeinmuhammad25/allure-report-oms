@@ -13,7 +13,8 @@ export default class OrderLocator extends BaseLocator {
     static editTableTimeOutField: string = "(//app-number-input//input)[2]";
     static addPromotionButton: string = "//button[span[normalize-space()='Add Promotion']]";
 
-
+    static clickMenu = (menu: string): string => `//div[contains(@class, 'd-flex table-cell hover')]//span[contains(text(), '${menu}')]`;
+    static buttonConfirmCloseTable = (action: string): string => `//span[normalize-space()='${action}']`;
     static categoryButton = (category: string): string => `//app-grid-menu//button//div[normalize-space()='${category}']`;
     static menuButton = (menu: string): string => `//app-grid-menu//button//div[contains(text(),'${menu}')]`;
     static deleteMenuButton = (menu: string): string =>
@@ -40,4 +41,5 @@ export default class OrderLocator extends BaseLocator {
     static cancelReasonApplyButton: string = "//app-table-cancel//button[normalize-space()='Apply']";
     static cancelReasonCancelButton: string = "//app-table-cancel//button[normalize-space()='Cancel']";
     static orderPanel: string = "//app-order";
+    static cancelMenuAfterSave: string = "//textarea[contains(@class, 'form-control input-text-notes')]";
 }

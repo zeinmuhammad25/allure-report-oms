@@ -22,4 +22,8 @@ export default class EditOrderLocator extends BaseLocator {
     static buttonPlusMenu = (menuName: string): string => this.buttonActionMenu(menuName, "plus");
     static buttonMinusMenu = (menuName: string): string => this.buttonActionMenu(menuName, "minus");
     static buttonAddNotesMenu = (menuName: string): string => this.buttonActionMenu(menuName, "pencil");
+    static escapeKeyboard = "//div[@class='modal-header bg-primary']";
+    static selectMenuExtraCategory = (menuName: string): string => `//span[contains(text(),'${menuName}')]`;
+    static selectMenuExtra = (menuName: string): string => `//button[span[contains(text(), '${menuName}')]]`;
+
 }
