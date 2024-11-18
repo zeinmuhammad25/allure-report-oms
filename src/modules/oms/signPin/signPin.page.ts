@@ -2,6 +2,7 @@ import signPinScenario from "./signPin.scenario";
 import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SignPinLocator from "./signPin.locator";
+import StartDayLocator from "../startDay/startDay.locator";
 
 export default class SignPinPage extends BaseOmsPage implements signPinScenario {
 
@@ -75,5 +76,43 @@ export default class SignPinPage extends BaseOmsPage implements signPinScenario 
         await this.click(SignPinLocator.validationSignInUserYes);
         await this.waitForResponse("/user/login");
     }
+
+    async validateShowStarCash(inputCash: string): Promise<void> {
+        await this.click(SignPinLocator.buttonSignIn);
+        await this.click(SignPinLocator.validationSignInUserYes);
+        await this.waitForResponse("/shift");
+        await this.wait(3000);
+
+        const isStartingCashVisible = await this.isVisible(StartDayLocator.startingCash);
+        if (isStartingCashVisible) {
+            console.log("Starting Cash is visible, proceeding with input and OK button.");
+
+            await this.expectVisible(StartDayLocator.startingCash);
+            await this.fill(StartDayLocator.startingCash, inputCash);
+            await this.click(StartDayLocator.escapeKeyboard);
+            await this.expectVisible(StartDayLocator.getLocatorStartDay("Start Shift"));
+            await this.click(StartDayLocator.getLocatorStartDay("Start Shift"));
+            await this.expectVisible(StartDayLocator.getLocatorStartDay("Yes"));
+            await this.click(StartDayLocator.getLocatorStartDay("Yes"));
+
+            const onVisible = async () => {
+                console.log("Success StartDay");
+                const buttonOk = await this.isVisible(StartDayLocator.getLocatorStartDay("Ok"));
+                if (buttonOk) {
+                    console.log("OK button is visible, click OK button");
+                    await this.click(StartDayLocator.getLocatorStartDay("Ok"));
+                } else {
+                    console.log("Error: OK button not found!");
+                }
+            };
+            await this.waitForVisible(StartDayLocator.notificationSuccess, onVisible, 10000, 5);
+            await this.waitForResponse("/table");
+        } else {
+            console.log("Starting Cash is not visible, verifying text \"AC ROOM\" and \"SMOKING ROOM\".");
+            await this.expectTextVisible("AC ROOM");
+            await this.expectTextVisible("SMOKING ROOM");
+        }
+    }
+
 }
 
