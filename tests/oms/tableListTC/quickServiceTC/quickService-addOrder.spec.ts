@@ -546,4 +546,71 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderMenu.saveOrder();
         });
 
+    test("[TC_0204019] Validate Logic When User Able To Add Menu Biasa With Notes Before Save Order",
+        {tag: tag + "@positive"}, async ({page}) => {
+            let orderMenu = new OrderPage(page);
+            let editOrder = new EditOrderComponents(page);
+
+            await orderMenu.selectCategoryMenu(menuCategory);
+            await orderMenu.selectCategoryDetailMenu(menuCategoryDetailSingleMenu);
+            await orderMenu.selectMenu(menuSingleOption.atMenuBiasaGoreng);
+            await orderMenu.clickMenuDetail(menuSingleOption.atMenuBiasaGoreng);
+            await editOrder.inputNotesMenu("Notes Menu Single");
+            await editOrder.escapeKeyboard();
+            await editOrder.actionButtonFooter("Apply");
+            await editOrder.wait(2000);
+            await orderMenu.saveOrder();
+
+        });
+
+    test("[TC_0204020] Validate Logic When User Able To Add Menu Paket With Notes Before Save Order",
+        {tag: tag + "@positive"}, async ({page}) => {
+            let orderMenu = new OrderPage(page);
+            let editOrder = new EditOrderComponents(page);
+            let addOrderComponent = new AddOrderComponent(page);
+
+            await orderMenu.selectCategoryMenu(menuCategory);
+            await orderMenu.selectCategoryDetailMenu(menuCategoryDetailPackageMenu);
+            await orderMenu.selectMenu(menuPackage);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: menuPackageOptions.sababayWhiteVelvet750ml, qty: 2, notes: null},
+                {menuName: menuPackageOptions.bombaySapphireDryGin750ml, qty: 2, notes: null},
+                {menuName: menuPackageOptions.gilbeysWhisky350ml, qty: 2, notes: null},
+                {menuName: menuPackageOptions.sprite250ml, qty: 2, notes: null}
+            ]);
+
+            await editOrder.wait(2000);
+            await editOrder.actionButtonFooter("Back");
+            await editOrder.actionButtonFooter("Back");
+            await editOrder.inputNotesMenu("Notes Menu Package");
+            await editOrder.escapeKeyboard();
+            await editOrder.actionButtonFooter("Apply");
+            await editOrder.wait(2000);
+            await orderMenu.saveOrder();
+        });
+
+    test("[TC_0204021] Validate Logic When User Able To Add Menu Extra With Notes Before Save Order",
+        {tag: tag + "@positive"}, async ({page}) => {
+            let orderMenu = new OrderPage(page);
+            let editOrder = new EditOrderComponents(page);
+
+            await orderMenu.selectCategoryMenu(menuCategory);
+            await orderMenu.selectCategoryDetailMenu(menuCategoryDetailExtraMenu);
+            await orderMenu.selectMenu(menuExtra);
+            await orderMenu.clickMenuDetail(menuExtra);
+            await editOrder.escapeKeyboard();
+            await editOrder.inputNotesMenu("Notes Menu Extra");
+            await editOrder.escapeKeyboard();
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.selectMenuExtraCategory(menuExtraCategory);
+            await editOrder.selectMenuExtra(menuExtraOptions.anggurHijauKawaKawa600ml);
+            await editOrder.selectMenuExtra(menuExtraOptions.anggurMerahOT620ml);
+            await editOrder.wait(2000);
+            await editOrder.actionButtonFooter("Apply");
+            await orderMenu.wait(2000);
+            await orderMenu.saveOrder();
+        });
+
+
 });
