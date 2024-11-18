@@ -119,7 +119,6 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderMenu.selectCategoryMenu(menuCategory);
             await orderMenu.selectCategoryDetailMenu(menuCategoryDetailSingleMenu);
             await orderMenu.selectMenu(menuSingleOption.atMenuBiasaGoreng);
-            await orderMenu.clickMenuDetail(menuSingleOption.atMenuBiasaGoreng);
             await editOrder.editQtySelector(2);
             await editOrder.actionButtonFooter("Apply");
             await editOrder.wait(2000);
@@ -183,7 +182,6 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderMenu.selectCategoryMenu(menuCategory);
             await orderMenu.selectCategoryDetailMenu(menuCategoryDetailSingleMenu);
             await orderMenu.selectMenu(menuSingleOption.atMenuBiasaGoreng);
-            await orderMenu.deleteMenu(menuSingleOption.atMenuBiasaGoreng);
             await orderMenu.wait(3000);
             await orderMenu.saveOrder();
         });
@@ -351,9 +349,7 @@ test.describe.serial("Quick Service Add Order", () => {
 
             await orderMenu.selectCategoryMenu(menuCategory);
             await orderMenu.selectCategoryDetailMenu(menuCategoryDetailSingleMenu);
-            await orderMenu.selectMenu(menuSingleOption.atMenuBiasaGoreng);
-            await orderMenu.selectMenu(menuSingleOption.atMenuBiasaGoreng);
-            await orderMenu.selectMenu(menuSingleOption.atMenuBiasaGoreng);
+            await orderMenu.selectMenu(menuSingleOption.atMenuBiasaGoreng, 3);
             await orderMenu.wait(2000);
             await orderMenu.saveOrder();
             await orderMenu.wait(2000);
