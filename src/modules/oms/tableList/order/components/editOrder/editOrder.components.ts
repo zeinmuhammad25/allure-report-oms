@@ -59,5 +59,20 @@ export default class EditOrderComponents extends BaseOmsPage implements EditOrde
         await this.expectVisible(EditOrderLocator.buttonMinusMenu(menuName));
         await this.click(EditOrderLocator.buttonMinusMenu(menuName));
     }
+
+    async escapeKeyboard(): Promise<void> {
+        await this.expectVisible(EditOrderLocator.escapeKeyboard);
+        await this.click(EditOrderLocator.escapeKeyboard);
+    }
+
+    async selectMenuExtraCategory(menuName: string): Promise<void> {
+        await this.expectVisible(EditOrderLocator.selectMenuExtraCategory(menuName));
+        await this.click(EditOrderLocator.selectMenuExtraCategory(menuName));
+    }
+
+    async selectMenuExtra(menuName: string): Promise<void> {
+        await this.expectVisible(EditOrderLocator.selectMenuExtra(menuName));
+        await this.click(EditOrderLocator.selectMenuExtra(menuName));
+    }
 }
 

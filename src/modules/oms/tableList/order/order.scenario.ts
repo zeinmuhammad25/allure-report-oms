@@ -32,10 +32,18 @@ export default interface OrderScenario extends BaseScenario {
 
     moveTable(): Promise<void>;
 
+    expectDisabledMoveTable(): Promise<void>;
+
     moveItem(): Promise<void>;
 
     linkTable(): Promise<void>;
 
     cancelTable(notes: string): Promise<void>;
+
+    clickMenuDetail(menu: string): Promise<void>;
+
+    cancelMenuAfterSave(notes: string): Promise<void>;
+
+    confirmationCloseTable(action: "Yes" | "No"): Promise<void>;
 
 }
