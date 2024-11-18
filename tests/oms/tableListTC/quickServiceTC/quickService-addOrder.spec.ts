@@ -612,5 +612,95 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderMenu.saveOrder();
         });
 
+    test("[TC_0204022] Validate Logic When User Able To Edit Menu Biasa With Notes After Save Order",
+        {tag: tag + "@negative"}, async ({page}) => {
+            let orderMenu = new OrderPage(page);
+            let sideNavBar = new SideNavBarComponents(page);
+            let tableListPage = new TableListPage(page);
+            let quickServiceListPage = new QuickServiceListPage(page);
+            let editOrder = new EditOrderComponents(page);
+
+
+            await orderMenu.selectCategoryMenu(menuCategory);
+            await orderMenu.selectCategoryDetailMenu(menuCategoryDetailSingleMenu);
+            await orderMenu.selectMenu(menuSingleOption.atMenuBiasaGoreng);
+            await orderMenu.wait(2000);
+            await orderMenu.saveOrder();
+            await orderMenu.wait(2000);
+            await sideNavBar.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.wait(2000);
+            await orderMenu.clickMenuDetail(menuSingleOption.atMenuBiasaGoreng);
+            await orderMenu.wait(2000);
+            await editOrder.inputNotesMenuInvisible();
+        });
+
+    test("[TC_0204023] Validate Logic When User Able To Edit Menu Paket With Notes After Save Order",
+        {tag: tag + "@negative"}, async ({page}) => {
+            let orderMenu = new OrderPage(page);
+            let sideNavBar = new SideNavBarComponents(page);
+            let tableListPage = new TableListPage(page);
+            let addOrderComponent = new AddOrderComponent(page);
+            let quickServiceListPage = new QuickServiceListPage(page);
+            let editOrder = new EditOrderComponents(page);
+
+            await orderMenu.selectCategoryMenu(menuCategory);
+            await orderMenu.selectCategoryDetailMenu(menuCategoryDetailPackageMenu);
+            await orderMenu.selectMenu(menuPackage);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: menuPackageOptions.sababayWhiteVelvet750ml, qty: 2, notes: null},
+                {menuName: menuPackageOptions.bombaySapphireDryGin750ml, qty: 2, notes: null},
+                {menuName: menuPackageOptions.gilbeysWhisky350ml, qty: 2, notes: null},
+                {menuName: menuPackageOptions.sprite250ml, qty: 2, notes: null}
+            ]);
+            await editOrder.wait(2000);
+            await editOrder.actionButtonFooter("Apply");
+            await orderMenu.wait(2000);
+            await orderMenu.saveOrder();
+            await sideNavBar.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.wait(2000);
+            await orderMenu.clickMenuDetail(menuPackage);
+            await orderMenu.wait(2000);
+            await editOrder.inputNotesMenuInvisible();
+        });
+
+    test("[TC_0204024] Validate Logic When User Able To Edit Menu Extra With Notes After Save Order",
+        {tag: tag + "@negative"}, async ({page}) => {
+
+            let orderMenu = new OrderPage(page);
+            let sideNavBar = new SideNavBarComponents(page);
+            let tableListPage = new TableListPage(page);
+            let quickServiceListPage = new QuickServiceListPage(page);
+            let editOrder = new EditOrderComponents(page);
+
+            await orderMenu.selectCategoryMenu(menuCategory);
+            await orderMenu.selectCategoryDetailMenu(menuCategoryDetailExtraMenu);
+            await orderMenu.selectMenu(menuExtra, 5);
+            await orderMenu.clickMenuDetail(menuExtra);
+            await editOrder.escapeKeyboard();
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.selectMenuExtraCategory(menuExtraCategory);
+            await editOrder.selectMenuExtra(menuExtraOptions.anggurHijauKawaKawa600ml);
+            await editOrder.selectMenuExtra(menuExtraOptions.anggurMerahOT620ml);
+            await editOrder.actionButtonFooter("Apply");
+            await editOrder.wait(2000);
+            await orderMenu.saveOrder();
+            await sideNavBar.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.wait(2000);
+            await orderMenu.clickMenuDetail(menuExtra);
+            await orderMenu.wait(2000);
+            await editOrder.inputNotesMenuInvisible();
+
+        });
+
 
 });
