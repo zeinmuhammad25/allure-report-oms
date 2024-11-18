@@ -99,7 +99,7 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderMenu.selectCategoryMenu(menuCategory);
             await orderMenu.selectCategoryDetailMenu(menuCategoryDetailExtraMenu);
             await orderMenu.selectMenu(menuExtra);
-            await orderMenu.clickMenu(menuExtra);
+            await orderMenu.clickMenuDetail(menuExtra);
             await editOrder.escapeKeyboard();
             await editOrder.actionButtonFooter("Next");
             await editOrder.actionButtonFooter("Next");
@@ -119,7 +119,7 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderMenu.selectCategoryMenu(menuCategory);
             await orderMenu.selectCategoryDetailMenu(menuCategoryDetailSingleMenu);
             await orderMenu.selectMenu(menuSingleOption.atMenuBiasaGoreng);
-            await orderMenu.clickMenu(menuSingleOption.atMenuBiasaGoreng);
+            await orderMenu.clickMenuDetail(menuSingleOption.atMenuBiasaGoreng);
             await editOrder.editQtySelector(2);
             await editOrder.actionButtonFooter("Apply");
             await editOrder.wait(2000);
@@ -144,7 +144,7 @@ test.describe.serial("Quick Service Add Order", () => {
                 {menuName: menuPackageOptions.sprite250ml, qty: 2, notes: null}
             ]);
             await editOrder.actionButtonFooter("Apply");
-            await orderMenu.clickMenu(menuPackage);
+            await orderMenu.clickMenuDetail(menuPackage);
             await orderMenu.wait(2000);
             await editOrder.editQtySelector(2);
             await editOrder.actionButtonFooter("Apply");
@@ -161,7 +161,7 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderMenu.selectCategoryMenu(menuCategory);
             await orderMenu.selectCategoryDetailMenu(menuCategoryDetailExtraMenu);
             await orderMenu.selectMenu(menuExtra);
-            await orderMenu.clickMenu(menuExtra);
+            await orderMenu.clickMenuDetail(menuExtra);
             await editOrder.escapeKeyboard();
             await editOrder.actionButtonFooter("Next");
             await editOrder.actionButtonFooter("Next");
@@ -169,7 +169,7 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrder.selectMenuExtra(menuExtraOptions.anggurHijauKawaKawa600ml);
             await editOrder.selectMenuExtra(menuExtraOptions.anggurMerahOT620ml);
             await editOrder.actionButtonFooter("Apply");
-            await orderMenu.clickMenu(menuExtra);
+            await orderMenu.clickMenuDetail(menuExtra);
             await editOrder.editQtySelector(2);
             await editOrder.actionButtonFooter("Apply");
             await editOrder.wait(2000);
@@ -315,7 +315,7 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderMenu.selectCategoryMenu(menuCategory);
             await orderMenu.selectCategoryDetailMenu(menuCategoryDetailExtraMenu);
             await orderMenu.selectMenu(menuExtra);
-            await orderMenu.clickMenu(menuExtra);
+            await orderMenu.clickMenuDetail(menuExtra);
             await editOrder.escapeKeyboard();
             await editOrder.actionButtonFooter("Next");
             await editOrder.actionButtonFooter("Next");
@@ -362,7 +362,7 @@ test.describe.serial("Quick Service Add Order", () => {
             await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
             await quickServiceListPage.wait(2000);
-            await orderMenu.clickMenu(menuSingleOption.atMenuBiasaGoreng);
+            await orderMenu.clickMenuDetail(menuSingleOption.atMenuBiasaGoreng);
             await editOrder.editQtySelector(7);
             await editOrder.actionButtonFooter("Apply");
             await editOrder.wait(2000);
@@ -398,7 +398,7 @@ test.describe.serial("Quick Service Add Order", () => {
             await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
             await quickServiceListPage.wait(2000);
-            await orderMenu.clickMenu(menuPackage);
+            await orderMenu.clickMenuDetail(menuPackage);
             await editOrder.editQtySelector(7);
             await editOrder.actionButtonFooter("Apply");
             await editOrder.wait(2000);
