@@ -402,4 +402,148 @@ test.describe.serial("Quick Service Add Order", () => {
 
         });
 
+    test("[TC_0204015] Validate Logic When User Able To Edit Qty Menu Extra After Save Order > Increase Qty",
+        {tag: tag + "@positive"}, async ({page}) => {
+
+            let orderMenu = new OrderPage(page);
+            let sideNavBar = new SideNavBarComponents(page);
+            let tableListPage = new TableListPage(page);
+            let quickServiceListPage = new QuickServiceListPage(page);
+            let editOrder = new EditOrderComponents(page);
+
+            await orderMenu.selectCategoryMenu(menuCategory);
+            await orderMenu.selectCategoryDetailMenu(menuCategoryDetailExtraMenu);
+            await orderMenu.selectMenu(menuExtra, 5);
+            await orderMenu.clickMenuDetail(menuExtra);
+            await editOrder.escapeKeyboard();
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.selectMenuExtraCategory(menuExtraCategory);
+            await editOrder.selectMenuExtra(menuExtraOptions.anggurHijauKawaKawa600ml);
+            await editOrder.selectMenuExtra(menuExtraOptions.anggurMerahOT620ml);
+            await editOrder.actionButtonFooter("Apply");
+            await editOrder.wait(2000);
+            await orderMenu.saveOrder();
+            await sideNavBar.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.wait(2000);
+            await orderMenu.clickMenuDetail(menuExtra);
+            await editOrder.editQtySelector(7);
+            await editOrder.actionButtonFooter("Apply");
+            await editOrder.wait(2000);
+            await orderMenu.saveOrder();
+        });
+
+    test("[TC_0204016] Validate Logic When User Able To Edit Qty Menu Biasa After Save Order > Decrease Qty",
+        {tag: tag + "@positive"}, async ({page}) => {
+            let orderMenu = new OrderPage(page);
+            let sideNavBar = new SideNavBarComponents(page);
+            let tableListPage = new TableListPage(page);
+            let quickServiceListPage = new QuickServiceListPage(page);
+            let editOrder = new EditOrderComponents(page);
+
+
+            await orderMenu.selectCategoryMenu(menuCategory);
+            await orderMenu.selectCategoryDetailMenu(menuCategoryDetailSingleMenu);
+            await orderMenu.selectMenu(menuSingleOption.atMenuBiasaGoreng, 5);
+            await orderMenu.wait(2000);
+            await orderMenu.saveOrder();
+            await orderMenu.wait(2000);
+            await sideNavBar.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.wait(2000);
+            await orderMenu.clickMenuDetail(menuSingleOption.atMenuBiasaGoreng);
+            await editOrder.editQtySelector(3);
+            await editOrder.actionButtonFooter("Apply");
+            await orderMenu.cancelMenuAfterSave("Decrease Qty");
+            await editOrder.escapeKeyboard();
+            await editOrder.actionButtonFooter("Apply");
+            await editOrder.wait(2000);
+            await orderMenu.saveOrder();
+
+        });
+
+    test("[TC_0204017] Validate Logic When User Able To Edit Qty Menu Paket After Save Order > Decrease Qty",
+        {tag: tag + "@positive"}, async ({page}) => {
+            let orderMenu = new OrderPage(page);
+            let sideNavBar = new SideNavBarComponents(page);
+            let tableListPage = new TableListPage(page);
+            let addOrderComponent = new AddOrderComponent(page);
+            let quickServiceListPage = new QuickServiceListPage(page);
+            let editOrder = new EditOrderComponents(page);
+
+
+            await orderMenu.selectCategoryMenu(menuCategory);
+            await orderMenu.selectCategoryDetailMenu(menuCategoryDetailPackageMenu);
+            await orderMenu.selectMenu(menuPackage);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: menuPackageOptions.sababayWhiteVelvet750ml, qty: 2, notes: null},
+                {menuName: menuPackageOptions.bombaySapphireDryGin750ml, qty: 2, notes: null},
+                {menuName: menuPackageOptions.gilbeysWhisky350ml, qty: 2, notes: null},
+                {menuName: menuPackageOptions.sprite250ml, qty: 2, notes: null}
+            ]);
+            await editOrder.wait(2000);
+            await editOrder.actionButtonFooter("Back");
+            await editOrder.actionButtonFooter("Back");
+            await editOrder.editQtySelector(5);
+            await editOrder.actionButtonFooter("Apply");
+            await orderMenu.wait(2000);
+            await orderMenu.saveOrder();
+            await sideNavBar.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.wait(2000);
+            await orderMenu.clickMenuDetail(menuPackage);
+            await editOrder.editQtySelector(3);
+            await editOrder.actionButtonFooter("Apply");
+            await orderMenu.cancelMenuAfterSave("Decrease Qty");
+            await editOrder.escapeKeyboard();
+            await editOrder.actionButtonFooter("Apply");
+            await editOrder.wait(2000);
+            await orderMenu.saveOrder();
+
+        });
+
+    test("[TC_0204018] Validate Logic When User Able To Edit Qty Menu Extra After Save Order > Decrease Qty",
+        {tag: tag + "@positive"}, async ({page}) => {
+
+            let orderMenu = new OrderPage(page);
+            let sideNavBar = new SideNavBarComponents(page);
+            let tableListPage = new TableListPage(page);
+            let quickServiceListPage = new QuickServiceListPage(page);
+            let editOrder = new EditOrderComponents(page);
+
+            await orderMenu.selectCategoryMenu(menuCategory);
+            await orderMenu.selectCategoryDetailMenu(menuCategoryDetailExtraMenu);
+            await orderMenu.selectMenu(menuExtra, 5);
+            await orderMenu.clickMenuDetail(menuExtra);
+            await editOrder.escapeKeyboard();
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.selectMenuExtraCategory(menuExtraCategory);
+            await editOrder.selectMenuExtra(menuExtraOptions.anggurHijauKawaKawa600ml);
+            await editOrder.selectMenuExtra(menuExtraOptions.anggurMerahOT620ml);
+            await editOrder.actionButtonFooter("Apply");
+            await editOrder.wait(2000);
+            await orderMenu.saveOrder();
+            await sideNavBar.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.wait(2000);
+            await orderMenu.clickMenuDetail(menuExtra);
+            await editOrder.editQtySelector(3);
+            await editOrder.actionButtonFooter("Apply");
+            await orderMenu.cancelMenuAfterSave("Decrease Qty");
+            await editOrder.escapeKeyboard();
+            await editOrder.actionButtonFooter("Apply");
+            await editOrder.wait(2000);
+            await orderMenu.saveOrder();
+        });
+
 });
