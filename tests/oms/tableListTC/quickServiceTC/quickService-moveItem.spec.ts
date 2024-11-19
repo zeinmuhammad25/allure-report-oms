@@ -304,6 +304,22 @@ test.describe.serial("Quick Service Move Item", () => {
             //  9. Click button Next
             //  10. Select all menu
             //  11. Click button Apply
+            // Blocker :
+            // All move item salesNum are disabled
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectSalesNum("last");
+            await orderPage.moveItem();
+            await moveItemComponents.selectQuickService();
+            await moveItemComponents.pagination("previous");
         }
     );
 
