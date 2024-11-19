@@ -761,6 +761,7 @@ test.describe.serial("Quick Service Promotion", () => {
             let orderPage = new OrderPage(page);
             let addOrderComponent = new AddOrderComponent(page);
             let promotionListComponent = new PromotionListComponent(page);
+            let editOrderComponents = new EditOrderComponents(page);
             let paymentPOSPage = new PaymentPOSPage(page);
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
@@ -771,6 +772,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
             await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 6);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
+            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Next");
+            await editOrderComponents.actionButtonFooter("Next");
+            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
