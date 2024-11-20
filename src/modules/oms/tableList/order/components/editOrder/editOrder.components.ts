@@ -74,5 +74,31 @@ export default class EditOrderComponents extends BaseOmsPage implements EditOrde
         await this.expectVisible(EditOrderLocator.selectMenuExtra(menuName));
         await this.click(EditOrderLocator.selectMenuExtra(menuName));
     }
+
+    async inputNotesMenuInvisible(): Promise<void> {
+        await this.expectInvisible(EditOrderLocator.inputNotesMenu);
+        await this.expectTextInvisible("Input notes not found", true);
+    }
+
+    async inputPriceMenu(price: string): Promise<void> {
+        await this.expectVisible(EditOrderLocator.inputPrice);
+        await this.click(EditOrderLocator.inputPrice);
+        await this.fill(EditOrderLocator.inputPrice, price);
+    }
+
+    async inputCustomMenuName(menuName: string): Promise<void> {
+        await this.expectVisible(EditOrderLocator.inputCustomMenuOpenPrice);
+        await this.click(EditOrderLocator.inputCustomMenuOpenPrice);
+        await this.fill(EditOrderLocator.inputCustomMenuOpenPrice, menuName);
+
+    }
+
+    async inputNotes(notes: string): Promise<void> {
+        await this.expectVisible(EditOrderLocator.inputNotesMenuOpenPrice);
+        await this.click(EditOrderLocator.inputNotesMenuOpenPrice);
+        await this.fill(EditOrderLocator.inputNotesMenuOpenPrice, notes);
+
+    }
+
 }
 
