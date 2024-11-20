@@ -93,7 +93,7 @@ export default class EditOrderComponents extends BaseOmsPage implements EditOrde
 
     }
 
-    async inputNotes(notes: string): Promise<void> {
+    async inputNotesOpenPrice(notes: string): Promise<void> {
         await this.expectVisible(EditOrderLocator.inputNotesMenuOpenPrice);
         await this.click(EditOrderLocator.inputNotesMenuOpenPrice);
         await this.fill(EditOrderLocator.inputNotesMenuOpenPrice, notes);
