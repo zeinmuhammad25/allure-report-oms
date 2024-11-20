@@ -239,7 +239,8 @@ export default class MenuList {
         ...this.anggur,
         ...this.whisky,
         ...this.atCategory,
-        ...this.atSpecialPrice
+        ...this.atSpecialPrice,
+        ...this.atOpenPrice
     };
 
     public static menus = {
