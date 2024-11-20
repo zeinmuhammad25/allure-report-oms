@@ -1311,6 +1311,7 @@ test.describe.serial("Quick Service Promotion", () => {
             let bookOrder = new BookOrderComponent(page);
             let orderPage = new OrderPage(page);
             let addOrderComponent = new AddOrderComponent(page);
+            let editOrderComponents = new EditOrderComponents(page);
             let promotionListComponent = new PromotionListComponent(page);
             let paymentPOSPage = new PaymentPOSPage(page);
             await bookOrder.setPax(2);
@@ -1319,25 +1320,32 @@ test.describe.serial("Quick Service Promotion", () => {
             await bookOrder.skipCustomerPhoneNumber();
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 8);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 4);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 6);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
+            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Next");
+            await editOrderComponents.actionButtonFooter("Next");
+            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
                 {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 1, notes: null}
+                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 3, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
             await addOrderComponent.modifyMenuDetailPackage([
                 {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: 2, notes: null}
+                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 1, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -1346,6 +1354,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY DETAIL");
+            await paymentPOSPage.wait(1000);
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY DETAIL");
             await paymentPOSPage.wait(1000);
 
