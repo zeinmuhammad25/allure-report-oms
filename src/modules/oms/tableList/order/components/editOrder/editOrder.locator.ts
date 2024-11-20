@@ -3,7 +3,7 @@ import BaseLocator from "../../../../../../base/base-locator";
 export default class EditOrderLocator extends BaseLocator {
 
     static inputQtyMenu = "//input[@placeholder='e.g. 1']";
-    static inputNotesMenu = "//textarea[@class='form-control input-text-notes ng-untouched ng-pristine ng-valid']";
+    static inputNotesMenu = "//textarea[contains(@class, 'input-text-notes')]";
     static getLocatorActionButtonFooter = (actionName: string): string => `//button[span[normalize-space()='${actionName}']]`;
     static buttonClearNotesMenu = "//span[normalize-space()='Clear']";
     static buttonArrowLeft = "//div[@class='d-flex justify-content-end']//i[@class='glyphicon glyphicon-arrow-left']";
@@ -15,7 +15,7 @@ export default class EditOrderLocator extends BaseLocator {
     static searchMenuPackage = "//input[@placeholder='Search menu']";
     static promotionType = (promoTypeName: string): string => `//span[normalize-space()='${promoTypeName}']`;
     static getLocatorPromotionName = (label: string): string => `//td[normalize-space()='${label}']`;
-    static qtyMenu = (qtyMenu: number): string => `//span[normalize-space()='${qtyMenu}']`;
+    static qtyMenu = (qtyMenu: number): string => `//app-qty-spinner//span[normalize-space()='${qtyMenu}']`;
 
     private static buttonActionMenu = (menuName: string, action: string): string =>
         `//div[span[normalize-space() = '${menuName}']]/following-sibling::div//i[@class='glyphicon glyphicon-${action}']`;
