@@ -52,17 +52,27 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
         await this.click(topSalesNumLocator);
     }
 
+    async gotoLastPage(): Promise<void> {
+        await this.expectVisible(QuickServiceListLocator.getLocatorPagination("Last page"));
+        await this.click(QuickServiceListLocator.getLocatorPagination("Last page"));
+    }
+
     async clickLastSalesNum(): Promise<void> {
         const salesNums = await this.fetchSalesNums();
         if (salesNums.length === 0) {
             throw new Error("No salesNums found in the response");
         }
-
         const lastSalesNum = salesNums[salesNums.length - 1];
         console.log(`Last salesNum: ${lastSalesNum}`);
         const lastSalesNumLocator = `//td[normalize-space()='${lastSalesNum}']`;
-        await this.expectVisible(lastSalesNumLocator);
-        await this.click(lastSalesNumLocator);
+        try {
+            await this.expectVisible(lastSalesNumLocator);
+            await this.click(lastSalesNumLocator);
+        } catch (error) {
+            console.warn(`Last salesNum not found, navigating to the last page. Error: ${error.message}`);
+            await this.gotoLastPage();
+            await this.expectVisible(lastSalesNumLocator);
+            await this.click(lastSalesNumLocator);
+        }
     }
-
 }
