@@ -18,26 +18,52 @@ test.setTimeout(100000);
 test.describe.serial("Quick Service Promotion", () => {
 
     const tags = "@smokeTest @oms @apply_promotion ";
+    let terminalIdPage: TerminalIDPage;
+    let signPinPage: SignPinPage;
+    let bookOrder: BookOrderComponent;
+    let orderPage: OrderPage;
+    let addOrderComponent: AddOrderComponent;
+    let promotionListComponent: PromotionListComponent;
+    let editOrderComponents: EditOrderComponents;
+    let quickServiceListPage: QuickServiceListPage;
+    let sideNavBarComponents: SideNavBarComponents;
+    let tableListPage: TableListPage;
+    let paymentPOSPage: PaymentPOSPage;
+    let quickServicePage: QuickServiceListPage;
 
     test.beforeEach(async ({page}) => {
-        let terminalIdPage = new TerminalIDPage(page);
-        let signPinPage = new SignPinPage(page);
-        let quickServicePage = new QuickServiceListPage(page);
+        terminalIdPage = new TerminalIDPage(page);
+        signPinPage = new SignPinPage(page);
+        bookOrder = new BookOrderComponent(page);
+        orderPage = new OrderPage(page);
+        addOrderComponent = new AddOrderComponent(page);
+        promotionListComponent = new PromotionListComponent(page);
+        editOrderComponents = new EditOrderComponents(page);
+        quickServiceListPage = new QuickServiceListPage(page);
+        sideNavBarComponents = new SideNavBarComponents(page);
+        tableListPage = new TableListPage(page);
+        paymentPOSPage = new PaymentPOSPage(page);
+        quickServicePage = new QuickServiceListPage(page);
+
         await terminalIdPage.navigateHere();
         await terminalIdPage.performTerminalID();
         await signPinPage.inputPinByTouch("22");
         await signPinPage.validateShowStarCash("20.000");
-        await quickServicePage.addOrderQuickService();
-
     });
+
+    // test("clear sales data",
+    //     {tag: tags + "@negative"}, async ({page}) => {
+    //
+    //         let tableListPage = new TableListPage(page);
+    //         await tableListPage.wait(1000);
+    //         await tableListPage.deleteAllDineIn();
+    //         await tableListPage.deleteAllQuickService();
+    //     }
+    // );
 
     test("[TC_0204053] Validate Logic When User Apply Promotion Head - Order Pages- Discount Bill Rp",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -68,18 +94,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.addPromotion();
             await promotionListComponent.selectPromotion("BILL DISCOUNT RP");
             await orderPage.saveOrder();
-
         }
     );
 
-
     test("[TC_0204054] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % All Category",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -114,18 +134,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.wait(3000);
             await promotionListComponent.selectPromotion("DISCOUNT % ALL CATEGORY");
             await orderPage.saveOrder();
-
         }
     );
 
-
     test("[TC_0204055] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -160,17 +174,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISCOUNT % MENU");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU");
             await orderPage.saveOrder();
-
         }
     );
 
     test("[TC_0204056] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -205,17 +214,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY");
             await orderPage.saveOrder();
-
         }
     );
 
     test("[TC_0204057] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -255,18 +259,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY DETAIL");
             await orderPage.saveOrder();
-
         }
     );
 
-
     test("[TC_0204058] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount Limit % Menu",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -317,16 +315,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU");
             await orderPage.saveOrder();
-
         }
     );
+
     test("[TC_0204059] Validate Logic When User Apply Promotion Head - Order Pages - Discount Limit % Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -370,16 +364,11 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY");
             await orderPage.saveOrder();
-
         }
     );
     test("[TC_0204060] Validate Logic When User Apply Promotion Head - Order Pages - Discount Limit % Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -416,16 +405,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
             await orderPage.saveOrder();
-
         }
     );
+
     test("[TC_0204061] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp All Category",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -464,16 +449,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("MENU DISC RP ALL CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP ALL CATEGORY");
             await orderPage.saveOrder();
-
         }
     );
+
     test("[TC_0204062] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp Menu",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -514,16 +495,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("MENU DISC RP MENU");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU");
             await orderPage.saveOrder();
-
         }
     );
+
     test("[TC_0204063] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -561,16 +538,11 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY");
             await orderPage.saveOrder();
-
         }
     );
     test("[TC_0204064] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -610,11 +582,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
     test("[TC_0204065] Validate Logic When User Apply Promotion Head - Order Pages - Open Bill Dicount Rp",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -654,16 +622,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT RP");
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT RP", 1000000);
             await orderPage.saveOrder();
-
         }
     );
+
     test("[TC_0204066] Validate Logic When User Apply Promotion Head - Order Pages - Open Bill Dicount %",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -703,17 +667,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT %");
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT %", 10);
             await orderPage.saveOrder();
-
         }
     );
+
     test("[TC_0204067] Validate Logic When User Apply Promotion Head - Payment Pages - Discount Bill Rp",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -754,17 +713,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("BILL DISCOUNT RP");
             await promotionListComponent.selectPromotion("BILL DISCOUNT RP");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204068] Validate Logic When User Apply Promotion Head - Payment Pages - Discount % All Category",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -811,17 +765,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISCOUNT % ALL CATEGORY");
             await promotionListComponent.selectPromotion("DISCOUNT % ALL CATEGORY");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204069] Validate Logic When User Apply Promotion Head - Payment Pages - Discount % Menu",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -867,17 +816,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISCOUNT % MENU");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204070] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount % Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -924,17 +868,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204071] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount % Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -979,17 +918,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY DETAIL");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204072] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -1035,17 +969,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204073] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -1092,17 +1021,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204074] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -1150,17 +1074,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204075] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp All Category",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -1207,17 +1126,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("MENU DISC RP ALL CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP ALL CATEGORY");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204076] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -1257,17 +1171,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("MENU DISC RP MENU");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204077] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -1305,17 +1214,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204078] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -1359,17 +1263,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await paymentPOSPage.wait(1000);
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY DETAIL");
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204079] Validate Logic When User Apply Promotion Head - Payment Pages -  Open Bill Dicount Rp",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -1417,17 +1316,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await paymentPOSPage.wait(1000);
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT RP", 400000);
             await paymentPOSPage.wait(1000);
-
         }
     );
+
     test("[TC_0204080] Validate Logic When User Apply Promotion Head - Payment Pages -  Open Bill Dicount %",
         {tag: tags + "@positive"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -1479,22 +1373,12 @@ test.describe.serial("Quick Service Promotion", () => {
             await paymentPOSPage.wait(1000);
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT %", 60);
             await paymentPOSPage.wait(1000);
-
         }
     );
 
-
     test("[TC_0204081] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Bill Rp",
         {tag: tags + "@negative"}, async ({page}) => {
-            let bookOrder = new BookOrderComponent(page);
-            let orderPage = new OrderPage(page);
-            let addOrderComponent = new AddOrderComponent(page);
-            let promotionListComponent = new PromotionListComponent(page);
-            let editOrderComponents = new EditOrderComponents(page);
-            let quickServiceListPage = new QuickServiceListPage(page);
-            let sideNavBarComponents = new SideNavBarComponents(page);
-            let tableListPage = new TableListPage(page);
-            let paymentPOSPage = new PaymentPOSPage(page);
+            await quickServicePage.addOrderQuickService();
             await bookOrder.setPax(2);
             await bookOrder.selectSalesMode("AT EXCLUSIVE");
             await bookOrder.applyQuickService();
@@ -1526,20 +1410,14 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.wait(2000);
             await orderPage.addPromotion();
             await orderPage.wait(2000);
-            await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY DETAIL");
-            await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY DETAIL");
+            await promotionListComponent.searchPromotion("BILL DISCOUNT RP");
+            await promotionListComponent.selectPromotion("BILL DISCOUNT RP");
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(6000)
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
-            await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.selectSalesNum("last");
             await orderPage.cancelTable("test");
-
-
         }
     );
-
 
 });
