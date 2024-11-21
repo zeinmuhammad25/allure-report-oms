@@ -699,6 +699,43 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.saveOrder();
         });
 
+    test("[TC_0204034] Validate Logic When User Able To Edit Qty Menu Paket Special Price After Save",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atSpecialPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.name);
+            await orderPage.selectMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.anggurHijauKawaKawa600ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurPutihOT620ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurMerahOTGold620ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurMerahKawaKawa600ml.shortName, qty: 2, notes: null}
+            ]);
+            await editOrderComponents.wait(2000);
+            await editOrderComponents.actionButtonFooter("Back");
+            await editOrderComponents.editQtySelector(5);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.wait(2000);
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.wait(2000);
+            await orderPage.clickMenuDetail(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+            await editOrderComponents.editQtySelector(3);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.cancelMenuAfterSave("Decrease Qty Special Price");
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Apply");
+            await editOrderComponents.wait(2000);
+            await orderPage.saveOrder();
+        });
+
+
+});
+
+
+
 
 
 
