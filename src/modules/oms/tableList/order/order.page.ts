@@ -156,4 +156,9 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.waitForResponse("/table");
     }
 
+    async validateMenuNotVisible(menu: string): Promise<void> {
+        await this.expectInvisible(OrderLocator.clickMenu(menu));
+        console.warn(`Validation passed: Menu "${menu}" is now invisible.`);
+    }
+
 }
