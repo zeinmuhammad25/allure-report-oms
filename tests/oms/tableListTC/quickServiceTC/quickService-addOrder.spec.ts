@@ -825,6 +825,16 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.inputNotesMenuInvisible();
         });
 
+    test("[TC_0204039] Validate Logic When User Able To Add Menu Open Price",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atOpenPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atOpenPrice.atMenuBiasaOpenPrice.name);
+            await orderPage.selectMenu(MenuList.menus.menuOpenPriceChoices.shortName);
+            await editOrderComponents.inputPriceMenu("20.000");
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.saveOrder();
+        });
 
 
 });
