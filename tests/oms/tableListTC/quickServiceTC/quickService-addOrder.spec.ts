@@ -731,6 +731,24 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.saveOrder();
         });
 
+    test("[TC_0204035] Validate Logic When User Able To Delete Menu Paket Special Price Before Save",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: null}
+            ]);
+            await editOrderComponents.wait(2000);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.wait(2000);
+            await orderPage.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+            await editOrderComponents.wait(2000);
+            await orderPage.saveOrder();
+        });
 
 });
 
@@ -744,5 +762,3 @@ test.describe.serial("Quick Service Add Order", () => {
 
 
 
-
-});
