@@ -11,6 +11,8 @@ import PromotionListComponent
 import PaymentPOSPage from "../../../../src/modules/oms/tableList/payment/paymentPOS.page";
 import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
 import EditOrderComponents from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.components";
+import SideNavBarComponents from "../../../../src/modules/oms/components/sideNavBar/sideNavBar.components";
+import TableListPage from "../../../../src/modules/oms/tableList/tableList.page";
 
 test.setTimeout(100000);
 test.describe.serial("Quick Service Promotion", () => {
@@ -1477,6 +1479,64 @@ test.describe.serial("Quick Service Promotion", () => {
             await paymentPOSPage.wait(1000);
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT %", 60);
             await paymentPOSPage.wait(1000);
+
+        }
+    );
+
+
+    test("[TC_0204081] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Bill Rp",
+        {tag: tags + "@negative"}, async ({page}) => {
+            let bookOrder = new BookOrderComponent(page);
+            let orderPage = new OrderPage(page);
+            let addOrderComponent = new AddOrderComponent(page);
+            let promotionListComponent = new PromotionListComponent(page);
+            let editOrderComponents = new EditOrderComponents(page);
+            let quickServiceListPage = new QuickServiceListPage(page);
+            let sideNavBarComponents = new SideNavBarComponents(page);
+            let tableListPage = new TableListPage(page);
+            let paymentPOSPage = new PaymentPOSPage(page);
+            await bookOrder.setPax(2);
+            await bookOrder.selectSalesMode("AT EXCLUSIVE");
+            await bookOrder.applyQuickService();
+            await bookOrder.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 4);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
+            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Next");
+            await editOrderComponents.actionButtonFooter("Next");
+            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: "test 124"}
+            ]);
+            await addOrderComponent.wait(2000);
+            await addOrderComponent.applyMenuDetailPackage();
+            await orderPage.wait(2000);
+            await orderPage.addPromotion();
+            await orderPage.wait(2000);
+            await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY DETAIL");
+            await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY DETAIL");
+            await orderPage.saveOrder();
+            await paymentPOSPage.wait(6000)
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.clickLastSalesNum();
+            await orderPage.cancelTable("test");
+
 
         }
     );
