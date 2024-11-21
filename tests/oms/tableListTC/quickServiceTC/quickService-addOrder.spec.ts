@@ -631,6 +631,19 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.confirmationCloseTable("Yes");
         });
 
+    test("[TC_0204030] Validate Logic When User Able To Add Menu Biasa Special Price With Notes Before Save",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atSpecialPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuBiasaSpecialPrice.name);
+            await orderPage.selectMenu(MenuList.menus.menuSpecialPriceDelights.shortName);
+            await orderPage.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.shortName);
+            await editOrderComponents.inputNotesMenu("Notes Menu Single Special Price");
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Apply");
+            await editOrderComponents.wait(2000);
+            await orderPage.saveOrder();
+        });
+
 
 
 
