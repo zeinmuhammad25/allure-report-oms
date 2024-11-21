@@ -130,23 +130,6 @@ test.describe.serial("Quick Service Move Item", () => {
 
     test("[TC_0204106] Validate Logic when User can Navigate to the next Move Item page",
         {tag: tags + "@positive"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Quick Service
-            //  8. Select other transaction Quick Service
-            //  9. Click button Next
-            // Blocker :
-            // All move item salesNum are disabled
-
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
             await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
@@ -156,13 +139,13 @@ test.describe.serial("Quick Service Move Item", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
             await orderPage.saveOrder();
+
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
             await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
+            await moveItemComponents.selectQuickService();
+            await moveItemComponents.pagination('next');
         }
     );
 
