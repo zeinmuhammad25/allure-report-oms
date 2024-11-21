@@ -12,7 +12,7 @@ import PaymentPOSPage from "../../../../src/modules/oms/tableList/payment/paymen
 import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
 import EditOrderComponents from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.components";
 
-test.setTimeout(60000);
+test.setTimeout(100000);
 test.describe.serial("Quick Service Promotion", () => {
 
     const tags = "@smokeTest @oms @apply_promotion ";
@@ -1365,6 +1365,7 @@ test.describe.serial("Quick Service Promotion", () => {
             let bookOrder = new BookOrderComponent(page);
             let orderPage = new OrderPage(page);
             let addOrderComponent = new AddOrderComponent(page);
+            let editOrderComponents = new EditOrderComponents(page);
             let promotionListComponent = new PromotionListComponent(page);
             let paymentPOSPage = new PaymentPOSPage(page);
             await bookOrder.setPax(2);
@@ -1376,6 +1377,17 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
             await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
+            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Next");
+            await editOrderComponents.actionButtonFooter("Next");
+            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
