@@ -1417,6 +1417,53 @@ test.describe.serial("Quick Service Promotion", () => {
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
             await orderPage.cancelTable("test");
+            await orderPage.confirmationCloseTable("Yes");
+        }
+    );
+
+    test("[TC_0204082] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % All Category",
+        {tag: tags + "@negative"}, async ({page}) => {
+            await quickServicePage.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await bookOrder.selectSalesMode("AT EXCLUSIVE");
+            await bookOrder.applyQuickService();
+            await bookOrder.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 4);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
+            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Next");
+            await editOrderComponents.actionButtonFooter("Next");
+            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: "test 124"}
+            ]);
+            await addOrderComponent.wait(2000);
+            await addOrderComponent.applyMenuDetailPackage();
+            await orderPage.wait(2000);
+            await orderPage.addPromotion();
+            await orderPage.wait(2000);
+            await promotionListComponent.searchPromotion("DISCOUNT % ALL CATEGORY");
+            await promotionListComponent.selectPromotion("DISCOUNT % ALL CATEGORY");
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectSalesNum("last");
+            await orderPage.cancelTable("test");
+            await orderPage.confirmationCloseTable("Yes");
         }
     );
 
