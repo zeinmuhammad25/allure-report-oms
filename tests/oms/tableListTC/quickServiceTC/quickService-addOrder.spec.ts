@@ -733,22 +733,54 @@ test.describe.serial("Quick Service Add Order", () => {
 
     test("[TC_0204035] Validate Logic When User Able To Delete Menu Paket Special Price Before Save",
         {tag: tag + "@positive"}, async () => {
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+            await orderPage.selectCategoryMenu(MenuList.atSpecialPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.name);
+            await orderPage.selectMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: 2, notes: null},
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 2, notes: null},
-                {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: 2, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: null}
+                {menuName: MenuList.menuPackages.anggurHijauKawaKawa600ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurPutihOT620ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurMerahOTGold620ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurMerahKawaKawa600ml.shortName, qty: 2, notes: null}
             ]);
             await editOrderComponents.wait(2000);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.wait(2000);
-            await orderPage.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+            await orderPage.deleteMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
             await editOrderComponents.wait(2000);
             await orderPage.saveOrder();
         });
+
+    test("[TC_0204036] Validate Logic When User Able To Delete Menu Paket Special Price After Save",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atSpecialPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.name);
+            await orderPage.selectMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.anggurHijauKawaKawa600ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurPutihOT620ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurMerahOTGold620ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurMerahKawaKawa600ml.shortName, qty: 2, notes: null}
+            ]);
+            await editOrderComponents.wait(2000);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.wait(2000);
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.wait(2000);
+            await orderPage.deleteMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+            await orderPage.wait(2000);
+            await orderPage.cancelMenuAfterSave("CANCEL MENU");
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.wait(2000);
+            await orderPage.saveOrder();
+            await orderPage.confirmationCloseTable("Yes");
+        });
+
+
 
 });
 
