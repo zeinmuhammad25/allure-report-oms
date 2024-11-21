@@ -949,7 +949,23 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
             await orderPage.wait(2000);
             await editOrderComponents.inputNotesMenuInvisible();
+        });
 
+    test("[TC_0204046] Validate Logic When User Able To Add Menu Extra Special Price",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atSpecialPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuExtraSpecialPrice.name);
+            await orderPage.selectMenu(MenuList.menus.menuExtraSpecialFriedRice.shortName);
+            await orderPage.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Next");
+            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
+            await editOrderComponents.selectMenuExtra(MenuList.menus.bataviaBlended700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.menus.gilbeysWhisky350ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.menus.pennyPacker700ml.shortName);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.wait(2000);
+            await orderPage.saveOrder();
         });
 
 
