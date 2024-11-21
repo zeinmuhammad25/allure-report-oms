@@ -917,6 +917,40 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.confirmationCloseTable("Yes");
         });
 
+    test("[TC_0204044] Validate Logic When User Able To Add Menu Open Price With Notes Before Save",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atOpenPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atOpenPrice.atMenuBiasaOpenPrice.name);
+            await orderPage.selectMenu(MenuList.menus.menuOpenPriceChoices.shortName);
+            await editOrderComponents.inputPriceMenu("20.000");
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.inputNotesOpenPrice("Notes Open Price");
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.saveOrder();
+        });
+
+    test("[TC_0204045] Validate Logic When User Able To Add Menu Open Price With Notes After Save",
+        {tag: tag + "@negative"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atOpenPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atOpenPrice.atMenuBiasaOpenPrice.name);
+            await orderPage.selectMenu(MenuList.menus.menuOpenPriceChoices.shortName);
+            await editOrderComponents.inputPriceMenu("20.000");
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.wait(2000);
+            await orderPage.saveOrder();
+            await orderPage.wait(2000);
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.wait(2000);
+            await orderPage.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
+            await orderPage.wait(2000);
+            await editOrderComponents.inputNotesMenuInvisible();
+
+        });
 
 
 });
