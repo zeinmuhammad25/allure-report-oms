@@ -28,6 +28,11 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
         await this.click(MoveItemLocator.buttonSelectAll);
     }
 
+    async deselectAllMenu(): Promise<void> {
+        await this.expectVisible(MoveItemLocator.buttonDeselectAll);
+        await this.click(MoveItemLocator.buttonDeselectAll);
+    }
+
     async moveAllMenu(menuName: string): Promise<void> {
         await this.expectVisible(MoveItemLocator.buttonMoveAll(menuName));
         await this.click(MoveItemLocator.buttonMoveAll(menuName));
@@ -38,6 +43,12 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
         await this.click(MoveItemLocator.getLocatorButtonActionFooter("Apply"));
         await this.click(MoveItemLocator.escapeKeyboard);
         await this.click(MoveItemLocator.buttonApplyBookTable);
+    }
+
+
+    async actionCancelMoveItem(): Promise<void> {
+        await this.expectVisible(MoveItemLocator.getLocatorButtonActionFooter("Cancel"));
+        await this.click(MoveItemLocator.getLocatorButtonActionFooter("Cancel"));
     }
 
     async actionVerifyMenuDisplay(menuName: string): Promise<void> {
@@ -64,6 +75,11 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
         await this.click(MoveItemLocator.buttonPlusMenu(menuName));
     }
 
+    async moveBackPartialItemMenu(menuName: string): Promise<void> {
+        await this.expectVisible(MoveItemLocator.buttonMinusMenu(menuName));
+        await this.click(MoveItemLocator.buttonMinusMenu(menuName));
+    }
+
     async verifyPreviousQty(menuName: string): Promise<void> {
         const locator = MoveItemLocator.verifyQtyMenu(menuName);
         await this.expectVisible(locator);
@@ -84,5 +100,15 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
         } else {
             console.log(`Menu quantity for "${menuName}" successfully reduced from ${previousQty} to ${currentQty}.`);
         }
+    }
+
+    async pagination(action: "next" | "previous"): Promise<void> {
+        await this.expectVisible(MoveItemLocator.paginationButtons(action));
+        await this.click(MoveItemLocator.paginationButtons(action));
+    }
+
+    async selectQuickService(): Promise<void> {
+        await this.expectVisible(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
+        await this.click(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
     }
 }
