@@ -136,4 +136,21 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.click(OrderLocator.cancelReasonApplyButton);
     }
 
+    async clickMenuDetail(menu: string): Promise<void> {
+        await this.expectVisible(OrderLocator.clickMenu(menu));
+        await this.click(OrderLocator.clickMenu(menu));
+    }
+
+    async cancelMenuAfterSave(notes: string): Promise<void> {
+        await this.expectVisible(OrderLocator.cancelMenuAfterSave);
+        await this.click(OrderLocator.cancelMenuAfterSave);
+        await this.fill(OrderLocator.cancelMenuAfterSave, notes);
+    }
+
+    async confirmationCloseTable(action: "Yes" | "No"): Promise<void> {
+        await this.expectVisible(OrderLocator.buttonConfirmCloseTable(action));
+        await this.click(OrderLocator.buttonConfirmCloseTable(action));
+        await this.waitForResponse("/table");
+    }
+
 }

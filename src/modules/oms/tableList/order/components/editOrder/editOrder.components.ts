@@ -59,5 +59,46 @@ export default class EditOrderComponents extends BaseOmsPage implements EditOrde
         await this.expectVisible(EditOrderLocator.buttonMinusMenu(menuName));
         await this.click(EditOrderLocator.buttonMinusMenu(menuName));
     }
+
+    async escapeKeyboard(): Promise<void> {
+        await this.expectVisible(EditOrderLocator.escapeKeyboard);
+        await this.click(EditOrderLocator.escapeKeyboard);
+    }
+
+    async selectMenuExtraCategory(menuName: string): Promise<void> {
+        await this.expectVisible(EditOrderLocator.selectMenuExtraCategory(menuName));
+        await this.click(EditOrderLocator.selectMenuExtraCategory(menuName));
+    }
+
+    async selectMenuExtra(menuName: string): Promise<void> {
+        await this.expectVisible(EditOrderLocator.selectMenuExtra(menuName));
+        await this.click(EditOrderLocator.selectMenuExtra(menuName));
+    }
+
+    async inputNotesMenuInvisible(): Promise<void> {
+        await this.expectInvisible(EditOrderLocator.inputNotesMenu);
+        await this.expectTextInvisible("Input notes not found", true);
+    }
+
+    async inputPriceMenu(price: string): Promise<void> {
+        await this.expectVisible(EditOrderLocator.inputPrice);
+        await this.click(EditOrderLocator.inputPrice);
+        await this.fill(EditOrderLocator.inputPrice, price);
+    }
+
+    async inputCustomMenuName(menuName: string): Promise<void> {
+        await this.expectVisible(EditOrderLocator.inputCustomMenuOpenPrice);
+        await this.click(EditOrderLocator.inputCustomMenuOpenPrice);
+        await this.fill(EditOrderLocator.inputCustomMenuOpenPrice, menuName);
+
+    }
+
+    async inputNotesOpenPrice(notes: string): Promise<void> {
+        await this.expectVisible(EditOrderLocator.inputNotesMenuOpenPrice);
+        await this.click(EditOrderLocator.inputNotesMenuOpenPrice);
+        await this.fill(EditOrderLocator.inputNotesMenuOpenPrice, notes);
+
+    }
+
 }
 
