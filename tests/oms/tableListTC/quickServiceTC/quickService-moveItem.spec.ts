@@ -407,24 +407,21 @@ test.describe.serial("Quick Service Move Item", () => {
 
     test("[TC_0204119] Validate Logic when User can undo Move Item action with button Cancel on Quick Service",
         {tag: tags + "@positive"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            //  2. Open other transaction Quick Service
-            //  3. Order menu
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Quick Service
-            //  8. Select other transaction Quick Service
-            //  9. Click button Next
-            //  10. Select menu
-            //  11. Click button Cancel
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectSalesNum("last");
+            await orderPage.moveItem();
+            await moveItemComponents.moveItemToSectionQuickService();
+            await moveItemComponents.actionCancelMoveItem();
         }
     );
 
