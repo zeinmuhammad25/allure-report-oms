@@ -836,6 +836,21 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.saveOrder();
         });
 
+    test("[TC_0204040] Validate Logic When User Able To Edit Qty Menu Open Price",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atOpenPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atOpenPrice.atMenuBiasaOpenPrice.name);
+            await orderPage.selectMenu(MenuList.menus.menuOpenPriceChoices.shortName);
+            await editOrderComponents.inputPriceMenu("20.000");
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName)
+            await editOrderComponents.editQtySelector(5)
+            await editOrderComponents.actionButtonFooter("Apply");
+            await editOrderComponents.wait(2000);
+            await orderPage.saveOrder();
+        });
+
 
 });
 
