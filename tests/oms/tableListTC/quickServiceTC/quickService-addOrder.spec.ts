@@ -10,40 +10,29 @@ import EditOrderComponents from "../../../../src/modules/oms/tableList/order/com
 import AddOrderComponent from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.component";
 import SideNavBarComponents from "../../../../src/modules/oms/components/sideNavBar/sideNavBar.components";
 
+test.setTimeout(600000);
 test.describe.serial("Quick Service Add Order", () => {
     const tag = "@smokeTest @oms @quickService @addOrder ";
-    const menuCategory = MenuList.atCategory.name;
-
-    const menuCategoryDetailSingleMenu = MenuList.categoryDetail.atMenuBiasa.name;
-    const menuSingleOption = {
-        atMenuBiasaRebus: MenuList.menus.atMenuBiasaRebus.name,
-        atMenuBiasaBakar: MenuList.menus.atMenuBiasaRebus.name,
-        atMenuBiasaGoreng: MenuList.menus.atMenuBiasaRebus.name
-    };
-
-    const menuCategoryDetailExtraMenu = MenuList.categoryDetail.atMenuExtra.name;
-    const menuExtra = MenuList.menus.atMenuExtraAlpha.name;
-    const menuExtraCategory = MenuList.anggur.name;
-    const menuExtraOptions = {
-        anggurHijauKawaKawa600ml: MenuList.menus.anggurHijauKawaKawa600ml.shortName,
-        anggurMerahOT620ml: MenuList.menus.anggurMerahOT620ml.shortName
-    };
-
-    const menuCategoryDetailPackageMenu = MenuList.categoryDetail.atMenuPaket.name;
-    const menuPackage = MenuList.menus.atMenuPaketMahal.name;
-    const menuPackageOptions = {
-        bombaySapphireDryGin750ml: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName,
-        sababayWhiteVelvet750ml: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName,
-        gilbeysWhisky350ml: MenuList.menuPackages.gilbeysWhisky350ml.shortName,
-        sprite250ml: MenuList.menuPackages.sprite250ml.shortName
-    };
+    let terminalIdPage: TerminalIDPage;
+    let signPinPage: SignPinPage;
+    let tableListPage: TableListPage;
+    let quickServiceListPage: QuickServiceListPage;
+    let orderPage: OrderPage;
+    let addOrderComponent: AddOrderComponent;
+    let bookOrderComponent: BookOrderComponent;
+    let sideNavBarComponents: SideNavBarComponents;
+    let editOrderComponents: EditOrderComponents;
 
     test.beforeEach(async ({page}) => {
-        let terminalIdPage = new TerminalIDPage(page);
-        let signPinPage = new SignPinPage(page);
-        let tableListPage = new TableListPage(page);
-        let bookOrderPage = new BookOrderComponent(page);
-        let quickServiceListPage = new QuickServiceListPage(page);
+        terminalIdPage = new TerminalIDPage(page);
+        signPinPage = new SignPinPage(page);
+        tableListPage = new TableListPage(page);
+        quickServiceListPage = new QuickServiceListPage(page);
+        orderPage = new OrderPage(page);
+        addOrderComponent = new AddOrderComponent(page);
+        bookOrderComponent = new BookOrderComponent(page);
+        sideNavBarComponents = new SideNavBarComponents(page);
+        editOrderComponents = new EditOrderComponents(page);
 
         await terminalIdPage.navigateHere();
         await terminalIdPage.performTerminalID();
