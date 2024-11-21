@@ -2,11 +2,13 @@ import Element from "../../../base/objects/Element";
 import BaseOmsPage from "../base-oms-page";
 import TableListScenario from "./tableList.scenario";
 import TableListLocator from "./tableList.locator";
-import TerminalIDLocator from "../terminalID/terminalID.locator";
+import QuickServiceListPage from "./quickServiceList/quickServiceList.page";
+import OrderPage from "./order/order.page";
+import Table from "../objects/table";
 
 
 export default class TableListPage extends BaseOmsPage implements TableListScenario {
-    pageUrl: () => string;
+    pageUrl = (): string => this.urls.get.tableList.orderDineIn;
 
     shouldHave(): Element[] {
         return [
@@ -53,5 +55,41 @@ export default class TableListPage extends BaseOmsPage implements TableListScena
         await this.click(TableListLocator.buttonPreviousPage);
     }
 
+    async deleteAllQuickService(): Promise<void> {
+        const quickServiceListPage = new QuickServiceListPage(this._page);
+        const orderPage = new OrderPage(this._page);
 
+        await this.gotoQuickService();
+        while (await quickServiceListPage.quickServiceHasData()) {
+            await quickServiceListPage.selectSalesNum("first");
+            await orderPage.cancelTable("Tidak Jadi");
+            await this.wait(500);
+            await this.click("//app-confirm-dialog//button[1]");
+            await this.wait(500);
+            await this.gotoQuickService();
+        }
+    }
+
+    async deleteAllDineIn(): Promise<void> {
+        const orderPage = new OrderPage(this._page);
+        while (await this.isVisible(TableListLocator.firstBookedTableButton)) {
+            await this.wait(500);
+            await this.click(TableListLocator.firstBookedTableButton);
+            await orderPage.cancelTable("Tidak Jadi");
+            await this.wait(500);
+            await this.click("//app-confirm-dialog//button[1]");
+            await this.wait(500);
+        }
+
+        await this.selectRoom(Table.smokingRoom.name);
+        while (await this.isVisible(TableListLocator.firstBookedTableButton)) {
+            await this.click(TableListLocator.firstBookedTableButton);
+            await orderPage.cancelTable("Tidak Jadi");
+            await this.wait(500);
+            await this.click("//app-confirm-dialog//button[1]");
+            await this.wait(500);
+            await this.selectRoom(Table.smokingRoom.name);
+        }
+
+    }
 }

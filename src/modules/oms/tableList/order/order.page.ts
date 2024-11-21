@@ -127,8 +127,11 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async cancelTable(notes: string): Promise<void> {
-        await this.expectVisible(OrderLocator.cancelTableButton);
-        await this.click(OrderLocator.cancelTableButton);
+        await this.wait(300);
+        const cancelButtonLocator = await this.isVisible(OrderLocator.cancelTableButton) ? OrderLocator.cancelTableButton : OrderLocator.cancelOrderButton;
+
+        await this.expectVisible(cancelButtonLocator);
+        await this.click(cancelButtonLocator);
         await this.expectVisible(OrderLocator.cancelReasonTextArea);
         await this.click(OrderLocator.cancelReasonTextArea);
         await this.fill(OrderLocator.cancelReasonTextArea, notes);
