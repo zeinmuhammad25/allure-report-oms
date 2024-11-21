@@ -662,6 +662,26 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.inputNotesMenuInvisible();
         });
 
+    test("[TC_0204032] Validate Logic When User Able To Add Menu Paket Special Price",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atSpecialPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.name);
+            await orderPage.selectMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+            await addOrderComponent.modifyMenuDetailPackage([
+                {menuName: MenuList.menuPackages.anggurHijauKawaKawa600ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurPutihOT620ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurMerahOTGold620ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.anggurMerahKawaKawa600ml.shortName, qty: 2, notes: null}
+            ]);
+            await editOrderComponents.wait(2000);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await editOrderComponents.wait(2000);
+            await orderPage.saveOrder();
+        });
+
+
+
+
 
 
 
