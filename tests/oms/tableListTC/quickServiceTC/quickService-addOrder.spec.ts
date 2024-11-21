@@ -574,5 +574,30 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.saveOrder();
         });
 
+    test("[TC_0204027] Validate Logic When User Able To Edit Qty Menu Biasa Special Price After Save",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atSpecialPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuBiasaSpecialPrice.name);
+            await orderPage.selectMenu(MenuList.menus.menuSpecialPriceDelights.shortName, 5);
+            await orderPage.wait(2000);
+            await orderPage.saveOrder();
+            await orderPage.wait(2000);
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.fetchSalesNums();
+            await quickServiceListPage.clickLastSalesNum();
+            await quickServiceListPage.wait(2000);
+            await orderPage.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.shortName);
+            await editOrderComponents.editQtySelector(3);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.cancelMenuAfterSave("Decrease Qty");
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Apply");
+            await editOrderComponents.wait(2000);
+            await orderPage.saveOrder();
+        });
+
+
+
 
 });
