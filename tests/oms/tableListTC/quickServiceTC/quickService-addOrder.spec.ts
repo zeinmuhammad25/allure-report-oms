@@ -88,7 +88,6 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.saveOrder();
         });
 
-
     test("[TC_0204004] Validate Logic When User Able To Edit Qty Menu Biasa",
         {tag: tag + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
@@ -560,6 +559,18 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.selectCategoryMenu(MenuList.atSpecialPrice.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuBiasaSpecialPrice.name);
             await orderPage.selectMenu(MenuList.menus.menuSpecialPriceDelights.shortName);
+            await orderPage.saveOrder();
+        });
+
+    test("[TC_0204026] Validate Logic When User Able To Edit Qty Menu Biasa Special Price",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atSpecialPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuBiasaSpecialPrice.name);
+            await orderPage.selectMenu(MenuList.menus.menuSpecialPriceDelights.shortName);
+            await orderPage.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.shortName);
+            await editOrderComponents.editQtySelector(2);
+            await editOrderComponents.actionButtonFooter("Apply");
+            await editOrderComponents.wait(2000);
             await orderPage.saveOrder();
         });
 
