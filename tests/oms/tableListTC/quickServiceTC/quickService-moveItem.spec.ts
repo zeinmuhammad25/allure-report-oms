@@ -506,21 +506,21 @@ test.describe.serial("Quick Service Move Item", () => {
 
     test("[TC_0204124] Validate Logic when User can Move Item from Dine-In to Quick Service",
         {tag: tags + "@positive"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            //  2. Open other transaction Quick Service (Not Inclusive)
-            //  3. Not Order menu
-            // Steps:
-            //  1. Create transaction Dine In
-            //  2. Choose Sales Mode Not Inclusive
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Dine In again
-            //  6. Click button Move Item
-            //  7. Click section Quick Service
-            //  8. Select transaction Quick Service
+            ////
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectSalesNum("last");
+            await orderPage.moveItem();
+            await moveItemComponents.selectQuickService();
         }
     );
 
