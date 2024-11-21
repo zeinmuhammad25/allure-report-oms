@@ -441,28 +441,27 @@ test.describe.serial("Quick Service Move Item", () => {
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
             await orderPage.moveItem();
-            await moveItemComponents.selectQuickService();
+            await moveItemComponents.moveItemToSectionQuickService();
         }
     );
 
     test("[TC_0204121] Validate Logic when User cannot select current order in Move Item from Quick Service to Quick Service",
         {tag: tags + "@negative"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            //  2. Open other transaction Quick Service
-            //  3. Order menu
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode
-            //
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Quick Service
-            //  8. Select current order
+            ////
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectSalesNum("last");
+            await orderPage.moveItem();
+            await moveItemComponents.moveItemToSectionQuickService();
         }
     );
 
