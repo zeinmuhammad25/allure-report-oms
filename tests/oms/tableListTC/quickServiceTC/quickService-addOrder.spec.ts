@@ -597,6 +597,19 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.saveOrder();
         });
 
+    test("[TC_0204028] Validate Logic When User Able To Delete Menu Biasa Special Price Before Save",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atSpecialPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuBiasaSpecialPrice.name);
+            await orderPage.selectMenu(MenuList.menus.menuSpecialPriceDelights.shortName);
+            await orderPage.wait(2000);
+            await orderPage.deleteMenu(MenuList.menus.menuSpecialPriceDelights.shortName);
+            await orderPage.wait(3000);
+            await orderPage.saveOrder();
+        });
+
+
+
 
 
 
