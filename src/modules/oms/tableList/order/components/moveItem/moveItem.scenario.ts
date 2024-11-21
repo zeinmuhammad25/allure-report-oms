@@ -19,4 +19,7 @@ export default interface MoveItemScenario extends BaseScenario {
 
     verifyCurrentQty(menuName: string, previousQty: number): Promise<void>;
 
+    pagination(action: "next" | "previous"): Promise<void>;
+
+    selectQuickService(): Promise<void>;
 }
