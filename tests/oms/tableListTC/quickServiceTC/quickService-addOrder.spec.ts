@@ -879,6 +879,19 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.saveOrder();
         });
 
+    test("[TC_0204042] Validate Logic When User Able To Delete Menu Open Price Before Save",
+        {tag: tag + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atOpenPrice.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atOpenPrice.atMenuBiasaOpenPrice.name);
+            await orderPage.selectMenu(MenuList.menus.menuOpenPriceChoices.shortName);
+            await editOrderComponents.inputPriceMenu("20.000");
+            await editOrderComponents.escapeKeyboard();
+            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.wait(2000);
+            await orderPage.deleteMenu(MenuList.menus.menuOpenPriceChoices.shortName);
+            await orderPage.saveOrder();
+        });
+
 
 });
 
