@@ -86,27 +86,6 @@ test.describe.serial("Quick Service Move Item", () => {
 
     test("[TC_0204104] Validate Logic when User can Move Item to the other filled order with the same Sales Mode from Quick Service to Quick Service",
         {tag: tags + "@positive"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            //  2. Open other transaction Quick Service
-            //  3. Order menu
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Quick Service
-            //  8. Select other transaction Quick Service filled order
-            //  9. Click button Next
-            //  10. Select menu for move item
-            //  11. Click button Apply
-            // Blocker :
-            // All move item salesNum are disabled
-
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
             await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
