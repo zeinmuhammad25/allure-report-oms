@@ -188,6 +188,14 @@ export default class MenuList {
             }
         },
 
+        atMenuExtraSpecialPrice: {
+            name: "AT MENU EXTRA SPECIAL PRICE",
+            menuExtraSpecialFriedRice: {
+                name: "MENU EXTRA SPECIAL PRICE Fried Rice",
+                shortName: "MENU EXTRA SPECIAL Fried Rice"
+            }
+        },
+
         atMenuPaketSpecialPrice: {
             name: "AT MENU PAKET SPECIAL PRICE",
             menuPaketSpecialSelections: {
@@ -251,6 +259,7 @@ export default class MenuList {
         ...this.atCategory.atMenuExtra,
         ...this.atSpecialPrice.atMenuBiasaSpecialPrice,
         ...this.atSpecialPrice.atMenuPaketSpecialPrice,
+        ...this.atSpecialPrice.atMenuExtraSpecialPrice,
         ...this.atOpenPrice.atMenuBiasaOpenPrice
     };
 
