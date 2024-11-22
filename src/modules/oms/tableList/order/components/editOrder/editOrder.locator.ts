@@ -26,6 +26,6 @@ export default class EditOrderLocator extends BaseLocator {
     static selectMenuExtraCategory = (menuName: string): string => `//span[contains(text(),'${menuName}')]`;
     static selectMenuExtra = (menuName: string): string => `//button[span[contains(text(), '${menuName}')]]`;
     static inputPrice = "//input[@placeholder='e.g. 1']";
-    static inputNotesMenuOpenPrice = "//textarea[@class='form-control ng-pristine ng-valid ng-touched']";
+    static inputNotesMenuOpenPrice = "//textarea[@autocomplete='off']";
     static inputCustomMenuOpenPrice = "//input[@placeholder='Input Custom Menu Name']";
 }
