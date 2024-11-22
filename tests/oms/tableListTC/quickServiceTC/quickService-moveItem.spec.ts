@@ -9,6 +9,8 @@ import TableListPage from "../../../../src/modules/oms/tableList/tableList.page"
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import MoveItemComponents from "../../../../src/modules/oms/tableList/order/components/moveItem/moveItem.components";
 import Table from "../../../../src/modules/oms/objects/table";
+import MergeTableComponent
+    from "../../../../src/modules/oms/tableList/order/components/mergeTable/mergeTable.component";
 
 test.setTimeout(100000);
 test.describe.serial("Quick Service Move Item", () => {
@@ -21,6 +23,7 @@ test.describe.serial("Quick Service Move Item", () => {
     let sideNavBarComponents: SideNavBarComponents;
     let tableListPage: TableListPage;
     let moveItemComponents: MoveItemComponents;
+    let mergeTableComponent: MergeTableComponent;
 
     test.beforeEach(async ({page}) => {
         bookOrderComponent = new BookOrderComponent(page);
@@ -31,6 +34,7 @@ test.describe.serial("Quick Service Move Item", () => {
         sideNavBarComponents = new SideNavBarComponents(page);
         tableListPage = new TableListPage(page);
         moveItemComponents = new MoveItemComponents(page);
+        mergeTableComponent = new MergeTableComponent(page);
 
         await terminalIdPage.navigateHere();
         await terminalIdPage.performTerminalID();
@@ -1027,30 +1031,45 @@ test.describe.serial("Quick Service Move Item", () => {
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
             await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name)
+            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
         }
     );
 
     test("[TC_0204143] Validate Logic when User can Move Item to emptied table from Quick Service to Dine-In Parent Merge Table",
         {tag: tags + "@positive"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            //  2. Open other transaction Dine In Merge Table
-            //  3. Not order menu
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode Not Inclusive
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Dine In
-            //  8. Select other transaction Dine In Parent Merge Table
-            //  9. Click button Next
-            //  10. Select menu
-            //  11. Click button Apply
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
+            await bookOrderComponent.bookAndOrder();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.saveOrder();
+
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await orderPage.mergeTable();
+            await mergeTableComponent.selectRoom(Table.acRoom.name);
+            await mergeTableComponent.selectTable(Table.acRoom.ac1.name);
+            await mergeTableComponent.applyMergeTable();
+            await orderPage.saveOrder();
+
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderPage.saveOrder();
+
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectSalesNum("last");
+            await orderPage.moveItem();
+            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItemComponents.actionApplyMoveItem();
         }
     );
 
