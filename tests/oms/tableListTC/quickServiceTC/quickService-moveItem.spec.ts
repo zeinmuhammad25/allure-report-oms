@@ -1186,22 +1186,40 @@ test.describe.serial("Quick Service Move Item", () => {
 
     test("[TC_0204147] Validate Logic when User cannot select billed table in Move Item from Quick Service to Dine-In",
         {tag: tags + "@negative"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            //  2. Open other transaction Dine In
-            //  3. Order menu
-            //  4. Print Bill
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Dine In
-            //  8. Select transaction Dine In
+            ////
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.bookAndOrder();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderPage.saveOrder();
+
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await orderPage.printBill();
+            await orderPage.saveOrder();
+
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderPage.saveOrder();
+
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectSalesNum("last");
+            await orderPage.moveItem();
+            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItemComponents.actionApplyMoveItem();
         }
     );
 
