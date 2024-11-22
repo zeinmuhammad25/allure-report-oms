@@ -680,6 +680,9 @@ test.describe.serial("Quick Service Move Item", () => {
             await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
             await bookOrderComponent.bookAndOrder();
             await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
             await orderPage.saveOrder();
 
             await quickServiceListPage.addOrderQuickService();
