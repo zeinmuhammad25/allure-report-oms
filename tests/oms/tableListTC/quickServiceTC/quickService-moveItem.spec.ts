@@ -579,14 +579,12 @@ test.describe.serial("Quick Service Move Item", () => {
 
     test("[TC_0204127] Validate Logic when User cannot Move Item from Quick Service to Quick Service while having no ordered items and not saving order first",
         {tag: tags + "@negative"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode
-            //  3. Not order menu
+            ////
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
         }
     );
 
