@@ -538,6 +538,25 @@ test.describe.serial("Quick Service Move Item", () => {
             //  3. Order menu
             //  4. Click Save Order
             //  5. Click transaction Quick Service again
+            // Blocker:
+            // Depend on ESB Core
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectSalesNum("last");
+            await orderPage.moveItem();
+            await moveItemComponents.moveItemToSectionQuickService();
+            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItemComponents.actionApplyMoveItem();
         }
     );
 
