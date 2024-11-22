@@ -988,23 +988,28 @@ test.describe.serial("Quick Service Move Item", () => {
 
     test("[TC_0204141] Validate Logic when User cannot Move Item from Quick Service to the other empty table with different Sales Mode in different Table Section on Dine-In",
         {tag: tags + "@negative"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            //  2. Open other transaction Dine In
-            //  3. Choose sales mode Inclusive
-            //  4. Not Order menu
-            // Steps:
-            //  1. Create
-            // transaction Quick Service
-            //  2. Choose Sales Mode Not Inclusive
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Dine In
-            //  8. Select other transaction Dine In
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
+            await bookOrderComponent.bookAndOrder();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.saveOrder();
+
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderPage.saveOrder();
+
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectSalesNum("last");
+            await orderPage.moveItem();
+            await moveItemComponents.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac3.name);
         }
     );
 
