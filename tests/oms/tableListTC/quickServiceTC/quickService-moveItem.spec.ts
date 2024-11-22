@@ -8,6 +8,7 @@ import SideNavBarComponents from "../../../../src/modules/oms/components/sideNav
 import TableListPage from "../../../../src/modules/oms/tableList/tableList.page";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import MoveItemComponents from "../../../../src/modules/oms/tableList/order/components/moveItem/moveItem.components";
+import Table from "../../../../src/modules/oms/objects/table";
 
 test.setTimeout(100000);
 test.describe.serial("Quick Service Move Item", () => {
@@ -20,7 +21,6 @@ test.describe.serial("Quick Service Move Item", () => {
     let sideNavBarComponents: SideNavBarComponents;
     let tableListPage: TableListPage;
     let moveItemComponents: MoveItemComponents;
-
 
     test.beforeEach(async ({page}) => {
         bookOrderComponent = new BookOrderComponent(page);
@@ -590,21 +590,23 @@ test.describe.serial("Quick Service Move Item", () => {
 
     test("[TC_0204128] Validate Logic when User can Move Item from Quick Service to Dine-In other table",
         {tag: tags + "@positive"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Dine In
-            //  8. Choose table
-            //  9. Click button Next
-            //  10. Select menu
-            //  11. Click button Apply
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
+            await bookOrderComponent.applyQuickService();
+            await bookOrderComponent.skipCustomerPhoneNumber();
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderPage.saveOrder();
+            await sideNavBarComponents.gotoPageTableList();
+            await tableListPage.gotoQuickService();
+            await quickServiceListPage.selectSalesNum("last");
+            await orderPage.moveItem();
+            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac2.name);
+            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItemComponents.actionApplyMoveItem();
         }
     );
 
