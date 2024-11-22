@@ -36,6 +36,7 @@ export default class OrderLocator extends BaseLocator {
     static linkTableButton: string = this.bottomButton("Link Table");
 
     static cancelTableButton: string = this.bottomButton("Cancel Table");
+    static cancelOrderButton: string = this.bottomButton("Cancel Order");
     static cancelTablePanel: string = "//app-table-cancel";
     static cancelReasonTextArea: string = "//app-table-cancel//textarea";
     static cancelReasonApplyButton: string = "//app-table-cancel//button[normalize-space()='Apply']";

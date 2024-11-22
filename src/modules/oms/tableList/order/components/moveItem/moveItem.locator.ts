@@ -30,4 +30,7 @@ export default class MoveItemLocator extends BaseLocator {
     static buttonMoveAll = (menuName: string): string => `//div[div[contains(text(), '${menuName}')]]
     /following-sibling::div//button//span[normalize-space()='Move All']`;
 
+    static paginationButtons = (action: "next" | "previous"): string => "//app-item-move//app-grid-pager//button"
+        + (action === "next" ? "[1]" : "[2]");
+
 }
