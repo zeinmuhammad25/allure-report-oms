@@ -46,4 +46,6 @@ export default interface OrderScenario extends BaseScenario {
 
     confirmationCloseTable(action: "Yes" | "No"): Promise<void>;
 
+    validateMenuNotVisible(menu: string): Promise<void>;
+
 }
