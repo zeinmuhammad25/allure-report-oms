@@ -56,16 +56,6 @@ test.describe.serial("Quick Service Promotion", () => {
         await bookOrder.skipCustomerPhoneNumber();
     });
 
-    // test("clear sales data",
-    //     {tag: tags + "@negative"}, async ({page}) => {
-    //
-    //         let tableListPage = new TableListPage(page);
-    //         await tableListPage.wait(1000);
-    //         await tableListPage.deleteAllDineIn();
-    //         await tableListPage.deleteAllQuickService();
-    //     }
-    // );
-
     test("[TC_0204053] Validate Logic When User Apply Promotion Head - Order Pages- Discount Bill Rp",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
@@ -79,8 +69,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName, 2);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 2);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -111,8 +101,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 2);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 2);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -146,9 +136,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -180,10 +168,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName, 2);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 2);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -215,14 +201,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName, 4);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 5);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -244,6 +224,8 @@ test.describe.serial("Quick Service Promotion", () => {
 
     test("[TC_0204058] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount Limit % Menu",
         {tag: tags + "@positive"}, async ({page}) => {
+            //TODO :
+            // need to check tentative error on awaiting for response API contain /get-menu-package
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 4);
@@ -256,16 +238,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 5);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 5);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -308,16 +282,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 5);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 5);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -349,10 +315,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 5);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 5);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -387,10 +351,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 5);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 5);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -425,13 +387,8 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 4);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -466,19 +423,14 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 4);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: "max", notes: "test 124"}
+                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: "max", notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -504,15 +456,15 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 2);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 1);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -539,20 +491,15 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -579,20 +526,15 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -619,20 +561,15 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 5);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -648,6 +585,8 @@ test.describe.serial("Quick Service Promotion", () => {
 
     test("[TC_0204068] Validate Logic When User Apply Promotion Head - Payment Pages - Discount % All Category",
         {tag: tags + "@positive"}, async ({page}) => {
+            //TODO :
+            // need to check tentative error on apply promotion and manu paket
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
@@ -660,26 +599,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
+            await addOrderComponent.wait(1000);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: "max", notes: "test 124"}
+                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 2, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -697,7 +632,7 @@ test.describe.serial("Quick Service Promotion", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 4);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
@@ -706,26 +641,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
+            await addOrderComponent.wait(1000);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: "max", notes: "test 124"}
+                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: "max", notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -743,9 +674,9 @@ test.describe.serial("Quick Service Promotion", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 5);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 2);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 2);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 2);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
@@ -754,25 +685,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 2, notes: "test 124"},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 2, notes: null},
+                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -781,6 +709,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY");
+            await promotionListComponent.wait(1000);
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY");
             await paymentPOSPage.wait(1000);
         }
@@ -800,10 +729,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 4);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -846,10 +772,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 5);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -892,11 +815,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -926,10 +845,11 @@ test.describe.serial("Quick Service Promotion", () => {
 
     test("[TC_0204074] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 7);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 7);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 2);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 2);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
@@ -938,11 +858,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -986,11 +902,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 4);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1031,11 +943,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 7);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1072,8 +980,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1110,8 +1017,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1154,8 +1060,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 2);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1203,11 +1108,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1234,7 +1135,6 @@ test.describe.serial("Quick Service Promotion", () => {
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT %");
-            await paymentPOSPage.wait(1000);
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT %", 60);
             await paymentPOSPage.wait(1000);
         }
@@ -1254,15 +1154,15 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 2);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -1294,16 +1194,15 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 2);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -1335,16 +1234,15 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -1376,16 +1274,15 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 2);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -1417,16 +1314,15 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
+            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 5);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
             await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: "test 124"},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: "test 124"}
+                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
+                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
             ]);
             await addOrderComponent.wait(2000);
             await addOrderComponent.applyMenuDetailPackage();
@@ -1459,11 +1355,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 4);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1514,11 +1406,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 5);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1567,11 +1455,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1620,11 +1504,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 7);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1660,6 +1540,8 @@ test.describe.serial("Quick Service Promotion", () => {
 
     test("[TC_0204090] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Menu Discount Rp Menu",
         {tag: tags + "@negative"}, async ({page}) => {
+            //TODO :
+            // need to check tentative error on awaiting for response API contain /get-menu-package
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
@@ -1673,11 +1555,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 8);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1726,11 +1604,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1779,11 +1653,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 8);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1832,11 +1702,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 5);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
@@ -1885,11 +1751,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName);
+            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
