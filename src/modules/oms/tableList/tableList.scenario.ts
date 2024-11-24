@@ -14,4 +14,8 @@ export default interface TableListScenario extends BaseScenario {
     selectRoom(roomName: string): Promise<void>;
 
     selectTable(tableName: string): Promise<void>;
+
+    deleteAllQuickService(): Promise<void>;
+
+    deleteAllDineIn(): Promise<void>;
 }
