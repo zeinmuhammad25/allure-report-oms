@@ -9,7 +9,11 @@ export default interface QuickServiceListScenario extends BaseScenario {
 
     clickTopSalesNum(): Promise<void>;
 
+    gotoLastPage(): Promise<void>;
+
     selectSalesNum(salesNum: string | "first" | "last"): Promise<void>;
+
+    quickServiceHasData(): Promise<boolean>;
 
     clickLastSalesNum(): Promise<void>;
 }
