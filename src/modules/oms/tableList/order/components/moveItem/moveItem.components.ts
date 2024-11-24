@@ -19,8 +19,19 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
         await this.click(MoveItemLocator.getLocatorButtonActionFooter("Next"));
     }
 
-    async moveItemToSectionDineIn(): Promise<void> {
-        //TODO throw new Error("Method not implemented.");
+    async moveItemToSectionDineIn(roomName: string, tableName: string): Promise<void> {
+        await this.expectVisible(MoveItemLocator.tableButton(roomName));
+        await this.click(MoveItemLocator.tableButton(roomName));
+        await this.expectVisible(MoveItemLocator.tableButton(tableName));
+        await this.click(MoveItemLocator.tableButton(tableName));
+        await this.expectVisible(MoveItemLocator.getLocatorButtonActionFooter("Next"));
+        await this.click(MoveItemLocator.getLocatorButtonActionFooter("Next"));
+    }
+
+    async expectDisabledTable(roomName: string, tableName: string): Promise<void> {
+        await this.expectVisible(MoveItemLocator.tableButton(roomName));
+        await this.click(MoveItemLocator.tableButton(roomName));
+        await this.expectVisible(MoveItemLocator.tableButtonDisabled(tableName));
     }
 
     async moveSelectAllItemMenu(): Promise<void> {
@@ -41,10 +52,11 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
     async actionApplyMoveItem(): Promise<void> {
         await this.expectVisible(MoveItemLocator.getLocatorButtonActionFooter("Apply"));
         await this.click(MoveItemLocator.getLocatorButtonActionFooter("Apply"));
-        await this.click(MoveItemLocator.escapeKeyboard);
-        await this.click(MoveItemLocator.buttonApplyBookTable);
+        if (await this.isVisible(MoveItemLocator.escapeKeyboard)) {
+            await this.click(MoveItemLocator.escapeKeyboard);
+            await this.click(MoveItemLocator.buttonApplyBookTable);
+        }
     }
-
 
     async actionCancelMoveItem(): Promise<void> {
         await this.expectVisible(MoveItemLocator.getLocatorButtonActionFooter("Cancel"));
@@ -70,14 +82,26 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
         }
     }
 
-    async movePartialItemMenu(menuName: string): Promise<void> {
+    async movePartialItemMenu(menuName: string, qty?: number): Promise<void> {
         await this.expectVisible(MoveItemLocator.buttonPlusMenu(menuName));
-        await this.click(MoveItemLocator.buttonPlusMenu(menuName));
+        if (typeof qty === "number" && qty > 0) {
+            for (let i = 0; i < qty; i++) {
+                await this.click(MoveItemLocator.buttonPlusMenu(menuName));
+            }
+        } else {
+            await this.click(MoveItemLocator.buttonPlusMenu(menuName));
+        }
     }
 
-    async moveBackPartialItemMenu(menuName: string): Promise<void> {
+    async moveBackPartialItemMenu(menuName: string, qty?: number): Promise<void> {
         await this.expectVisible(MoveItemLocator.buttonMinusMenu(menuName));
-        await this.click(MoveItemLocator.buttonMinusMenu(menuName));
+        if (typeof qty === "number" && qty > 0) {
+            for (let i = 0; i < qty; i++) {
+                await this.click(MoveItemLocator.buttonMinusMenu(menuName));
+            }
+        } else {
+            await this.click(MoveItemLocator.buttonMinusMenu(menuName));
+        }
     }
 
     async verifyPreviousQty(menuName: string): Promise<void> {
