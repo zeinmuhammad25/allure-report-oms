@@ -48,10 +48,11 @@ export default class ApplicationSettingPage extends BaseOmsPage implements Appli
     }
 
     async userSetStation(): Promise<void> {
-        await this.click(ApplicationSettingLocator.buttonTool);
-        await this.click(ApplicationSettingLocator.buttonApplicationSetting);
+        await this.expectVisible(ApplicationSettingLocator.defaultStationDropdown);
+        await this.click(ApplicationSettingLocator.defaultStationDropdown);
         await this.click(ApplicationSettingLocator.selectDefaultStation("KASIR"));
         await this.click(ApplicationSettingLocator.buttonSaveSetting);
+        await this.click(ApplicationSettingLocator.applicationSettingDialogOk);
     }
 
     async userSetWaringTime(): Promise<void> {
