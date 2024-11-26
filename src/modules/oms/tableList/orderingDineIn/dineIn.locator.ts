@@ -1,7 +1,6 @@
 import BaseLocator from "../../../../base/base-locator";
 
 export  default class DineInLocator extends BaseLocator {
-
     static sectionTableAcRoom: string = "//span[contains(text(),'AC ROOM')]";
     static sectionTableSmokingRoom: string = "//span[contains(text(),'SMOKING ROOM')]";
     static tableAcRoom1: string = "(//div[@id='wrap-btn-text-1611'])[1]";
