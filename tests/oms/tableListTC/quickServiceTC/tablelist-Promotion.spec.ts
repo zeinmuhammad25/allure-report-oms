@@ -109,6 +109,14 @@ test.describe.serial("Quick Service Promotion", () => {
         await addOrderComponent.applyMenuDetailPackage();
     };
 
+    const cancelOrderQuickService = async () => {
+        await sideNavBarComponents.gotoPageTableList();
+        await tableListPage.gotoQuickService();
+        await quickServiceListPage.selectSalesNum("last");
+        await orderPage.cancelTable("test");
+        await orderPage.confirmationCloseTable("Yes");
+    };
+
 
     test("[TC_0204053] Validate Logic When User Apply Promotion Head - Order Pages- Discount Bill Rp",
         {tag: tags + "@positive"}, async ({page}) => {
@@ -382,36 +390,20 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204067] Validate Logic When User Apply Promotion Head - Payment Pages - Discount Bill Rp",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 3);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 6);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 20);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 5);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("BILL DISCOUNT RP");
             await promotionListComponent.selectPromotion("BILL DISCOUNT RP");
-            await paymentPOSPage.wait(1000);
         }
     );
 
@@ -420,953 +412,437 @@ test.describe.serial("Quick Service Promotion", () => {
             //TODO :
             // need to check tentative error on apply promotion and manu paket
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 6);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 3);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await addOrderComponent.wait(1000);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISCOUNT % ALL CATEGORY");
             await promotionListComponent.selectPromotion("DISCOUNT % ALL CATEGORY");
-            await paymentPOSPage.wait(1000);
         }
     );
 
     test("[TC_0204069] Validate Logic When User Apply Promotion Head - Payment Pages - Discount % Menu",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 4);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 15);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await addOrderComponent.wait(1000);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: "max", notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISCOUNT % MENU");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU");
-            await paymentPOSPage.wait(1000);
         }
     );
 
     test("[TC_0204070] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount % Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 2);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 2);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 2);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 2, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 2, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY");
-            await promotionListComponent.wait(1000);
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY");
-            await paymentPOSPage.wait(1000);
         }
     );
 
     test("[TC_0204071] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount % Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 2);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 4);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 2, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 6, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY DETAIL");
-            await paymentPOSPage.wait(1000);
         }
     );
 
     test("[TC_0204072] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 2);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 1);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 5);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 2, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 8, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU");
-            await paymentPOSPage.wait(1000);
         }
     );
 
     test("[TC_0204073] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 7);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 9);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY");
-            await paymentPOSPage.wait(1000);
         }
     );
 
     test("[TC_0204074] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 2);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 2);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 6, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: null},
-                {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
+            ;
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
-            await paymentPOSPage.wait(1000);
         }
     );
 
     test("[TC_0204075] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp All Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 2);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 2);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 4);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 6, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("MENU DISC RP ALL CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP ALL CATEGORY");
-            await paymentPOSPage.wait(1000);
         }
     );
 
     test("[TC_0204076] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 7);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 7);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("MENU DISC RP MENU");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU");
-            await paymentPOSPage.wait(1000);
         }
     );
 
     test("[TC_0204077] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 3);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 2);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 3);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 8);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(2000);
+            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY");
-            await paymentPOSPage.wait(1000);
         }
     );
 
     test("[TC_0204078] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 4);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 6);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 3);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 9);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 1, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY DETAIL");
-            await paymentPOSPage.wait(1000);
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY DETAIL");
-            await paymentPOSPage.wait(1000);
         }
     );
 
     test("[TC_0204079] Validate Logic When User Apply Promotion Head - Payment Pages -  Open Bill Dicount Rp",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 2);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 1, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT RP");
-            await paymentPOSPage.wait(1000);
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT RP", 400000);
-            await paymentPOSPage.wait(1000);
+            await promotionListComponent.wait(800);
         }
     );
 
     test("[TC_0204080] Validate Logic When User Apply Promotion Head - Payment Pages -  Open Bill Dicount %",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 10);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(1000);
+            await orderMenuPaketMahal();
             await orderPage.saveOrder();
             await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT %");
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT %", 60);
-            await paymentPOSPage.wait(1000);
+            await paymentPOSPage.wait(800);
         }
     );
 
     test("[TC_0204081] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Bill Rp",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 4);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 2);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 3);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 4, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("BILL DISCOUNT RP");
             await promotionListComponent.selectPromotion("BILL DISCOUNT RP");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204082] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % All Category",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 4);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 2);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 7);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("DISCOUNT % ALL CATEGORY");
             await promotionListComponent.selectPromotion("DISCOUNT % ALL CATEGORY");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204083] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % Menu",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 4);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("DISCOUNT % MENU");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204084] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % Menu Category",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 4);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 2);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204085] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % Menu Category Detail",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 5);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 4);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.whisky.name);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
-            await editOrderComponents.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 5);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(2000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY DETAIL");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204086] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Limit % Menu",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 10);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 4);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: 2, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(1000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204087] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Limit % Menu Category",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 10);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 5);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(1000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204088] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Limit % Menu Category Detail",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 10);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 8);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(1000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204089] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Menu Discount Rp All Category",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 10);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 7);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(1000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("MENU DISC RP ALL CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP ALL CATEGORY");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
@@ -1375,244 +851,100 @@ test.describe.serial("Quick Service Promotion", () => {
             //TODO :
             // need to check tentative error on awaiting for response API contain /get-menu-package
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 10);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 8);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(1000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("MENU DISC RP MENU");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204091] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Menu Discount Rp Menu Category",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 10);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(1000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204092] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Menu Discount Rp Menu Category Detail",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 10);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 8);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(1000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY DETAIL");
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204093] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Open Bill Dicount Rp",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 10);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 5);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(1000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT RP");
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT RP", 10000);
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
     test("[TC_0204094] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Open Bill Dicount %",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 10);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 10);
+            await orderMenuBiasa();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await editOrderComponents.escapeKeyboard();
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.actionButtonFooter("Next");
-            await editOrderComponents.selectMenuExtraCategory(MenuList.anggur.name);
-            await editOrderComponents.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 6);
-            await editOrderComponents.actionButtonFooter("Apply");
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
+            await orderMenuExtraAnggur();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 3, notes: null},
-                {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 1, notes: null},
-                {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await addOrderComponent.modifyMenuDetailPackage([
-                {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-                {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 3, notes: null}
-            ]);
-            await addOrderComponent.wait(2000);
-            await addOrderComponent.applyMenuDetailPackage();
-            await orderPage.wait(1000);
+            await orderMenuPaketMahal();
+            await orderMenuPaketMurah();
             await orderPage.addPromotion();
-            await orderPage.wait(2000);
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT %");
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT %", 70);
             await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.cancelTable("test");
-            await orderPage.confirmationCloseTable("Yes");
+            await cancelOrderQuickService();
         }
     );
 
