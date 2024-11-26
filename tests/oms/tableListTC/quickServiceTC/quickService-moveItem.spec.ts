@@ -11,6 +11,9 @@ import MoveItemComponents from "../../../../src/modules/oms/tableList/order/comp
 import Table from "../../../../src/modules/oms/objects/table";
 import MergeTableComponent
     from "../../../../src/modules/oms/tableList/order/components/mergeTable/mergeTable.component";
+import ToolsPage from "../../../../src/modules/oms/tools/tools.page";
+import ApplicationSettingPage from "../../../../src/modules/oms/tools/applicationSetting/applicationSetting.page";
+import {ToolsTabs} from "../../../../src/modules/oms/tools/ToolsTabs";
 
 test.setTimeout(100000);
 test.describe.serial("Quick Service Move Item", () => {
@@ -24,6 +27,8 @@ test.describe.serial("Quick Service Move Item", () => {
     let tableListPage: TableListPage;
     let moveItemComponents: MoveItemComponents;
     let mergeTableComponent: MergeTableComponent;
+    let toolsPage: ToolsPage;
+    let applicationSettingPage: ApplicationSettingPage;
 
     test.beforeEach(async ({page}) => {
         bookOrderComponent = new BookOrderComponent(page);
@@ -35,28 +40,58 @@ test.describe.serial("Quick Service Move Item", () => {
         tableListPage = new TableListPage(page);
         moveItemComponents = new MoveItemComponents(page);
         mergeTableComponent = new MergeTableComponent(page);
+        toolsPage = new ToolsPage(page);
+        applicationSettingPage = new ApplicationSettingPage(page);
 
         await terminalIdPage.navigateHere();
         await terminalIdPage.performTerminalID();
         await signPinPage.inputPinByTouch("22");
         await signPinPage.submitPin();
+        await sideNavBarComponents.gotoPageTools();
+        await toolsPage.selectTab(ToolsTabs.ApplicationSetting);
+        await applicationSettingPage.userSetStation();
+        await sideNavBarComponents.gotoPageTableList();
     });
 
     test.afterEach(async ({page}) => {
         // await tableListPage.deleteAllQuickService();
     });
 
+    const makeOrder = async (salesMode = "AT EXCLUSIVE", isQuickService = true) => {
+        await bookOrderComponent.selectSalesMode(salesMode);
+        if (isQuickService) {
+            await bookOrderComponent.applyQuickService();
+        } else {
+            await bookOrderComponent.bookAndOrder();
+        }
+        await bookOrderComponent.skipCustomerPhoneNumber();
+    };
+
+    const orderMenuBiasa = async (qty = 1) => {
+        await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+        await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+        await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty);
+        await orderPage.saveOrder();
+    };
+
+    const createQuickServiceAndMoveItem = async () => {
+        await sideNavBarComponents.gotoPageTableList();
+        await tableListPage.gotoQuickService();
+        await quickServiceListPage.selectSalesNum("last");
+        await orderPage.moveItem();
+        await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+        await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+        await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+        await moveItemComponents.actionApplyMoveItem();
+    };
+
+
     test("[TC_0204102] Validate Logic when User can Move Item to new Quick Service order from Quick Service to Quick Service",
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -71,13 +106,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -92,14 +122,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
-
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -114,14 +138,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
-
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -136,14 +154,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
-
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -157,14 +169,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
-
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -177,13 +183,8 @@ test.describe.serial("Quick Service Move Item", () => {
     test("[TC_0204108] Validate Logic when User can Navigate to the next Destination Table Page in Move Item",
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -196,13 +197,8 @@ test.describe.serial("Quick Service Move Item", () => {
     test("[TC_0204109] Validate Logic when User can Navigate to the previous Destination Table Page in Move Item",
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -216,13 +212,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -238,13 +229,8 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -260,13 +246,8 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -282,13 +263,8 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -303,13 +279,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -325,13 +296,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -349,13 +315,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -370,13 +331,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -391,13 +347,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -413,13 +364,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -434,13 +380,8 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -454,13 +395,8 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -473,13 +409,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@negative"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -493,13 +424,8 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -513,13 +439,8 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -546,13 +467,8 @@ test.describe.serial("Quick Service Move Item", () => {
             // Depend on ESB Core
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -569,9 +485,7 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
+            await makeOrder();
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
@@ -586,9 +500,7 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
+            await makeOrder();
         }
     );
 
@@ -596,13 +508,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -618,32 +525,13 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT INCLUSIVE", false);
+            await orderMenuBiasa(3);
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
+            await makeOrder("AT INCLUSIVE", true);
+            await orderMenuBiasa(3);
+            await createQuickServiceAndMoveItem();
         }
     );
 
@@ -651,29 +539,13 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
+            await makeOrder("AT INCLUSIVE", false);
             await orderPage.saveOrder();
-
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
+            await makeOrder("AT INCLUSIVE", true);
+            await orderMenuBiasa(3);
+            await createQuickServiceAndMoveItem();
         }
     );
 
@@ -681,24 +553,12 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT INCLUSIVE", false);
+            await orderMenuBiasa(3);
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT INCLUSIVE", true);
+            await orderMenuBiasa(3);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -713,21 +573,12 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
+            await makeOrder("AT INCLUSIVE", false);
             await orderPage.saveOrder();
-
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT INCLUSIVE", true);
+            await orderMenuBiasa(3);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -743,21 +594,12 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
+            await makeOrder("AT INCLUSIVE", false);
             await orderPage.saveOrder();
-
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT INCLUSIVE", true);
+            await orderMenuBiasa(3);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -773,21 +615,12 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
+            await makeOrder("AT INCLUSIVE", false);
             await orderPage.saveOrder();
-
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT INCLUSIVE", true);
+            await orderMenuBiasa(3);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -802,32 +635,13 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT EXCLUSIVE", true);
+            await orderMenuBiasa(3);
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
+            await makeOrder();
+            await orderMenuBiasa(3);
+            await createQuickServiceAndMoveItem();
         }
     );
 
@@ -835,24 +649,12 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT EXCLUSIVE", true);
+            await orderMenuBiasa(3);
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -867,24 +669,12 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT EXCLUSIVE", true);
+            await orderMenuBiasa(3);
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -899,24 +689,12 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT EXCLUSIVE", true);
+            await orderMenuBiasa(3);
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -931,24 +709,12 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT EXCLUSIVE", true);
+            await orderMenuBiasa(3);
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -964,24 +730,12 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@negative"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 3);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT INCLUSIVE", false);
+            await orderMenuBiasa(3);
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -994,21 +748,12 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@negative"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
+            await makeOrder("AT INCLUSIVE", false);
             await orderPage.saveOrder();
-
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
+            await makeOrder();
+            await orderMenuBiasa(5);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -1022,11 +767,8 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
+            await makeOrder();
             await orderPage.saveOrder();
-
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
             await quickServiceListPage.selectSalesNum("last");
@@ -1039,11 +781,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
+            await makeOrder("AT INCLUSIVE", false);
             await orderPage.saveOrder();
-
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
             await orderPage.mergeTable();
@@ -1051,25 +790,11 @@ test.describe.serial("Quick Service Move Item", () => {
             await mergeTableComponent.selectTable(Table.acRoom.ac1.name);
             await mergeTableComponent.applyMergeTable();
             await orderPage.saveOrder();
-
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT INCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
+            await makeOrder("AT INCLUSIVE", true);
+            await orderMenuBiasa(5);
+            await createQuickServiceAndMoveItem();
         }
     );
 
@@ -1077,11 +802,8 @@ test.describe.serial("Quick Service Move Item", () => {
         {tag: tags + "@positive"}, async ({page}) => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
+            await makeOrder("AT EXCLUSIVE", true);
             await orderPage.saveOrder();
-
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
             await orderPage.mergeTable();
@@ -1089,25 +811,11 @@ test.describe.serial("Quick Service Move Item", () => {
             await mergeTableComponent.selectTable(Table.acRoom.ac1.name);
             await mergeTableComponent.applyMergeTable();
             await orderPage.saveOrder();
-
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
+            await makeOrder();
+            await orderMenuBiasa(5);
+            await createQuickServiceAndMoveItem();
         }
     );
 
@@ -1116,11 +824,8 @@ test.describe.serial("Quick Service Move Item", () => {
             ////
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
+            await makeOrder("AT EXCLUSIVE", true);
             await orderPage.saveOrder();
-
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
             await orderPage.mergeTable();
@@ -1128,25 +833,11 @@ test.describe.serial("Quick Service Move Item", () => {
             await mergeTableComponent.selectTable(Table.acRoom.ac1.name);
             await mergeTableComponent.applyMergeTable();
             await orderPage.saveOrder();
-
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
+            await makeOrder();
+            await orderMenuBiasa(5);
+            await createQuickServiceAndMoveItem();
         }
     );
 
@@ -1155,151 +846,103 @@ test.describe.serial("Quick Service Move Item", () => {
             //// bisa
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT EXCLUSIVE", true);
+            await orderMenuBiasa(5);
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
+            await makeOrder();
+            await orderMenuBiasa(5);
+            await createQuickServiceAndMoveItem();
         }
     );
 
     test("[TC_0204147] Validate Logic when User cannot select billed table in Move Item from Quick Service to Dine-In",
         {tag: tags + "@negative"}, async ({page}) => {
-            ////
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.bookAndOrder();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
+            await makeOrder("AT EXCLUSIVE", true);
+            await orderMenuBiasa(5);
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac3.name);
             await orderPage.printBill();
             await orderPage.saveOrder();
-
             await quickServiceListPage.addOrderQuickService();
             await bookOrderComponent.setPax(2);
-            await bookOrderComponent.selectSalesMode("AT EXCLUSIVE");
-            await bookOrderComponent.applyQuickService();
-            await bookOrderComponent.skipCustomerPhoneNumber();
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 5);
-            await orderPage.saveOrder();
-
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
+            await makeOrder();
+            await orderMenuBiasa(5);
+            await createQuickServiceAndMoveItem();
         }
     );
 
     test("[TC_0204148] Validate Logic when User can Move Item to Child Merge Table from Quick Service to Dine-In",
         {tag: tags + "@positive"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            //  2. Open other transaction Dine In Merge Table
-            //  3. Order menu
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Dine In
-            //  8. Select transaction Dine In child merge table
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await makeOrder("AT EXCLUSIVE", true);
+            await orderMenuBiasa(5);
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await orderPage.printBill();
+            await orderPage.saveOrder();
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await makeOrder();
+            await orderMenuBiasa(5);
+            await createQuickServiceAndMoveItem();
         }
     );
 
     test("[TC_0204149] Validate Logic when User cannot Move Item to emptied order from Quick Service to Dine-In Child Merge Table with different sales mode",
         {tag: tags + "@negative"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            //  2. Open other transaction Dine In Merge Table
-            //  3. Sales Mode Inclusive
-            //  4. Not Order menu
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode Not Inclusive
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Dine In
-            //  8. Select transaction Dine In child merge table
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await makeOrder("AT EXCLUSIVE", true);
+            await orderMenuBiasa(5);
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await orderPage.printBill();
+            await orderPage.saveOrder();
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await makeOrder();
+            await orderMenuBiasa(5);
+            await createQuickServiceAndMoveItem();
         }
     );
 
     test("[TC_0204150] Validate Logic when User cannot Move Item to filled table from Child Merge Table from Quick Service to Dine-In with different sales mode",
         {tag: tags + "@negative"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            //  2. Open other transaction Dine In Merge Table
-            //  3. Sales Mode Inclusive
-            //  4. Order menu
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode Not Inclusive
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Dine In
-            //  8. Select transaction Dine In child merge table
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await makeOrder("AT EXCLUSIVE", false);
+            await orderMenuBiasa(5);
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await orderPage.printBill();
+            await orderPage.saveOrder();
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await makeOrder();
+            await orderMenuBiasa(5);
+            await createQuickServiceAndMoveItem();
         }
     );
 
     test("[TC_0204151] Validate Logic when User cannot Move Item from Quick Service to Dine-In while having no ordered items and not saving order first",
         {tag: tags + "@negative"}, async ({page}) => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            //  6. Click button Move Item
-            //  7. Click section Dine In
-            //  8. Select transaction Dine In child merge table
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await makeOrder("AT EXCLUSIVE", true);
+            await orderMenuBiasa(5);
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac3.name);
+            await orderPage.printBill();
+            await orderPage.saveOrder();
+            await quickServiceListPage.addOrderQuickService();
+            await bookOrderComponent.setPax(2);
+            await makeOrder();
+            await orderMenuBiasa(5);
+            await createQuickServiceAndMoveItem();
         }
     );
 });
