@@ -14,6 +14,7 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
     }
 
     async addOrderQuickService(): Promise<void> {
+        await this.click(QuickServiceListLocator.sectionQuickService);
         await this.expectVisible(QuickServiceListLocator.buttonAddQuickService);
         await this.click(QuickServiceListLocator.buttonAddQuickService);
 
@@ -33,6 +34,15 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
 
     }
 
+    async selectSalesNum(salesNum: string | "first" | "last"): Promise<void> {
+        await this.expectVisible(QuickServiceListLocator.quickServiceSalesNum(salesNum));
+        await this.click(QuickServiceListLocator.quickServiceSalesNum(salesNum));
+    }
+
+    async quickServiceHasData(): Promise<boolean> {
+        return await this.isVisible(QuickServiceListLocator.quickServiceSalesNum("first"));
+    }
+
     async clickTopSalesNum(): Promise<void> {
         const salesNums = await this.fetchSalesNums();
         if (salesNums.length === 0) {
@@ -46,17 +56,27 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
         await this.click(topSalesNumLocator);
     }
 
+    async gotoLastPage(): Promise<void> {
+        await this.expectVisible(QuickServiceListLocator.getLocatorPagination("Last page"));
+        await this.click(QuickServiceListLocator.getLocatorPagination("Last page"));
+    }
+
     async clickLastSalesNum(): Promise<void> {
         const salesNums = await this.fetchSalesNums();
         if (salesNums.length === 0) {
             throw new Error("No salesNums found in the response");
         }
-
         const lastSalesNum = salesNums[salesNums.length - 1];
         console.log(`Last salesNum: ${lastSalesNum}`);
         const lastSalesNumLocator = `//td[normalize-space()='${lastSalesNum}']`;
-        await this.expectVisible(lastSalesNumLocator);
-        await this.click(lastSalesNumLocator);
+        try {
+            await this.expectVisible(lastSalesNumLocator);
+            await this.click(lastSalesNumLocator);
+        } catch (error) {
+            console.warn(`Last salesNum not found, navigating to the last page. Error: ${error.message}`);
+            await this.gotoLastPage();
+            await this.expectVisible(lastSalesNumLocator);
+            await this.click(lastSalesNumLocator);
+        }
     }
-
 }

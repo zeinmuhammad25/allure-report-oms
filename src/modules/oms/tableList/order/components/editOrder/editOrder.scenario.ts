@@ -18,4 +18,18 @@ export default interface EditOrderScenario extends BaseScenario {
     actionPlusPackageItems(menuName: string): Promise<void>;
 
     actionMinusPackageItems(menuName: string): Promise<void>;
+
+    escapeKeyboard(): Promise<void>;
+
+    selectMenuExtraCategory(menuName: string): Promise<void>;
+
+    selectMenuExtra(menuName: string): Promise<void>;
+
+    inputNotesMenuInvisible(): Promise<void>;
+
+    inputPriceMenu(price: string): Promise<void>;
+
+    inputCustomMenuName(menuName: string): Promise<void>;
+
+    inputNotesOpenPrice(notes: string): Promise<void>;
 }

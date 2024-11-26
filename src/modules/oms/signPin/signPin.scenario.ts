@@ -13,4 +13,8 @@ export default interface signPinScenario extends BaseScenario {
     submitPinValidateStartDayNo(): Promise<void>;
 
     submitPinNoUnregisteredUser(): Promise<void>;
+
+    submitPin(): Promise<void>;
+
+    validateShowStarCash(inputCash: string): Promise<void>;
 }

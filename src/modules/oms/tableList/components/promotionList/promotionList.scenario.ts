@@ -3,7 +3,7 @@ import BaseScenario from "../../../../../base/base-scenario";
 export default interface PromotionListScenario extends BaseScenario {
     searchPromotion(keyword: string): Promise<void>;
 
-    selectPromotion(promotionID: string): Promise<void>;
+    selectPromotion(promotionName: string, value?: number): Promise<void>;
 
     selectPromotionType(promotionType: string): Promise<void>;
 

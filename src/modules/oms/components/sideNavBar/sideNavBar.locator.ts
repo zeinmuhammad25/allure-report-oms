@@ -3,8 +3,8 @@ import BaseLocator from "../../../../base/base-locator";
 export default class SideNavBarLocator extends BaseLocator {
 
     //hideSideNav
-    static getLocatorHideNavBar = (key: string): string => `//a[@class='d-flex align-items-center' and @href='/fnb-pos-v2/en${key}']`;
-    static hideNavBarOthers: string = "//a[@aria-haspopup='true']";
+    static getSideNavBarButtons = (key: string): string => `//a[@href='/fnb-pos-v2/en${key}']`;
+    static sideNavBarOthersButton: string = "//a[@aria-haspopup='true']";
     //showSideNav
     static getLocatorShowNavBar = (key: string): string => `//a[normalize-space()='${key}']`;
     //menuOthers

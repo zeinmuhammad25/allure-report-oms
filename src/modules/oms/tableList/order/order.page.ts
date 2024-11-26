@@ -39,19 +39,31 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.click(OrderLocator.editTableButton);
     }
 
+    async addPromotion(): Promise<void> {
+        await this.expectVisible(OrderLocator.addPromotionButton);
+        await this.click(OrderLocator.addPromotionButton);
+    }
+
     async selectCategoryMenu(categoryName: string): Promise<void> {
-        await this.expectVisible(OrderLocator.menuButton(categoryName));
-        await this.click(OrderLocator.menuButton(categoryName));
+        await this.expectVisible(OrderLocator.categoryButton(categoryName));
+        await this.click(OrderLocator.categoryButton(categoryName));
     }
 
     async selectCategoryDetailMenu(categoryDetailName: string): Promise<void> {
-        await this.expectVisible(OrderLocator.menuButton(categoryDetailName));
-        await this.click(OrderLocator.menuButton(categoryDetailName));
+        await this.expectVisible(OrderLocator.categoryButton(categoryDetailName));
+        await this.click(OrderLocator.categoryButton(categoryDetailName));
     }
 
-    async selectMenu(menuName: string): Promise<void> {
+    async selectMenu(menuName: string, qty?: number): Promise<void> {
         await this.expectVisible(OrderLocator.menuButton(menuName));
-        await this.click(OrderLocator.menuButton(menuName));
+        if (typeof qty === "number") {
+            for (let i = 0; i < qty; i++) {
+                await this.click(OrderLocator.menuButton(menuName));
+                await this.wait(200);
+            }
+        } else {
+            await this.click(OrderLocator.menuButton(menuName));
+        }
     }
 
     async deleteMenu(menuName: string): Promise<void> {
@@ -83,14 +95,70 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.waitForResponse("/order/print-all-checker");
     }
 
+    async mergeTable(): Promise<void> {
+        await this.expectVisible(OrderLocator.mergeTableButton);
+        await this.click(OrderLocator.mergeTableButton);
+    }
+
+    async moveTable(): Promise<void> {
+        const locatorMoveTable = await this.isVisible(OrderLocator.moveTableButton)
+            ? OrderLocator.moveTableButton
+            : OrderLocator.moveToTableButton;
+
+        await this.expectVisible(locatorMoveTable);
+        await this.click(locatorMoveTable);
+    }
+
+    async expectDisabledMoveTable(): Promise<void> {
+        const locatorMoveTable = await this.isVisible(OrderLocator.moveToTableDisabledButton)
+            ? OrderLocator.moveToTableDisabledButton
+            : OrderLocator.moveTableDisabledButton;
+        await this.expectVisible(locatorMoveTable);
+    }
+
+    async moveItem(): Promise<void> {
+        await this.expectVisible(OrderLocator.moveItemButton);
+        await this.click(OrderLocator.moveItemButton);
+    }
+
+    async linkTable(): Promise<void> {
+        await this.expectVisible(OrderLocator.linkTableButton);
+        await this.click(OrderLocator.linkTableButton);
+    }
+
     async cancelTable(notes: string): Promise<void> {
-        await this.expectVisible(OrderLocator.cancelTableButton);
-        await this.click(OrderLocator.cancelTableButton);
+        await this.wait(300);
+        const cancelButtonLocator = await this.isVisible(OrderLocator.cancelTableButton) ? OrderLocator.cancelTableButton : OrderLocator.cancelOrderButton;
+
+        await this.expectVisible(cancelButtonLocator);
+        await this.click(cancelButtonLocator);
         await this.expectVisible(OrderLocator.cancelReasonTextArea);
         await this.click(OrderLocator.cancelReasonTextArea);
         await this.fill(OrderLocator.cancelReasonTextArea, notes);
         await this.click(OrderLocator.cancelTablePanel);
         await this.click(OrderLocator.cancelReasonApplyButton);
+    }
+
+    async clickMenuDetail(menu: string): Promise<void> {
+        await this.expectVisible(OrderLocator.clickMenu(menu));
+        await this.click(OrderLocator.clickMenu(menu));
+    }
+
+    async cancelMenuAfterSave(notes: string): Promise<void> {
+        await this.expectVisible(OrderLocator.cancelMenuAfterSave);
+        await this.click(OrderLocator.cancelMenuAfterSave);
+        await this.fill(OrderLocator.cancelMenuAfterSave, notes);
+    }
+
+    async confirmationCloseTable(action: "Yes" | "No"): Promise<void> {
+        await this.expectVisible(OrderLocator.buttonConfirmCloseTable(action));
+        await this.click(OrderLocator.buttonConfirmCloseTable(action));
+        await this.waitForResponse("/table");
+    }
+
+    async validateMenuNotVisible(menu: string): Promise<void> {
+        await this.expectInvisible(OrderLocator.clickMenu(menu));
+        console.warn(`Validation passed: Menu "${menu}" is now invisible.`);
     }
 
 }

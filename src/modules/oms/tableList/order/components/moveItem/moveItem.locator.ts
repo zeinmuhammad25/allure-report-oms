@@ -17,7 +17,7 @@ export default class MoveItemLocator extends BaseLocator {
     static buttonArrowDown = "//button[contains(@class, 'mr-2')]//i[contains(@class, 'glyphicon-arrow-down')]";
     static buttonSaveOrder = "//span[contains(text(),'Save Order')]";
     static buttonApplyBookTable = "//button[@type='button']//span[@class='mat-button-wrapper'][normalize-space()='Apply']";
-    static escapeKeyboard = "//h4[normalize-space()='Book Table (New Quick Service)']";
+    static escapeKeyboard = "//h4[contains(text(),'Book Table (')]";
     static getLocatorButtonActionFooter = (actionName: string): string => `//span[normalize-space()='${actionName}']`;
     static verifyMenu = (menuName: string): string => `//cdk-virtual-scroll-viewport//*[contains(text(), '${menuName}')]`;
     static verifyQtyMenu = (menuName: string): string => `//div[@class='d-flex table-cell hover ng-star-inserted' 
@@ -30,4 +30,8 @@ export default class MoveItemLocator extends BaseLocator {
     static buttonMoveAll = (menuName: string): string => `//div[div[contains(text(), '${menuName}')]]
     /following-sibling::div//button//span[normalize-space()='Move All']`;
 
+    static paginationButtons = (action: "next" | "previous"): string => "//app-item-move//app-grid-pager//button"
+        + (action === "next" ? "[1]" : "[2]");
+    static tableButton = (buttonName: string): string => `//app-item-move//button[normalize-space()='${buttonName}']`;
+    static tableButtonDisabled = (buttonName: string): string => `//app-item-move//button[@disabled and normalize-space()='${buttonName}']`;
 }

@@ -2,6 +2,7 @@ import PromotionListScenario from "./promotionList.scenario";
 import BaseOmsPage from "../../../base-oms-page";
 import Element from "../../../../../base/objects/Element";
 import PromotionListLocator from "./promotionList.locator";
+import {type} from "node:os";
 
 
 export default class PromotionListComponent extends BaseOmsPage implements PromotionListScenario {
@@ -21,8 +22,23 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
         await this.fill(PromotionListLocator.searchPromoField, keyword);
     }
 
-    async selectPromotion(promotionID: string): Promise<void> {
-        // No Data need more data to simulate element
+    private formatNumber(value: number): string {
+        const number = parseInt(value.toString(), 10);
+        return new Intl.NumberFormat("de-DE").format(number);
+    };
+
+    async selectPromotion(promotionName: string, value?: number): Promise<void> {
+        await this.expectVisible(PromotionListLocator.promotionByName(promotionName));
+        await this.click(PromotionListLocator.promotionByName(promotionName));
+        await this.wait(200);
+        const hasOpenBillDialog = await this.isVisible(PromotionListLocator.openBillDiscountPanel);
+        if (hasOpenBillDialog && typeof value === "number") {
+            await this.expectVisible(PromotionListLocator.openBillDiscountField);
+            await this.click(PromotionListLocator.openBillDiscountField);
+            await this.fill(PromotionListLocator.openBillDiscountField, this.formatNumber(value));
+            await this.click(PromotionListLocator.openBillDiscountApplyButton);
+        }
+        await this.click(PromotionListLocator.applyButton);
     }
 
     async selectPromotionType(promotionType: string): Promise<void> {
@@ -30,7 +46,6 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
         await this.click(PromotionListLocator.promotionTypeDropdown);
         await this.expectVisible(PromotionListLocator.promotionTypeOption(promotionType));
         await this.click(PromotionListLocator.promotionTypeOption(promotionType));
-        await this.click(PromotionListLocator.applyButton);
     }
 
     async gotoPromotionPage(type: "first" | "previous" | "next" | "last"): Promise<void> {

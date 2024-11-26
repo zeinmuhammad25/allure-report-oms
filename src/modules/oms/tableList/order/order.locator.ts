@@ -11,20 +11,36 @@ export default class OrderLocator extends BaseLocator {
     static editTableApplyButton: string = "//app-table-open//button//span[normalize-space()='Apply']";
     static editTablePaxField: string = "(//app-number-input//input)[1]";
     static editTableTimeOutField: string = "(//app-number-input//input)[2]";
+    static addPromotionButton: string = "//button[span[normalize-space()='Add Promotion']]";
 
-    static menuButton = (menu: string): string => `//app-grid-menu//button//div[normalize-space()='${menu}']`;
+    static clickMenu = (menu: string): string => `//div[contains(@class, 'd-flex table-cell hover')]//span[contains(text(), '${menu}')]`;
+    static buttonConfirmCloseTable = (action: string): string => `//span[normalize-space()='${action}']`;
+    static categoryButton = (category: string): string => `//app-grid-menu//button//div[normalize-space()='${category}']`;
+    static menuButton = (menu: string): string => `//app-grid-menu//button//div[contains(text(),'${menu}')]`;
     static deleteMenuButton = (menu: string): string =>
         `//app-order-list//div[span[normalize-space()='${menu}']]`
         + "/following-sibling::div//button[//i[@class='glyphicon glyphicon-remove']]";
 
     private static bottomButton = (label: string): string => `//button[normalize-space()='${label}']`;
+    private static bottomDisabledButton = (label: string): string => `//button[@disabled and normalize-space()='${label}']`;
     static saveOrderButton: string = this.bottomButton("Save Order");
     static printBillButton: string = this.bottomButton("Print Bill");
     static printCheckerButton: string = this.bottomButton("Checker");
+
+    static mergeTableButton: string = this.bottomButton("Merge Table");
+    static moveTableButton: string = this.bottomButton("Move Table");
+    static moveToTableButton: string = this.bottomButton("Move to Table");
+    static moveTableDisabledButton: string = this.bottomDisabledButton("Move Table");
+    static moveToTableDisabledButton: string = this.bottomDisabledButton("Move to Table");
+    static moveItemButton: string = this.bottomButton("Move Item");
+    static linkTableButton: string = this.bottomButton("Link Table");
+
     static cancelTableButton: string = this.bottomButton("Cancel Table");
+    static cancelOrderButton: string = this.bottomButton("Cancel Order");
     static cancelTablePanel: string = "//app-table-cancel";
     static cancelReasonTextArea: string = "//app-table-cancel//textarea";
     static cancelReasonApplyButton: string = "//app-table-cancel//button[normalize-space()='Apply']";
     static cancelReasonCancelButton: string = "//app-table-cancel//button[normalize-space()='Cancel']";
     static orderPanel: string = "//app-order";
+    static cancelMenuAfterSave: string = "//textarea[contains(@class, 'form-control input-text-notes')]";
 }
