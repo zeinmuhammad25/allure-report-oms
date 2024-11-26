@@ -56,7 +56,7 @@ test.describe.serial("Quick Service Promotion", () => {
         await bookOrder.skipCustomerPhoneNumber();
     });
 
-    const orderMenuBiasa = async () => {
+    const orderSingleMenu = async () => {
         await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
         await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 4);
         await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 6);
@@ -121,7 +121,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204053] Validate Logic When User Apply Promotion Head - Order Pages- Discount Bill Rp",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
@@ -138,7 +138,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204054] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % All Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
@@ -157,7 +157,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204055] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
@@ -176,7 +176,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204056] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
@@ -196,7 +196,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204057] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
@@ -218,7 +218,7 @@ test.describe.serial("Quick Service Promotion", () => {
             //TODO :
             // need to check tentative error on awaiting for response API contain /get-menu-package
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
@@ -238,7 +238,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204059] Validate Logic When User Apply Promotion Head - Order Pages - Discount Limit % Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
@@ -256,7 +256,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204060] Validate Logic When User Apply Promotion Head - Order Pages - Discount Limit % Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
@@ -275,7 +275,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204061] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp All Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
@@ -294,7 +294,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204062] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp Menu",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 8);
@@ -314,7 +314,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204063] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 10);
@@ -333,7 +333,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204064] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 12);
@@ -352,7 +352,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204065] Validate Logic When User Apply Promotion Head - Order Pages - Open Bill Dicount Rp",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 7);
@@ -371,7 +371,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204066] Validate Logic When User Apply Promotion Head - Order Pages - Open Bill Dicount %",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
@@ -390,7 +390,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204067] Validate Logic When User Apply Promotion Head - Payment Pages - Discount Bill Rp",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
@@ -412,7 +412,7 @@ test.describe.serial("Quick Service Promotion", () => {
             //TODO :
             // need to check tentative error on apply promotion and manu paket
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
@@ -431,7 +431,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204069] Validate Logic When User Apply Promotion Head - Payment Pages - Discount % Menu",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 15);
@@ -451,7 +451,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204070] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount % Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
@@ -471,7 +471,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204071] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount % Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
@@ -491,7 +491,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204072] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
@@ -510,7 +510,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204073] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 9);
@@ -530,7 +530,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204074] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
@@ -550,7 +550,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204075] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp All Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
@@ -570,7 +570,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204076] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 7);
@@ -590,7 +590,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204077] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu Category",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 8);
@@ -610,7 +610,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204078] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu Category Detail",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 9);
@@ -630,7 +630,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204079] Validate Logic When User Apply Promotion Head - Payment Pages -  Open Bill Dicount Rp",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
@@ -650,7 +650,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204080] Validate Logic When User Apply Promotion Head - Payment Pages -  Open Bill Dicount %",
         {tag: tags + "@positive"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
@@ -670,7 +670,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204081] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Bill Rp",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
@@ -690,7 +690,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204082] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % All Category",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 7);
@@ -709,7 +709,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204083] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % Menu",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
@@ -729,7 +729,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204084] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % Menu Category",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
@@ -749,7 +749,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204085] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % Menu Category Detail",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
@@ -769,7 +769,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204086] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Limit % Menu",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
@@ -789,7 +789,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204087] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Limit % Menu Category",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
@@ -809,7 +809,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204088] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Limit % Menu Category Detail",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 8);
@@ -829,7 +829,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204089] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Menu Discount Rp All Category",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
@@ -851,7 +851,7 @@ test.describe.serial("Quick Service Promotion", () => {
             //TODO :
             // need to check tentative error on awaiting for response API contain /get-menu-package
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
@@ -871,7 +871,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204091] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Menu Discount Rp Menu Category",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
@@ -891,7 +891,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204092] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Menu Discount Rp Menu Category Detail",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
@@ -911,7 +911,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204093] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Open Bill Dicount Rp",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
@@ -931,7 +931,7 @@ test.describe.serial("Quick Service Promotion", () => {
     test("[TC_0204094] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Open Bill Dicount %",
         {tag: tags + "@negative"}, async ({page}) => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuBiasa();
+            await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
