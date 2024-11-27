@@ -11,22 +11,28 @@ export default class MergeTableComponent extends BaseOmsPage implements MergeTab
     }
 
     async selectRoom(roomName: string): Promise<void> {
-        await this.expectVisible(MergeTableLocator.tableButton(roomName))
-        await this.click(MergeTableLocator.tableButton(roomName))
+        await this.expectVisible(MergeTableLocator.tableButton(roomName));
+        await this.click(MergeTableLocator.tableButton(roomName));
     }
 
     async selectTable(tableName: string): Promise<void> {
-        await this.expectVisible(MergeTableLocator.tableButton(tableName))
-        await this.click(MergeTableLocator.tableButton(tableName))
+        await this.expectVisible(MergeTableLocator.tableButton(tableName));
+        await this.click(MergeTableLocator.tableButton(tableName));
     }
 
-    async applyMergeTable(): Promise<void> {
-        await this.expectVisible(MergeTableLocator.applyButton)
-        await this.click(MergeTableLocator.applyButton)
+    async applyMergeTable(actionOccupied: boolean = true): Promise<void> {
+        await this.expectVisible(MergeTableLocator.applyButton);
+        await this.click(MergeTableLocator.applyButton);
+        if (await this.isVisible(MergeTableLocator.popUpOccupied)) {
+            const actionLocator = actionOccupied ? MergeTableLocator.yesOccupied : MergeTableLocator.noOccupied;
+            await this.expectVisible(actionLocator);
+            await this.click(actionLocator);
+        }
     }
 
     async cancelMergeTable(): Promise<void> {
-        await this.expectVisible(MergeTableLocator.applyButton)
-        await this.click(MergeTableLocator.applyButton)
+        await this.expectVisible(MergeTableLocator.cancelButton);
+        await this.click(MergeTableLocator.cancelButton);
     }
+
 }
