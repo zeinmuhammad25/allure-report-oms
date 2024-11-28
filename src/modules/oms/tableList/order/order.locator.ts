@@ -17,9 +17,14 @@ export default class OrderLocator extends BaseLocator {
     static buttonConfirmCloseTable = (action: string): string => `//span[normalize-space()='${action}']`;
     static categoryButton = (category: string): string => `//app-grid-menu//button//div[normalize-space()='${category}']`;
     static menuButton = (menu: string): string => `//app-grid-menu//button//div[contains(text(),'${menu}')]`;
-    static deleteMenuButton = (menu: string): string =>
-        `//app-order-list//div[span[normalize-space()='${menu}']]`
-        + "/following-sibling::div//button[//i[@class='glyphicon glyphicon-remove']]";
+    static deleteMenuButton = (menu: string): string => `//app-order-list//div[span[normalize-space()='${menu}']]` +
+        "/following-sibling::div//button[@color='danger']//i[@class='glyphicon glyphicon-remove']";
+    static holdMenuButton = (menu: string): string => `//app-order-list//div[span[normalize-space()='${menu}']]` +
+        "/following-sibling::div//button//img[@src='assets/images/hold.png']";
+    static holdAllMenuButton: string = "//span[contains(text(), 'Hold All')]";
+    static fireMenuButton = (menu: string): string => ` //app-order-list//div[span[normalize-space()='${menu}']]` +
+        "/following-sibling::div//button//img[@src='assets/images/fire.png']";
+    static fireAllMenuButton: string = "//span[contains(text(), 'Fire All')]";
 
     private static bottomButton = (label: string): string => `//button[normalize-space()='${label}']`;
     private static bottomDisabledButton = (label: string): string => `//button[@disabled and normalize-space()='${label}']`;
