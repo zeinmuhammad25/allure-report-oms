@@ -120,7 +120,7 @@ test.describe.serial("Quick Service Add Order", () => {
 
         await terminalIdPage.navigateHere();
         await terminalIdPage.performTerminalID();
-        await signPinPage.wait(2000);
+        await signPinPage.wait(800);
         await signPinPage.inputPinByTouch("22");
         await signPinPage.validateShowStarCash("20.000");
         await tableListPage.gotoQuickService();
@@ -140,9 +140,9 @@ test.describe.serial("Quick Service Add Order", () => {
     test("[TC_0204002] Validate Logic When User Able To Add Menu Paket",
         {tag: tag + "@positive"}, async () => {
             await selectMenuPaket();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -164,7 +164,7 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
             await editOrderComponents.editQtySelector(2);
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -173,10 +173,10 @@ test.describe.serial("Quick Service Add Order", () => {
             await selectMenuPaket();
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.clickMenuDetail(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await editOrderComponents.editQtySelector(2);
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -191,27 +191,27 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.clickMenuDetail(MenuList.menus.atMenuExtraAlpha.name);
             await editOrderComponents.editQtySelector(2);
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204007] Validate Logic When User Able To Delete Menu Biasa Sebelum Save Order",
         {tag: tag + "@positive"}, async () => {
             await selectMenuBiasa();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.deleteMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await orderPage.wait(3000);
+            await orderPage.wait(800);
             await orderPage.validateMenuNotVisible(MenuList.menus.atMenuBiasaGoreng.name);
         });
 
     test("[TC_0204008] Validate Logic When User Able To Delete Menu Paket Sebelum Save Order",
         {tag: tag + "@positive"}, async () => {
             await selectMenuPaket();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.validateMenuNotVisible(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
         });
 
@@ -223,29 +223,28 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItems();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.deleteMenu(MenuList.menus.atMenuExtraAlpha.name);
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.validateMenuNotVisible(MenuList.menus.atMenuExtraAlpha.name);
         });
 
     test("[TC_0204010] Validate Logic When User Able To Delete Menu Biasa Sesudah Save Order",
         {tag: tag + "@positive"}, async () => {
             await selectMenuBiasa();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(800);
             await orderPage.deleteMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.cancelMenuAfterSave("CANCEL MENU");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await orderPage.confirmationCloseTable("Yes");
         });
@@ -253,21 +252,20 @@ test.describe.serial("Quick Service Add Order", () => {
     test("[TC_0204011] Validate Logic When User Able To Delete Menu Paket Sesudah Save Order",
         {tag: tag + "@positive"}, async () => {
             await selectMenuPaket();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(800);
             await orderPage.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.cancelMenuAfterSave("CANCEL MENU");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await orderPage.confirmationCloseTable("Yes");
         });
@@ -280,19 +278,18 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItems();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(800);
             await orderPage.deleteMenu(MenuList.menus.atMenuExtraAlpha.name);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.cancelMenuAfterSave("CANCEL MENU");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await orderPage.confirmationCloseTable("Yes");
         });
@@ -300,37 +297,35 @@ test.describe.serial("Quick Service Add Order", () => {
     test("[TC_0204013] Validate Logic When User Able To Edit Qty Menu Biasa After Save Order > Increase Qty",
         {tag: tag + "@positive"}, async () => {
             await selectMenuBiasa(true, 3);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
             await editOrderComponents.editQtySelector(7);
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204014] Validate Logic When User Able To Edit Qty Menu Paket After Save Order > Increase Qty",
         {tag: tag + "@positive"}, async () => {
             await selectMenuPaket();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
             await editOrderComponents.editQtySelector(7);
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -342,63 +337,60 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItems();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.atMenuExtraAlpha.name);
             await editOrderComponents.editQtySelector(7);
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204016] Validate Logic When User Able To Edit Qty Menu Biasa After Save Order > Decrease Qty",
         {tag: tag + "@positive"}, async () => {
             await selectMenuBiasa(true, 5);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
             await editOrderComponents.editQtySelector(3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.cancelMenuAfterSave("Decrease Qty");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204017] Validate Logic When User Able To Edit Qty Menu Paket After Save Order > Decrease Qty",
         {tag: tag + "@positive"}, async () => {
             await selectMenuPaket();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Back");
             await editOrderComponents.actionButtonFooter("Back");
             await editOrderComponents.editQtySelector(5);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
             await editOrderComponents.editQtySelector(3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.cancelMenuAfterSave("Decrease Qty");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -410,20 +402,19 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItems();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.atMenuExtraAlpha.name);
             await editOrderComponents.editQtySelector(3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.cancelMenuAfterSave("Decrease Qty");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -434,20 +425,20 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.inputNotesMenu("Notes Menu Single");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204020] Validate Logic When User Able To Add Menu Paket With Notes Before Save Order",
         {tag: tag + "@positive"}, async () => {
             await selectMenuPaket();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Back");
             await editOrderComponents.actionButtonFooter("Back");
             await editOrderComponents.inputNotesMenu("Notes Menu Package");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -460,42 +451,40 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItems();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204022] Validate Logic When User Able To Edit Menu Biasa With Notes After Save Order",
         {tag: tag + "@negative"}, async () => {
             await selectMenuBiasa();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await editOrderComponents.inputNotesMenuInvisible();
         });
 
     test("[TC_0204023] Validate Logic When User Able To Edit Menu Paket With Notes After Save Order",
         {tag: tag + "@negative"}, async () => {
             await selectMenuPaket();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await editOrderComponents.inputNotesMenuInvisible();
         });
 
@@ -507,15 +496,14 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItems();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.atMenuExtraAlpha.name);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await editOrderComponents.inputNotesMenuInvisible();
         });
 
@@ -531,57 +519,55 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.shortName);
             await editOrderComponents.editQtySelector(2);
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204027] Validate Logic When User Able To Edit Qty Menu Biasa Special Price After Save",
         {tag: tag + "@positive"}, async () => {
             await selectMenuBiasaSpecialPrice(true, 5);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.shortName);
             await editOrderComponents.editQtySelector(3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.cancelMenuAfterSave("Decrease Qty");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204028] Validate Logic When User Able To Delete Menu Biasa Special Price Before Save",
         {tag: tag + "@positive"}, async () => {
             await selectMenuBiasaSpecialPrice();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.deleteMenu(MenuList.menus.menuSpecialPriceDelights.shortName);
-            await orderPage.wait(3000);
+            await orderPage.wait(300);
             await orderPage.validateMenuNotVisible(MenuList.menus.menuSpecialPriceDelights.shortName);
         });
 
     test("[TC_0204029] Validate Logic When User Able To Delete Menu Biasa Special Price After Save",
         {tag: tag + "@positive"}, async () => {
             await selectMenuBiasaSpecialPrice();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(800);
             await orderPage.deleteMenu(MenuList.menus.menuSpecialPriceDelights.shortName);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.cancelMenuAfterSave("CANCEL MENU SPECIAL PRICE");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await orderPage.confirmationCloseTable("Yes");
         });
@@ -593,32 +579,31 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.inputNotesMenu("Notes Menu Single Special Price");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204031] Validate Logic When User Able To Add Menu Biasa Special Price With Notes After Save",
         {tag: tag + "@negative"}, async () => {
             await selectMenuBiasaSpecialPrice();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.shortName);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await editOrderComponents.inputNotesMenuInvisible();
         });
 
     test("[TC_0204032] Validate Logic When User Able To Add Menu Paket Special Price",
         {tag: tag + "@positive"}, async () => {
             await selectMenuPaketSpecialPrice();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -627,66 +612,64 @@ test.describe.serial("Quick Service Add Order", () => {
             await selectMenuPaketSpecialPrice();
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.clickMenuDetail(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await editOrderComponents.editQtySelector(5);
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204034] Validate Logic When User Able To Edit Qty Menu Paket Special Price After Save",
         {tag: tag + "@positive"}, async () => {
             await selectMenuPaketSpecialPrice();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Back");
             await editOrderComponents.editQtySelector(5);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
             await editOrderComponents.editQtySelector(3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.cancelMenuAfterSave("Decrease Qty Special Price");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204035] Validate Logic When User Able To Delete Menu Paket Special Price Before Save",
         {tag: tag + "@positive"}, async () => {
             await selectMenuPaketSpecialPrice();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(800);
             await orderPage.deleteMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.validateMenuNotVisible(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
         });
 
     test("[TC_0204036] Validate Logic When User Able To Delete Menu Paket Special Price After Save",
         {tag: tag + "@positive"}, async () => {
             await selectMenuPaketSpecialPrice();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(800);
             await orderPage.deleteMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.cancelMenuAfterSave("CANCEL MENU");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await orderPage.confirmationCloseTable("Yes");
         });
@@ -694,29 +677,28 @@ test.describe.serial("Quick Service Add Order", () => {
     test("[TC_0204037] Validate Logic When User Able To Add Menu Paket Special Price With Notes Before Save",
         {tag: tag + "@positive"}, async () => {
             await selectMenuPaketSpecialPrice();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Back");
             await editOrderComponents.inputNotesMenu("Notes Menu Package Special Price");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
     test("[TC_0204038] Validate Logic When User Able To Add Menu Paket Special Price With Notes After Save",
         {tag: tag + "@negative"}, async () => {
             await selectMenuPaketSpecialPrice();
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await editOrderComponents.inputNotesMenuInvisible();
         });
 
@@ -738,7 +720,7 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
             await editOrderComponents.editQtySelector(5);
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -751,20 +733,19 @@ test.describe.serial("Quick Service Add Order", () => {
             await orderPage.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
             await editOrderComponents.editQtySelector(5);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
             await editOrderComponents.editQtySelector(3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.cancelMenuAfterSave("Decrease Qty Open Price");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -774,9 +755,9 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.inputPriceMenu("20.000");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.deleteMenu(MenuList.menus.menuOpenPriceChoices.shortName);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.validateMenuNotVisible(MenuList.menus.menuOpenPriceChoices.shortName);
         });
 
@@ -786,19 +767,18 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.inputPriceMenu("20.000");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.deleteMenu(MenuList.menus.menuOpenPriceChoices.shortName);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.cancelMenuAfterSave("CANCEL MENU OPEN PRICE");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await orderPage.confirmationCloseTable("Yes");
         });
@@ -820,16 +800,15 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.inputPriceMenu("20.000");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await editOrderComponents.inputNotesMenuInvisible();
         });
 
@@ -841,7 +820,7 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItemsSpecial();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -854,7 +833,7 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItemsSpecial();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -867,21 +846,20 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItemsSpecial();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
             await editOrderComponents.editQtySelector(3);
             await editOrderComponents.actionButtonFooter("Apply");
             await orderPage.cancelMenuAfterSave("Decrease Qty Menu special price");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -893,9 +871,9 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItemsSpecial();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.deleteMenu(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.validateMenuNotVisible(MenuList.menus.menuExtraSpecialFriedRice.shortName);
         });
 
@@ -907,20 +885,19 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItemsSpecial();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.deleteMenu(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.cancelMenuAfterSave("CANCEL MENU OPEN PRICE");
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
             await orderPage.confirmationCloseTable("Yes");
         });
@@ -934,9 +911,9 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.escapeKeyboard();
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItemsSpecial();
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await editOrderComponents.actionButtonFooter("Apply");
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await orderPage.saveOrder();
         });
 
@@ -948,26 +925,14 @@ test.describe.serial("Quick Service Add Order", () => {
             await editOrderComponents.actionButtonFooter("Next");
             await selectExtraMenuItemsSpecial();
             await editOrderComponents.actionButtonFooter("Apply");
-            await editOrderComponents.wait(2000);
+            await editOrderComponents.wait(300);
             await orderPage.saveOrder();
             await sideNavBarComponents.gotoPageTableList();
             await tableListPage.gotoQuickService();
-            await quickServiceListPage.fetchSalesNums();
             await quickServiceListPage.clickLastSalesNum();
-            await quickServiceListPage.wait(2000);
+            await quickServiceListPage.wait(300);
             await orderPage.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await orderPage.wait(2000);
+            await orderPage.wait(300);
             await editOrderComponents.inputNotesMenuInvisible();
         });
 });
-
-
-
-
-
-
-
-
-
-
-
