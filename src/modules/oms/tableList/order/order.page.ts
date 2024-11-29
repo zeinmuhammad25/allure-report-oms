@@ -161,4 +161,28 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         console.warn(`Validation passed: Menu "${menu}" is now invisible.`);
     }
 
+    async validateMenuVisible(menu: string): Promise<void> {
+        await this.expectVisible(OrderLocator.clickMenu(menu));
+        console.warn(`Validation passed: Menu "${menu}" is visible.`);
+    }
+
+    async holdMenu(menuName: string): Promise<void> {
+        await this.expectVisible(OrderLocator.holdMenuButton(menuName));
+        await this.click(OrderLocator.holdMenuButton(menuName));
+    }
+
+    async fireMenu(menuName: string): Promise<void> {
+        await this.expectVisible(OrderLocator.fireMenuButton(menuName));
+        await this.click(OrderLocator.fireMenuButton(menuName));
+    }
+
+    async holdAllMenu(): Promise<void> {
+        await this.expectVisible(OrderLocator.holdAllMenuButton);
+        await this.click(OrderLocator.holdAllMenuButton);
+    }
+
+    async fireAllMenu(): Promise<void> {
+        await this.expectVisible(OrderLocator.fireAllMenuButton);
+        await this.click(OrderLocator.fireAllMenuButton);
+    }
 }
