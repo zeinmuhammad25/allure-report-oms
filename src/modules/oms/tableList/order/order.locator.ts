@@ -29,7 +29,6 @@ export default class OrderLocator extends BaseLocator {
     private static bottomButton = (label: string): string => `//button[normalize-space()='${label}']`;
     private static bottomDisabledButton = (label: string): string => `//button[@disabled and normalize-space()='${label}']`;
     static saveOrderButton: string = this.bottomButton("Save Order");
-    static splitBill: string = this.bottomButton("Split Bill");
     static printBillButton: string = this.bottomButton("Print Bill");
     static printCheckerButton: string = this.bottomButton("Checker");
 
@@ -44,6 +43,8 @@ export default class OrderLocator extends BaseLocator {
     static linkTableDisabledButton: string = this.bottomDisabledButton("Link Table");
     static splitBillButton: string = this.bottomButton("Split Bill");
     static splitBillDisabledButton: string = this.bottomDisabledButton("Split Bill");
+    static paymentButton: string = this.bottomButton("Payment");
+    static paymentDisableButton: string = this.bottomDisabledButton("Payment");
 
     static cancelTableButton: string = this.bottomButton("Cancel Table");
     static cancelOrderButton: string = this.bottomButton("Cancel Order");
@@ -53,4 +54,10 @@ export default class OrderLocator extends BaseLocator {
     static cancelReasonCancelButton: string = "//app-table-cancel//button[normalize-space()='Cancel']";
     static orderPanel: string = "//app-order";
     static cancelMenuAfterSave: string = "//textarea[contains(@class, 'form-control input-text-notes')]";
+
+    static tableInfo: string = "//button[@class='table-info']";
+    static holdMenuDetailInTable = (tableName: string): string => `//span[normalize-space()='Table ${tableName}']`;
+    static menuInHoldTable = (tableName: string, menuName: string): string => `//mat-expansion-panel//span[normalize-space(text())='Table ${tableName}']` +
+        `//following::li[contains(text(), '${menuName}')]`;
+    static buttonCloseHoldTable: string = "//i[@class='glyphicon glyphicon-remove ic-close']";
 }

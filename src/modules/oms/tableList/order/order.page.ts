@@ -205,13 +205,33 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.click(OrderLocator.fireAllMenuButton);
     }
 
-    async splitBill(): Promise<void> {
-        await this.expectVisible(OrderLocator.splitBill);
-        await this.click(OrderLocator.splitBill);
-    }
-
     async cancelMenuButtonIsNotVisible(menuName: string): Promise<void> {
         await this.expectInvisible(OrderLocator.deleteMenuButton(menuName));
         console.warn(`Validation passed: Button Cancel Not Displayed.`);
     }
+
+    async tableInfo(): Promise<void> {
+        await this.expectVisible(OrderLocator.tableInfo);
+        await this.click(OrderLocator.tableInfo);
+    }
+
+    async detailInfoHoldTable(tableName: string): Promise<void> {
+        await this.expectVisible(OrderLocator.holdMenuDetailInTable(tableName));
+        await this.click(OrderLocator.holdMenuDetailInTable(tableName));
+    }
+
+    async validateMenuInHoldTable(tableName: string, menuName: string): Promise<void> {
+        await this.expectVisible(OrderLocator.menuInHoldTable(tableName, menuName));
+        console.warn(`Validation passed: ${menuName} displayed in Table info`);
+        await this.click(OrderLocator.buttonCloseHoldTable);
+    }
+
+    async expectDisabledPayment(): Promise<void> {
+        const locatorPayment = await this.isVisible(OrderLocator.paymentDisableButton)
+            ? OrderLocator.paymentDisableButton
+            : OrderLocator.paymentDisableButton;
+        await this.expectVisible(locatorPayment);
+    }
+
+
 }
