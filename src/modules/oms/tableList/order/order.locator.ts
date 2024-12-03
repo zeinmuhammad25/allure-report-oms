@@ -29,6 +29,7 @@ export default class OrderLocator extends BaseLocator {
     private static bottomButton = (label: string): string => `//button[normalize-space()='${label}']`;
     private static bottomDisabledButton = (label: string): string => `//button[@disabled and normalize-space()='${label}']`;
     static saveOrderButton: string = this.bottomButton("Save Order");
+    static splitBill: string = this.bottomButton("Split Bill");
     static printBillButton: string = this.bottomButton("Print Bill");
     static printCheckerButton: string = this.bottomButton("Checker");
 

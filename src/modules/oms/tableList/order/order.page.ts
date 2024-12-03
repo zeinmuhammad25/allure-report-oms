@@ -185,4 +185,14 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.expectVisible(OrderLocator.fireAllMenuButton);
         await this.click(OrderLocator.fireAllMenuButton);
     }
+
+    async splitBill(): Promise<void> {
+        await this.expectVisible(OrderLocator.splitBill);
+        await this.click(OrderLocator.splitBill);
+    }
+
+    async cancelMenuButtonIsNotVisible(menuName: string): Promise<void> {
+        await this.expectInvisible(OrderLocator.deleteMenuButton(menuName));
+        console.warn(`Validation passed: Button Cancel Not Displayed.`);
+    }
 }
