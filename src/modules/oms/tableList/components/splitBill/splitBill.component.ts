@@ -49,6 +49,7 @@ export default class SplitBillComponent extends BaseOmsPage implements SplitBill
         await this.expectVisible(SplitBillLocator.dialogSplitBillQtyField);
         await this.click(SplitBillLocator.dialogSplitBillQtyField);
         await this.fill(SplitBillLocator.dialogSplitBillQtyField, menuQty);
+        await this.click(SplitBillLocator.popUpQty);
         await this.click(SplitBillLocator.dialogSplitBillQtyApply);
     }
 

@@ -107,5 +107,10 @@ export default class EditOrderComponents extends BaseOmsPage implements EditOrde
 
     }
 
+    async actionCancel(): Promise<void> {
+        await this.expectVisible(EditOrderLocator.buttonCancel);
+        await this.click(EditOrderLocator.buttonCancel);
+    }
+
 }
 
