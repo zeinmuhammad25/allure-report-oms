@@ -48,4 +48,22 @@ export default interface OrderScenario extends BaseScenario {
 
     validateMenuNotVisible(menu: string): Promise<void>;
 
+    disabledMergeTable(): Promise<void>;
+
+    splitBill(): Promise<void>;
+
+    disabledSplitBill(): Promise<void>;
+
+    disabledLinkTable(): Promise<void>;
+
+    validateMenuVisible(menu: string): Promise<void>;
+
+    holdMenu(menuName: string): Promise<void>;
+
+    fireMenu(menuName: string): Promise<void>;
+
+    holdAllMenu(): Promise<void>;
+
+    fireAllMenu(): Promise<void>;
+
 }
