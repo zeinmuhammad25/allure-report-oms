@@ -89,6 +89,17 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.waitForResponse("/order/print-bill");
     }
 
+    async splitBill(): Promise<void> {
+        await this.expectVisible(OrderLocator.splitBillButton);
+        await this.click(OrderLocator.splitBillButton);
+        await this.waitForResponse("/order/get-sales-head");
+    }
+
+    async disabledSplitBill(): Promise<void> {
+        await this.expectVisible(OrderLocator.splitBillDisabledButton);
+    }
+
+
     async printChecker(): Promise<void> {
         await this.expectVisible(OrderLocator.printCheckerButton);
         await this.click(OrderLocator.printCheckerButton);
@@ -98,6 +109,10 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     async mergeTable(): Promise<void> {
         await this.expectVisible(OrderLocator.mergeTableButton);
         await this.click(OrderLocator.mergeTableButton);
+    }
+
+    async disabledMergeTable(): Promise<void> {
+        await this.expectVisible(OrderLocator.mergeTableDisabledButton);
     }
 
     async moveTable(): Promise<void> {
@@ -124,6 +139,10 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     async linkTable(): Promise<void> {
         await this.expectVisible(OrderLocator.linkTableButton);
         await this.click(OrderLocator.linkTableButton);
+    }
+
+    async disabledLinkTable(): Promise<void> {
+        await this.expectVisible(OrderLocator.linkTableDisabledButton);
     }
 
     async cancelTable(notes: string): Promise<void> {

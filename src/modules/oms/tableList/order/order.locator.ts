@@ -33,12 +33,16 @@ export default class OrderLocator extends BaseLocator {
     static printCheckerButton: string = this.bottomButton("Checker");
 
     static mergeTableButton: string = this.bottomButton("Merge Table");
+    static mergeTableDisabledButton: string = this.bottomDisabledButton("Merge Table");
     static moveTableButton: string = this.bottomButton("Move Table");
     static moveToTableButton: string = this.bottomButton("Move to Table");
     static moveTableDisabledButton: string = this.bottomDisabledButton("Move Table");
     static moveToTableDisabledButton: string = this.bottomDisabledButton("Move to Table");
     static moveItemButton: string = this.bottomButton("Move Item");
     static linkTableButton: string = this.bottomButton("Link Table");
+    static linkTableDisabledButton: string = this.bottomDisabledButton("Link Table");
+    static splitBillButton: string = this.bottomButton("Split Bill");
+    static splitBillDisabledButton: string = this.bottomDisabledButton("Split Bill");
 
     static cancelTableButton: string = this.bottomButton("Cancel Table");
     static cancelOrderButton: string = this.bottomButton("Cancel Order");
