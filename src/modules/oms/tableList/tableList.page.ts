@@ -92,4 +92,39 @@ export default class TableListPage extends BaseOmsPage implements TableListScena
         }
 
     }
+
+
+    async deleteSplitBill(splitName: "Main Bill" | "Bill 2" | "Bill 3" | "Bill 4"): Promise<void> {
+        const orderPage = new OrderPage(this._page);
+        const isTableVisible = await this.isVisible(TableListLocator.firstBookedTableButton);
+        if (isTableVisible) {
+            await this.wait(500);
+            await this.click(TableListLocator.firstBookedTableButton);
+            await this.expectVisible(TableListLocator.tableSplitBill(splitName));
+            await this.click(TableListLocator.tableSplitBill(splitName));
+            await orderPage.cancelTable("Tidak Jadi");
+            await this.wait(500);
+            await this.click("//app-confirm-dialog//button[1]");
+            await this.wait(500);
+        } else {
+            await this.selectRoom(Table.smokingRoom.name);
+        }
+        await this.selectRoom(Table.smokingRoom.name);
+        await this.wait(500);
+        const isTableVisibleAgain = await this.isVisible(TableListLocator.firstBookedTableButton);
+        if (isTableVisibleAgain) {
+            await this.click(TableListLocator.firstBookedTableButton);
+            await this.expectVisible(TableListLocator.tableSplitBill(splitName));
+            await this.click(TableListLocator.tableSplitBill(splitName));
+            await orderPage.cancelTable("Tidak Jadi");
+            await this.wait(500);
+            await this.click("//app-confirm-dialog//button[1]");
+            await this.wait(500);
+        }
+    }
+
+    async selectTableSplitBill(splitName: "Main Bill" | "Bill 2" | "Bill 3" | "Bill 4"): Promise<void> {
+        await this.expectVisible(TableListLocator.tableSplitBill(splitName));
+        await this.click(TableListLocator.tableSplitBill(splitName));
+    }
 }
