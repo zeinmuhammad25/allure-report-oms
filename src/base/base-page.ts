@@ -289,12 +289,13 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         }, { endpoint: this.baseUrl + endpoint, method, headers, body });
     }
 
-    public async sqlExecute(dbConfig:ConnectionOptions, query:string):Promise<void> {
+    public async sqlExecute(dbConfig:ConnectionOptions, query:string):Promise<any> {
         const connection = await createConnection(dbConfig);
         try {
             console.log("Connected to the database");
-            await connection.execute(query);
+            const result = await connection.execute(query);
             console.log("Query executed successfully");
+            return result;
         } catch (error) {
             console.error("Error executing query:", error);
         } finally {
