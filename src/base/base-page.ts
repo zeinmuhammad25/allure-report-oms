@@ -4,6 +4,7 @@ import BaseScenario from "./base-scenario";
 import BaseUrl from "./base-url";
 import {Keyboard} from "./constants/Keyboard";
 import BaseConfigs from "./base-configs";
+import {ConnectionOptions, createConnection} from "mysql2/promise";
 
 export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs> implements BaseScenario {
     protected readonly _page: Page;
@@ -286,6 +287,19 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
                 throw error;
             }
         }, { endpoint: this.baseUrl + endpoint, method, headers, body });
+    }
+
+    public async sqlExecute(dbConfig:ConnectionOptions, query:string):Promise<void> {
+        const connection = await createConnection(dbConfig);
+        try {
+            console.log("Connected to the database");
+            await connection.execute(query);
+            console.log("Query executed successfully");
+        } catch (error) {
+            console.error("Error executing query:", error);
+        } finally {
+            await connection.end();
+        }
     }
 
 }
