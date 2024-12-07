@@ -71,7 +71,7 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
         await this.waitForResponse("/table");
         await this.expectVisible(MoveTableLocator.buttonActiveTable);
         await this.click(MoveTableLocator.buttonActiveTable);
-        await this.wait(1000);
+        await this.wait(300);
         await this.click(MoveTableLocator.buttonApplyOrCancel("Cancel"));
     }
 
@@ -80,7 +80,7 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
         await this.waitForResponse("/table");
         await this.expectVisible(MoveTableLocator.buttonActiveTable);
         await this.click(MoveTableLocator.buttonActiveTable);
-        await this.wait(1000);
+        await this.wait(300);
         await this.click(MoveTableLocator.buttonApplyOrCancel("Cancel"));
     }
 
