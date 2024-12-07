@@ -66,4 +66,12 @@ export default interface OrderScenario extends BaseScenario {
 
     fireAllMenu(): Promise<void>;
 
+    cancelTableSelectNotes(notes: string): Promise<void>;
+
+    disabledCancelTable(): Promise<void>;
+
+    cancelTableApplyDisabled(): Promise<void>;
+
+    UndoCancelTable(notes: string): Promise<void>;
+
 }
