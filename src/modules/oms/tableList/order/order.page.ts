@@ -116,6 +116,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async moveTable(): Promise<void> {
+        await this.wait(800);
         const locatorMoveTable = await this.isVisible(OrderLocator.moveTableButton)
             ? OrderLocator.moveTableButton
             : OrderLocator.moveToTableButton;
@@ -147,15 +148,53 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
 
     async cancelTable(notes: string): Promise<void> {
         await this.wait(300);
-        const cancelButtonLocator = await this.isVisible(OrderLocator.cancelTableButton) ? OrderLocator.cancelTableButton : OrderLocator.cancelOrderButton;
-
+        const cancelButtonLocator = await this.isVisible(OrderLocator.cancelTableButton)
+            ? OrderLocator.cancelTableButton : OrderLocator.cancelOrderButton;
         await this.expectVisible(cancelButtonLocator);
         await this.click(cancelButtonLocator);
         await this.expectVisible(OrderLocator.cancelReasonTextArea);
         await this.click(OrderLocator.cancelReasonTextArea);
         await this.fill(OrderLocator.cancelReasonTextArea, notes);
-        await this.click(OrderLocator.cancelTablePanel);
+        await this.click(OrderLocator.popUpCancelTable);
         await this.click(OrderLocator.cancelReasonApplyButton);
+    }
+
+    async disabledCancelTable(): Promise<void> {
+        const disableCancelLocator = await this.isVisible(OrderLocator.cancelTableDisabledButton)
+            ? OrderLocator.cancelTableDisabledButton : OrderLocator.cancelOrderDisabledButton;
+        await this.expectVisible(disableCancelLocator);
+    }
+
+    async cancelTableApplyDisabled(): Promise<void> {
+        await this.wait(300);
+        const cancelButtonLocator = await this.isVisible(OrderLocator.cancelTableButton)
+            ? OrderLocator.cancelTableButton : OrderLocator.cancelOrderButton;
+        await this.expectVisible(cancelButtonLocator);
+        await this.click(cancelButtonLocator);
+        await this.expectVisible(OrderLocator.popUpCancelTable);
+        await this.expectVisible(OrderLocator.cancelReasonDisabledApplyButton);
+    }
+
+    async cancelTableSelectNotes(notes: string): Promise<void> {
+        await this.wait(300);
+        const cancelButtonLocator = await this.isVisible(OrderLocator.cancelTableButton)
+            ? OrderLocator.cancelTableButton : OrderLocator.cancelOrderButton;
+        await this.expectVisible(cancelButtonLocator);
+        await this.click(cancelButtonLocator);
+        await this.expectVisible(OrderLocator.cancelReasonTextArea);
+        await this.click(OrderLocator.cancelTablePanel(notes));
+        await this.click(OrderLocator.cancelReasonApplyButton);
+    }
+
+    async UndoCancelTable(notes: string): Promise<void> {
+        await this.wait(300);
+        const cancelButtonLocator = await this.isVisible(OrderLocator.cancelTableButton)
+            ? OrderLocator.cancelTableButton : OrderLocator.cancelOrderButton;
+        await this.expectVisible(cancelButtonLocator);
+        await this.click(cancelButtonLocator);
+        await this.expectVisible(OrderLocator.cancelReasonTextArea);
+        await this.click(OrderLocator.cancelTablePanel(notes));
+        await this.click(OrderLocator.cancelReasonCancelButton);
     }
 
     async clickMenuDetail(menu: string): Promise<void> {
@@ -232,6 +271,5 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
             : OrderLocator.paymentDisableButton;
         await this.expectVisible(locatorPayment);
     }
-
 
 }
