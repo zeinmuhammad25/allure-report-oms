@@ -34,8 +34,8 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
     }
 
     async selectTable(tableName: string): Promise<void> {
-        await this.expectVisible(MoveTableLocator.moveTableSelect(tableName));
         await this.click(MoveTableLocator.moveTableSelect(tableName));
+        await this.click(MoveTableLocator.buttonApplyOrCancel("Apply"))
     }
 
     async disableButtonByLabel(label: string): Promise<void> {
