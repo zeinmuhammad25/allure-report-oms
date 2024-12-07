@@ -48,10 +48,14 @@ export default class OrderLocator extends BaseLocator {
 
     static cancelTableButton: string = this.bottomButton("Cancel Table");
     static cancelOrderButton: string = this.bottomButton("Cancel Order");
-    static cancelTablePanel: string = "//app-table-cancel";
+    static cancelTableDisabledButton: string = this.bottomDisabledButton("Cancel Table");
+    static cancelOrderDisabledButton: string = this.bottomDisabledButton("Cancel Order");
+    static cancelTablePanel = (notes: string): string => `//app-grid-pagination//button//span[normalize-space()='${notes}']`;
+    static popUpCancelTable: string = "//div[@class='modal-header bg-primary ng-star-inserted']";
     static cancelReasonTextArea: string = "//app-table-cancel//textarea";
     static cancelReasonApplyButton: string = "//app-table-cancel//button[normalize-space()='Apply']";
-    static cancelReasonCancelButton: string = "//app-table-cancel//button[normalize-space()='Cancel']";
+    static cancelReasonDisabledApplyButton: string = "//app-table-cancel//button[@disabled and normalize-space()='Apply']";
+    static cancelReasonCancelButton: string = "//app-table-cancel//button[@class='btn-action mr-2 mat-raised-button mat-danger']//span[normalize-space()='Cancel']";
     static orderPanel: string = "//app-order";
     static cancelMenuAfterSave: string = "//textarea[contains(@class, 'form-control input-text-notes')]";
 
