@@ -39,6 +39,7 @@ export default class OrderLocator extends BaseLocator {
     static moveTableDisabledButton: string = this.bottomDisabledButton("Move Table");
     static moveToTableDisabledButton: string = this.bottomDisabledButton("Move to Table");
     static moveItemButton: string = this.bottomButton("Move Item");
+    static moveItemDisableButton: string = this.bottomDisabledButton("Move Item");
     static linkTableButton: string = this.bottomButton("Link Table");
     static linkTableDisabledButton: string = this.bottomDisabledButton("Link Table");
     static splitBillButton: string = this.bottomButton("Split Bill");

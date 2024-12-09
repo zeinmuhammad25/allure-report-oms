@@ -91,6 +91,16 @@ export default class TableListPage extends BaseOmsPage implements TableListScena
             await this.selectRoom(Table.smokingRoom.name);
         }
 
+        await this.selectRoom(Table.acRoom.name);
+        while (await this.isVisible(TableListLocator.firstBookedTableButton)) {
+            await this.click(TableListLocator.firstBookedTableButton);
+            await orderPage.cancelTable("Tidak Jadi");
+            await this.wait(500);
+            await this.click("//app-confirm-dialog//button[1]");
+            await this.wait(500);
+            await this.selectRoom(Table.acRoom.name);
+        }
+
     }
 
 
