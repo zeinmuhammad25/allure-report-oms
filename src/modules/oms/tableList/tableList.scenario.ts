@@ -18,4 +18,8 @@ export default interface TableListScenario extends BaseScenario {
     deleteAllQuickService(): Promise<void>;
 
     deleteAllDineIn(): Promise<void>;
+
+    cancelAllQuickServices(): Promise<void>;
+
+    cancelAllTables(): Promise<void>;
 }
