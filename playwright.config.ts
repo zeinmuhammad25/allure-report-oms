@@ -35,7 +35,7 @@ export default defineConfig({
     headless: false,
     permissions: ['geolocation'],
     geolocation: {latitude: -6.2114, longitude: 106.8446},
-
+    storageState: process.env.STORAGE_STATE ? process.env.STORAGE_STATE : undefined
   },
 
   /* Configure projects for major browsers */
