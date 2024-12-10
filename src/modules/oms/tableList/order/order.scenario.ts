@@ -84,4 +84,16 @@ export default interface OrderScenario extends BaseScenario {
 
     expectDisabledPayment(): Promise<void>;
 
+    holdMenuButtonNotDisplayed(menuName: string): Promise<void>;
+
+    holdAllMenuButtonNotDisplayed(): Promise<void>;
+
+    fireMenuButtonNotDisplayed(menuName: string): Promise<void>;
+
+    fireAllMenuButtonNotDisplayed(): Promise<void>;
+
+    activateKitchenFireManagement(): Promise<void>;
+
+    notActivateKitchenFireManagement(): Promise<void>;
+
 }
