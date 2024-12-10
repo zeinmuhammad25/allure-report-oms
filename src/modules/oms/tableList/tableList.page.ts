@@ -22,6 +22,11 @@ export default class TableListPage extends BaseOmsPage implements TableListScena
 
     private apiBaseUrl = "http://localhost/fnb-pos-v2/api/web/v1";
 
+    async goHere(): Promise<void> {
+        await this.navigateHere();
+        await this.wait(300);
+    }
+
     async gotoQuickService(): Promise<void> {
         await this.expectVisible(TableListLocator.buttonQuickService);
         await this.click(TableListLocator.buttonQuickService);
@@ -143,7 +148,7 @@ export default class TableListPage extends BaseOmsPage implements TableListScena
 
     async cancelAllQuickServices(): Promise<void> {
         const token = await this.getLocalStorage("session");
-        const result = await this.makeApiRequest("/order/index-take-away/", {
+        const result = await this.makeApiRequest<{ salesNum: string }[]>("/order/index-take-away/", {
             baseUrl: this.apiBaseUrl,
             method: "POST",
             headers: {"Authorization": `Bearer ${token}`}
@@ -158,25 +163,32 @@ export default class TableListPage extends BaseOmsPage implements TableListScena
             this.makeApiRequest("/order/cancel-table", {
                 baseUrl: this.apiBaseUrl,
                 method: "POST",
-                headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
-                body: { "tableID": 0, "salesNum": salesNum, "cancelNotes": "Test Cancel Quick Service", "checkCurrentOrder": false }
+                headers: {"Authorization": `Bearer ${token}`, "Content-Type": "application/json"},
+                body: {
+                    "tableID": 0,
+                    "salesNum": salesNum,
+                    "cancelNotes": "Test Cancel Quick Service",
+                    "checkCurrentOrder": false
+                }
             })
         ));
     }
 
     async cancelAllTables(): Promise<void> {
         const token = await this.getLocalStorage("session");
-        const result = await this.makeApiRequest("/table", {
+        const result = await this.makeApiRequest<{
+            tables: { tableStatusName: string, tableID: number, salesNum: string }[]
+        }[]>("/table", {
             baseUrl: this.apiBaseUrl,
             method: "POST",
             headers: {"Authorization": `Bearer ${token}`, "Content-Type": "application/json"},
-            body: {"terminalCode": "07","activatedDate": null}
+            body: {"terminalCode": "07", "activatedDate": null}
         });
 
         let tables = [];
         if (result.status == 200) {
-            tables = result.data.flatMap(section =>section.tables
-                .filter(table => table.tableStatusName !== 'Available')
+            tables = result.data.flatMap(section => section.tables
+                .filter(table => table.tableStatusName !== "Available")
                 .map(table => ({
                     tableStatusName: table.tableStatusName,
                     tableID: table.tableID,
@@ -189,8 +201,13 @@ export default class TableListPage extends BaseOmsPage implements TableListScena
             this.makeApiRequest("/order/cancel-table", {
                 baseUrl: this.apiBaseUrl,
                 method: "POST",
-                headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
-                body: {"tableID":table.tableID,"salesNum":table.salesNum,"cancelNotes":"Test Cancel Dine In","checkCurrentOrder":false}
+                headers: {"Authorization": `Bearer ${token}`, "Content-Type": "application/json"},
+                body: {
+                    "tableID": table.tableID,
+                    "salesNum": table.salesNum,
+                    "cancelNotes": "Test Cancel Dine In",
+                    "checkCurrentOrder": false
+                }
             })
         ));
     }
