@@ -1,5 +1,4 @@
 import BaseScenario from "../../../base/base-scenario";
-import {promises} from "node:dns";
 
 export default interface signPinScenario extends BaseScenario {
     inputPinByTouch(pin: string): Promise<void>;
@@ -17,4 +16,6 @@ export default interface signPinScenario extends BaseScenario {
     submitPin(): Promise<void>;
 
     validateShowStarCash(inputCash: string): Promise<void>;
+
+    storeAuthState(): Promise<void>;
 }
