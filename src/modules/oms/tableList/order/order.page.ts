@@ -298,14 +298,14 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         console.warn(`Validation passed: Button fireAllMenu Not Displayed.`);
     }
 
-    async activateKitchenFireManagement() :Promise<void> {
-        const query:string = "UPDATE ms_setting SET value1 = 1 WHERE key1 = 'POS' AND key2 = 'Kitchen Fire Management';";
-        await this.sqlExecute(this.configs.get.dbConfig, query)
+    async activateKitchenFireManagement(): Promise<void> {
+        const query: string = "UPDATE ms_setting SET value1 = 1 WHERE key1 = 'POS' AND key2 = 'Kitchen Fire Management';";
+        await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
-    async notActivateKitchenFireManagement() :Promise<void> {
-        const query:string = "UPDATE ms_setting SET value1 = 0 WHERE key1 = 'POS' AND key2 = 'Kitchen Fire Management';";
-        await this.sqlExecute(this.configs.get.dbConfig, query)
+    async notActivateKitchenFireManagement(): Promise<void> {
+        const query: string = "UPDATE ms_setting SET value1 = 0 WHERE key1 = 'POS' AND key2 = 'Kitchen Fire Management';";
+        await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
 }
