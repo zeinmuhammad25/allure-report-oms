@@ -118,4 +118,3 @@ export default class SignPinPage extends BaseOmsPage implements signPinScenario 
         await this._page.context().storageState({path: this.configs.get.storageState});
     }
 }
-

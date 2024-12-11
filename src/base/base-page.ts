@@ -256,7 +256,7 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.locator(selector);
     }
 
-    public async makeApiRequest(endpoint: string, options: {method?: string, headers?: Record<string, string>, body?: any, baseUrl?: string} = {}):
+    public async makeApiRequest<T>(endpoint: string, options: {method?: string, headers?: Record<string, string>, body?: any, baseUrl?: string} = {}):
         Promise<{ status: number; statusText: string; data: T }> {
         console.log(`Making API request to: ${endpoint}`);
         const { method = "GET", headers = {}, body, baseUrl = this.baseUrl} = options;
