@@ -22,6 +22,7 @@ import TerminalIDPage from "../../src/modules/oms/terminalID/terminalID.page";
 import ApplicationSettingPage from "../../src/modules/oms/tools/applicationSetting/applicationSetting.page";
 import ToolsPage from "../../src/modules/oms/tools/tools.page";
 import TroubleshootComponent from "../../src/modules/oms/tools/troubleshoot/troubleshoot.component";
+import MoveTableComponent from "../../src/modules/oms/tableList/order/components/moveTable/moveTable.component";
 
 export const test = base.extend<OmsPages>({
     synchronizeData: async ({page}, use) => await use(new SynchronizeDataPage(page)),
@@ -37,6 +38,7 @@ export const test = base.extend<OmsPages>({
     linkTable: async ({page}, use) => await use(new LinkTableComponent(page)),
     mergeTable: async ({page}, use) => await use(new MergeTableComponent(page)),
     moveItem: async ({page}, use) => await use(new MoveItemComponents(page)),
+    moveTable: async ({page}, use) => await use(new MoveTableComponent(page)),
     order: async ({page}, use) => await use(new OrderPage(page)),
     dineIn: async ({page}, use) => await use(new DineInPage(page)),
     paymentPos: async ({page}, use) => await use(new PaymentPOSPage(page)),
