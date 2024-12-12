@@ -20,6 +20,7 @@ import ApplicationSettingScenario from "./tools/applicationSetting/applicationSe
 import ToolsScenario from "./tools/tools.scenario";
 import TroubleshootScenario from "./tools/troubleshoot/troubleshoot.scenario";
 import topNavBarScenario from "./components/topNavBar/topNavBar.scenario";
+import MoveTableScenario from "./tableList/order/components/moveTable/moveTable.scenario";
 
 export type OmsPages = {
     synchronizeData: SynchronizeDataScenario
@@ -35,6 +36,7 @@ export type OmsPages = {
     linkTable: LinkTableScenario
     mergeTable: MergeTableScenario
     moveItem: MoveItemScenario
+    moveTable: MoveTableScenario
     order: OrderScenario
     dineIn: dineInScenario
     paymentPos: PaymentPosScenario
@@ -44,6 +46,4 @@ export type OmsPages = {
     applicationSetting: ApplicationSettingScenario
     tools: ToolsScenario
     troubleshoot: TroubleshootScenario
-
-
 };

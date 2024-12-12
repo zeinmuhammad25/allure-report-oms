@@ -90,4 +90,13 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
     }
 
 
+    async selectTableAndApplyInSmokingRoom(): Promise<void> {
+        await this.click(MoveTableLocator.moveTableSelect(Table.smokingRoom.name));
+        await this.waitForResponse("/table");
+        await this.expectVisible(MoveTableLocator.buttonActiveTable);
+        await this.click(MoveTableLocator.buttonActiveTable);
+        await this.wait(300);
+        await this.click(MoveTableLocator.buttonApplyOrCancel("Apply"));
+    }
+
 }
