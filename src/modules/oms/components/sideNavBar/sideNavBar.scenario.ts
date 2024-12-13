@@ -27,4 +27,6 @@ export default interface SideNavBarScenario extends BaseScenario {
     gotoPageBranchMenu(): Promise<void>;
 
     gotoPageStation(): Promise<void>;
+
+    selectStation(stationName: string): Promise<void>;
 }

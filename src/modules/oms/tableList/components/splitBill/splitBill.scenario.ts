@@ -14,4 +14,10 @@ export default interface SplitBillScenario extends BaseScenario {
     returnMenu(billName: string, menuName: string): Promise<void>;
 
     closeSplitBill(): Promise<void>;
+
+    billNameVisible(billName: string): Promise<void>;
+
+    billNameInvisible(billName: string): Promise<void>;
+
+    moveMenuButtonInvisible(menuName: string): Promise<void>;
 }

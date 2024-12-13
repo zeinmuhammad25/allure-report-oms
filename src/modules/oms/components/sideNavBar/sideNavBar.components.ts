@@ -105,4 +105,17 @@ export default class SideNavBarComponents extends BaseOmsPage implements SideNav
         await this.expectTextVisible("Station Management", true);
     }
 
+    async selectStation(stationName: string): Promise<void> {
+        await this.expectVisible(SideNavBarLocator.toolsMenu("Application Setting"));
+        await this.click(SideNavBarLocator.toolsMenu("Application Setting"));
+        await this.expectVisible(SideNavBarLocator.dropDownStation);
+        await this.click(SideNavBarLocator.dropDownStation);
+        await this.expectVisible(SideNavBarLocator.stationName(stationName));
+        await this.click(SideNavBarLocator.stationName(stationName));
+        await this.expectVisible(SideNavBarLocator.textButton("Save"));
+        await this.click(SideNavBarLocator.textButton("Save"));
+        await this.expectVisible(SideNavBarLocator.textButton("Ok"));
+        await this.click(SideNavBarLocator.textButton("Ok"));
+    }
+
 }
