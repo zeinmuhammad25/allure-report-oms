@@ -78,9 +78,10 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async gotoPayment(): Promise<void> {
-        await this.expectVisible(OrderLocator.paymentButton);
+        await this.expectVisible(OrderLocator.printBillButton);
+        await this.click(OrderLocator.printBillButton);
+        await this.waitForResponse("/order/print-bill");
         await this.click(OrderLocator.paymentButton);
-        await this.waitForResponse("/get-payment-method");
     }
 
     async printBill(): Promise<void> {
@@ -309,7 +310,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async expectVisibleCustomerName(name: string): Promise<void> {
-        await this.wait(800)
+        await this.wait(800);
         await this.expectTextVisible(name);
     }
 
