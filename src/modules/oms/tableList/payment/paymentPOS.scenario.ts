@@ -43,4 +43,8 @@ export default interface PaymentPosScenario extends BaseScenario {
 
     disableApplyPayment(): Promise<void>;
 
+    paymentComplimentAmount(amount: string, notes: string): Promise<void>;
+
+    disableApplyCompliment(): Promise<void>;
+
 }
