@@ -92,23 +92,54 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
     }
 
     async paymentComplimentGetOutstanding(notes: string): Promise<void> {
+        const MAXLENGTH = 100;
         await this.paymentGetOutstandingAmount();
         await this.expectVisible(PaymentPOSLocator.inputComplimentNotes);
+        if (notes.length > MAXLENGTH) {
+            console.warn(`Input notes terlalu panjang (${notes.length} karakter). Maksimum adalah ${MAXLENGTH} karakter. Notes akan dipotong.`);
+            notes = notes.substring(0, MAXLENGTH);
+        }
         await this.fill(PaymentPOSLocator.inputComplimentNotes, notes);
         await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.click(PaymentPOSLocator.escapeKeyboard);
-
     }
 
     async paymentComplimentPercentage(percentage: number, notes: string): Promise<void> {
+        const MAXLENGTH = 100;
         await this.expectVisible(PaymentPOSLocator.inputComplimentPercentage);
         await this.fill(PaymentPOSLocator.inputComplimentPercentage, percentage.toString());
         await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.click(PaymentPOSLocator.escapeKeyboard);
         await this.expectVisible(PaymentPOSLocator.inputComplimentNotes);
+        if (notes.length > MAXLENGTH) {
+            console.warn(`Input notes terlalu panjang (${notes.length} karakter). Maksimum adalah ${MAXLENGTH} karakter. Notes akan dipotong.`);
+            notes = notes.substring(0, MAXLENGTH);
+        }
         await this.fill(PaymentPOSLocator.inputComplimentNotes, notes);
         await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.click(PaymentPOSLocator.escapeKeyboard);
+    }
+
+    async paymentComplimentAmount(amount : string, notes: string): Promise<void> {
+        const MAXLENGTH = 100;
+        await this.expectVisible(PaymentPOSLocator.inputComplimentAmount);
+        await this.fill(PaymentPOSLocator.inputComplimentAmount,amount);
+        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+        await this.expectVisible(PaymentPOSLocator.inputComplimentNotes);
+        if (notes.length > MAXLENGTH) {
+            console.warn(`Input notes terlalu panjang (${notes.length} karakter). Maksimum adalah ${MAXLENGTH} karakter. Notes akan dipotong.`);
+            notes = notes.substring(0, MAXLENGTH);
+        }
+        await this.fill(PaymentPOSLocator.inputComplimentNotes, notes);
+        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+    }
+
+    async disableApplyCompliment(): Promise<void> {
+        await this.paymentGetOutstandingAmount();
+        await this.expectVisible(PaymentPOSLocator.inputComplimentNotes);
+        await this.expectVisible(PaymentPOSLocator.disabledApply);
     }
 
     async paymentVoucher(): Promise<void> {
