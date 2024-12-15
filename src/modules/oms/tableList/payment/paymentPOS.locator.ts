@@ -37,6 +37,7 @@ export default class PaymentPOSLocator extends BaseLocator {
 
     //sectionCompliment
     static inputComplimentPercentage = "//input[@placeholder='e.g. 50']";
+    static inputComplimentAmount = "//input[@placeholder='e.g. 200.000']";
     static inputComplimentNotes = "//div[contains(@class, 'area-text-notes')]//textarea";
 
     //sectionOtherCost
