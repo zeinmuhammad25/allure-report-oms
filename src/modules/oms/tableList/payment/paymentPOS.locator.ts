@@ -10,6 +10,9 @@ export default class PaymentPOSLocator extends BaseLocator {
     static escapeKeyboard = "//div[@class='modal-header bg-primary']";
     static inputPaymentAmount = "//input[@placeholder='e.g. 200.000']";
     static buttonGetOutstandingPayment = "//span[normalize-space()='Get Outstanding']";
+    static gridSelectCashBord = (selectCash: PaymentObject): string => `//div[@class='d-flex']//span//button//span[contains(text(),'${selectCash}')]`;
+    static disabledApply = "//button[@disabled and normalize-space()='Apply']";
+
 
     static getLocatorButtonAction = (actionPayment: PaymentObject): string => `//span[normalize-space()='${actionPayment}']`;
     static getLocatorButtonArrow = (actionArrow: PaymentObject): string => `//i[@class='glyphicon glyphicon-arrow-${actionArrow}']`;
@@ -38,5 +41,13 @@ export default class PaymentPOSLocator extends BaseLocator {
 
     //sectionOtherCost
     static inputOtherCostNotes = "//textarea[contains(@class, 'input-text-notes')]";
+
+    //User Authorization POP UP
+    static popUpUserAuthorization = "//div[@class='modal-header bg-primary']//h4[normalize-space()='User Authorization']";
+    static popUpUserAuthorizationPin = "//span[normalize-space()='PIN']";
+    static popUpUserAuthorizationOtp = "//span[normalize-space()='OTP']";
+    static inputPinOrOtpField = "//app-auth-modal//div[contains(@class, 'mat-form-field-infix')]//input[contains(@class, 'mat-input-element')]";
+    static AuthorizeButton = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Authorize']";
+    static CancelButton = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Cancel']";
 
 }
