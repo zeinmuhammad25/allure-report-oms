@@ -1,11 +1,11 @@
 import BaseOmsPage from "../../base-oms-page";
 import Element from "../../../../base/objects/Element";
 import DineInLocator from "./dineIn.locator";
-import dineInScenario from "./dineIn.scenario";
+import DineInScenario from "./dineIn.scenario";
 
 
 
-export default class DineInPage extends BaseOmsPage implements dineInScenario {
+export default class DineInPage extends BaseOmsPage implements DineInScenario {
 
     pageUrl = (): string => this.urls.get.tableList.orderDineIn;
 

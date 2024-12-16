@@ -1,10 +1,10 @@
-import signPinScenario from "./signPin.scenario";
+import SignPinScenario from "./signPin.scenario";
 import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SignPinLocator from "./signPin.locator";
 import StartDayLocator from "../startDay/startDay.locator";
 
-export default class SignPinPage extends BaseOmsPage implements signPinScenario {
+export default class SignPinPage extends BaseOmsPage implements SignPinScenario {
 
     pageUrl = (): string => this.urls.get.generalPos.loginPage;
 
