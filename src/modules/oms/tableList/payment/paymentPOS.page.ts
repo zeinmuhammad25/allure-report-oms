@@ -13,6 +13,16 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         ];
     }
 
+    async paymentPinUserAuthorization(Pin: string): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.popUpUserAuthorization);
+        await this.expectVisible(PaymentPOSLocator.popUpUserAuthorizationPin);
+        await this.click(PaymentPOSLocator.popUpUserAuthorization);
+        await this.expectVisible(PaymentPOSLocator.inputPinOrOtpField);
+        await this.click(PaymentPOSLocator.inputPinOrOtpField);
+        await this.fill(PaymentPOSLocator.inputPinOrOtpField, Pin);
+        await this.expectVisible(PaymentPOSLocator.AuthorizeButton);
+    }
+
     async paymentType(paymentType: PaymentObject): Promise<void> {
         await this.expectVisible(PaymentPOSLocator.getLocatorPaymentType(paymentType));
         await this.click(PaymentPOSLocator.getLocatorPaymentType(paymentType));
@@ -33,9 +43,27 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
 
     async paymentInputAmount(inputAmount: string): Promise<void> {
         await this.expectVisible(PaymentPOSLocator.inputPaymentAmount);
+        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.fill(PaymentPOSLocator.inputPaymentAmount, inputAmount);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+    }
+
+    async selectCashBoard(cashBord: PaymentObject, click: number): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.inputPaymentAmount);
         await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.click(PaymentPOSLocator.escapeKeyboard);
+        for (let i = 0; i < click; i++) {
+            await this.click(PaymentPOSLocator.gridSelectCashBord(cashBord));
+        }
+    }
+
+    async disableApplyPayment(): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.disabledApply);
+    }
+
+    async clearAmount(): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.buttonClearCashAmount);
+        await this.click(PaymentPOSLocator.buttonClearCashAmount);
     }
 
     async paymentGetOutstandingAmount(): Promise<void> {
@@ -50,9 +78,9 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
 
     async paymentDebitBCA(inputField: PaymentObject, value: string): Promise<void> {
         await this.expectVisible(PaymentPOSLocator.getLocatorInputPaymentDebit(inputField));
-        await this.fill(PaymentPOSLocator.getLocatorInputPaymentDebit(inputField), value);
         await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.click(PaymentPOSLocator.escapeKeyboard);
+        await this.fill(PaymentPOSLocator.getLocatorInputPaymentDebit(inputField), value);
     }
 
     async paymentQrisShopee(): Promise<void> {
@@ -64,23 +92,54 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
     }
 
     async paymentComplimentGetOutstanding(notes: string): Promise<void> {
+        const MAXLENGTH = 100;
         await this.paymentGetOutstandingAmount();
         await this.expectVisible(PaymentPOSLocator.inputComplimentNotes);
+        if (notes.length > MAXLENGTH) {
+            console.warn(`Input notes terlalu panjang (${notes.length} karakter). Maksimum adalah ${MAXLENGTH} karakter. Notes akan dipotong.`);
+            notes = notes.substring(0, MAXLENGTH);
+        }
         await this.fill(PaymentPOSLocator.inputComplimentNotes, notes);
         await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.click(PaymentPOSLocator.escapeKeyboard);
-
     }
 
     async paymentComplimentPercentage(percentage: number, notes: string): Promise<void> {
+        const MAXLENGTH = 100;
         await this.expectVisible(PaymentPOSLocator.inputComplimentPercentage);
         await this.fill(PaymentPOSLocator.inputComplimentPercentage, percentage.toString());
         await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.click(PaymentPOSLocator.escapeKeyboard);
         await this.expectVisible(PaymentPOSLocator.inputComplimentNotes);
+        if (notes.length > MAXLENGTH) {
+            console.warn(`Input notes terlalu panjang (${notes.length} karakter). Maksimum adalah ${MAXLENGTH} karakter. Notes akan dipotong.`);
+            notes = notes.substring(0, MAXLENGTH);
+        }
         await this.fill(PaymentPOSLocator.inputComplimentNotes, notes);
         await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.click(PaymentPOSLocator.escapeKeyboard);
+    }
+
+    async paymentComplimentAmount(amount : string, notes: string): Promise<void> {
+        const MAXLENGTH = 100;
+        await this.expectVisible(PaymentPOSLocator.inputComplimentAmount);
+        await this.fill(PaymentPOSLocator.inputComplimentAmount,amount);
+        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+        await this.expectVisible(PaymentPOSLocator.inputComplimentNotes);
+        if (notes.length > MAXLENGTH) {
+            console.warn(`Input notes terlalu panjang (${notes.length} karakter). Maksimum adalah ${MAXLENGTH} karakter. Notes akan dipotong.`);
+            notes = notes.substring(0, MAXLENGTH);
+        }
+        await this.fill(PaymentPOSLocator.inputComplimentNotes, notes);
+        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+    }
+
+    async disableApplyCompliment(): Promise<void> {
+        await this.paymentGetOutstandingAmount();
+        await this.expectVisible(PaymentPOSLocator.inputComplimentNotes);
+        await this.expectVisible(PaymentPOSLocator.disabledApply);
     }
 
     async paymentVoucher(): Promise<void> {

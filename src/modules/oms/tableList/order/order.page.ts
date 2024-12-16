@@ -309,7 +309,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async expectVisibleCustomerName(name: string): Promise<void> {
-        await this.wait(800)
+        await this.wait(800);
         await this.expectTextVisible(name);
     }
 
