@@ -20,7 +20,6 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         await this.expectVisible(PaymentPOSLocator.inputPinOrOtpField);
         await this.click(PaymentPOSLocator.inputPinOrOtpField);
         await this.fill(PaymentPOSLocator.inputPinOrOtpField, Pin);
-        await this.expectVisible(PaymentPOSLocator.popUpUserAuthorizationPin);
         await this.click(PaymentPOSLocator.popUpUserAuthorization);
         await this.expectVisible(PaymentPOSLocator.authorizeButton);
         await this.click(PaymentPOSLocator.authorizeButton);
