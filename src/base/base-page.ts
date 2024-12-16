@@ -4,6 +4,7 @@ import BaseScenario from "./base-scenario";
 import BaseUrl from "./base-url";
 import {Keyboard} from "./constants/Keyboard";
 import BaseConfigs from "./base-configs";
+import {ConnectionOptions, createConnection} from "mysql2/promise";
 
 export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs> implements BaseScenario {
     protected readonly _page: Page;
@@ -255,10 +256,10 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.locator(selector);
     }
 
-    public async makeApiRequest(endpoint: string, options: { method?: string, headers?: Record<string, string>, body?: any } = {}):
+    public async makeApiRequest<T>(endpoint: string, options: {method?: string, headers?: Record<string, string>, body?: any, baseUrl?: string} = {}):
         Promise<{ status: number; statusText: string; data: T }> {
         console.log(`Making API request to: ${endpoint}`);
-        const { method = "GET", headers = {}, body } = options;
+        const { method = "GET", headers = {}, body, baseUrl = this.baseUrl} = options;
         return this._page.evaluate(async ({ endpoint, method, headers, body }) => {
             try {
                 const response = await fetch(endpoint, {
@@ -285,7 +286,78 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
                 console.error("Error during API request:", error);
                 throw error;
             }
-        }, { endpoint: this.baseUrl + endpoint, method, headers, body });
+        }, { endpoint: baseUrl + endpoint, method, headers, body });
+    }
+
+    public async sqlExecute(dbConfig:ConnectionOptions, query:string):Promise<any> {
+        const connection = await createConnection(dbConfig);
+        try {
+            console.log("Connected to the database");
+            const result = await connection.execute(query);
+            console.log("Query executed successfully");
+            return result;
+        } catch (error) {
+            console.error("Error executing query:", error);
+        } finally {
+            await connection.end();
+        }
+    }
+
+    public async setLocalStorage(key: string, value: string): Promise<void> {
+        try {
+            console.log(`Set local Storage "${key}" :"${value}"`);
+            await this._page.evaluate(async ([key, value]) => localStorage.setItem(key, value), [key, value])
+            console.log("Success set local Storage");
+        } catch (error) {
+            console.error("Error executing query:", error);
+        }
+    }
+
+    public async getLocalStorage(key: string): Promise<string> {
+        try {
+            console.log(`Get local Storage of "${key}"`);
+            const result = await this._page.evaluate((key) => localStorage.getItem(key), key);
+            console.log(`Success Get local Storage "${key}" : "${result}"`);
+            return result;
+        } catch (error) {
+            console.error("Error executing query:", error);
+        }
+    }
+
+    public async removeLocalStorage(key: string): Promise<void> {
+        try {
+            console.log(`Remove local Storage of "${key}"`);
+            await this._page.evaluate((key) => localStorage.removeItem(key), key);
+            console.log(`Success remove local Storage of "${key}"`);
+        } catch (error) {
+            console.error("Error executing query:", error);
+        }
+    }
+
+    public async clearLocalStorage(): Promise<void> {
+        try {
+            console.log(`Remove local Storage`);
+            await this._page.evaluate(() => localStorage.clear());
+            console.log(`Success clear all local Storage`);
+        } catch (error) {
+            console.error("Error executing query:", error);
+        }
+    }
+
+    public async getAllLocalStorage(): Promise<object> {
+        try {
+            console.log(`Get All local Storage`);
+            return await this._page.evaluate(() => {
+                const allLocalStorage = {};
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    allLocalStorage[key] = localStorage.getItem(key);
+                }
+                return allLocalStorage;
+            });
+        } catch (error) {
+            console.error("Error executing query:", error);
+        }
     }
 
 }

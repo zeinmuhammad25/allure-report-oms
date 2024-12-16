@@ -17,9 +17,14 @@ export default class OrderLocator extends BaseLocator {
     static buttonConfirmCloseTable = (action: string): string => `//span[normalize-space()='${action}']`;
     static categoryButton = (category: string): string => `//app-grid-menu//button//div[normalize-space()='${category}']`;
     static menuButton = (menu: string): string => `//app-grid-menu//button//div[contains(text(),'${menu}')]`;
-    static deleteMenuButton = (menu: string): string =>
-        `//app-order-list//div[span[normalize-space()='${menu}']]`
-        + "/following-sibling::div//button[//i[@class='glyphicon glyphicon-remove']]";
+    static deleteMenuButton = (menu: string): string => `//app-order-list//div[span[normalize-space()='${menu}']]` +
+        "/following-sibling::div//button[@color='danger']//i[@class='glyphicon glyphicon-remove']";
+    static holdMenuButton = (menu: string): string => `//app-order-list//div[span[normalize-space()='${menu}']]` +
+        "/following-sibling::div//button//img[@src='assets/images/hold.png']";
+    static holdAllMenuButton: string = "//span[contains(text(), 'Hold All')]";
+    static fireMenuButton = (menu: string): string => ` //app-order-list//div[span[normalize-space()='${menu}']]` +
+        "/following-sibling::div//button//img[@src='assets/images/fire.png']";
+    static fireAllMenuButton: string = "//span[contains(text(), 'Fire All')]";
 
     private static bottomButton = (label: string): string => `//button[normalize-space()='${label}']`;
     private static bottomDisabledButton = (label: string): string => `//button[@disabled and normalize-space()='${label}']`;
@@ -28,19 +33,36 @@ export default class OrderLocator extends BaseLocator {
     static printCheckerButton: string = this.bottomButton("Checker");
 
     static mergeTableButton: string = this.bottomButton("Merge Table");
+    static mergeTableDisabledButton: string = this.bottomDisabledButton("Merge Table");
     static moveTableButton: string = this.bottomButton("Move Table");
     static moveToTableButton: string = this.bottomButton("Move to Table");
     static moveTableDisabledButton: string = this.bottomDisabledButton("Move Table");
     static moveToTableDisabledButton: string = this.bottomDisabledButton("Move to Table");
     static moveItemButton: string = this.bottomButton("Move Item");
+    static moveItemDisableButton: string = this.bottomDisabledButton("Move Item");
     static linkTableButton: string = this.bottomButton("Link Table");
+    static linkTableDisabledButton: string = this.bottomDisabledButton("Link Table");
+    static splitBillButton: string = this.bottomButton("Split Bill");
+    static splitBillDisabledButton: string = this.bottomDisabledButton("Split Bill");
+    static paymentButton: string = this.bottomButton("Payment");
+    static paymentDisableButton: string = this.bottomDisabledButton("Payment");
 
     static cancelTableButton: string = this.bottomButton("Cancel Table");
     static cancelOrderButton: string = this.bottomButton("Cancel Order");
-    static cancelTablePanel: string = "//app-table-cancel";
+    static cancelTableDisabledButton: string = this.bottomDisabledButton("Cancel Table");
+    static cancelOrderDisabledButton: string = this.bottomDisabledButton("Cancel Order");
+    static cancelTablePanel = (notes: string): string => `//app-grid-pagination//button//span[normalize-space()='${notes}']`;
+    static popUpCancelTable: string = "//div[@class='modal-header bg-primary ng-star-inserted']";
     static cancelReasonTextArea: string = "//app-table-cancel//textarea";
     static cancelReasonApplyButton: string = "//app-table-cancel//button[normalize-space()='Apply']";
-    static cancelReasonCancelButton: string = "//app-table-cancel//button[normalize-space()='Cancel']";
+    static cancelReasonDisabledApplyButton: string = "//app-table-cancel//button[@disabled and normalize-space()='Apply']";
+    static cancelReasonCancelButton: string = "//app-table-cancel//button[@class='btn-action mr-2 mat-raised-button mat-danger']//span[normalize-space()='Cancel']";
     static orderPanel: string = "//app-order";
     static cancelMenuAfterSave: string = "//textarea[contains(@class, 'form-control input-text-notes')]";
+
+    static tableInfo: string = "//button[@class='table-info']";
+    static holdMenuDetailInTable = (tableName: string): string => `//span[normalize-space()='Table ${tableName}']`;
+    static menuInHoldTable = (tableName: string, menuName: string): string => `//mat-expansion-panel//span[normalize-space(text())='Table ${tableName}']` +
+        `//following::li[contains(text(), '${menuName}')]`;
+    static buttonCloseHoldTable: string = "//i[@class='glyphicon glyphicon-remove ic-close']";
 }

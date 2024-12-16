@@ -15,4 +15,6 @@ export default interface MoveTableScenario extends BaseScenario {
 
     selectTableAndCancelInSmokingRoom(): Promise<void>;
 
+    selectTableAndApplyInSmokingRoom(): Promise<void>;
+
 }

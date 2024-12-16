@@ -20,6 +20,10 @@ export default class TerminalIDPage extends BaseOmsPage implements TerminalIDSce
         ];
     }
 
+    async goHere(): Promise<void>{
+        await this.navigateHere();
+    }
+
     async selectTerminalID(): Promise<void> {
         await this.expectVisible(TerminalIDLocator.getTerminalID(1));
         await this.click(TerminalIDLocator.getTerminalID(1));

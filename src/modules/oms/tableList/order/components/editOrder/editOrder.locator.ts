@@ -11,6 +11,7 @@ export default class EditOrderLocator extends BaseLocator {
     static buttonArrowUp = "//div[@class='d-flex']//i[@class='glyphicon glyphicon-arrow-up']";
     static buttonArrowDown = "//div[@class='d-flex']//i[@class='glyphicon glyphicon-arrow-down']";
     static buttonSelectPromotionType = "//div[@class='mat-select-value']";
+    static buttonCancel = "//button[contains(@class, 'btn-action') and contains(@class, 'mat-danger')]";
     static searchPromotionMenu = "//input[@placeholder='Search....']";
     static searchMenuPackage = "//input[@placeholder='Search menu']";
     static promotionType = (promoTypeName: string): string => `//span[normalize-space()='${promoTypeName}']`;

@@ -22,13 +22,18 @@ export default class MoveItemLocator extends BaseLocator {
     static verifyMenu = (menuName: string): string => `//cdk-virtual-scroll-viewport//*[contains(text(), '${menuName}')]`;
     static verifyQtyMenu = (menuName: string): string => `//div[@class='d-flex table-cell hover ng-star-inserted' 
     and .//span[contains(text(), '${menuName}')]]//div[@class='pointer']`;
-
+    private static buttonDisableActionMoveItem = (menuName:string, action: string):string =>`//div[div[contains(text(), '${menuName}')]]
+    /following-sibling::div//button[@class='mat-stroked-button flex-grow-1 btn-disabled']//i[@class='glyphicon glyphicon-${action}']`
     private static buttonActionPlusMinusMenu = (menuName: string, action: string): string =>
         `//div[div[contains(text(), '${menuName}')]]/following-sibling::div//button//i[@class='glyphicon glyphicon-${action}']`;
     static buttonPlusMenu = (menuName: string): string => this.buttonActionPlusMinusMenu(menuName, "plus");
     static buttonMinusMenu = (menuName: string): string => this.buttonActionPlusMinusMenu(menuName, "minus");
+    static disableButtonMinusMenu = (menuName: string): string => this.buttonDisableActionMoveItem(menuName, "minus");
+    static disableButtonPlusMenu = (menuName: string): string => this.buttonActionPlusMinusMenu(menuName, "plus");
     static buttonMoveAll = (menuName: string): string => `//div[div[contains(text(), '${menuName}')]]
     /following-sibling::div//button//span[normalize-space()='Move All']`;
+    static disableButtonMoveAll = (menuName: string): string => `//div[div[contains(text(), '${menuName}')]]` +
+        "/following-sibling::div//button[@class='mat-stroked-button flex-grow-1 btn-disabled']//span[normalize-space()='Move All']"
 
     static paginationButtons = (action: "next" | "previous"): string => "//app-item-move//app-grid-pager//button"
         + (action === "next" ? "[1]" : "[2]");

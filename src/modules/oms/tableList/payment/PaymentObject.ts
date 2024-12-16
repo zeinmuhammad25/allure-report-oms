@@ -47,6 +47,15 @@ export enum PaymentObject {
     InputVerificationCode = "Verification code from EDC",
     InputBankName = "Name of the bank that issued the card",
     InputAccountName = "Name on the card",
-    InputSelfOrderId = "Self Order ID"
+    InputSelfOrderId = "Self Order ID",
+
+    // Grid Select Cash Board
+    GridCashBoard100000 = "100.000",
+    GridCashBoard25000 = "25.000",
+    GridCashBoard20000 = "20.000",
+    GridCashBoard15000 = "15.000",
+    GridCashBoard5000 = "5.000",
+    GridCashBoard2000 = "2.000",
+    GridCashBoard1000 = "1.000"
 
 }

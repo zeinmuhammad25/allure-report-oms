@@ -9,4 +9,5 @@ export default class TableListLocator extends BaseLocator {
     static buttonPreviousPage = "//button//span//i[@class='glyphicon glyphicon-arrow-left']";
     static buttonNextPage = "//button//span//i[@class='glyphicon glyphicon-arrow-right']";
     static firstBookedTableButton: string = "//app-table-map//button[not(contains(@class, 'mat-primary'))][1]";
+    static tableSplitBill = (splitName: string): string => `//button[span[contains(text(), '${splitName}')]]`;
 }

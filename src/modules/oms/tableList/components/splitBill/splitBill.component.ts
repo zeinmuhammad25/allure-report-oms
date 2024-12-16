@@ -24,6 +24,7 @@ export default class SplitBillComponent extends BaseOmsPage implements SplitBill
     }
 
     async addBill(billName: string): Promise<void> {
+        await this.wait(500);
         await this.expectVisible(SplitBillLocator.addBillButton);
         await this.click(SplitBillLocator.addBillButton);
         await this.expectVisible(SplitBillLocator.dialogInputNameField);
@@ -49,6 +50,7 @@ export default class SplitBillComponent extends BaseOmsPage implements SplitBill
         await this.expectVisible(SplitBillLocator.dialogSplitBillQtyField);
         await this.click(SplitBillLocator.dialogSplitBillQtyField);
         await this.fill(SplitBillLocator.dialogSplitBillQtyField, menuQty);
+        await this.click(SplitBillLocator.popUpQty);
         await this.click(SplitBillLocator.dialogSplitBillQtyApply);
     }
 
@@ -62,7 +64,20 @@ export default class SplitBillComponent extends BaseOmsPage implements SplitBill
     async closeSplitBill(): Promise<void> {
         await this.expectVisible(SplitBillLocator.closeButton);
         await this.click(SplitBillLocator.closeButton);
+        await this.wait(500);
 
+    }
+
+    async billNameVisible(billName: string): Promise<void> {
+        await this.expectVisible(billName);
+    }
+
+    async billNameInvisible(billName: string): Promise<void> {
+        await this.expectInvisible(billName);
+    }
+
+    async moveMenuButtonInvisible(menuName: string): Promise<void> {
+        await this.expectInvisible(SplitBillLocator.moveMenuButton(menuName));
     }
 
 }

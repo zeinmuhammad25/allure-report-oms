@@ -11,5 +11,13 @@ export default class PosOmsConfigs extends BaseConfigs {
         return this._instance || (this._instance = new this());
     }
 
-    public get = {}
+    public get = {
+        storageState : process.env.STORAGE_STATE,
+        dbConfig: {
+            host: process.env.OMS_DB_HOST,
+            user: process.env.OMS_DB_USER,
+            password: process.env.OMS_DB_PASS,
+            database: process.env.OMS_DB_NAME
+        }
+    };
 }

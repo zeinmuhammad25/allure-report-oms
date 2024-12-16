@@ -15,17 +15,6 @@ export default class SignPinPage extends BaseOmsPage implements signPinScenario 
             Element.ofSelector(SignPinLocator.buttonPin(2)),
             Element.ofSelector(SignPinLocator.buttonPin("CLR")),
             Element.ofSelector(SignPinLocator.buttonSignIn),
-            Element.ofSelector(SignPinLocator.validationSignInUserYes),
-            Element.ofSelector(SignPinLocator.validationSignInUserNo),
-            Element.ofSelector(SignPinLocator.userNotFoundPopup),
-            Element.ofSelector(SignPinLocator.quickServiceListBtn),
-            Element.ofSelector(SignPinLocator.tableListSingIn1),
-            Element.ofSelector(SignPinLocator.tableListSingIn2),
-            Element.ofSelector(SignPinLocator.esbOrderReport),
-            Element.ofSelector(SignPinLocator.errorReport),
-            Element.ofSelector(SignPinLocator.refreshErrorReport),
-            Element.ofSelector(SignPinLocator.syncUserSignPinLog),
-            Element.ofSelector(SignPinLocator.closeLogSignPin)
         ];
     }
 
@@ -79,13 +68,15 @@ export default class SignPinPage extends BaseOmsPage implements signPinScenario 
 
     async validateShowStarCash(inputCash: string): Promise<void> {
         await this.click(SignPinLocator.buttonSignIn);
-        await this.click(SignPinLocator.validationSignInUserYes);
-        await this.waitForResponse("/shift");
-        await this.wait(3000);
-
+        await this.wait(800);
+        const isYesButtonVisible = await this.isVisible(SignPinLocator.validationSignInUserYes);
+        if (isYesButtonVisible) {
+            await this.click(SignPinLocator.validationSignInUserYes);
+        } else {
+        }
+        await this.wait(800);
         const isStartingCashVisible = await this.isVisible(StartDayLocator.startingCash);
         if (isStartingCashVisible) {
-            console.log("Starting Cash is visible, proceeding with input and OK button.");
 
             await this.expectVisible(StartDayLocator.startingCash);
             await this.fill(StartDayLocator.startingCash, inputCash);
@@ -96,23 +87,21 @@ export default class SignPinPage extends BaseOmsPage implements signPinScenario 
             await this.click(StartDayLocator.getLocatorStartDay("Yes"));
 
             const onVisible = async () => {
-                console.log("Success StartDay");
                 const buttonOk = await this.isVisible(StartDayLocator.getLocatorStartDay("Ok"));
                 if (buttonOk) {
-                    console.log("OK button is visible, click OK button");
                     await this.click(StartDayLocator.getLocatorStartDay("Ok"));
                 } else {
-                    console.log("Error: OK button not found!");
                 }
             };
             await this.waitForVisible(StartDayLocator.notificationSuccess, onVisible, 10000, 5);
             await this.waitForResponse("/table");
         } else {
-            console.log("Starting Cash is not visible, verifying text \"AC ROOM\" and \"SMOKING ROOM\".");
             await this.expectTextVisible("AC ROOM");
             await this.expectTextVisible("SMOKING ROOM");
         }
     }
 
+    async storeAuthState(): Promise<void> {
+        await this._page.context().storageState({path: this.configs.get.storageState});
+    }
 }
-

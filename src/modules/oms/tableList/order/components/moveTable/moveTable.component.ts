@@ -34,8 +34,8 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
     }
 
     async selectTable(tableName: string): Promise<void> {
-        await this.expectVisible(MoveTableLocator.moveTableSelect(tableName));
         await this.click(MoveTableLocator.moveTableSelect(tableName));
+        await this.click(MoveTableLocator.buttonApplyOrCancel("Apply"))
     }
 
     async disableButtonByLabel(label: string): Promise<void> {
@@ -71,7 +71,7 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
         await this.waitForResponse("/table");
         await this.expectVisible(MoveTableLocator.buttonActiveTable);
         await this.click(MoveTableLocator.buttonActiveTable);
-        await this.wait(1000);
+        await this.wait(300);
         await this.click(MoveTableLocator.buttonApplyOrCancel("Cancel"));
     }
 
@@ -80,7 +80,7 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
         await this.waitForResponse("/table");
         await this.expectVisible(MoveTableLocator.buttonActiveTable);
         await this.click(MoveTableLocator.buttonActiveTable);
-        await this.wait(1000);
+        await this.wait(300);
         await this.click(MoveTableLocator.buttonApplyOrCancel("Cancel"));
     }
 
@@ -89,5 +89,14 @@ export default class MoveTableComponent extends BaseOmsPage implements MoveTable
         await this.click(MoveTableLocator.buttonBackToTableList);
     }
 
+
+    async selectTableAndApplyInSmokingRoom(): Promise<void> {
+        await this.click(MoveTableLocator.moveTableSelect(Table.smokingRoom.name));
+        await this.waitForResponse("/table");
+        await this.expectVisible(MoveTableLocator.buttonActiveTable);
+        await this.click(MoveTableLocator.buttonActiveTable);
+        await this.wait(300);
+        await this.click(MoveTableLocator.buttonApplyOrCancel("Apply"));
+    }
 
 }

@@ -48,4 +48,54 @@ export default interface OrderScenario extends BaseScenario {
 
     validateMenuNotVisible(menu: string): Promise<void>;
 
+    disabledMergeTable(): Promise<void>;
+
+    splitBill(): Promise<void>;
+
+    disabledSplitBill(): Promise<void>;
+
+    disabledLinkTable(): Promise<void>;
+
+    validateMenuVisible(menu: string): Promise<void>;
+
+    holdMenu(menuName: string): Promise<void>;
+
+    fireMenu(menuName: string): Promise<void>;
+
+    holdAllMenu(): Promise<void>;
+
+    fireAllMenu(): Promise<void>;
+
+    cancelTableSelectNotes(notes: string): Promise<void>;
+
+    disabledCancelTable(): Promise<void>;
+
+    cancelTableApplyDisabled(): Promise<void>;
+
+    UndoCancelTable(notes: string): Promise<void>;
+
+    cancelMenuButtonIsNotVisible(menuName: string): Promise<void>;
+
+    tableInfo(): Promise<void>;
+
+    detailInfoHoldTable(tableName: string): Promise<void>;
+
+    validateMenuInHoldTable(tableName: string, menuName: string): Promise<void>;
+
+    expectDisabledPayment(): Promise<void>;
+
+    holdMenuButtonNotDisplayed(menuName: string): Promise<void>;
+
+    holdAllMenuButtonNotDisplayed(): Promise<void>;
+
+    fireMenuButtonNotDisplayed(menuName: string): Promise<void>;
+
+    fireAllMenuButtonNotDisplayed(): Promise<void>;
+
+    activateKitchenFireManagement(): Promise<void>;
+
+    notActivateKitchenFireManagement(): Promise<void>;
+
+    expectVisibleCustomerName(name: string): Promise<void>
+
 }

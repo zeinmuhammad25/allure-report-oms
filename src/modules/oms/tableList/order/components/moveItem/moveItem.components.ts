@@ -2,6 +2,7 @@ import Element from "../../../../../../base/objects/Element";
 import BaseOmsPage from "../../../../base-oms-page";
 import MoveItemScenario from "./moveItem.scenario";
 import MoveItemLocator from "./moveItem.locator";
+import PromotionScenario from "../../../../../pld/promotion/promotion.scenario";
 
 export default class MoveItemComponents extends BaseOmsPage implements MoveItemScenario {
     pageUrl: () => string;
@@ -134,5 +135,15 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
     async selectQuickService(): Promise<void> {
         await this.expectVisible(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
         await this.click(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
+    }
+
+    async expectDisabledButtonPlus(menuName:string):Promise<void>{
+        await this.expectVisible(MoveItemLocator.disableButtonPlusMenu(menuName))
+        console.warn(`Validation passed: Button Plus Disabled in Menu ${menuName}.`);
+    }
+
+    async expectDisabledButtonMoveAll(menuName:string):Promise<void>{
+        await this.expectVisible(MoveItemLocator.disableButtonMoveAll(menuName))
+        console.warn(`Validation passed: Button MoveAll Disabled in Menu ${menuName}.`);
     }
 }

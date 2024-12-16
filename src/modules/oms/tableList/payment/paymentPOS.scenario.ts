@@ -35,4 +35,16 @@ export default interface PaymentPosScenario extends BaseScenario {
 
     paymentOtherCost(notes: string): Promise<void>;
 
+    selectCashBoard(cashBord: PaymentObject, click: number): Promise<void>;
+
+    clearAmount(): Promise<void>;
+
+    paymentPinUserAuthorization(Pin: string): Promise<void>;
+
+    disableApplyPayment(): Promise<void>;
+
+    paymentComplimentAmount(amount: string, notes: string): Promise<void>;
+
+    disableApplyCompliment(): Promise<void>;
+
 }
