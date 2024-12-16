@@ -13,14 +13,17 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         ];
     }
 
+    private apiBaseUrl = "http://localhost/fnb-pos-v2/api/web/v1";
+
     async paymentPinUserAuthorization(Pin: string): Promise<void> {
         await this.expectVisible(PaymentPOSLocator.popUpUserAuthorization);
-        await this.expectVisible(PaymentPOSLocator.popUpUserAuthorizationPin);
-        await this.click(PaymentPOSLocator.popUpUserAuthorization);
         await this.expectVisible(PaymentPOSLocator.inputPinOrOtpField);
         await this.click(PaymentPOSLocator.inputPinOrOtpField);
         await this.fill(PaymentPOSLocator.inputPinOrOtpField, Pin);
-        await this.expectVisible(PaymentPOSLocator.AuthorizeButton);
+        await this.expectVisible(PaymentPOSLocator.popUpUserAuthorizationPin);
+        await this.click(PaymentPOSLocator.popUpUserAuthorization);
+        await this.expectVisible(PaymentPOSLocator.authorizeButton);
+        await this.click(PaymentPOSLocator.authorizeButton);
     }
 
     async paymentType(paymentType: PaymentObject): Promise<void> {
@@ -32,13 +35,12 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
     async paymentMethod(paymentMethod: PaymentObject): Promise<void> {
         await this.expectVisible(PaymentPOSLocator.getLocatorPaymentType(paymentMethod));
         await this.click(PaymentPOSLocator.getLocatorPaymentType(paymentMethod));
-
     }
 
     async actionPayment(actionPayment: PaymentObject): Promise<void> {
+        await this.wait(500);
         await this.expectVisible(PaymentPOSLocator.getLocatorPaymentMethod(actionPayment));
         await this.click(PaymentPOSLocator.getLocatorPaymentMethod(actionPayment));
-
     }
 
     async paymentInputAmount(inputAmount: string): Promise<void> {
@@ -120,10 +122,10 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         await this.click(PaymentPOSLocator.escapeKeyboard);
     }
 
-    async paymentComplimentAmount(amount : string, notes: string): Promise<void> {
+    async paymentComplimentAmount(amount: string, notes: string): Promise<void> {
         const MAXLENGTH = 100;
         await this.expectVisible(PaymentPOSLocator.inputComplimentAmount);
-        await this.fill(PaymentPOSLocator.inputComplimentAmount,amount);
+        await this.fill(PaymentPOSLocator.inputComplimentAmount, amount);
         await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.click(PaymentPOSLocator.escapeKeyboard);
         await this.expectVisible(PaymentPOSLocator.inputComplimentNotes);
@@ -163,6 +165,57 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         await this.fill(PaymentPOSLocator.inputOtherCostNotes, notes);
         await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.click(PaymentPOSLocator.escapeKeyboard);
+    }
+
+    async fillPaymentAmountWithGrandTotal(adjustment?: number): Promise<void> {
+        adjustment = adjustment ?? 0;
+        const token = await this.getLocalStorage("session");
+        try {
+            const result = await this.makeApiRequest("/order/sales-order-list/", {
+                baseUrl: this.apiBaseUrl,
+                method: "POST",
+                headers: {"Authorization": `Bearer ${token}`}
+            });
+
+            let tables: { salesNum: string }[] = [];
+            if (result?.status === 200 && Array.isArray(result?.data)) {
+                tables = result.data.map(table => ({
+                    salesNum: table?.salesNum
+                }));
+            }
+
+            if (tables.length > 0) {
+                const lastSalesNum: string = tables[tables.length - 1].salesNum;
+
+                const orderDetails = await this.makeApiRequest<{
+                    grandTotal: number,
+                    roundingTotal: number
+                }>("/order/view", {
+                    baseUrl: this.apiBaseUrl,
+                    method: "POST",
+                    headers: {"Authorization": `Bearer ${token}`, "Content-Type": "application/json"},
+                    body: {"salesNum": lastSalesNum}
+                });
+
+                if (orderDetails?.status === 200 && orderDetails?.data) {
+                    const {grandTotal, roundingTotal} = orderDetails.data;
+                    const finalAmount = grandTotal - roundingTotal + adjustment;
+
+                    const formattedAmount = new Intl.NumberFormat("id-ID", {
+                        style: "decimal",
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 2
+                    }).format(finalAmount);
+
+                    await this.expectVisible(PaymentPOSLocator.inputPaymentAmount);
+                    await this.fill(PaymentPOSLocator.inputPaymentAmount, formattedAmount);
+                    await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
+                    await this.click(PaymentPOSLocator.escapeKeyboard);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
 
 

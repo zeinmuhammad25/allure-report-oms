@@ -47,4 +47,7 @@ export default interface PaymentPosScenario extends BaseScenario {
 
     disableApplyCompliment(): Promise<void>;
 
+    fillPaymentAmountWithGrandTotal(adjustment?: number): Promise<void>;
+
+
 }
