@@ -48,7 +48,7 @@ export default class PaymentPOSLocator extends BaseLocator {
     static popUpUserAuthorizationPin = "//span[normalize-space()='PIN']";
     static popUpUserAuthorizationOtp = "//span[normalize-space()='OTP']";
     static inputPinOrOtpField = "//app-auth-modal//div[contains(@class, 'mat-form-field-infix')]//input[contains(@class, 'mat-input-element')]";
-    static AuthorizeButton = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Authorize']";
-    static CancelButton = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Cancel']";
+    static authorizeButton = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Authorize']";
+    static cancelButton = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Cancel']";
 
 }
