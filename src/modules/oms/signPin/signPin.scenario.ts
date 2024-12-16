@@ -1,6 +1,6 @@
 import BaseScenario from "../../../base/base-scenario";
 
-export default interface signPinScenario extends BaseScenario {
+export default interface SignPinScenario extends BaseScenario {
     inputPinByTouch(pin: string): Promise<void>;
 
     inputPinByKeyboard(pin: string): Promise<void>;
