@@ -63,6 +63,7 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
     async submitPin(): Promise<void> {
         await this.click(SignPinLocator.buttonSignIn);
         await this.click(SignPinLocator.validationSignInUserYes);
+        await this.wait(1000);
         await this.waitForResponse("/user/login");
     }
 
