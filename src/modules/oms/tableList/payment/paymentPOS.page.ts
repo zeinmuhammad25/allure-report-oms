@@ -77,11 +77,11 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         await this.click(PaymentPOSLocator.buttonPayCashFullAmount);
     }
 
-    async paymentDebitBCA(inputField: PaymentObject, value: string): Promise<void> {
+    async inputFieldDebitBCA(inputField: PaymentObject, value: string): Promise<void> {
         await this.expectVisible(PaymentPOSLocator.getLocatorInputPaymentDebit(inputField));
-        await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
-        await this.click(PaymentPOSLocator.escapeKeyboard);
+        await this.click(PaymentPOSLocator.getLocatorInputPaymentDebit(inputField));
         await this.fill(PaymentPOSLocator.getLocatorInputPaymentDebit(inputField), value);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
     }
 
     async paymentQrisShopee(): Promise<void> {
@@ -147,12 +147,32 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         throw new Error("Method not implemented.");
     }
 
-    async paymentOtherVoucherSubtotal(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async paymentOtherVoucherSubtotalAndGrandTotal(voucherCode: string, amount: string, notes: string): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.inputOtherVoucherCode);
+        await this.fill(PaymentPOSLocator.inputOtherVoucherCode, voucherCode);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+        await this.expectVisible(PaymentPOSLocator.inputPaymentAmount);
+        await this.fill(PaymentPOSLocator.inputPaymentAmount, amount);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+        await this.expectVisible(PaymentPOSLocator.inputOtherVoucherNotes);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+        await this.fill(PaymentPOSLocator.inputOtherVoucherNotes, notes);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
     }
 
-    async paymentOtherVoucherGrandTotal(): Promise<void> {
-        throw new Error("Method not implemented.");
+    async inputOtherVoucherNotes(notes: string): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.inputOtherVoucherNotes);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+        await this.fill(PaymentPOSLocator.inputOtherVoucherNotes, notes);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+    }
+
+    async inputOtherVoucherCode(voucherCode: string): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.inputOtherVoucherCode);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
+        await this.fill(PaymentPOSLocator.inputOtherVoucherCode, voucherCode);
+        await this.wait(500);
+        await this.click(PaymentPOSLocator.escapeKeyboard);
     }
 
     async paymentMemberDeposit(): Promise<void> {
@@ -165,6 +185,36 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         await this.expectVisible(PaymentPOSLocator.escapeKeyboard);
         await this.click(PaymentPOSLocator.escapeKeyboard);
     }
+
+    async paymentInputWithOutstandingAmount(): Promise<void> {
+        const outstandingValue = await this.getInputValue(PaymentPOSLocator.valueOutstanding);
+        console.log("Outstanding Amount:", outstandingValue);
+        await this.paymentInputAmount(outstandingValue);
+    }
+
+    async paymentInputWithOutstandingAdjustment(operation: "add" | "subtract", adjustmentValue: number): Promise<void> {
+        const outstandingValueStr = await this.getInputValue(PaymentPOSLocator.valueOutstanding);
+        console.log("Outstanding Amount (Original):", outstandingValueStr);
+        let outstandingValue = parseFloat(outstandingValueStr.replace(/\./g, "").replace(",", ".")); // Menghandle format angka 139.600
+        if (isNaN(outstandingValue)) {
+            console.error("Invalid Outstanding Amount:", outstandingValueStr);
+            return;
+        }
+
+        if (operation === "add") {
+            outstandingValue += adjustmentValue;
+        } else if (operation === "subtract") {
+            outstandingValue -= adjustmentValue;
+        } else {
+            console.error("Invalid operation. Use \"add\" or \"subtract\"");
+            return;
+        }
+
+        const adjustedValue = outstandingValue.toLocaleString("id-ID", {minimumFractionDigits: 0});
+        console.log("Adjusted Outstanding Amount:", adjustedValue);
+        await this.paymentInputAmount(adjustedValue);
+    }
+
 
     async fillPaymentAmountWithGrandTotal(adjustment?: number): Promise<void> {
         adjustment = adjustment ?? 0;
