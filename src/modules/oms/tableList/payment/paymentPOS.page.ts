@@ -6,7 +6,6 @@ import PaymentPOSLocator from "./paymentPOS.locator";
 
 export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosScenario {
     pageUrl: () => string;
-
     shouldHave(): Element[] {
         return [
             Element.ofSelector(PaymentPOSLocator.buttonApplyMember)
@@ -215,7 +214,6 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         await this.paymentInputAmount(adjustedValue);
     }
 
-
     async fillPaymentAmountWithGrandTotal(adjustment?: number): Promise<void> {
         adjustment = adjustment ?? 0;
         const token = await this.getLocalStorage("session");
@@ -265,6 +263,10 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         } catch (error) {
             console.error(error);
         }
+    }
+
+    async expectPopUpAuth(): Promise<void> {
+        await this.expectVisible(PaymentPOSLocator.popUpUserAuthorization)
     }
 
 

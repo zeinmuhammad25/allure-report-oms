@@ -2,6 +2,7 @@ import BaseScenario from "../../../../base/base-scenario";
 import {PaymentObject} from "./PaymentObject";
 
 export default interface PaymentPosScenario extends BaseScenario {
+    expectPopUpAuth(): Promise<void>;
 
     paymentType(paymentType: PaymentObject): Promise<void>;
 
