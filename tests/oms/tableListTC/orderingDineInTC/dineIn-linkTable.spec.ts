@@ -454,8 +454,8 @@ test.describe.serial("Dine in Link Table", () => {
             await tableListPage.selectTable(Table.smokingRoom.sr1.name);
             await tableListPage.selectTableSplitBill("Bill 2");
             await orderPage.expectDisabledPayment();
-            await tableListPage.cancelAllQuickServices();
-            await tableListPage.cancelAllTables();
+            await orderPage.cancelTable("Cancel");
+            await orderPage.confirmationCloseTable("Yes");
         }
     );
 
