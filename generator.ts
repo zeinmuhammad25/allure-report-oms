@@ -2,7 +2,7 @@ import * as fs from "fs";
 
 const generateTCBank = (inputFilePath: string | null = null, outputFilePath: string | null = null) => {
 
-    const finalInputFilePath = inputFilePath ?? "./tc.bank";
+    const finalInputFilePath = inputFilePath ?? ".cache/tc.bank";
     const finalOutputFilePath = outputFilePath ?? "./tests/tc-bank.g.ts";
 
     fs.readFile(finalInputFilePath, "utf-8", (err, data) => {
