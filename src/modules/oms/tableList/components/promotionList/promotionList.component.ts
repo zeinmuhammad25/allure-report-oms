@@ -18,6 +18,7 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
     }
 
     async searchPromotion(keyword: string): Promise<void> {
+        await this.wait(800)
         await this.expectVisible(PromotionListLocator.searchPromoField);
         await this.fill(PromotionListLocator.searchPromoField, keyword);
     }
