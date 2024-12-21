@@ -416,6 +416,11 @@ test.describe.serial("Dine in Merge Table", () => {
             await splitBillComponent.moveMenu("child", MenuList.menus.atMenuBiasaBakar.name, "2");
             await splitBillComponent.closeSplitBill();
             await orderPage.saveOrder();
+            await tableListPage.selectRoom(Table.smokingRoom.name);
+            await tableListPage.selectTable(Table.smokingRoom.sr2.name);
+            await tableListPage.selectTableSplitBill("Bill 2");
+            await orderPage.cancelTable("Cancel");
+            await orderPage.confirmationCloseTable("Yes");
         }
     );
 
