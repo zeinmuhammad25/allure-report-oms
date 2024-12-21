@@ -555,6 +555,7 @@ test.describe.serial("Dine in Merge Table", () => {
 
     test("[TC_0205071] Validate Logic when User can Merge Table with filled table after Hold menu",
         {tag: tags + "@Positive"}, async () => {
+        await orderPage.activateKitchenFireManagement()
             await allAccessUserLogin();
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac1.name);
@@ -629,6 +630,7 @@ test.describe.serial("Dine in Merge Table", () => {
             await mergeTableComponent.selectTable(Table.acRoom.ac2.name);
             await mergeTableComponent.applyMergeTable();
             await orderPage.saveOrder();
+            await orderPage.notActivateKitchenFireManagement();
         }
     );
 
