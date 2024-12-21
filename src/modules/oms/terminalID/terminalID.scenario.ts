@@ -5,13 +5,17 @@ export default interface TerminalIDScenario extends BaseScenario {
 
     performTerminalID(): Promise<void>;
 
-    selectTerminalID(): Promise<void>
+    selectTerminalID(): Promise<void>;
 
-    applyTerminalID(): Promise<void>
+    applyTerminalID(): Promise<void>;
 
-    claimTerminalID(): Promise<void>
+    claimTerminalID(): Promise<void>;
 
-    saveTerminalID(): Promise<void>
+    saveTerminalID(): Promise<void>;
+
+    inputNotesTerminalID(note: string): Promise<void>;
+
+    disableButtonSave(): Promise<void>;
 
 
 }
