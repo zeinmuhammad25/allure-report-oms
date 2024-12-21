@@ -211,4 +211,38 @@ export default class TableListPage extends BaseOmsPage implements TableListScena
             })
         ));
     }
+
+    async cancelTableAndSplitBill(): Promise<void> {
+        const token = await this.getLocalStorage("session");
+        const result = await this.makeApiRequest("/order/sales-order-list/", {
+            baseUrl: this.apiBaseUrl,
+            method: "POST",
+            headers: {"Authorization": `Bearer ${token}`}
+        });
+
+        let tables = [];
+        if (result?.status === 200 && Array.isArray(result?.data)) {
+            tables = result.data.map(table => ({
+                tableID: table?.tableID,
+                salesNum: table?.salesNum
+            }));
+        }
+
+        if (tables.length > 0) {
+            await Promise.all(tables.map((table) =>
+                this.makeApiRequest("/order/cancel-table", {
+                    baseUrl: this.apiBaseUrl,
+                    method: "POST",
+                    headers: {"Authorization": `Bearer ${token}`, "Content-Type": "application/json"},
+                    body: {
+                        "tableID": table.tableID,
+                        "salesNum": table.salesNum,
+                        "cancelNotes": "Test Cancel Dine In",
+                        "checkCurrentOrder": false
+                    }
+                })
+            ));
+        }
+    }
+
 }
