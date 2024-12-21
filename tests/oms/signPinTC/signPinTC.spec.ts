@@ -1,8 +1,6 @@
 import {test} from "@playwright/test";
 import SignPinPage from "../../../src/modules/oms/signPin/signPin.page";
 import TerminalIDPage from "../../../src/modules/oms/terminalID/terminalID.page";
-import SignPinLocator from "../../../src/modules/oms/signPin/signPin.locator";
-
 
 test.describe.serial("Landing Page", () => {
 
@@ -34,7 +32,7 @@ test.describe.serial("Landing Page", () => {
         {tag: "@smokeTest @oms @signPin @negative"}, async ({page}) => {
             let signPinPage = new SignPinPage(page);
 
-            await signPinPage.inputPinByTouch("0000");
+            await signPinPage.inputPinByTouch("99999");
             await signPinPage.submitPinNoUnregisteredUser();
         }
     )
