@@ -1,456 +1,405 @@
-import {test} from "@playwright/test";
-import BookOrderComponent from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.component";
-import OrderPage from "../../../../src/modules/oms/tableList/order/order.page";
-import TerminalIDPage from "../../../../src/modules/oms/terminalID/terminalID.page";
-import SignPinPage from "../../../../src/modules/oms/signPin/signPin.page";
-import QuickServiceListPage from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.page";
-import SideNavBarComponents from "../../../../src/modules/oms/components/sideNavBar/sideNavBar.components";
-import TableListPage from "../../../../src/modules/oms/tableList/tableList.page";
+import {test} from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
-import MoveItemComponents from "../../../../src/modules/oms/tableList/order/components/moveItem/moveItem.components";
 import Table from "../../../../src/modules/oms/objects/table";
-import MergeTableComponent
-    from "../../../../src/modules/oms/tableList/order/components/mergeTable/mergeTable.component";
-import ToolsPage from "../../../../src/modules/oms/tools/tools.page";
-import ApplicationSettingPage from "../../../../src/modules/oms/tools/applicationSetting/applicationSetting.page";
-import {ToolsTabs} from "../../../../src/modules/oms/tools/ToolsTabs";
+import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
+import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
+import SideNavBarScenario from "../../../../src/modules/oms/components/sideNavBar/sideNavBar.scenario";
+import TableListScenario from "../../../../src/modules/oms/tableList/tableList.scenario";
+import MoveItemScenario from "../../../../src/modules/oms/tableList/order/components/moveItem/moveItem.scenario";
+import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
 
 test.setTimeout(100000);
 test.describe.serial("Quick Service Move Item", () => {
-    const tags = "@smokeTest @oms @moveItem ";
-    let bookOrderComponent: BookOrderComponent;
-    let orderPage: OrderPage;
-    let terminalIdPage: TerminalIDPage;
-    let signPinPage: SignPinPage;
-    let quickServiceListPage: QuickServiceListPage;
-    let sideNavBarComponents: SideNavBarComponents;
-    let tableListPage: TableListPage;
-    let moveItemComponents: MoveItemComponents;
-    let mergeTableComponent: MergeTableComponent;
-    let toolsPage: ToolsPage;
-    let applicationSettingPage: ApplicationSettingPage;
+    const tags = "@smokeTest @oms @quickService @moveItem ";
 
-    test.beforeEach(async ({page}) => {
-        bookOrderComponent = new BookOrderComponent(page);
-        orderPage = new OrderPage(page);
-        terminalIdPage = new TerminalIDPage(page);
-        signPinPage = new SignPinPage(page);
-        quickServiceListPage = new QuickServiceListPage(page);
-        sideNavBarComponents = new SideNavBarComponents(page);
-        tableListPage = new TableListPage(page);
-        moveItemComponents = new MoveItemComponents(page);
-        mergeTableComponent = new MergeTableComponent(page);
-        toolsPage = new ToolsPage(page);
-        applicationSettingPage = new ApplicationSettingPage(page);
-
-        await terminalIdPage.navigateHere();
-        await terminalIdPage.performTerminalID();
-        await signPinPage.inputPinByTouch("22");
-        await signPinPage.submitPin();
-        await sideNavBarComponents.gotoPageTools();
-        await toolsPage.selectTab(ToolsTabs.ApplicationSetting);
-        await applicationSettingPage.userSetStation();
-        await sideNavBarComponents.gotoPageTableList();
-    });
-
-    test.afterEach(async ({page}) => {
-        // await tableListPage.deleteAllQuickService();
-    });
-
-    const makeOrder = async (salesMode = "AT EXCLUSIVE", isQuickService = true) => {
-        await bookOrderComponent.selectSalesMode(salesMode);
+    const makeOrder = async (bookOrder: BookOrderScenario, salesMode = "AT EXCLUSIVE", isQuickService = true) => {
+        await bookOrder.selectSalesMode(salesMode);
         if (isQuickService) {
-            await bookOrderComponent.applyQuickService();
+            await bookOrder.applyQuickService();
         } else {
-            await bookOrderComponent.bookAndOrder();
+            await bookOrder.bookAndOrder();
         }
-        await bookOrderComponent.skipCustomerPhoneNumber();
+        await bookOrder.skipCustomerPhoneNumber();
     };
 
-    const orderMenuBiasa = async (qty = 1) => {
-        await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-        await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        await orderPage.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty);
-        await orderPage.saveOrder();
+    const orderMenuBiasa = async (order: OrderScenario, qty = 1) => {
+        await order.selectCategoryMenu(MenuList.atCategory.name);
+        await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty);
+        await order.saveOrder();
     };
 
-    const createQuickServiceAndMoveItem = async () => {
-        await sideNavBarComponents.gotoPageTableList();
-        await tableListPage.gotoQuickService();
-        await quickServiceListPage.selectSalesNum("last");
-        await orderPage.moveItem();
-        await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-        await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-        await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-        await moveItemComponents.actionApplyMoveItem();
+    const createQuickServiceAndMoveItem = async (
+        order: OrderScenario,
+        sideNavBar: SideNavBarScenario,
+        tableList: TableListScenario,
+        quickServiceList: QuickServiceListScenario,
+        moveItem: MoveItemScenario,
+        qty = 1) => {
+        await sideNavBar.gotoPageTableList();
+        await tableList.gotoQuickService();
+        await quickServiceList.selectSalesNum("last");
+        await order.moveItem();
+        await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+        await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty);
+        await moveItem.actionApplyMoveItem();
     };
 
+    test.beforeEach(async ({terminalID, signPin, tableList}) => {
+        const testWithAuthentication = [
+            "[TC_0204102] Validate Logic when User can Move Item to new Quick Service order from Quick Service to Quick Service"
+        ];
+        if (testWithAuthentication.includes(test.info().title)) {
+            await terminalID.goHere();
+            await terminalID.performTerminalID();
+            await signPin.inputPinByTouch("22");
+            await signPin.validateShowStarCash("20.000");
+            await signPin.storeAuthState();
+        }
+        await tableList.goHere();
+    });
+
+    test.afterEach(async ({tableList}) => {
+        await Promise.all([
+            tableList.cancelAllQuickServices(),
+            tableList.cancelAllTables()
+        ]);
+    });
 
     test("[TC_0204102] Validate Logic when User can Move Item to new Quick Service order from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204103] Validate Logic when User can Move Item to the other order from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204104] Validate Logic when User can Move Item to the other filled order with the same Sales Mode from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204105] Validate Logic when User can Move Item to the empty order with the same Sales Mode from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204106] Validate Logic when User can Navigate to the next Move Item page",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.selectQuickService();
-            await moveItemComponents.pagination("next");
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.selectQuickService();
+            await moveItem.pagination("next");
+        });
 
     test("[TC_0204107] Validate Logic when User can Navigate to the previous Move Item page",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.selectQuickService();
-            await moveItemComponents.pagination("previous");
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.selectQuickService();
+            await moveItem.pagination("previous");
+        });
 
     test("[TC_0204108] Validate Logic when User can Navigate to the next Destination Table Page in Move Item",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.selectQuickService();
-            await moveItemComponents.pagination("next");
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.selectQuickService();
+            await moveItem.pagination("next");
+        });
 
     test("[TC_0204109] Validate Logic when User can Navigate to the previous Destination Table Page in Move Item",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.selectQuickService();
-            await moveItemComponents.pagination("previous");
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.selectQuickService();
+            await moveItem.pagination("previous");
+        });
 
     test("[TC_0204110] Validate Logic when User can Move Item to the empty order with all Menu(s) selected from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204111] Validate Logic when User can Move Item to the other filled order with all Menu(s) selected from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            ////
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204112] Validate Logic when User can Move Item to the empty order with a Menu selected from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            ////
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204113] Validate Logic when User can Move Item to the filled order with a Menu selected from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            ////
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204114] Validate Logic when User can Increase an item with ≥ 1 Qty in Move Item to the other order from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204115] Validate Logic when User can Decrease an item with ≥ 1 Qty selected in Move Item to the other order from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.moveBackPartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.moveBackPartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204116] Validate Logic when User can Move All an item with ≥ 1 Qty in Move Item to the other order from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204117] Validate Logic when User can Select All Move Item to the other order from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveSelectAllItemMenu();
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.moveSelectAllItemMenu();
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204118] Validate Logic when User can Deselect All Move Item to the other order from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.moveSelectAllItemMenu();
-            await moveItemComponents.deselectAllMenu();
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.moveSelectAllItemMenu();
+            await moveItem.deselectAllMenu();
+        });
 
     test("[TC_0204119] Validate Logic when User can undo Move Item action with button Cancel on Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.actionCancelMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+            await moveItem.actionCancelMoveItem();
+        });
 
     test("[TC_0204120] Validate Logic when User cannot select billed order in Move Item from Quick Service to Quick Service",
-        {tag: tags + "@negative"}, async ({page}) => {
-            ////
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+        });
 
     test("[TC_0204121] Validate Logic when User cannot select current order in Move Item from Quick Service to Quick Service",
-        {tag: tags + "@negative"}, async ({page}) => {
-            ////
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+        });
 
     test("[TC_0204122] Validate Logic when User cannot Move Item to the other filled order with different Sales Mode from Quick Service to Quick Service",
-        {tag: tags + "@negative"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.selectQuickService();
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.selectQuickService();
+        });
 
     test("[TC_0204123] Validate Logic when User cannot Move Item to the other empty order with different Sales Mode from Quick Service to Quick Service",
-        {tag: tags + "@negative"}, async ({page}) => {
-            ////
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.selectQuickService();
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.selectQuickService();
+        });
 
     test("[TC_0204124] Validate Logic when User can Move Item from Dine-In to Quick Service",
-        {tag: tags + "@positive"}, async ({page}) => {
-            ////
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.selectQuickService();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.selectQuickService();
+        });
 
     test("[TC_0204125] Validate Logic when User cannot Move Item while not having access",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             //TODO :
             // Precondition:
             //  POS
@@ -465,484 +414,436 @@ test.describe.serial("Quick Service Move Item", () => {
             //  5. Click transaction Quick Service again
             // Blocker:
             // Depend on ESB Core
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
-
-    test("[TC_0204126] Validate Logic when User cannot Move Item without ordered item to the other order from Quick Service to Quick Service",
-        {tag: tags + "@negative"}, async ({page}) => {
-            ////
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionQuickService();
-        }
-    );
-
-    test("[TC_0204127] Validate Logic when User cannot Move Item from Quick Service to Quick Service while having no ordered items and not saving order first",
-        {tag: tags + "@negative"}, async ({page}) => {
-            ////
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-        }
-    );
-
-    test("[TC_0204128] Validate Logic when User can Move Item from Quick Service to Dine-In other table",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac2.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
-
-    test("[TC_0204129] Validate Logic when User can Move Item from Quick Service to Dine-In other filled table with the same Sales Mode",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT INCLUSIVE", false);
-            await orderMenuBiasa(3);
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder("AT INCLUSIVE", true);
-            await orderMenuBiasa(3);
-            await createQuickServiceAndMoveItem();
-        }
-    );
-
-    test("[TC_0204130] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with the same Sales Mode",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT INCLUSIVE", false);
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder("AT INCLUSIVE", true);
-            await orderMenuBiasa(3);
-            await createQuickServiceAndMoveItem();
-        }
-    );
-
-    test("[TC_0204131] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with all Menu(s) selected",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT INCLUSIVE", false);
-            await orderMenuBiasa(3);
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder("AT INCLUSIVE", true);
-            await orderMenuBiasa(3);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
-
-    test("[TC_0204132] Validate Logic when User can Move Item from Quick Service to Dine-In filled table with all Menu(s) selected",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT INCLUSIVE", false);
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder("AT INCLUSIVE", true);
-            await orderMenuBiasa(3);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
-
-    test("[TC_0204133] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with a Menu selected",
-        {tag: tags + "@positive"}, async ({page}) => {
-            ////
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT INCLUSIVE", false);
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder("AT INCLUSIVE", true);
-            await orderMenuBiasa(3);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
-
-    test("[TC_0204134] Validate Logic when User can Move Item to the filled table with a Menu selected from Quick Service to Dine-In",
-        {tag: tags + "@positive"}, async ({page}) => {
-            ////
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT INCLUSIVE", false);
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder("AT INCLUSIVE", true);
-            await orderMenuBiasa(3);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
-
-    test("[TC_0204135] Validate Logic when User can Increase an item with ≥ 1 Qty in Move Item from Quick Service to Dine-In other table",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderMenuBiasa(3);
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(3);
-            await createQuickServiceAndMoveItem();
-        }
-    );
-
-    test("[TC_0204136] Validate Logic when User can Decrease an item with ≥ 1 Qty selected in Move Item from Quick Service to Dine-In other table",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderMenuBiasa(3);
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.moveBackPartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 2);
-            await moveItemComponents.actionApplyMoveItem();
+            // await quickServiceList.addOrderQuickService();
+            // await bookOrder.setPax(2);
+            // await makeOrder(bookOrder);
+            // await orderMenuBiasa(order, 5);
+            // await sideNavBar.gotoPageTableList();
+            // await tableList.gotoQuickService();
+            // await quickServiceList.selectSalesNum("last");
+            // await order.moveItem();
+            // await moveItem.moveItemToSectionQuickService();
+            // await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            // await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            // await moveItem.actionApplyMoveItem();
         });
 
-    test("[TC_0204137] Validate Logic when User can Move All an item with ≥ 1 Qty in Move Item from Quick Service to Dine-In other table",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderMenuBiasa(3);
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+    test("[TC_0204126] Validate Logic when User cannot Move Item without ordered item to the other order from Quick Service to Quick Service",
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await order.saveOrder();
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionQuickService();
+        });
+
+    test("[TC_0204127] Validate Logic when User cannot Move Item from Quick Service to Quick Service while having no ordered items and not saving order first",
+        {tag: tags + "@negative"}, async ({quickServiceList, order, bookOrder}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await order.expectDisabledMoveTable();
+        });
+
+    test("[TC_0204128] Validate Logic when User can Move Item from Quick Service to Dine-In other table",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac2.name);
+            await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
+
+    test("[TC_0204129] Validate Logic when User can Move Item from Quick Service to Dine-In other filled table with the same Sales Mode",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT INCLUSIVE", false);
+            await orderMenuBiasa(order, 3);
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder, "AT INCLUSIVE", true);
+            await orderMenuBiasa(order, 3);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
+
+    test("[TC_0204130] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with the same Sales Mode",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT INCLUSIVE", false);
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder, "AT INCLUSIVE", true);
+            await orderMenuBiasa(order, 3);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
+
+    test("[TC_0204131] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with all Menu(s) selected",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT INCLUSIVE", false);
+            await orderMenuBiasa(order, 3);
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder, "AT INCLUSIVE", true);
+            await orderMenuBiasa(order, 3);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
+
+    test("[TC_0204132] Validate Logic when User can Move Item from Quick Service to Dine-In filled table with all Menu(s) selected",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT INCLUSIVE", false);
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder, "AT INCLUSIVE", true);
+            await orderMenuBiasa(order, 3);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
+
+    test("[TC_0204133] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with a Menu selected",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT INCLUSIVE", false);
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder, "AT INCLUSIVE", true);
+            await orderMenuBiasa(order, 3);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
+
+    test("[TC_0204134] Validate Logic when User can Move Item to the filled table with a Menu selected from Quick Service to Dine-In",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            ////
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT INCLUSIVE", false);
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder, "AT INCLUSIVE", true);
+            await orderMenuBiasa(order, 3);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
+
+    test("[TC_0204135] Validate Logic when User can Increase an item with ≥ 1 Qty in Move Item from Quick Service to Dine-In other table",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 4);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
+
+    test("[TC_0204136] Validate Logic when User can Decrease an item with ≥ 1 Qty selected in Move Item from Quick Service to Dine-In other table",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.moveBackPartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 2);
+            await moveItem.actionApplyMoveItem();
+        });
+
+    test("[TC_0204137] Validate Logic when User can Move All in Move Item from Quick Service to Dine-In other table",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204138] Validate Logic when User can Select All Move Item to the other order from Quick Service to Dine-In",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderMenuBiasa(3);
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.actionApplyMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.actionApplyMoveItem();
+        });
 
     test("[TC_0204139] Validate Logic when User can Deselect All Move Item to the other order from Quick Service to Dine-In",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderMenuBiasa(3);
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItemComponents.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItemComponents.deselectAllMenu();
-            await moveItemComponents.verifyCurrentQty(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 0);
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.deselectAllMenu();
+            await moveItem.verifyCurrentQty(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 0);
+        });
 
     test("[TC_0204140] Validate Logic when User cannot Move Item from Quick Service to the other filled table with different Sales Mode on Dine-In",
-        {tag: tags + "@negative"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT INCLUSIVE", false);
-            await orderMenuBiasa(3);
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac3.name);
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT INCLUSIVE", false);
+            await orderMenuBiasa(order, 3);
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac3.name);
+        });
 
     test("[TC_0204141] Validate Logic when User cannot Move Item from Quick Service to the other empty table with different Sales Mode in different Table Section on Dine-In",
-        {tag: tags + "@negative"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT INCLUSIVE", false);
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac3.name);
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT INCLUSIVE", false);
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac3.name);
+        });
 
     test("[TC_0204142] Validate Logic when User cannot Move Item without ordered item from Quick Service to Dine-In table",
-        {tag: tags + "@negative"}, async ({page}) => {
-            ////
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderPage.saveOrder();
-            await sideNavBarComponents.gotoPageTableList();
-            await tableListPage.gotoQuickService();
-            await quickServiceListPage.selectSalesNum("last");
-            await orderPage.moveItem();
-            await moveItemComponents.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await order.saveOrder();
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.selectSalesNum("last");
+            await order.moveItem();
+            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+        });
 
     test("[TC_0204143] Validate Logic when User can Move Item to emptied table from Quick Service to Dine-In Parent Merge Table",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT INCLUSIVE", false);
-            await orderPage.saveOrder();
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await orderPage.mergeTable();
-            await mergeTableComponent.selectRoom(Table.acRoom.name);
-            await mergeTableComponent.selectTable(Table.acRoom.ac1.name);
-            await mergeTableComponent.applyMergeTable();
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder("AT INCLUSIVE", true);
-            await orderMenuBiasa(5);
-            await createQuickServiceAndMoveItem();
-        }
-    );
+        {tag: tags + "@positive"},
+        async ({quickServiceList, bookOrder, sideNavBar, tableList, order, mergeTable, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT INCLUSIVE", false);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await order.mergeTable();
+            await mergeTable.selectRoom(Table.acRoom.name);
+            await mergeTable.selectTable(Table.acRoom.ac1.name);
+            await mergeTable.applyMergeTable();
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder, "AT INCLUSIVE", true);
+            await orderMenuBiasa(order, 5);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
 
     test("[TC_0204144] Validate Logic when User can Move Item to filled table from Quick Service to Dine-In Parent Merge Table",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderPage.saveOrder();
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await orderPage.mergeTable();
-            await mergeTableComponent.selectRoom(Table.acRoom.name);
-            await mergeTableComponent.selectTable(Table.acRoom.ac1.name);
-            await mergeTableComponent.applyMergeTable();
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await createQuickServiceAndMoveItem();
-        }
-    );
+        {tag: tags + "@positive"},
+        async ({quickServiceList, bookOrder, sideNavBar, tableList, order, mergeTable, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder,"AT EXCLUSIVE", false);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await order.mergeTable();
+            await mergeTable.selectRoom(Table.acRoom.name);
+            await mergeTable.selectTable(Table.acRoom.ac1.name);
+            await mergeTable.applyMergeTable();
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
 
     test("[TC_0204145] Validate Logic when User can Move Item from Quick Service to Dine-In Parent Merge Table",
-        {tag: tags + "@positive"}, async ({page}) => {
-            ////
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderPage.saveOrder();
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await orderPage.mergeTable();
-            await mergeTableComponent.selectRoom(Table.acRoom.name);
-            await mergeTableComponent.selectTable(Table.acRoom.ac1.name);
-            await mergeTableComponent.applyMergeTable();
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await createQuickServiceAndMoveItem();
-        }
-    );
+        {tag: tags + "@positive"},
+        async ({quickServiceList, bookOrder, sideNavBar, tableList, order, mergeTable, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT EXCLUSIVE", false);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await order.mergeTable();
+            await mergeTable.selectRoom(Table.acRoom.name);
+            await mergeTable.selectTable(Table.acRoom.ac1.name);
+            await mergeTable.applyMergeTable();
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
 
     test("[TC_0204146] Validate Logic when User cannot select current table in Move Item from Quick Service to Dine-In",
-        {tag: tags + "@negative"}, async ({page}) => {
-            //// bisa
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderMenuBiasa(5);
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await createQuickServiceAndMoveItem();
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT EXCLUSIVE", false);
+            await orderMenuBiasa(order, 5);
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
 
     test("[TC_0204147] Validate Logic when User cannot select billed table in Move Item from Quick Service to Dine-In",
-        {tag: tags + "@negative"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderMenuBiasa(5);
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await orderPage.printBill();
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await createQuickServiceAndMoveItem();
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT EXCLUSIVE", false);
+            await orderMenuBiasa(order, 5);
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await order.printBill();
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
 
     test("[TC_0204148] Validate Logic when User can Move Item to Child Merge Table from Quick Service to Dine-In",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderMenuBiasa(5);
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await orderPage.printBill();
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await createQuickServiceAndMoveItem();
-        }
-    );
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT EXCLUSIVE", false);
+            await orderMenuBiasa(order, 5);
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await order.printBill();
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
 
     test("[TC_0204149] Validate Logic when User cannot Move Item to emptied order from Quick Service to Dine-In Child Merge Table with different sales mode",
-        {tag: tags + "@negative"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderMenuBiasa(5);
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await orderPage.printBill();
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await createQuickServiceAndMoveItem();
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT EXCLUSIVE", false);
+            await orderMenuBiasa(order, 5);
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await order.printBill();
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
 
     test("[TC_0204150] Validate Logic when User cannot Move Item to filled table from Child Merge Table from Quick Service to Dine-In with different sales mode",
-        {tag: tags + "@negative"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", false);
-            await orderMenuBiasa(5);
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await orderPage.printBill();
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await createQuickServiceAndMoveItem();
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT EXCLUSIVE", false);
+            await orderMenuBiasa(order, 5);
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await order.printBill();
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
 
     test("[TC_0204151] Validate Logic when User cannot Move Item from Quick Service to Dine-In while having no ordered items and not saving order first",
-        {tag: tags + "@negative"}, async ({page}) => {
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT EXCLUSIVE", true);
-            await orderMenuBiasa(5);
-            await tableListPage.selectRoom(Table.acRoom.name);
-            await tableListPage.selectTable(Table.acRoom.ac3.name);
-            await orderPage.printBill();
-            await orderPage.saveOrder();
-            await quickServiceListPage.addOrderQuickService();
-            await bookOrderComponent.setPax(2);
-            await makeOrder();
-            await orderMenuBiasa(5);
-            await createQuickServiceAndMoveItem();
-        }
-    );
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await makeOrder(bookOrder, "AT EXCLUSIVE", false);
+            await orderMenuBiasa(order, 5);
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac3.name);
+            await order.printBill();
+            await order.saveOrder();
+            await quickServiceList.addOrderQuickService();
+            await bookOrder.setPax(2);
+            await makeOrder(bookOrder);
+            await orderMenuBiasa(order, 5);
+            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+        });
 });
