@@ -32,4 +32,6 @@ export default interface EditOrderScenario extends BaseScenario {
     inputCustomMenuName(menuName: string): Promise<void>;
 
     inputNotesOpenPrice(notes: string): Promise<void>;
+
+    actionCancel(): Promise<void>;
 }
