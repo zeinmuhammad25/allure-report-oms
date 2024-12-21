@@ -1,0 +1,247 @@
+import {test} from "../../injection";
+import MenuList from "../../../../src/modules/oms/objects/menuList";
+import Table from "../../../../src/modules/oms/objects/table";
+import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
+import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
+
+test.setTimeout(100000);
+test.describe.serial("Ordering Dine In Move Table", () => {
+    const tags = "@smokeTest @oms @orderingDineIn @moveTable ";
+
+    const selectMenuBiasa = async (order: OrderScenario, quantity = 1) => {
+        await order.selectCategoryMenu(MenuList.atCategory.name);
+        await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+        await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
+    };
+
+    const salesModeInclusive = async (bookOrder: BookOrderScenario) => {
+        await bookOrder.selectSalesMode("AT INCLUSIVE");
+        await bookOrder.bookAndOrder();
+        await bookOrder.skipCustomerPhoneNumber();
+    };
+
+    test.beforeEach(async ({terminalID, signPin}) => {
+        const testWithReauthentication = [
+            "[TC_0205074] Validate Logic when User can Move Table to the other table",
+            "[TC_0205083] Validate Logic when User can cancel Move Table action with button Cancel",
+            "[TC_0205084] Validate Logic when User can Move Table after Hold the menu"
+        ];
+
+        if (testWithReauthentication.includes(test.info().title)) {
+            await terminalID.goHere();
+            await terminalID.performTerminalID();
+            await signPin.inputPinByTouch("22");
+            await signPin.validateShowStarCash("20.000");
+            await signPin.storeAuthState();
+        }
+    });
+
+    test.afterEach(async ({tableList}) => {
+        await Promise.all([
+            tableList.cancelAllQuickServices(),
+            tableList.cancelAllTables()
+        ]);
+    });
+
+    test("[TC_0205074] Validate Logic when User can Move Table to the other table",
+        async ({order, tableList, bookOrder, moveTable}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await selectMenuBiasa(order, 3);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await order.moveTable();
+            await moveTable.autoMoveTable();
+        });
+
+    test("[TC_0205075] Validate Logic when User can Move Table to the other table with the same Table Section",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await selectMenuBiasa(order, 3);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await order.moveTable();
+            await moveTable.autoMoveTable();
+        });
+
+    test("[TC_0205076] Validate Logic when User can Move Table to the other table with different Table Section",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await selectMenuBiasa(order, 3);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await order.moveTable();
+            await moveTable.selectTableAndApplyInSmokingRoom();
+        });
+
+    test("[TC_0205077] Validate Logic when User cannot Move Table to own child linked table",
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable, linkTable}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac2.name);
+            await salesModeInclusive(bookOrder);
+            await linkTable.singleLinkTable();
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await order.moveTable();
+            await moveTable.selectRoom(Table.acRoom.name);
+            await moveTable.disableButtonByLabel(Table.acRoom.ac1.name);
+        });
+
+    test("[TC_0205078] Validate Logic when User cannot Move Table to own child merged table",
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable, mergeTable}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await order.mergeTable();
+            await mergeTable.selectRoom(Table.acRoom.name);
+            await mergeTable.selectRoom(Table.acRoom.ac2.name);
+            await mergeTable.applyMergeTable();
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await order.moveTable();
+            await moveTable.selectRoom(Table.acRoom.name);
+            await moveTable.disableButtonByLabel(Table.acRoom.ac2.name);
+        });
+
+    test("[TC_0205079] Validate Logic when user cannot Move Table to the other filled table",
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac2.name);
+            await salesModeInclusive(bookOrder);
+            await selectMenuBiasa(order, 3);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await order.moveTable();
+            await moveTable.selectRoom(Table.acRoom.name);
+            await moveTable.disableButtonByLabel(Table.acRoom.ac2.name);
+        });
+
+    test("[TC_0205080] Validate Logic when user cannot Move Table to the other filled table with the same Table Section",
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac2.name);
+            await salesModeInclusive(bookOrder);
+            await selectMenuBiasa(order, 3);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await order.moveTable();
+            await moveTable.selectRoom(Table.acRoom.name);
+            await moveTable.disableButtonByLabel(Table.acRoom.ac2.name);
+        });
+
+    test("[TC_0205081] Validate Logic when user cannot Move Table to the other filled table with different Table Section",
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.smokingRoom.name);
+            await tableList.selectTable(Table.smokingRoom.sr1.name);
+            await salesModeInclusive(bookOrder);
+            await selectMenuBiasa(order, 3);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await order.moveTable();
+            await moveTable.selectRoom(Table.smokingRoom.name);
+            await moveTable.disableButtonByLabel(Table.smokingRoom.sr1.name);
+        });
+
+    test("[TC_0205082] Validate Logic when user cannot Move Table while not having access",
+        {tag: tags + "@negative"}, async ({terminalID, signPin, tableList, order, bookOrder}) => {
+            await terminalID.goHere();
+            await terminalID.performTerminalID();
+            await signPin.inputPinByTouch("0000");
+            await signPin.validateShowStarCash("20.000");
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await order.expectDisabledMoveTable();
+        });
+
+    test("[TC_0205083] Validate Logic when User can cancel Move Table action with button Cancel",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await selectMenuBiasa(order, 3);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await order.moveTable();
+            await moveTable.selectTableAndCancelInSmokingRoom();
+        });
+
+    test("[TC_0205084] Validate Logic when User can Move Table after Hold the menu",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
+            await tableList.goHere();
+            await order.activateKitchenFireManagement();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await selectMenuBiasa(order, 3);
+            await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await order.moveTable();
+            await moveTable.selectTableAndApplyInSmokingRoom();
+        });
+
+    test("[TC_0205085] Validate Logic when User can Move Table after Hold All the menu",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await selectMenuBiasa(order, 3);
+            await order.holdAllMenu();
+            await order.confirmationCloseTable("Yes");
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await order.moveTable();
+            await moveTable.selectTableAndApplyInSmokingRoom();
+        });
+
+    test("[TC_0205086] Validate Logic when User can Move Table while having no ordered items",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
+            await tableList.goHere();
+            await order.notActivateKitchenFireManagement();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeInclusive(bookOrder);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await order.moveTable();
+            await moveTable.selectTableAndApplyInSmokingRoom();
+            await order.saveOrder();
+            await order.notActivateKitchenFireManagement();
+        });
+});
