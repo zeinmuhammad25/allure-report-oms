@@ -96,6 +96,8 @@ export default interface OrderScenario extends BaseScenario {
 
     notActivateKitchenFireManagement(): Promise<void>;
 
-    expectVisibleCustomerName(name: string): Promise<void>
+    expectVisibleCustomerName(name: string): Promise<void>;
+
+    expectDisabledMoveItem(): Promise<void>;
 
 }
