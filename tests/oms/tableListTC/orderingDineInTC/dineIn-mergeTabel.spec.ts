@@ -416,6 +416,11 @@ test.describe.serial("Dine in Merge Table", () => {
             await splitBillComponent.moveMenu("child", MenuList.menus.atMenuBiasaBakar.name, "2");
             await splitBillComponent.closeSplitBill();
             await orderPage.saveOrder();
+            await tableListPage.selectRoom(Table.smokingRoom.name);
+            await tableListPage.selectTable(Table.smokingRoom.sr2.name);
+            await tableListPage.selectTableSplitBill("Bill 2");
+            await orderPage.cancelTable("Cancel");
+            await orderPage.confirmationCloseTable("Yes");
         }
     );
 
@@ -550,6 +555,7 @@ test.describe.serial("Dine in Merge Table", () => {
 
     test("[TC_0205071] Validate Logic when User can Merge Table with filled table after Hold menu",
         {tag: tags + "@Positive"}, async () => {
+        await orderPage.activateKitchenFireManagement()
             await allAccessUserLogin();
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac1.name);
@@ -624,6 +630,7 @@ test.describe.serial("Dine in Merge Table", () => {
             await mergeTableComponent.selectTable(Table.acRoom.ac2.name);
             await mergeTableComponent.applyMergeTable();
             await orderPage.saveOrder();
+            await orderPage.notActivateKitchenFireManagement();
         }
     );
 
