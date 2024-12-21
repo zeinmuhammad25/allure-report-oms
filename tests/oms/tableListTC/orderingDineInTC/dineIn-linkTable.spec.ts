@@ -343,8 +343,11 @@ test.describe.serial("Dine in Link Table", () => {
             await splitBillComponent.moveMenu("split", MenuList.menus.atMenuBiasaBakar.name, "3");
             await splitBillComponent.closeSplitBill();
             await orderPage.saveOrder();
-            await tableListPage.cancelAllQuickServices();
-            await tableListPage.cancelAllTables();
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac1.name);
+            await tableListPage.selectTableSplitBill("Bill 2");
+            await orderPage.cancelTable("Cancel");
+            await orderPage.confirmationCloseTable("Yes");
         }
     );
 
@@ -377,8 +380,8 @@ test.describe.serial("Dine in Link Table", () => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac2.name);
             await tableListPage.selectTableSplitBill("Bill 2");
-            await tableListPage.cancelAllQuickServices();
-            await tableListPage.cancelAllTables();
+            await orderPage.cancelTable("Cancel");
+            await orderPage.confirmationCloseTable("Yes");
         }
     );
 
@@ -411,8 +414,13 @@ test.describe.serial("Dine in Link Table", () => {
             await tableListPage.selectRoom(Table.acRoom.name);
             await tableListPage.selectTable(Table.acRoom.ac1.name);
             await tableListPage.selectTableSplitBill("Main Bill");
-            await tableListPage.cancelAllQuickServices();
-            await tableListPage.cancelAllTables();
+            await orderPage.cancelTable("Cancel");
+            await orderPage.confirmationCloseTable("Yes");
+            await tableListPage.selectRoom(Table.acRoom.name);
+            await tableListPage.selectTable(Table.acRoom.ac1.name);
+            await tableListPage.selectTableSplitBill("Bill 2");
+            await orderPage.cancelTable("Cancel");
+            await orderPage.confirmationCloseTable("Yes");
         }
     );
 
@@ -446,8 +454,8 @@ test.describe.serial("Dine in Link Table", () => {
             await tableListPage.selectTable(Table.smokingRoom.sr1.name);
             await tableListPage.selectTableSplitBill("Bill 2");
             await orderPage.expectDisabledPayment();
-            await tableListPage.cancelAllQuickServices();
-            await tableListPage.cancelAllTables();
+            await orderPage.cancelTable("Cancel");
+            await orderPage.confirmationCloseTable("Yes");
         }
     );
 
