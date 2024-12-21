@@ -119,7 +119,7 @@ test.describe.serial("Quick Service Promotion", () => {
 
 
     test("[TC_0204053] Validate Logic When User Apply Promotion Head - Order Pages- Discount Bill Rp",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -132,11 +132,18 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.addPromotion();
             await promotionListComponent.selectPromotion("BILL DISCOUNT RP");
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204054] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % All Category",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -148,14 +155,20 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderMenuPaketMahal();
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("DISCOUNT % ALL CATEGORY");
-            await orderPage.wait(1000);
             await promotionListComponent.selectPromotion("DISCOUNT % ALL CATEGORY");
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204055] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -165,16 +178,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMurah();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("DISCOUNT % MENU");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU");
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204056] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu Category",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -185,16 +204,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY");
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204057] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu Category Detail",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -205,18 +230,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY DETAIL");
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204058] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount Limit % Menu",
-        {tag: tags + "@positive"}, async ({page}) => {
-            //TODO :
-            // need to check tentative error on awaiting for response API contain /get-menu-package
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -227,16 +256,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU");
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204059] Validate Logic When User Apply Promotion Head - Order Pages - Discount Limit % Menu Category",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -246,15 +281,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMurah();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY");
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
     test("[TC_0204060] Validate Logic When User Apply Promotion Head - Order Pages - Discount Limit % Menu Category Detail",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -264,16 +305,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMurah();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204061] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp All Category",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -283,16 +330,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMahal();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("MENU DISC RP ALL CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP ALL CATEGORY");
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204062] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp Menu",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -303,16 +356,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("MENU DISC RP MENU");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU");
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204063] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp Menu Category",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -323,15 +382,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY");
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
     test("[TC_0204064] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp Menu Category Detail",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -341,16 +406,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMahal();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY DETAIL");
             await orderPage.saveOrder();
-
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
     test("[TC_0204065] Validate Logic When User Apply Promotion Head - Order Pages - Open Bill Dicount Rp",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -360,16 +430,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMahal();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT RP");
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT RP", 1000000);
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204066] Validate Logic When User Apply Promotion Head - Order Pages - Open Bill Dicount %",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -379,16 +455,22 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMurah();
-            await orderPage.wait(1000);
             await orderPage.addPromotion();
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT %");
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT %", 10);
             await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204067] Validate Logic When User Apply Promotion Head - Payment Pages - Discount Bill Rp",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -400,17 +482,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("BILL DISCOUNT RP");
             await promotionListComponent.selectPromotion("BILL DISCOUNT RP");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204068] Validate Logic When User Apply Promotion Head - Payment Pages - Discount % All Category",
-        {tag: tags + "@positive"}, async ({page}) => {
-            //TODO :
-            // need to check tentative error on apply promotion and manu paket
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -421,15 +507,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMurah();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISCOUNT % ALL CATEGORY");
             await promotionListComponent.selectPromotion("DISCOUNT % ALL CATEGORY");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204069] Validate Logic When User Apply Promotion Head - Payment Pages - Discount % Menu",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -441,15 +533,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISCOUNT % MENU");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204070] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount % Menu Category",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -461,15 +559,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204071] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount % Menu Category Detail",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -481,15 +585,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISCOUNT % MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("DISCOUNT % MENU CATEGORY DETAIL");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204072] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -500,15 +610,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204073] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu Category",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -520,35 +636,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY");
             await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204074] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu Category Detail",
-        {tag: tags + "@positive"}, async ({page}) => {
-            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu();
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
-            await orderMenuExtraAnggur();
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderMenuPaketMurah();
-            ;
-            await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
-            await paymentPOSPage.paymentType(PaymentObject.AddPromo);
-            await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
-            await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
-        }
-    );
-
-    test("[TC_0204075] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp All Category",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -560,15 +662,47 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
+            await paymentPOSPage.paymentType(PaymentObject.AddPromo);
+            await promotionListComponent.searchPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
+            await promotionListComponent.selectPromotion("DISC LIMIT % MENU CATEGORY DETAIL");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
+        }
+    );
+
+    test("[TC_0204075] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp All Category",
+        {tag: tags + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderSingleMenu();
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 5);
+            await orderMenuExtraAnggur();
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+            await orderMenuPaketMurah();
+            await orderMenuPaketMahal();
+            await orderPage.saveOrder();
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("MENU DISC RP ALL CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP ALL CATEGORY");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204076] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -580,15 +714,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("MENU DISC RP MENU");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204077] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu Category",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -600,15 +740,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204078] Validate Logic When User Apply Promotion Head - Payment Pages -  Menu Discount Rp Menu Category Detail",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -620,15 +766,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderMenuPaketMurah();
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("MENU DISC RP MENU CATEGORY DETAIL");
             await promotionListComponent.selectPromotion("MENU DISC RP MENU CATEGORY DETAIL");
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204079] Validate Logic When User Apply Promotion Head - Payment Pages -  Open Bill Dicount Rp",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -639,16 +791,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT RP");
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT RP", 400000);
-            await promotionListComponent.wait(800);
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204080] Validate Logic When User Apply Promotion Head - Payment Pages -  Open Bill Dicount %",
-        {tag: tags + "@positive"}, async ({page}) => {
+        {tag: tags + "@positive"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -659,16 +816,21 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMahal();
             await orderPage.saveOrder();
-            await paymentPOSPage.wait(1000);
             await paymentPOSPage.paymentType(PaymentObject.AddPromo);
             await promotionListComponent.searchPromotion("OPEN BILL DISCOUNT %");
             await promotionListComponent.selectPromotion("OPEN BILL DISCOUNT %", 60);
-            await paymentPOSPage.wait(800);
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
         }
     );
 
     test("[TC_0204081] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Bill Rp",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -688,7 +850,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204082] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % All Category",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -707,7 +869,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204083] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % Menu",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -727,7 +889,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204084] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % Menu Category",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -747,7 +909,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204085] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % Menu Category Detail",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -767,7 +929,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204086] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Limit % Menu",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -787,7 +949,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204087] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Limit % Menu Category",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -807,7 +969,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204088] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Limit % Menu Category Detail",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -827,7 +989,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204089] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Menu Discount Rp All Category",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -847,7 +1009,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204090] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Menu Discount Rp Menu",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             //TODO :
             // need to check tentative error on awaiting for response API contain /get-menu-package
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
@@ -869,7 +1031,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204091] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Menu Discount Rp Menu Category",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -889,7 +1051,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204092] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Menu Discount Rp Menu Category Detail",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -909,7 +1071,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204093] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Open Bill Dicount Rp",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -929,7 +1091,7 @@ test.describe.serial("Quick Service Promotion", () => {
     );
 
     test("[TC_0204094] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Open Bill Dicount %",
-        {tag: tags + "@negative"}, async ({page}) => {
+        {tag: tags + "@negative"}, async () => {
             await orderPage.selectCategoryMenu(MenuList.atCategory.name);
             await orderSingleMenu();
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);

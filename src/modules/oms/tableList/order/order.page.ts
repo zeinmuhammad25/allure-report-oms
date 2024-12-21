@@ -40,6 +40,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async addPromotion(): Promise<void> {
+        await this.wait(1000)
         await this.expectVisible(OrderLocator.addPromotionButton);
         await this.click(OrderLocator.addPromotionButton);
     }

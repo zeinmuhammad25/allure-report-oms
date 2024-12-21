@@ -25,9 +25,9 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
     }
 
     async paymentType(paymentType: PaymentObject): Promise<void> {
+        await this.wait(1000)
         await this.expectVisible(PaymentPOSLocator.getLocatorPaymentType(paymentType));
         await this.click(PaymentPOSLocator.getLocatorPaymentType(paymentType));
-
     }
 
     async paymentMethod(paymentMethod: PaymentObject): Promise<void> {
