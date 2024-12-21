@@ -7,4 +7,6 @@ export default interface StartDayScenario extends BaseScenario {
 
     notificationSuccessStartDay(): Promise<void>
 
+    popUpShiftInZero(): Promise<void>
+
 }
