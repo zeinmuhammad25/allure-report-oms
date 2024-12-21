@@ -13,6 +13,8 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
         ];
     }
 
+    private apiBaseUrl = "http://localhost/fnb-pos-v2/api/web/v1";
+
     async addOrderQuickService(): Promise<void> {
         await this.click(QuickServiceListLocator.sectionQuickService);
         await this.expectVisible(QuickServiceListLocator.buttonAddQuickService);
@@ -25,15 +27,6 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
         console.log("Successfully clicked on the top salesNum.");
     }
 
-    async fetchSalesNums(): Promise<string[]> {
-        const response = await this.makeApiRequest("/api/web/v1/order/index-take-away/");
-        if (Array.isArray(response.data)) {
-            return response.data.map(item => item.salesNum);
-        }
-        throw new Error("Unexpected API response format");
-
-    }
-
     async selectSalesNum(salesNum: string | "first" | "last"): Promise<void> {
         await this.expectVisible(QuickServiceListLocator.quickServiceSalesNum(salesNum));
         await this.click(QuickServiceListLocator.quickServiceSalesNum(salesNum));
@@ -44,7 +37,7 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
     }
 
     async clickTopSalesNum(): Promise<void> {
-        const salesNums = await this.fetchSalesNums();
+        const salesNums = await this.getSalesNums();
         if (salesNums.length === 0) {
             throw new Error("No salesNums found in the response");
         }
@@ -62,7 +55,7 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
     }
 
     async clickLastSalesNum(): Promise<void> {
-        const salesNums = await this.fetchSalesNums();
+        const salesNums = await this.getSalesNums();
         if (salesNums.length === 0) {
             throw new Error("No salesNums found in the response");
         }
@@ -79,4 +72,21 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
             await this.click(lastSalesNumLocator);
         }
     }
+
+    async getSalesNums(): Promise<string[]> {
+        const token = await this.getLocalStorage("session");
+        const result = await this.makeApiRequest<{ salesNum: string }[]>("/order/index-take-away/", {
+            baseUrl: this.apiBaseUrl,
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+        if (result.status === 200) {
+            return result.data.map(item => item.salesNum);
+        }
+        throw new Error("Failed to fetch sales numbers.");
+    }
+
 }
