@@ -81,16 +81,13 @@ test.describe.serial("Dine in Cancel Table", () => {
         ];
 
         if (testWithAuthentication.includes(test.info().title)) {
-            // Jika test case adalah TC_0205131
             if (test.info().title === testWithAuthentication[0]) {
                 await terminalID.goHere();
                 await terminalID.performTerminalID();
                 await signPin.inputPinByTouch("22");
                 await signPin.validateShowStarCash("20.000");
                 await signPin.storeAuthState();
-            }
-            // Jika test case adalah salah satu TC_0205144 hingga TC_0205147
-            else if ([
+            } else if ([
                 testWithAuthentication[1],
                 testWithAuthentication[2],
                 testWithAuthentication[3],
