@@ -58,15 +58,16 @@ test.describe.serial("Dine in Cancel Table", () => {
         await addOrder.applyMenuDetailPackage();
     };
 
-
     const cancelTableSelectNotes = async (order: OrderScenario, reason: "Cancel" | "Tidak Jadi" | "Testing A" | "Testing B") => {
         await order.cancelTableSelectNotes(reason);
         await order.confirmationCloseTable("Yes");
     };
+
     const cancelTable = async (order: OrderScenario) => {
         await order.cancelTable("Cancel");
         await order.confirmationCloseTable("Yes");
     };
+
     const UndoCancelTable = async (order: OrderScenario, reason: "Cancel" | "Tidak Jadi" | "Testing A" | "Testing B") => {
         await order.UndoCancelTable(reason);
     };
