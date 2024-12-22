@@ -40,7 +40,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async addPromotion(): Promise<void> {
-        await this.wait(1000)
+        await this.wait(1000);
         await this.expectVisible(OrderLocator.addPromotionButton);
         await this.click(OrderLocator.addPromotionButton);
     }
@@ -82,6 +82,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.expectVisible(OrderLocator.paymentButton);
         await this.click(OrderLocator.paymentButton);
         await this.waitForResponse("/get-payment-method");
+        await this.wait(1000);
     }
 
     async printBill(): Promise<void> {
