@@ -61,6 +61,7 @@ test.describe.serial("Dine in Link Table", () => {
     test.beforeEach(async ({terminalID, signPin, tableList, order}) => {
         const testWithAuthentication = [
             "[TC_0205115] Validate Logic when User can Link Table to other table with the same Sales Mode",
+            "[TC_0205121] Validate Logic when User cannot Link Table while the other table doing Hold",
             "[TC_0205129] Validate Logic when User cannot Link Table after Hold the menu",
             "[TC_0205130] Validate Logic when User cannot Link Table after Hold All the menu"
         ];
@@ -74,7 +75,8 @@ test.describe.serial("Dine in Link Table", () => {
                 await signPin.storeAuthState();
             } else if ([
                 testWithAuthentication[1],
-                testWithAuthentication[2]
+                testWithAuthentication[2],
+                testWithAuthentication[3]
             ].includes(test.info().title)) {
                 await order.activateKitchenFireManagement();
                 await terminalID.goHere();
@@ -233,30 +235,6 @@ test.describe.serial("Dine in Link Table", () => {
             await tableList.selectTable(Table.acRoom.ac1.name);
             await linkTable.singleLinkTable();
             await order.saveOrder();
-        }
-    );
-
-    test("[TC_0205121] Validate Logic when User cannot Link Table while the other table doing Hold",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrder}) => {
-            await order.activateKitchenFireManagement();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.holdAllMenu();
-            await order.confirmationCloseTable("Yes");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await linkTable.userMultiLinkTable();
-            await order.notActivateKitchenFireManagement();
         }
     );
 
@@ -454,6 +432,8 @@ test.describe.serial("Dine in Link Table", () => {
             await tableList.selectRoom(Table.acRoom.name);
             await tableList.selectTable(Table.acRoom.ac1.name);
             await order.disabledLinkTable();
+            await order.cancelTable("Cancel");
+            await order.confirmationCloseTable("Yes");
             await topNavBar.userSignOut();
             await signPin.inputPinByTouch("22");
             await signPin.validateShowStarCash("20.000");
@@ -483,6 +463,28 @@ test.describe.serial("Dine in Link Table", () => {
             await order.saveOrder();
             await tableList.selectRoom(Table.smokingRoom.name);
             await tableList.selectTable(Table.smokingRoom.sr1.name);
+            await linkTable.userMultiLinkTable();
+        }
+    );
+
+    test("[TC_0205121] Validate Logic when User cannot Link Table while the other table doing Hold",
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrder}) => {
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await makeOrder("AT INCLUSIVE", bookOrder);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await orderSingleMenu(order);
+            await order.holdAllMenu();
+            await order.confirmationCloseTable("Yes");
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac2.name);
+            await makeOrder("AT INCLUSIVE", bookOrder);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await orderMenuPaketMurah(order, addOrder);
+            await order.saveOrder();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac2.name);
             await linkTable.userMultiLinkTable();
         }
     );
