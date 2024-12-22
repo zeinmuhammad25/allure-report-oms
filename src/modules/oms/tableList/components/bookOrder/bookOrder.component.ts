@@ -72,6 +72,7 @@ export default class BookOrderComponent extends BaseOmsPage implements BookOrder
     async skipCustomerPhoneNumber(): Promise<void> {
         await this.expectVisible(BookOrderLocator.laterCustomerDataButton);
         await this.click(BookOrderLocator.laterCustomerDataButton);
+        await this.wait(300);
     }
 
 }
