@@ -108,7 +108,6 @@ test.describe.serial("Payment Other Cost ", () => {
             await signPin.inputPinByTouch("22");
             await signPin.validateShowStarCash("20.000");
             await signPin.storeAuthState();
-
         }
     );
 
