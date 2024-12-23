@@ -12,7 +12,7 @@ export default class BookOrderComponent extends BaseOmsPage implements BookOrder
             Element.ofSelector(BookOrderLocator.bookTableTab),
             Element.ofSelector(BookOrderLocator.bookingListTab),
             Element.ofSelector(BookOrderLocator.paxButton(1)),
-            Element.ofSelector(BookOrderLocator.salesModeButton('AT EXCLUSIVE')),
+            Element.ofSelector(BookOrderLocator.salesModeButton("AT EXCLUSIVE"))
         ];
     }
 
@@ -52,6 +52,16 @@ export default class BookOrderComponent extends BaseOmsPage implements BookOrder
         await this.click(BookOrderLocator.bookOrderButton);
     }
 
+    async applyQuickService(): Promise<void> {
+        await this.expectVisible(BookOrderLocator.bookScanAndApplyButton("Apply"));
+        await this.click(BookOrderLocator.bookScanAndApplyButton("Apply"));
+    }
+
+    async scanQuickService(): Promise<void> {
+        await this.expectVisible(BookOrderLocator.bookScanAndApplyButton("Scan / Input"));
+        await this.click(BookOrderLocator.bookScanAndApplyButton("Scan / Input"));
+    }
+
     async setCustomerPhoneNumber(phoneNumber: string): Promise<void> {
         await this.expectVisible(BookOrderLocator.customerDataPhoneField);
         await this.fill(BookOrderLocator.customerDataPhoneField, phoneNumber);
@@ -62,6 +72,7 @@ export default class BookOrderComponent extends BaseOmsPage implements BookOrder
     async skipCustomerPhoneNumber(): Promise<void> {
         await this.expectVisible(BookOrderLocator.laterCustomerDataButton);
         await this.click(BookOrderLocator.laterCustomerDataButton);
+        await this.wait(300);
     }
 
 }

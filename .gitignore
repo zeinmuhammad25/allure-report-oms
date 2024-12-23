@@ -6,6 +6,7 @@ node_modules/
 /.idea
 
 /tests-examples/test-examples.spec.ts
+/tests/test-examples.spec.ts
 /tests/oms/signPinTC/signPinTC1.spec.ts
 .env
 /.cache

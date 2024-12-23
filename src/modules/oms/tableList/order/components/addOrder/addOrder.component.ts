@@ -55,8 +55,10 @@ export default class AddOrderComponent extends BaseOmsPage implements AddOrderSc
     }
 
     async applyMenuDetailPackage(): Promise<void> {
+        await this.wait(1000);
         await this.expectVisible(AddOrderLocator.applyButton);
         await this.click(AddOrderLocator.applyButton);
+        await this.wait(1000);
     }
 
     async cancelMenuDetailPackage(): Promise<void> {

@@ -15,9 +15,11 @@ export default class MergeTableComponent extends BaseOmsPage implements MergeTab
         await this.click(MergeTableLocator.tableButton(roomName));
     }
 
-    async selectTable(tableName: string): Promise<void> {
-        await this.expectVisible(MergeTableLocator.tableButton(tableName));
-        await this.click(MergeTableLocator.tableButton(tableName));
+    async selectTable(tableName: string,status: "active" | "disable" | "occupied" = "active"): Promise<void> {
+        await this.expectVisible(MergeTableLocator.tableButton(tableName,status));
+        if (status!="disable"){
+            await this.click(MergeTableLocator.tableButton(tableName,status));
+        }
     }
 
     async applyMergeTable(actionOccupied: boolean = true): Promise<void> {
@@ -34,5 +36,6 @@ export default class MergeTableComponent extends BaseOmsPage implements MergeTab
         await this.expectVisible(MergeTableLocator.cancelButton);
         await this.click(MergeTableLocator.cancelButton);
     }
+
 
 }
