@@ -10,6 +10,12 @@ test.describe.serial("Start Day Test", () => {
         await signPin.submitPinValidateStartDayYes();
     });
 
+    test.afterEach(async ({startDay}) => {
+        await Promise.all([
+            await startDay.deleteDataStartDay()
+        ]);
+    });
+
     test("Validate Logic when User input number in Starting Cash",
         {tag: "@smokeTest @oms @StartDay @positive"}, async ({startDay}) => {
             await startDay.inputStartingCash("20.000");
