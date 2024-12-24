@@ -13,7 +13,7 @@ export default class StartDayPage extends BaseOmsPage implements StartDayScenari
     shouldHave(): Element[] {
         return [
             Element.ofSelector(StartDayLocator.startingCash),
-            Element.ofSelector(StartDayLocator.getLocatorStartDay("Start Shift")),
+            Element.ofSelector(StartDayLocator.getLocatorStartDay("Start Shift"))
 
         ];
     }
@@ -43,24 +43,32 @@ export default class StartDayPage extends BaseOmsPage implements StartDayScenari
 
     async notificationSuccessStartDay(): Promise<void> {
         const onVisible = async () => {
-            console.log('Success StartDay');
+            console.log("Success StartDay");
 
             const buttonOk = await this.isVisible(StartDayLocator.getLocatorStartDay("Ok"));
 
             if (buttonOk) {
                 // If the locator exists, Click Ok
-                console.log('OK button is visible, click OK button');
+                console.log("OK button is visible, click OK button");
                 await this.click(StartDayLocator.getLocatorStartDay("Ok"));
             } else {
                 // If OK locator is not found, log error
-                console.log('Error: OK button not found!');
+                console.log("Error: OK button not found!");
             }
         };
 
         await this.waitForVisible(StartDayLocator.notificationSuccess, onVisible, 10000, 5);
         await this.waitForResponse("/table");
+    }
 
+    async deleteDataStartDay(): Promise<void> {
+        const useDatabaseQuery: string = "USE pos_oms;";
+        const truncateShiftLogQuery: string = "TRUNCATE TABLE tr_shiftlog;";
+        const truncateShiftLogDetailQuery: string = "TRUNCATE TABLE tr_shiftlogdetail;";
 
+        await this.sqlExecute(this.configs.get.dbConfig, useDatabaseQuery);
+        await this.sqlExecute(this.configs.get.dbConfig, truncateShiftLogQuery);
+        await this.sqlExecute(this.configs.get.dbConfig, truncateShiftLogDetailQuery);
     }
 
 }
