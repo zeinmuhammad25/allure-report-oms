@@ -14,7 +14,7 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
             Element.ofSelector(SignPinLocator.buttonPin(1)),
             Element.ofSelector(SignPinLocator.buttonPin(2)),
             Element.ofSelector(SignPinLocator.buttonPin("CLR")),
-            Element.ofSelector(SignPinLocator.buttonSignIn),
+            Element.ofSelector(SignPinLocator.buttonSignIn)
         ];
     }
 
@@ -100,6 +100,17 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
             await this.expectTextVisible("AC ROOM");
             await this.expectTextVisible("SMOKING ROOM");
         }
+    }
+
+    async validateNotNowCheckCustomerPayments(): Promise<void> {
+        const isPopUpCheckCustomerPaymentsVisible = await this.isVisible(SignPinLocator.popUpCheckCustomerPayment);
+        if (isPopUpCheckCustomerPaymentsVisible) {
+            await this.click(SignPinLocator.buttonPopUpNotNow);
+        } else {
+            await this.expectTextVisible("AC ROOM");
+            await this.expectTextVisible("SMOKING ROOM");
+        }
+
     }
 
     async storeAuthState(): Promise<void> {
