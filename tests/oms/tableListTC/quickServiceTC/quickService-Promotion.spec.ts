@@ -126,6 +126,15 @@ test.describe.serial("Quick Service Promotion", () => {
         await promotionListComponent.applyAllQtyPromoItem();
     };
 
+    const freeItemAllCategoryInputQty = async (qty: number) => {
+        await editOrderComponents.escapeKeyboard();
+        await editOrderComponents.actionButtonFooter("Next");
+        await promotionListComponent.searchPromotion("FREE ITEM ALL CATEGORY");
+        await promotionListComponent.selectPromotionDetail("FREE ITEM ALL CATEGORY");
+        await editOrderComponents.actionButtonFooter("Apply");
+        await promotionListComponent.applyInputQtyPromoItem(qty);
+    };
+
 
     test("[TC_0204053] Validate Logic When User Apply Promotion Head - Order Pages- Discount Bill Rp",
         {tag: tags + "@positive"}, async () => {
@@ -1132,6 +1141,30 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderMenuPaketMurah();
             await orderPage.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
             await freeItemAllCategory();
+            await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
+        }
+    );
+
+    test("[TC_0204095] Validate Logic When User Apply Promotion - input Qty - FREE ITEM ALL CATEGORY",
+        {tag: tags + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderSingleMenu();
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
+            await orderMenuExtraAnggur();
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+            await orderMenuPaketMurah();
+            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+            await freeItemAllCategoryInputQty(3);
             await orderPage.saveOrder();
             await paymentPOSPage.paymentType(PaymentObject.Cash);
             await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
