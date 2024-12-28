@@ -2,7 +2,6 @@ import PromotionListScenario from "./promotionList.scenario";
 import BaseOmsPage from "../../../base-oms-page";
 import Element from "../../../../../base/objects/Element";
 import PromotionListLocator from "./promotionList.locator";
-import {type} from "node:os";
 
 
 export default class PromotionListComponent extends BaseOmsPage implements PromotionListScenario {
@@ -18,7 +17,7 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
     }
 
     async searchPromotion(keyword: string): Promise<void> {
-        await this.wait(800)
+        await this.wait(800);
         await this.expectVisible(PromotionListLocator.searchPromoField);
         await this.fill(PromotionListLocator.searchPromoField, keyword);
     }
@@ -40,6 +39,32 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
             await this.click(PromotionListLocator.openBillDiscountApplyButton);
         }
         await this.click(PromotionListLocator.applyButton);
+    }
+
+    async selectPromotionDetail(promotionName: string): Promise<void> {
+        await this.expectVisible(PromotionListLocator.promotionByName(promotionName));
+        await this.click(PromotionListLocator.promotionByName(promotionName));
+        await this.wait(200);
+    }
+
+    async applyAllQtyPromoItem(): Promise<void> {
+        await this.expectVisible(PromotionListLocator.promotionItemPopUp);
+        await this.click(PromotionListLocator.promotionItemPopUp);
+        await this.expectVisible(PromotionListLocator.promotionItemApplyAllButton);
+        await this.click(PromotionListLocator.promotionItemApplyAllButton);
+        await this.wait(500);
+    }
+
+    async applyInputQtyPromoItem(value: number): Promise<void> {
+        await this.expectVisible(PromotionListLocator.promotionItemPopUp);
+        await this.click(PromotionListLocator.promotionItemPopUp);
+        await this.expectVisible(PromotionListLocator.promotionItemFieldQty);
+        await this.click(PromotionListLocator.promotionItemFieldQty);
+        await this.click(PromotionListLocator.promotionItemPopUp);
+        await this.fill(PromotionListLocator.promotionItemFieldQty, this.formatNumber(value));
+        await this.expectVisible(PromotionListLocator.promotionItemApplyButton);
+        await this.click(PromotionListLocator.promotionItemApplyButton);
+        await this.wait(500);
     }
 
     async selectPromotionType(promotionType: string): Promise<void> {
