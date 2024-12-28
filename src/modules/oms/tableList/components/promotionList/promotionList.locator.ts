@@ -14,4 +14,12 @@ export default class PromotionListLocator extends BaseLocator {
     static promotionTypeOption = (type: string): string => `//mat-option//span[normalize-space()='${type}']`;
     static searchPromoField: string = `//app-promo-table//input[@placeholder='Search....']`;
     static promotionByName = (promotionName: string) => `//tr//td[normalize-space()='${promotionName}']`;
+    static promotionItemPopUp: string = "//app-promo-item-edit[@class='ng-star-inserted']//div//div[@class='modal-header bg-primary']";
+    static promotionItemPlusButton: string = "//span[normalize-space()='+']";
+    static promotionItemMinusButton: string = "//span[normalize-space()='-']";
+    static promotionItemFieldQty: string = "//input[@placeholder='e.g. 1']";
+    static promotionItemApplyAllButton: string = "//span[normalize-space()='Apply All']";
+    static promotionItemApplyButton: string = "//button[@class='btn-action apply-all-edit-menu mat-raised-button mat-primary']//span[normalize-space()='Apply']";
+
+
 }
