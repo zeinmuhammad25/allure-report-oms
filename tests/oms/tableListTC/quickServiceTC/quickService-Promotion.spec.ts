@@ -1218,5 +1218,29 @@ test.describe.serial("Quick Service Promotion", () => {
         }
     );
 
+    test("[TC_0204097] Validate Logic When User Apply Promotion - input Qty - FREE ITEM MENU CATEGORY",
+        {tag: tags + "@positive"}, async () => {
+            await orderPage.selectCategoryMenu(MenuList.atCategory.name);
+            await orderSingleMenu();
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
+            await orderMenuExtraAnggur();
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+            await orderMenuPaketMurah();
+            await orderPage.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
+            await freeItemMenuCategoryInputQty(2);
+            await orderPage.saveOrder();
+            await paymentPOSPage.paymentType(PaymentObject.Cash);
+            await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
+            await paymentPOSPage.paymentCashFullAmount();
+            await paymentPOSPage.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.SavePayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPOSPage.actionPayment(PaymentObject.ClosePayment);
+        }
+    );
+
 
 });
