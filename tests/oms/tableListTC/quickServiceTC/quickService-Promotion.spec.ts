@@ -1338,7 +1338,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await orderPage.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
             await orderMenuPaketMurah();
             await orderPage.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
-            await freeItemMenuCategoryDetail();
+            await freeItemMenu();
             await orderPage.saveOrder();
             await paymentPOSPage.paymentType(PaymentObject.Cash);
             await paymentPOSPage.paymentMethod(PaymentObject.CashPayment);
