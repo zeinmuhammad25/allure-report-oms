@@ -360,4 +360,8 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         }
     }
 
+    public async getInputValue(locator: string): Promise<string> {
+        return await this._page.locator(locator).inputValue();
+    }
+
 }

@@ -27,8 +27,8 @@ export default class PaymentPOSLocator extends BaseLocator {
     static getLocatorInputPaymentDebit = (inputField: PaymentObject): string => `//input[@placeholder='${inputField}']`;
 
     //sectionOtherVoucher
-    static inputOtherVoucherCode = "//input[@class='form-control pos-number ng-pristine ng-valid ng-touched']";
-    static inputOtherVoucherNotes = "//textarea[@class='form-control ng-untouched ng-pristine ng-valid']";
+    static inputOtherVoucherCode = "//input[contains(@class, 'form-control pos-number') and @maxlength='50' and @type='text']";
+    static inputOtherVoucherNotes = "//textarea[contains(@class, 'form-control') and @maxlength='100']";
 
     //sectionVoucher
     static inputVoucherCode = "//input[@class='form-control pos-text ng-pristine ng-valid ng-touched']";
@@ -48,7 +48,8 @@ export default class PaymentPOSLocator extends BaseLocator {
     static popUpUserAuthorizationPin = "//span[normalize-space()='PIN']";
     static popUpUserAuthorizationOtp = "//span[normalize-space()='OTP']";
     static inputPinOrOtpField = "//app-auth-modal//div[contains(@class, 'mat-form-field-infix')]//input[contains(@class, 'mat-input-element')]";
-    static AuthorizeButton = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Authorize']";
-    static CancelButton = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Cancel']";
+    static authorizeButton = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Authorize']";
+    static cancelButton = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Cancel']";
+    static valueOutstanding ="//div[contains(@class, 'd-flex') and contains(@class, 'row-dialog')]//div[label/text()='Outstanding']//input[@class='form-control pos-number'] "
 
 }

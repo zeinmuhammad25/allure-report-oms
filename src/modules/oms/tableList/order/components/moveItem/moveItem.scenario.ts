@@ -30,4 +30,8 @@ export default interface MoveItemScenario extends BaseScenario {
     pagination(action: "next" | "previous"): Promise<void>;
 
     selectQuickService(): Promise<void>;
+
+    expectDisabledButtonPlus(menuName: string): Promise<void>;
+
+    expectDisabledButtonMoveAll(menuName: string): Promise<void>;
 }

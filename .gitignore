@@ -10,3 +10,4 @@ node_modules/
 /tests/oms/signPinTC/signPinTC1.spec.ts
 .env
 /.cache
+*.g.ts

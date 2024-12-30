@@ -23,7 +23,7 @@ export default interface EditOrderScenario extends BaseScenario {
 
     selectMenuExtraCategory(menuName: string): Promise<void>;
 
-    selectMenuExtra(menuName: string): Promise<void>;
+    selectMenuExtra(menuName: string,qty?: number): Promise<void>;
 
     inputNotesMenuInvisible(): Promise<void>;
 
@@ -32,4 +32,6 @@ export default interface EditOrderScenario extends BaseScenario {
     inputCustomMenuName(menuName: string): Promise<void>;
 
     inputNotesOpenPrice(notes: string): Promise<void>;
+
+    actionCancel(): Promise<void>;
 }

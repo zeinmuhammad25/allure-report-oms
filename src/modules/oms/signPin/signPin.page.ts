@@ -1,10 +1,10 @@
-import signPinScenario from "./signPin.scenario";
+import SignPinScenario from "./signPin.scenario";
 import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SignPinLocator from "./signPin.locator";
 import StartDayLocator from "../startDay/startDay.locator";
 
-export default class SignPinPage extends BaseOmsPage implements signPinScenario {
+export default class SignPinPage extends BaseOmsPage implements SignPinScenario {
 
     pageUrl = (): string => this.urls.get.generalPos.loginPage;
 
@@ -63,6 +63,7 @@ export default class SignPinPage extends BaseOmsPage implements signPinScenario 
     async submitPin(): Promise<void> {
         await this.click(SignPinLocator.buttonSignIn);
         await this.click(SignPinLocator.validationSignInUserYes);
+        await this.wait(1000);
         await this.waitForResponse("/user/login");
     }
 

@@ -5,8 +5,6 @@ export default interface QuickServiceListScenario extends BaseScenario {
 
     editOrderQuickService(): Promise<void>;
 
-    fetchSalesNums(): Promise<string[]>;
-
     clickTopSalesNum(): Promise<void>;
 
     gotoLastPage(): Promise<void>;

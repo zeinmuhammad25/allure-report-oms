@@ -2,6 +2,7 @@ import BaseScenario from "../../../../base/base-scenario";
 import {PaymentObject} from "./PaymentObject";
 
 export default interface PaymentPosScenario extends BaseScenario {
+    expectPopUpAuth(): Promise<void>;
 
     paymentType(paymentType: PaymentObject): Promise<void>;
 
@@ -15,7 +16,7 @@ export default interface PaymentPosScenario extends BaseScenario {
 
     paymentCashFullAmount(): Promise<void>;
 
-    paymentDebitBCA(inputField: PaymentObject, value: string): Promise<void>;
+    inputFieldDebitBCA(inputField: PaymentObject, value: string): Promise<void>;
 
     paymentQrisShopee(): Promise<void>;
 
@@ -27,9 +28,7 @@ export default interface PaymentPosScenario extends BaseScenario {
 
     paymentVoucher(): Promise<void>;
 
-    paymentOtherVoucherSubtotal(): Promise<void>;
-
-    paymentOtherVoucherGrandTotal(): Promise<void>;
+    paymentOtherVoucherSubtotalAndGrandTotal(voucherCode: string, amount: string, notes: string): Promise<void>;
 
     paymentMemberDeposit(): Promise<void>;
 
@@ -47,4 +46,13 @@ export default interface PaymentPosScenario extends BaseScenario {
 
     disableApplyCompliment(): Promise<void>;
 
+    fillPaymentAmountWithGrandTotal(adjustment?: number): Promise<void>;
+
+    paymentInputWithOutstandingAdjustment(operation: "add" | "subtract", adjustmentValue: number): Promise<void>;
+
+    paymentInputWithOutstandingAmount(): Promise<void>;
+
+    inputOtherVoucherNotes(notes: string): Promise<void>;
+
+    inputOtherVoucherCode(voucherCode: string): Promise<void>;
 }

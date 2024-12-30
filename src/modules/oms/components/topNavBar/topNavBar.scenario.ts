@@ -1,6 +1,6 @@
 import BaseScenario from "../../../../base/base-scenario";
 
-export default interface topNavBarScenario extends BaseScenario {
+export default interface TopNavBarScenario extends BaseScenario {
 
     userViewProfile(): Promise<void>;
 

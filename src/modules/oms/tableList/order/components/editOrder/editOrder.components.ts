@@ -48,6 +48,7 @@ export default class EditOrderComponents extends BaseOmsPage implements EditOrde
     async actionButtonFooter(actionName: string): Promise<void> {
         await this.expectVisible(EditOrderLocator.getLocatorActionButtonFooter(actionName));
         await this.click(EditOrderLocator.getLocatorActionButtonFooter(actionName));
+        await this.wait(200);
     }
 
     async actionPlusPackageItems(menuName: string): Promise<void> {
