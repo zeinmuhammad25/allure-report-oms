@@ -28,11 +28,24 @@ medusa/
 │   ├── configs
 │   │   └── urls.ts
 │   └── modules
-│       └── login
-│           ├── login.locator.ts
-│           ├── login.page.ts
-│           └── login.scenario.ts
+│       └── project
+│           └── project
+│               ├── features
+│               │   ├── component
+│               │   │   ├── component.locator.ts
+│               │   │   ├── component.page.ts
+│               │   │   └── component.scenario.ts
+│               │   ├── login.locator.ts
+│               │   ├── login.page.ts
+│               │   └── login.scenario.ts
+│               ├── base-project-base.ts
+│               └── project-pages.ts
 ├── tests
+│    └── project
+│        ├── tc-modules
+│        │    └── tc-subModules
+│        │        └── testcase.spec.ts
+│        └── injection.ts
 ├── .env
 ├── .gitignore
 ├── package.json
@@ -46,8 +59,8 @@ medusa/
 
 ### Prerequisites
 
-1. **Install Node.js**: Ensure you have Node.js installed. You can download it from [Node.js](https://nodejs.org/).
-
+1. **Node.js v.20.15.0**: Ensure you have Node.js v20.15.0 installed. You can download it from [Node.js](https://nodejs.org/).
+2. **Node Version Manage (Optional)**: If you working on multiple project with different node version, you should install nvm (Node Version Manager) so you can change your node version whenever you need. [download here](https://github.com/coreybutler/nvm-windows/releases) 
 
 ### Installation
 
@@ -113,11 +126,17 @@ BASE_URL=https://dev7.esb.co.id
     npx playwright test
 ```
 
-- **Run specific Tests**
+- **Run specific Test Case**
 
 ```bash
-    npx playwright test test/your_test.spec.ts
+    npx playwright test test/{your_test_path}/your_test.spec.ts
 ```
+
+- **Run specific Tests**
+<br> Each test inside your_test.spec.ts has green play button "<img src="docs%2Fassets%2Fgreen-play-button.png" alt="Play Button" width="15" height="15">".
+you can tap on that icon to run specific test. ***notes:*** becasuse some test using caching to cache authorization, you should run 1st test on ***your_test.spec.ts***.
+![test-run-button.png](docs%2Fassets%2Ftest-run-button.png)
+
 
 - **Headless mode**
 
@@ -271,6 +290,22 @@ test('User can log in and see the "Later" button on the dashboard', async ({page
     expect(buttonLater).toBeTruthy();
 });
 
+```
+
+4.  List pages and component inside {your-project-path}/{your-project}-pages.ts
+
+After your modules file is ready, create your test case file in `src/tests`
+
+-   Test case file example:
+
+```typescript
+export type OmsPages = {
+    synchronizeData: SynchronizeDataScenario
+    sideNavBar: SideNavBarScenario
+    nameOfPagesOrComponentsYouJustCreated:ScenarioOfPagesOrComponentsYouJustCreated
+    tools: ToolsScenario
+    troubleshoot: TroubleshootScenario
+};
 ```
 
 ## Contributors
