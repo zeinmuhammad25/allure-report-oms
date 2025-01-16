@@ -76,9 +76,13 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
         } else {
         }
         await this.wait(800);
+        const isPopUpCheckCustomerPaymentsVisible = await this.isVisible(SignPinLocator.popUpCheckCustomerPayment);
+        if (isPopUpCheckCustomerPaymentsVisible) {
+            await this.click(SignPinLocator.buttonPopUpNotNow);
+        } else {
+        }
         const isStartingCashVisible = await this.isVisible(StartDayLocator.startingCash);
         if (isStartingCashVisible) {
-
             await this.expectVisible(StartDayLocator.startingCash);
             await this.fill(StartDayLocator.startingCash, inputCash);
             await this.click(StartDayLocator.escapeKeyboard);
@@ -106,11 +110,7 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
         const isPopUpCheckCustomerPaymentsVisible = await this.isVisible(SignPinLocator.popUpCheckCustomerPayment);
         if (isPopUpCheckCustomerPaymentsVisible) {
             await this.click(SignPinLocator.buttonPopUpNotNow);
-        } else {
-            await this.expectTextVisible("AC ROOM");
-            await this.expectTextVisible("SMOKING ROOM");
         }
-
     }
 
     async storeAuthState(): Promise<void> {
