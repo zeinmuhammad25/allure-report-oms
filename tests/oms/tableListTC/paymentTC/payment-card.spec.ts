@@ -225,6 +225,7 @@ test.describe.serial("Payment Card POS", () => {
 
     test("[TC_0206022] Validate Logic when user cannot directly proceed Card Payment while not having access",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, topNavBar, signPin, order, paymentPos}) => {
+            await signPin.validateNotNowCheckCustomerPayments();
             await topNavBar.userSignOut();
             await signPin.inputPinByTouch("6");
             await signPin.validateShowStarCash("20.000");
