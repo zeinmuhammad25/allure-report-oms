@@ -84,7 +84,6 @@ test.describe.serial("Payment Other Cost ", () => {
 
     test("[TC_0206059] Validate Logic When User Able To Payment With Non Sales Payment When User Not Have Access to This Payment",
         {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, paymentPos, topNavBar, signPin}) => {
-            await signPin.validateNotNowCheckCustomerPayments();
             await topNavBar.userSignOut();
             await signPin.inputPinByTouch("6");
             await signPin.validateShowStarCash("20.000");
