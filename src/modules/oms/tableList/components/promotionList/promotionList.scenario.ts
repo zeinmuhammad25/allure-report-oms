@@ -7,5 +7,11 @@ export default interface PromotionListScenario extends BaseScenario {
 
     selectPromotionType(promotionType: string): Promise<void>;
 
+    selectPromotionDetail(promotionName: string): Promise<void>;
+
+    applyInputQtyPromoItem(value: number): Promise<void>;
+
+    applyAllQtyPromoItem(): Promise<void>;
+
     gotoPromotionPage(type: "first" | "previous" | "next" | "last"): Promise<void>;
 }
