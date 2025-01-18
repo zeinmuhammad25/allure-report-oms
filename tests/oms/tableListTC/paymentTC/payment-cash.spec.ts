@@ -289,6 +289,7 @@ test.describe.serial("Payment Cash POS", () => {
 
     test("[TC_0206011] Validate Logic when user can sum the Cash amount by selecting several different amount",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, paymentPos, addOrder, topNavBar, signPin}) => {
+            await signPin.validateNotNowCheckCustomerPayments();
             await topNavBar.userSignOut();
             await signPin.inputPinByTouch("6");
             await signPin.validateShowStarCash("20.000");
