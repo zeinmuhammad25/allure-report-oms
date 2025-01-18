@@ -297,7 +297,6 @@ test.describe.serial("Payment Compliment POS", () => {
 
     test("[TC_0206033] Validate Logic when user cannot directly proceed Complimentary while not having access",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, paymentPos, addOrder, topNavBar, signPin}) => {
-            await signPin.validateNotNowCheckCustomerPayments();
             await topNavBar.userSignOut();
             await signPin.inputPinByTouch("6");
             await signPin.validateShowStarCash("20.000");
