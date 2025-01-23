@@ -52,9 +52,9 @@ import ProfilePage from "../profile/profile.page";
 import DashboardLocator from "./dashboard.locator";
 
 export default class DashboardPage extends BasePosLitePage implements DashboardScenario {
-    private company = "Test QC 02";
-    private brand = "Test QC 02";
-    private branch = "Test Cabang Baru";
+    private company = "UD Anugerah"
+    private brand = "UD Anugerah"
+    private branch = "Anugerah Food"
     private emptyMessageOtherTransaction = "Anda belum memiliki daftar transaksi untuk other cost";
     private emptyMessageComplimentTransaction = "Anda belum memiliki daftar transaksi untuk komplimen";
     private emptyMessageNonSalesTransaction = "Anda belum memiliki daftar transaksi untuk pembatalan";
