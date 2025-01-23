@@ -60,9 +60,9 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
     private emptyMessageNonSalesTransaction = "Anda belum memiliki daftar transaksi untuk pembatalan";
 
 
-    private category = "Kategori Baru";
-    private subCategory = "Sub Kategori Baru";
-    private salesMode = "Dine In";
+    private category = "Dessert";
+    private subCategory = "Camilan";
+    private salesMode = "Online";
     private valueType = "Jumlah";
     private limit = "20 Teratas";
 
