@@ -52,26 +52,26 @@ import ProfilePage from "../profile/profile.page";
 import DashboardLocator from "./dashboard.locator";
 
 export default class DashboardPage extends BasePosLitePage implements DashboardScenario {
-    private company = "Test QC 02"
-    private brand = "Test QC 02"
-    private branch = "Test Cabang Baru"
-    private emptyMessageOtherTransaction = "Anda belum memiliki daftar transaksi untuk other cost"
-    private emptyMessageComplimentTransaction = "Anda belum memiliki daftar transaksi untuk komplimen"
-    private emptyMessageNonSalesTransaction = "Anda belum memiliki daftar transaksi untuk pembatalan"
+    private company = "Test QC 02";
+    private brand = "Test QC 02";
+    private branch = "Test Cabang Baru";
+    private emptyMessageOtherTransaction = "Anda belum memiliki daftar transaksi untuk other cost";
+    private emptyMessageComplimentTransaction = "Anda belum memiliki daftar transaksi untuk komplimen";
+    private emptyMessageNonSalesTransaction = "Anda belum memiliki daftar transaksi untuk pembatalan";
 
 
-    private category = 'Kategori Baru'
-    private subCategory = 'Sub Kategori Baru'
-    private salesMode = 'Dine In'
-    private valueType = 'Jumlah'
-    private limit = '20 Teratas'
+    private category = "Kategori Baru";
+    private subCategory = "Sub Kategori Baru";
+    private salesMode = "Dine In";
+    private valueType = "Jumlah";
+    private limit = "20 Teratas";
 
-    private apiSalesPerformance = "dashboard/sales-performance"
-    private apiSalesComposition = "dashboard/sales-composition"
-    private apiFraudControl = "dashboard/sales-fraud-control"
-    private apiSalesTopData = "dashboard/sales-top-data"
+    private apiSalesPerformance = "dashboard/sales-performance";
+    private apiSalesComposition = "dashboard/sales-composition";
+    private apiFraudControl = "dashboard/sales-fraud-control";
+    private apiSalesTopData = "dashboard/sales-top-data";
 
-    pageUrl = (): string => this.urls.get.dashboard.dashboardIndexUrl
+    pageUrl = (): string => this.urls.get.dashboard.dashboardIndexUrl;
 
     shouldHave(): Element[] {
         return [
@@ -79,260 +79,260 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
             Element.ofSelector(DashboardLocator.brandField),
             Element.ofSelector(DashboardLocator.branchField),
             Element.ofSelector(DashboardLocator.buttonDay),
-            Element.ofSelector(DashboardLocator.buttonMonth),
+            Element.ofSelector(DashboardLocator.buttonMonth)
         ];
     }
 
     private async filterByMonth() {
-        await this.click(DashboardLocator.buttonMonth)
+        await this.click(DashboardLocator.buttonMonth);
         await Promise.all([
             this.waitForResponse(this.apiSalesPerformance),
             this.waitForResponse(this.apiFraudControl),
             this.waitForResponse(this.apiSalesComposition)
-        ])
+        ]);
     }
 
     private async filterByDay() {
-        await this.click(DashboardLocator.buttonDay)
+        await this.click(DashboardLocator.buttonDay);
         await Promise.all([
             this.waitForResponse(this.apiSalesPerformance),
             this.waitForResponse(this.apiFraudControl),
             this.waitForResponse(this.apiSalesComposition)
-        ])
+        ]);
     }
 
     private async search() {
-        await this.click(DashboardLocator.buttonSearch)
+        await this.click(DashboardLocator.buttonSearch);
         await Promise.all([
             this.waitForResponse(this.apiSalesPerformance),
             this.waitForResponse(this.apiFraudControl),
             this.waitForResponse(this.apiSalesComposition)
-        ])
+        ]);
     }
 
     private async inputCompany() {
-        await this.click(DashboardLocator.companyField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.company))
-        await this.click(DashboardLocator.filterOptionItem(this.company))
-        await this.wait(300)
+        await this.click(DashboardLocator.companyField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.company));
+        await this.click(DashboardLocator.filterOptionItem(this.company));
+        await this.wait(300);
     }
 
     private async inputBrand() {
-        await this.click(DashboardLocator.brandField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.brand))
-        await this.click(DashboardLocator.filterOptionItem(this.brand))
+        await this.click(DashboardLocator.brandField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.brand));
+        await this.click(DashboardLocator.filterOptionItem(this.brand));
     }
 
     private async inputBranch() {
-        await this.click(DashboardLocator.branchField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.branch))
-        await this.click(DashboardLocator.filterOptionItem(this.branch))
+        await this.click(DashboardLocator.branchField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.branch));
+        await this.click(DashboardLocator.filterOptionItem(this.branch));
     }
 
     private async fillFilterAndShowData() {
-        await this.filterByMonth()
-        await this.filterByDay()
-        await this.inputCompany()
-        await this.inputBrand()
-        await this.inputBranch()
-        await this.search()
+        await this.filterByMonth();
+        await this.filterByDay();
+        await this.inputCompany();
+        await this.inputBrand();
+        await this.inputBranch();
+        await this.search();
     }
 
     async validateSalesStatisticOnDashboard(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.salesStatistic)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.salesStatistic);
     }
 
     async validateRawMaterialStockOnDashboard(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.rawMaterialStock)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.rawMaterialStock);
     }
 
     async validateOtherCostTransactionDataOnDashboardFraudControl(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.otherCostTransactionButton)
-        await this.click(DashboardLocator.otherCostTransactionButton)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.otherCostTransactionButton);
+        await this.click(DashboardLocator.otherCostTransactionButton);
         let isListEmpty = await this.isVisible(
             DashboardLocator.checkDataEmptyByMessage(this.emptyMessageOtherTransaction)
-        )
+        );
         if (!isListEmpty) {
             // TODO : search an item
         }
-        await this.expectVisible(DashboardLocator.fraudControlDialogCloseButton)
-        await this.click(DashboardLocator.fraudControlDialogCloseButton)
+        await this.expectVisible(DashboardLocator.fraudControlDialogCloseButton);
+        await this.click(DashboardLocator.fraudControlDialogCloseButton);
     }
 
     async validateComplimentTransactionDataOnDashboardFraudControl(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.complimentTransactionButton)
-        await this.click(DashboardLocator.complimentTransactionButton)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.complimentTransactionButton);
+        await this.click(DashboardLocator.complimentTransactionButton);
         let isListEmpty = await this.isVisible(
             DashboardLocator.checkDataEmptyByMessage(this.emptyMessageComplimentTransaction)
-        )
+        );
         if (!isListEmpty) {
             // TODO : search an item
         }
-        await this.expectVisible(DashboardLocator.fraudControlDialogCloseButton)
-        await this.click(DashboardLocator.fraudControlDialogCloseButton)
+        await this.expectVisible(DashboardLocator.fraudControlDialogCloseButton);
+        await this.click(DashboardLocator.fraudControlDialogCloseButton);
     }
 
     async validateNonSalesTransactionDataOnDashboardFraudControl(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.nonSalesTransactionButton)
-        await this.click(DashboardLocator.nonSalesTransactionButton)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.nonSalesTransactionButton);
+        await this.click(DashboardLocator.nonSalesTransactionButton);
         let isListEmpty = await this.isVisible(
             DashboardLocator.checkDataEmptyByMessage(this.emptyMessageNonSalesTransaction)
-        )
+        );
         if (!isListEmpty) {
             // TODO : search an item
         }
-        await this.expectVisible(DashboardLocator.fraudControlDialogCloseButton)
-        await this.click(DashboardLocator.fraudControlDialogCloseButton)
+        await this.expectVisible(DashboardLocator.fraudControlDialogCloseButton);
+        await this.click(DashboardLocator.fraudControlDialogCloseButton);
     }
 
     private async inputCompositionTopMenuCategoryField() {
-        await this.expectVisible(DashboardLocator.compositionTopMenuCategoryField)
-        await this.click(DashboardLocator.compositionTopMenuCategoryField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.category))
-        await this.click(DashboardLocator.filterOptionItem(this.category))
-        await this.waitForResponse(this.apiSalesTopData)
+        await this.expectVisible(DashboardLocator.compositionTopMenuCategoryField);
+        await this.click(DashboardLocator.compositionTopMenuCategoryField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.category));
+        await this.click(DashboardLocator.filterOptionItem(this.category));
+        await this.waitForResponse(this.apiSalesTopData);
     }
 
     private async inputCompositionTopMenuSubCategoryField() {
-        await this.expectVisible(DashboardLocator.compositionTopMenuSubCategoryField)
-        await this.click(DashboardLocator.compositionTopMenuSubCategoryField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.subCategory))
-        await this.click(DashboardLocator.filterOptionItem(this.subCategory))
-        await this.waitForResponse(this.apiSalesTopData)
+        await this.expectVisible(DashboardLocator.compositionTopMenuSubCategoryField);
+        await this.click(DashboardLocator.compositionTopMenuSubCategoryField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.subCategory));
+        await this.click(DashboardLocator.filterOptionItem(this.subCategory));
+        await this.waitForResponse(this.apiSalesTopData);
     }
 
     private async inputCompositionTopMenuSalesModeField() {
-        await this.expectVisible(DashboardLocator.compositionTopMenuSalesModeField)
-        await this.click(DashboardLocator.compositionTopMenuSalesModeField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.salesMode))
-        await this.click(DashboardLocator.filterOptionItem(this.salesMode))
-        await this.waitForResponse(this.apiSalesTopData)
+        await this.expectVisible(DashboardLocator.compositionTopMenuSalesModeField);
+        await this.click(DashboardLocator.compositionTopMenuSalesModeField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.salesMode));
+        await this.click(DashboardLocator.filterOptionItem(this.salesMode));
+        await this.waitForResponse(this.apiSalesTopData);
     }
 
     private async inputCompositionTopMenuValueTypeField() {
-        await this.expectVisible(DashboardLocator.compositionTopMenuValueTypeField)
-        await this.click(DashboardLocator.compositionTopMenuValueTypeField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.valueType))
-        await this.click(DashboardLocator.filterOptionItem(this.valueType))
-        await this.waitForResponse(this.apiSalesTopData)
+        await this.expectVisible(DashboardLocator.compositionTopMenuValueTypeField);
+        await this.click(DashboardLocator.compositionTopMenuValueTypeField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.valueType));
+        await this.click(DashboardLocator.filterOptionItem(this.valueType));
+        await this.waitForResponse(this.apiSalesTopData);
     }
 
     private async inputCompositionTopMenuLimitField() {
-        await this.expectVisible(DashboardLocator.compositionTopMenuLimitField)
-        await this.click(DashboardLocator.compositionTopMenuLimitField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.limit))
-        await this.click(DashboardLocator.filterOptionItem(this.limit))
-        await this.waitForResponse(this.apiSalesTopData)
+        await this.expectVisible(DashboardLocator.compositionTopMenuLimitField);
+        await this.click(DashboardLocator.compositionTopMenuLimitField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.limit));
+        await this.click(DashboardLocator.filterOptionItem(this.limit));
+        await this.waitForResponse(this.apiSalesTopData);
     }
 
     private async fillFilterCompositionTopMenu() {
-        await this.inputCompositionTopMenuCategoryField()
-        await this.inputCompositionTopMenuSubCategoryField()
+        await this.inputCompositionTopMenuCategoryField();
+        await this.inputCompositionTopMenuSubCategoryField();
     }
 
 
     private async inputCompositionTopBranchCompanyField() {
-        await this.expectVisible(DashboardLocator.compositionTopBranchCompanyField)
-        await this.click(DashboardLocator.compositionTopBranchCompanyField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.company))
-        await this.click(DashboardLocator.filterOptionItem(this.company))
-        await this.waitForResponse(this.apiSalesTopData)
-        await this.wait(200)
+        await this.expectVisible(DashboardLocator.compositionTopBranchCompanyField);
+        await this.click(DashboardLocator.compositionTopBranchCompanyField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.company));
+        await this.click(DashboardLocator.filterOptionItem(this.company));
+        await this.waitForResponse(this.apiSalesTopData);
+        await this.wait(200);
     }
 
     private async inputCompositionTopBranchBrandField() {
-        await this.expectVisible(DashboardLocator.compositionTopBranchBrandField)
-        await this.click(DashboardLocator.compositionTopBranchBrandField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.brand))
-        await this.click(DashboardLocator.filterOptionItem(this.brand))
-        await this.waitForResponse(this.apiSalesTopData)
+        await this.expectVisible(DashboardLocator.compositionTopBranchBrandField);
+        await this.click(DashboardLocator.compositionTopBranchBrandField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.brand));
+        await this.click(DashboardLocator.filterOptionItem(this.brand));
+        await this.waitForResponse(this.apiSalesTopData);
     }
 
     private async inputCompositionTopBranchBranchField() {
-        await this.expectVisible(DashboardLocator.compositionTopBranchBranchField)
-        await this.click(DashboardLocator.compositionTopBranchBranchField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.branch))
-        await this.click(DashboardLocator.filterOptionItem(this.branch))
-        await this.waitForResponse(this.apiSalesTopData)
+        await this.expectVisible(DashboardLocator.compositionTopBranchBranchField);
+        await this.click(DashboardLocator.compositionTopBranchBranchField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.branch));
+        await this.click(DashboardLocator.filterOptionItem(this.branch));
+        await this.waitForResponse(this.apiSalesTopData);
     }
 
     private async inputCompositionTopBranchValueTypeField() {
-        await this.expectVisible(DashboardLocator.compositionTopBranchValueTypeField)
-        await this.click(DashboardLocator.compositionTopBranchValueTypeField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.valueType))
-        await this.click(DashboardLocator.filterOptionItem(this.valueType))
-        await this.waitForResponse(this.apiSalesTopData)
+        await this.expectVisible(DashboardLocator.compositionTopBranchValueTypeField);
+        await this.click(DashboardLocator.compositionTopBranchValueTypeField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.valueType));
+        await this.click(DashboardLocator.filterOptionItem(this.valueType));
+        await this.waitForResponse(this.apiSalesTopData);
     }
 
     private async inputCompositionTopBranchLimitField() {
-        await this.expectVisible(DashboardLocator.compositionTopBranchLimitField)
-        await this.click(DashboardLocator.compositionTopBranchLimitField)
-        await this.expectVisible(DashboardLocator.filterOptionItem(this.limit))
-        await this.click(DashboardLocator.filterOptionItem(this.limit))
-        await this.waitForResponse(this.apiSalesTopData)
+        await this.expectVisible(DashboardLocator.compositionTopBranchLimitField);
+        await this.click(DashboardLocator.compositionTopBranchLimitField);
+        await this.expectVisible(DashboardLocator.filterOptionItem(this.limit));
+        await this.click(DashboardLocator.filterOptionItem(this.limit));
+        await this.waitForResponse(this.apiSalesTopData);
     }
 
     private async fillFilterCompositionTopBranch() {
-        await this.inputCompositionTopBranchCompanyField()
-        await this.inputCompositionTopBranchBrandField()
+        await this.inputCompositionTopBranchCompanyField();
+        await this.inputCompositionTopBranchBrandField();
     }
 
     async validateTopMenuDataOnDashboardComposition(): Promise<void> {
-        await this.fillFilterCompositionTopMenu()
+        await this.fillFilterCompositionTopMenu();
     }
 
     async validateTopBranchDataOnDashboardComposition(): Promise<void> {
-        await this.fillFilterCompositionTopBranch()
+        await this.fillFilterCompositionTopBranch();
     }
 
     async validateSalesBySalesModeDataOnDashboardComposition(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.compositionSalesBySalesMode)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.compositionSalesBySalesMode);
     }
 
     async validateSalesByPaymentMethodDataOnDashboardComposition(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.compositionSalesByPaymentMethod)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.compositionSalesByPaymentMethod);
     }
 
     async validateSalesByCategoryDataOnDashboardComposition(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.compositionSalesByCategory)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.compositionSalesByCategory);
     }
 
     async validateNetSalesDataOnDashboardSalesPerformance(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.netSalesData)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.netSalesData);
     }
 
     async validateTotalBillsDataOnDashboardSalesPerformance(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.totalBillsData)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.totalBillsData);
     }
 
     async validateAverageNetSalesPerBillDataOnDashboardSalesPerformance(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.averageNetSalesPerBillData)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.averageNetSalesPerBillData);
     }
 
     async validateTotalPaxDataOnDashboardSalesPerformance(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.totalPaxData)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.totalPaxData);
     }
 
     async validateAverageNetSalesPerPaxDataOnDashboardSalesPerformance(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.averageNetSalesPerPaxData)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.averageNetSalesPerPaxData);
     }
 
     async validatePendingSalesDataOnDashboardSalesPerformance(): Promise<void> {
-        await this.fillFilterAndShowData()
-        await this.expectVisible(DashboardLocator.pendingSalesData)
+        await this.fillFilterAndShowData();
+        await this.expectVisible(DashboardLocator.pendingSalesData);
     }
 
     async dashboardAccordionCheck(): Promise<void> {
@@ -511,7 +511,7 @@ export default class DashboardPage extends BasePosLitePage implements DashboardS
         await this.click(SidebarLocator.sidebarChildMenu);
         // await this.handleMenuToolTip();
         await this.expectVisible(MenuLocator.menuTooltipOkeButton);
-        await this.click(MenuLocator.menuTooltipOkeOrangeButton)
+        await this.click(MenuLocator.menuTooltipOkeOrangeButton);
         // await this.expectVisible(MenuLocator.menuTooltipOkeButton);
         // await this.click(MenuLocator.menuTooltipOkeButton);
         return this.clickAndExpectGotoPage(SidebarLocator.sidebarChildMenu, MenuPage);
