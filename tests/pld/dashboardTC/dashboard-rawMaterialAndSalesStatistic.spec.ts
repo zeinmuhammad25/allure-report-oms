@@ -12,16 +12,14 @@ test.describe.serial("Dashboard Composition Test", () => {
         await loginPage.performLoginSubs();
     });
 
-    test(
-        "Verify User can filter and show Sales Statistic Data of on Dashboard Page",
+    test("[TC_0401007] Verify User can filter and show Sales Statistic Data on Dashboard Page",
         {tag: tag},
         async ({page}) => {
             const dashboardPage = new DashboardPage(page);
             await dashboardPage.validateSalesStatisticOnDashboard();
         });
 
-    test(
-        "Verify User can filter and show Raw Material Stock Data of on Dashboard Page",
+    test("[TC_0401008] Verify User can filter and show Raw Material Stock Data on Dashboard Page",
         {tag: tag},
         async ({page}) => {
             const dashboardPage = new DashboardPage(page);
