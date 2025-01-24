@@ -14,7 +14,7 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
             Element.ofSelector(SignPinLocator.buttonPin(1)),
             Element.ofSelector(SignPinLocator.buttonPin(2)),
             Element.ofSelector(SignPinLocator.buttonPin("CLR")),
-            Element.ofSelector(SignPinLocator.buttonSignIn),
+            Element.ofSelector(SignPinLocator.buttonSignIn)
         ];
     }
 
@@ -73,13 +73,14 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
         const isYesButtonVisible = await this.isVisible(SignPinLocator.validationSignInUserYes);
         if (isYesButtonVisible) {
             await this.click(SignPinLocator.validationSignInUserYes);
-        } else {
         }
         await this.wait(800);
+        const isPopUpCheckCustomerPaymentsVisible = await this.isVisible(SignPinLocator.popUpCheckCustomerPayment);
+        if (isPopUpCheckCustomerPaymentsVisible) {
+            await this.click(SignPinLocator.buttonPopUpNotNow);
+        }
         const isStartingCashVisible = await this.isVisible(StartDayLocator.startingCash);
         if (isStartingCashVisible) {
-
-            await this.expectVisible(StartDayLocator.startingCash);
             await this.fill(StartDayLocator.startingCash, inputCash);
             await this.click(StartDayLocator.escapeKeyboard);
             await this.expectVisible(StartDayLocator.getLocatorStartDay("Start Shift"));
@@ -91,7 +92,6 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
                 const buttonOk = await this.isVisible(StartDayLocator.getLocatorStartDay("Ok"));
                 if (buttonOk) {
                     await this.click(StartDayLocator.getLocatorStartDay("Ok"));
-                } else {
                 }
             };
             await this.waitForVisible(StartDayLocator.notificationSuccess, onVisible, 10000, 5);
@@ -99,6 +99,13 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
         } else {
             await this.expectTextVisible("AC ROOM");
             await this.expectTextVisible("SMOKING ROOM");
+        }
+    }
+
+    async validateNotNowCheckCustomerPayments(): Promise<void> {
+        const isPopUpCheckCustomerPaymentsVisible = await this.isVisible(SignPinLocator.popUpCheckCustomerPayment);
+        if (isPopUpCheckCustomerPaymentsVisible) {
+            await this.click(SignPinLocator.buttonPopUpNotNow);
         }
     }
 
