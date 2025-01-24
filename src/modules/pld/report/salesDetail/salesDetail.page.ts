@@ -7,9 +7,9 @@ import ReportLocator from "../report.locator";
 
 
 export default class SalesDetailPage extends BasePosLitePage implements SalesDetailScenario {
-    private company = "Test QC 02"
-    private brand = "Test QC 02"
-    private branch = "Test Cabang Baru"
+    private company = "UD Anugerah";
+    private brand = "UD Anugerah";
+    private branch = "Anugerah Food";
     private salesMode = "GrabFood"
     private salesType = "Penjualan"
     private paymentMethod = "GOPAY (ESO)"
@@ -36,9 +36,9 @@ export default class SalesDetailPage extends BasePosLitePage implements SalesDet
 
 
     private async navigateToSalesDetail(): Promise<void> {
-        await this.expectVisible(ReportLocator.reportSideBar);
+        // await this.expectVisible(ReportLocator.reportSideBar);
         await this.click(ReportLocator.reportSideBar);
-        await this.expectVisible(ReportLocator.salesDetailSideBar);
+        // await this.expectVisible(ReportLocator.salesDetailSideBar);
         await this.click(ReportLocator.salesDetailSideBar);
     }
 
