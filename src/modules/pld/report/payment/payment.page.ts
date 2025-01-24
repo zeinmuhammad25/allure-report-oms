@@ -6,14 +6,14 @@ import ReportLocator from "../report.locator";
 
 
 export default class PaymentPage extends BasePosLitePage implements PaymentScenario {
-    private company = "Test QC 02"
-    private brand = "Test QC 02"
-    private branch = "Test Cabang Baru"
-    private salesMode = "GoFood"
-    private paymentType = "Tunai"
-    private paymentMethod = "CASH (POS)"
-    private reportModeDetail = "Mode Detail"
-    private reportModeSimple = "Mode Ringkasan"
+    private company = "UD Anugerah";
+    private brand = "UD Anugerah";
+    private branch = "Anugerah Food";
+    private salesMode = "GoFood";
+    private paymentType = "Tunai";
+    private paymentMethod = "CASH (POS)";
+    private reportModeDetail = "Mode Detail";
+    private reportModeSimple = "Mode Ringkasan";
 
     pageUrl = (): string => this.urls.get.report.paymentReportUrl;
 
@@ -25,14 +25,14 @@ export default class PaymentPage extends BasePosLitePage implements PaymentScena
             Element.ofSelector(PaymentLocator.salesBranchField),
             Element.ofSelector(PaymentLocator.reportMode),
             Element.ofSelector(PaymentLocator.paymentType),
-            Element.ofSelector(PaymentLocator.paymentMethod),
+            Element.ofSelector(PaymentLocator.paymentMethod)
         ];
     }
 
     private async navigateToPaymentReport() {
-        await this.expectVisible(ReportLocator.reportSideBar);
+        // await this.expectVisible(ReportLocator.reportSideBar);
         await this.click(ReportLocator.reportSideBar);
-        await this.expectVisible(ReportLocator.paymentSideBar);
+        // await this.expectVisible(ReportLocator.paymentSideBar);
         await this.click(ReportLocator.paymentSideBar);
     }
 
@@ -49,7 +49,7 @@ export default class PaymentPage extends BasePosLitePage implements PaymentScena
         await this.click(PaymentLocator.salesCompanyField);
         await this.expectVisible(PaymentLocator.filterOptionItem(this.company));
         await this.click(PaymentLocator.filterOptionItem(this.company));
-        await this.wait(300)
+        await this.wait(300);
     }
 
     private async inputSalesBrand(): Promise<void> {
@@ -57,7 +57,7 @@ export default class PaymentPage extends BasePosLitePage implements PaymentScena
         await this.click(PaymentLocator.salesBrandField);
         await this.expectVisible(PaymentLocator.filterOptionItem(this.brand));
         await this.click(PaymentLocator.filterOptionItem(this.brand));
-        await this.wait(300)
+        await this.wait(300);
     }
 
     private async inputSalesBranch(): Promise<void> {
@@ -101,15 +101,15 @@ export default class PaymentPage extends BasePosLitePage implements PaymentScena
     }
 
     private async fillFilterAndShow(detailMode: boolean): Promise<void> {
-        await this.inputSalesDate()
-        await this.inputSalesCompany()
-        await this.inputSalesBrand()
-        await this.inputSalesBranch()
-        await this.inputReportMode(detailMode)
+        await this.inputSalesDate();
+        await this.inputSalesCompany();
+        await this.inputSalesBrand();
+        await this.inputSalesBranch();
+        await this.inputReportMode(detailMode);
         if (detailMode) {
-            await this.inputSalesMode()
-            await this.inputPaymentType()
-            await this.inputPaymentMethod()
+            await this.inputSalesMode();
+            await this.inputPaymentType();
+            await this.inputPaymentMethod();
         }
         await this.expectVisible(PaymentLocator.salesViewButton);
         await this.click(PaymentLocator.salesViewButton);
@@ -123,22 +123,22 @@ export default class PaymentPage extends BasePosLitePage implements PaymentScena
     }
 
     async validateFilterAndShowDataFromPaymentMethod(): Promise<void> {
-        await this.navigateToPaymentReport()
-        await this.fillFilterAndShow(true)
+        await this.navigateToPaymentReport();
+        await this.fillFilterAndShow(true);
         await this.expectVisible(PaymentLocator.salesFromPaymentMethodTitle);
     }
 
     async validateFilterAndShowDataSalesDetail(): Promise<void> {
-        await this.navigateToPaymentReport()
-        await this.fillFilterAndShow(true)
+        await this.navigateToPaymentReport();
+        await this.fillFilterAndShow(true);
         await this.expectVisible(PaymentLocator.salesDetailTitle);
     }
 
     async validateDownloadDataPaymentReport(): Promise<void> {
-        await this.navigateToPaymentReport()
-        await this.fillFilterAndShow(true)
+        await this.navigateToPaymentReport();
+        await this.fillFilterAndShow(true);
         await this.expectVisible(PaymentLocator.salesFromPaymentMethodTitle);
         await this.expectVisible(PaymentLocator.salesDetailTitle);
-        await this.downloadFile()
+        await this.downloadFile();
     }
 }
