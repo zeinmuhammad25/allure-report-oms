@@ -12,32 +12,38 @@ test.describe.serial("Sales Summary Report Test", () => {
         await loginPage.performLoginSubs();
     });
 
-    test("Verify Summary Report has Sales Statistic", {tag: tag}, async ({page}) => {
+    test("[TC_0402001] Verify Summary Report has Sales Statistic",
+        {tag: tag}, async ({page}) => {
         const salesSummaryPage = new SalesSummaryPage(page);
         await salesSummaryPage.validateSalesStatistic();
     });
 
-    test("Verify Summary Report has Data Sales Per Day", {tag: tag}, async ({page}) => {
+    test("[TC_0402002] Verify Summary Report has Data Sales Per Day",
+        {tag: tag}, async ({page}) => {
         const salesSummaryPage = new SalesSummaryPage(page);
         await salesSummaryPage.validateDataSalesPerDay();
     });
 
-    test("Verify Summary Report has Data Sales Per Time", {tag: tag}, async ({page}) => {
+    test("[TC_0402003] Verify Summary Report has Data Sales Per Time",
+        {tag: tag}, async ({page}) => {
         const salesSummaryPage = new SalesSummaryPage(page);
         await salesSummaryPage.validateDataSalesPerTime();
     });
 
-    test("Verify Summary Report has Data Sales", {tag: tag}, async ({page}) => {
+    test("[TC_0402004] Verify Summary Report has Data Sales",
+        {tag: tag}, async ({page}) => {
         const salesSummaryPage = new SalesSummaryPage(page);
         await salesSummaryPage.validateDataSales();
     });
 
-    test("Verify Summary Report has Data Fraud Controll", {tag: tag}, async ({page}) => {
+    test("[TC_0402005] Verify Summary Report has Data Fraud Control",
+        {tag: tag}, async ({page}) => {
         const salesSummaryPage = new SalesSummaryPage(page);
         await salesSummaryPage.validateDataSalesFraudControl();
     });
 
-    test("Verify Summary Report can be download", {tag: tag}, async ({page}) => {
+    test("[TC_0402006] Verify Summary Report can be download",
+        {tag: tag}, async ({page}) => {
         const salesSummaryPage = new SalesSummaryPage(page);
         await salesSummaryPage.downloadSalesSummary();
     });
