@@ -10,11 +10,11 @@ export default class SalesDetailPage extends BasePosLitePage implements SalesDet
     private company = "UD Anugerah";
     private brand = "UD Anugerah";
     private branch = "Anugerah Food";
-    private salesMode = "GrabFood"
-    private salesType = "Penjualan"
-    private paymentMethod = "GOPAY (ESO)"
-    private transactionNumber = "101010101010"
-    private cashierName = "Jean Doe"
+    private salesMode = "GrabFood";
+    private salesType = "Penjualan";
+    private paymentMethod = "GOPAY (ESO)";
+    private transactionNumber = "101010101010";
+    private cashierName = "Jean Doe";
 
     pageUrl = (): string => this.urls.get.report.salesDetailUrl;
 
@@ -30,7 +30,7 @@ export default class SalesDetailPage extends BasePosLitePage implements SalesDet
             Element.ofSelector(SalesDetailLocator.transactionNumber),
             Element.ofSelector(SalesDetailLocator.cashierName),
             Element.ofSelector(SalesDetailLocator.salesViewButton),
-            Element.ofSelector(SalesDetailLocator.salesDownloadButton),
+            Element.ofSelector(SalesDetailLocator.salesDownloadButton)
         ];
     }
 
@@ -43,79 +43,79 @@ export default class SalesDetailPage extends BasePosLitePage implements SalesDet
     }
 
     private async inputSalesDate(): Promise<void> {
-        await this.expectVisible(SalesDetailLocator.salesDateField)
-        await this.click(SalesDetailLocator.salesDateField)
-        await this.expectVisible(SalesDetailLocator.thisWeekFilter)
-        await this.click(SalesDetailLocator.thisWeekFilter)
+        await this.expectVisible(SalesDetailLocator.salesDateField);
+        await this.click(SalesDetailLocator.salesDateField);
+        await this.expectVisible(SalesDetailLocator.thisWeekFilter);
+        await this.click(SalesDetailLocator.thisWeekFilter);
     }
 
     private async inputSalesCompany(): Promise<void> {
-        await this.expectVisible(SalesDetailLocator.salesCompanyField)
-        await this.click(SalesDetailLocator.salesCompanyField)
-        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.company))
-        await this.click(SalesDetailLocator.salesFilterOptionItem(this.company))
-        await this.wait(300)
+        await this.expectVisible(SalesDetailLocator.salesCompanyField);
+        await this.click(SalesDetailLocator.salesCompanyField);
+        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.company));
+        await this.click(SalesDetailLocator.salesFilterOptionItem(this.company));
+        await this.wait(300);
     }
 
     private async inputSalesBrand(): Promise<void> {
-        await this.expectVisible(SalesDetailLocator.salesBrandField)
-        await this.click(SalesDetailLocator.salesBrandField)
-        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.brand))
-        await this.click(SalesDetailLocator.salesFilterOptionItem(this.brand))
-        await this.wait(300)
+        await this.expectVisible(SalesDetailLocator.salesBrandField);
+        await this.click(SalesDetailLocator.salesBrandField);
+        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.brand));
+        await this.click(SalesDetailLocator.salesFilterOptionItem(this.brand));
+        await this.wait(300);
     }
 
     private async inputSalesBranch(): Promise<void> {
-        await this.expectVisible(SalesDetailLocator.salesBranchField)
-        await this.click(SalesDetailLocator.salesBranchField)
-        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.branch))
-        await this.click(SalesDetailLocator.salesFilterOptionItem(this.branch))
+        await this.expectVisible(SalesDetailLocator.salesBranchField);
+        await this.click(SalesDetailLocator.salesBranchField);
+        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.branch));
+        await this.click(SalesDetailLocator.salesFilterOptionItem(this.branch));
     }
 
     private async inputSalesMode(): Promise<void> {
-        await this.expectVisible(SalesDetailLocator.salesMode)
-        await this.click(SalesDetailLocator.salesMode)
-        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.salesMode))
-        await this.click(SalesDetailLocator.salesFilterOptionItem(this.salesMode))
+        await this.expectVisible(SalesDetailLocator.salesMode);
+        await this.click(SalesDetailLocator.salesMode);
+        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.salesMode));
+        await this.click(SalesDetailLocator.salesFilterOptionItem(this.salesMode));
     }
 
     private async inputSalesType(): Promise<void> {
-        await this.expectVisible(SalesDetailLocator.salesType)
-        await this.click(SalesDetailLocator.salesType)
-        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.salesType))
-        await this.click(SalesDetailLocator.salesFilterOptionItem(this.salesType))
+        await this.expectVisible(SalesDetailLocator.salesType);
+        await this.click(SalesDetailLocator.salesType);
+        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.salesType));
+        await this.click(SalesDetailLocator.salesFilterOptionItem(this.salesType));
     }
 
     private async inputPaymentMethod(): Promise<void> {
-        await this.expectVisible(SalesDetailLocator.paymentMethod)
-        await this.click(SalesDetailLocator.paymentMethod)
-        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.paymentMethod))
-        await this.click(SalesDetailLocator.salesFilterOptionItem(this.paymentMethod))
+        await this.expectVisible(SalesDetailLocator.paymentMethod);
+        await this.click(SalesDetailLocator.paymentMethod);
+        await this.expectVisible(SalesDetailLocator.salesFilterOptionItem(this.paymentMethod));
+        await this.click(SalesDetailLocator.salesFilterOptionItem(this.paymentMethod));
     }
 
     private async inputTransactionNumber(): Promise<void> {
-        await this.expectVisible(SalesDetailLocator.transactionNumber)
-        await this.fill(SalesDetailLocator.transactionNumber, this.transactionNumber)
+        await this.expectVisible(SalesDetailLocator.transactionNumber);
+        await this.fill(SalesDetailLocator.transactionNumber, this.transactionNumber);
     }
 
     private async inputCashierName(): Promise<void> {
-        await this.expectVisible(SalesDetailLocator.cashierName)
-        await this.fill(SalesDetailLocator.cashierName, this.cashierName)
+        await this.expectVisible(SalesDetailLocator.cashierName);
+        await this.fill(SalesDetailLocator.cashierName, this.cashierName);
     }
 
     private async fillFilterAndShow(withTransactionNo: boolean): Promise<void> {
-        await this.inputSalesDate()
-        await this.inputSalesCompany()
-        await this.inputSalesBrand()
-        await this.inputSalesBranch()
-        await this.inputSalesMode()
-        await this.inputSalesType()
-        await this.inputPaymentMethod()
-        await this.inputCashierName()
+        await this.inputSalesDate();
+        await this.inputSalesCompany();
+        await this.inputSalesBrand();
+        await this.inputSalesBranch();
+        await this.inputSalesMode();
+        await this.inputSalesType();
+        await this.inputPaymentMethod();
+        await this.inputCashierName();
         if (withTransactionNo) {
-            await this.inputTransactionNumber()
+            await this.inputTransactionNumber();
         }
-        await this.click(ProfitAndLossLocator.viewButton)
+        await this.click(ProfitAndLossLocator.viewButton);
     }
 
 
@@ -127,18 +127,18 @@ export default class SalesDetailPage extends BasePosLitePage implements SalesDet
     }
 
     async validateFilterAndShowData(): Promise<void> {
-        await this.navigateToSalesDetail()
-        await this.fillFilterAndShow(false)
+        await this.navigateToSalesDetail();
+        await this.fillFilterAndShow(false);
     }
 
     async validateShowDataWithTransactionNumber(): Promise<void> {
-        await this.navigateToSalesDetail()
-        await this.fillFilterAndShow(true)
+        await this.navigateToSalesDetail();
+        await this.fillFilterAndShow(true);
     }
 
     async validateShowDataAndDownload(): Promise<void> {
-        await this.navigateToSalesDetail()
-        await this.fillFilterAndShow(true)
-        await this.downloadSalesDetailReport()
+        await this.navigateToSalesDetail();
+        await this.fillFilterAndShow(true);
+        await this.downloadSalesDetailReport();
     }
 }
