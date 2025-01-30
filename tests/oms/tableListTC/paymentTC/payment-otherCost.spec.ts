@@ -46,6 +46,7 @@ test.describe.serial("Payment Other Cost ", () => {
             await terminalID.performTerminalID();
             await signPin.inputPinByTouch("22");
             await signPin.validateShowStarCash("20.000");
+            await signPin.validateNotNowCheckCustomerPayments();
             await signPin.storeAuthState();
             await sideNavBar.gotoPageTools();
             await sideNavBar.selectStation("KASIR");

@@ -3,7 +3,7 @@ import BaseLocator from "../../../base/base-locator";
 export default class SignPinLocator extends BaseLocator {
     //pin Section
     static fieldPin: string = "//input[@id='mat-input-0']";
-    static buttonPin = (key: number | 'CLR'): string => `//span[normalize-space()='${key}']`;
+    static buttonPin = (key: number | "CLR"): string => `//span[normalize-space()='${key}']`;
     static buttonSignIn: string = "//span[normalize-space()='SIGN IN']";
     static pageStartShift: string = "//h5[normalize-space()='Start Day']";
     static validationSignInUserYes: string = "//span[normalize-space()='Yes']";
@@ -21,4 +21,9 @@ export default class SignPinLocator extends BaseLocator {
     static refreshErrorReport: string = "//span[normalize-space()='REFRESH']";
     static syncUserSignPinLog: string = "//span[normalize-space()='SYNC USER']";
     static closeLogSignPin: string = "//span[normalize-space()='Close Log']";
+
+    //Pop Up section
+    static popUpCheckCustomerPayment: string = "//div[@class='tooltip-content']";
+    static buttonPopUpNotNow: string = "//span[normalize-space()='Not Now']";
+    static buttonPopUpCheckNow: string = "//span[normalize-space()='Check Now']";
 }

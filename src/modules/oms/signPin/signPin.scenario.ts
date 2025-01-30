@@ -18,4 +18,6 @@ export default interface SignPinScenario extends BaseScenario {
     validateShowStarCash(inputCash: string): Promise<void>;
 
     storeAuthState(): Promise<void>;
+
+    validateNotNowCheckCustomerPayments(): Promise<void>;
 }
