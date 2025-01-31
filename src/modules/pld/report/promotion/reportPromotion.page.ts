@@ -5,9 +5,9 @@ import ReportPromotionLocator from "./reportPromotion.locator";
 import ReportLocator from "../report.locator";
 
 export default class ReportPromotionPage extends BasePosLitePage implements ReportPromotionScenario {
-    private company = "UD Anugerah";
-    private brand = "UD Anugerah";
-    private branch = "Anugerah Food";
+    private company = this.configs.get.data.company;
+    private brand = this.configs.get.data.brand;
+    private branch = this.configs.get.data.branch;
     private reportMode = "Laporan Per Tanggal";
     private promotionType = "Diskon Nota (%)";
     private promotionName = "BCA";

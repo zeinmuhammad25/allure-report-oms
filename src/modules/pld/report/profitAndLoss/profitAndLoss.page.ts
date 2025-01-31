@@ -6,7 +6,9 @@ import ReportLocator from "../report.locator";
 
 
 export default class ProfitAndLossPage extends BasePosLitePage implements ProfitAndLossScenario {
-    private branch = "Anugerah Food";
+    private company = this.configs.get.data.company;
+    private brand = this.configs.get.data.brand;
+    private branch = this.configs.get.data.branch;
     private apiProfitAndLost = "statistic-filter/list-profit-loss-report-mode";
 
     pageUrl = (): string => this.urls.get.report.profitAndLossUrl;
