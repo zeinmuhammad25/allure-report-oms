@@ -6,9 +6,9 @@ import ReportLocator from "../report.locator";
 
 
 export default class SalesMenuPage extends BasePosLitePage implements SalesMenuScenario {
-    private company = "UD Anugerah";
-    private brand = "UD Anugerah";
-    private branch = "Anugerah Food";
+    private company = this.configs.get.data.company;
+    private brand = this.configs.get.data.brand;
+    private branch = this.configs.get.data.branch;
     private reportType = "Menu Paket Per Periode";
 
     pageUrl = (): string => this.urls.get.report.salesMenuUrl;

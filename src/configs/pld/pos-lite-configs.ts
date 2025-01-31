@@ -11,5 +11,17 @@ export default class PosLiteConfigs extends BaseConfigs {
         return this._instance || (this._instance = new this());
     }
 
-    public get = {}
+    public get = {
+        storageState: process.env.STORAGE_STATE,
+        data: {
+            company: process.env.PLD_COMPANY,
+            brand: process.env.PLD_BRAND,
+            branch: process.env.PLD_BRANCH,
+            salesMode: "GrabFood",
+            salesType: "Penjualan",
+            paymentMethod: "GOPAY (ESO)",
+            transactionNumber: "101010101010",
+            cashierName: "Jean Doe"
+        }
+    }
 }

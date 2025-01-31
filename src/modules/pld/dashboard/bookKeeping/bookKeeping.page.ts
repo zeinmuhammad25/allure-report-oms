@@ -6,9 +6,10 @@ import SidebarLocator from "../sidebar.locator";
 
 
 export default class BookKeepingPage extends BasePosLitePage implements BookKeepingScenario {
-
+    private company = this.configs.get.data.company;
+    private brand = this.configs.get.data.brand;
+    private branch = this.configs.get.data.branch;
     private apiBookKeeping = "accounting-dashboard/summary";
-    private branch = "Anugerah Food";
 
     pageUrl = (): string => this.urls.get.dashboard.bookKeepingUrl;
 

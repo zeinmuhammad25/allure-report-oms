@@ -6,9 +6,9 @@ import ReportLocator from "../report.locator";
 
 
 export default class CancelAndVoidPage extends BasePosLitePage implements CancelAndVoidScenario {
-    private company = "UD Anugerah";
-    private brand = "UD Anugerah";
-    private branch = "Anugerah Food";
+    private company = this.configs.get.data.company;
+    private brand = this.configs.get.data.brand;
+    private branch = this.configs.get.data.branch;
     private transactionNumber = "101010101010";
     private cashierName = "Jean Doe";
     private salesTypeVoid = "Void";

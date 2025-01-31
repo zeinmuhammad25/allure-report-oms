@@ -5,10 +5,9 @@ import SalesSummaryLocator from "./salesSummary.locator";
 import ReportLocator from "../report.locator";
 
 export default class SalesSummaryPage extends BasePosLitePage implements SalesSummaryScenario {
-    private company = "UD Anugerah";
-    private brand = "UD Anugerah";
-    private branch = "Anugerah Food";
-
+    private company = this.configs.get.data.company;
+    private brand = this.configs.get.data.brand;
+    private branch = this.configs.get.data.branch;
 
     pageUrl = (): string => this.urls.get.report.salesSummaryUrl;
 
