@@ -364,4 +364,13 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return await this._page.locator(locator).inputValue();
     }
 
+    public async getTextValue(locator: string): Promise<string> {
+        console.log(`Getting text value from locator: ${locator}`);
+        return await this._page.locator(locator).innerText();
+    }
+
+
+
+
+
 }
