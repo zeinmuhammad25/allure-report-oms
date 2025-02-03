@@ -77,6 +77,12 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await bookOrder.skipCustomerPhoneNumber();
     };
 
+    const salesModeExclusive = async (bookOrder: BookOrderScenario) => {
+        await bookOrder.selectSalesMode("AT EXCLUSIVE");
+        await bookOrder.bookAndOrder();
+        await bookOrder.skipCustomerPhoneNumber();
+    };
+
     test.beforeEach(async () => {
     });
 
@@ -102,6 +108,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             await tableList.selectTable(Table.acRoom.ac1.name);
             await salesModeInclusive(bookOrder);
             await selectMenuBiasa(order, 3);
+            await order.validateQtyOrderWithMenu(MenuList.menus.atMenuBiasaGoreng.name);
             await order.saveOrder();
         });
 
@@ -113,6 +120,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             await salesModeInclusive(bookOrder);
             await selectMenuPaket(order, addOrder);
             await editOrder.actionButtonFooter("Apply");
+            await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
             await order.saveOrder();
         });
 
@@ -129,6 +137,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             await editOrder.escapeKeyboard();
             await selectExtraMenuItems(editOrder);
             await editOrder.actionButtonFooter("Apply");
+            await order.validateQtyOrderWithMenu(MenuList.menus.atMenuExtraAlpha.name);
             await order.saveOrder();
         });
 
@@ -139,6 +148,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             await tableList.selectTable(Table.acRoom.ac1.name);
             await salesModeInclusive(bookOrder);
             await selectMenuBiasa(order, 2);
+            await order.validateQtyOrderWithMenu(MenuList.menus.atMenuBiasaGoreng.name);
             await order.saveOrder();
         });
 
@@ -150,6 +160,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             await salesModeInclusive(bookOrder);
             await selectMenuPaket(order, addOrder, 2);
             await editOrder.actionButtonFooter("Apply");
+            await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
             await order.saveOrder();
         });
 
@@ -166,6 +177,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             await editOrder.escapeKeyboard();
             await selectExtraMenuItems(editOrder);
             await editOrder.actionButtonFooter("Apply");
+            await order.validateQtyOrderWithMenu(MenuList.menus.atMenuExtraAlpha.name);
             await order.saveOrder();
         });
 
@@ -893,4 +905,100 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             await order.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
             await editOrder.inputNotesMenuInvisible();
         });
+
+    test("[TC_0205202] Validate Quantity for Menu and Subtotal of Menu Exclusive Price",
+        {tag: tags + "@positive"}, async ({order, tableList, addOrder, editOrder, bookOrder}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeExclusive(bookOrder);
+            await selectMenuBiasa(order, 6);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await selectMenuExtra(order);
+            await editOrder.escapeKeyboard();
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.escapeKeyboard();
+            await selectExtraMenuItems(editOrder);
+            await editOrder.actionButtonFooter("Apply");
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await selectMenuPaket(order, addOrder);
+            await editOrder.actionButtonFooter("Apply");
+            await order.validateQtyOrderWithMenu(
+                [
+                    MenuList.menus.atMenuBiasaGoreng.name, MenuList.menus.atMenuExtraAlpha.name,
+                    MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name
+                ]
+            );
+            await order.validatePriceExclusiveWithSubtotal(
+                [
+                    MenuList.menus.atMenuBiasaGoreng.name, MenuList.menus.atMenuExtraAlpha.name,
+                    MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name],
+                [
+                    MenuList.menus.anggurHijauKawaKawa600ml.shortName, MenuList.menus.anggurMerahOT620ml.shortName,
+                    MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, MenuList.menuPackages.sprite250ml.shortName,
+                    MenuList.menuPackages.gilbeysWhisky350ml.shortName
+                ]);
+            await order.saveOrder();
+        });
+
+    test("[TC_0205203] Validate Quantity for Menu and Subtotal of Menu Exclusive Price After Reducing Menu Quantity",
+        {tag: tags + "@positive"}, async ({order, tableList, addOrder, editOrder, bookOrder}) => {
+            await tableList.goHere();
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await salesModeExclusive(bookOrder);
+            await selectMenuBiasa(order, 6);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await selectMenuExtra(order);
+            await editOrder.escapeKeyboard();
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.actionButtonFooter("Next");
+            await editOrder.escapeKeyboard();
+            await selectExtraMenuItems(editOrder);
+            await editOrder.actionButtonFooter("Apply");
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await selectMenuPaket(order, addOrder);
+            await editOrder.actionButtonFooter("Apply");
+            await order.validateQtyOrderWithMenu(
+                [
+                    MenuList.menus.atMenuBiasaGoreng.name, MenuList.menus.atMenuExtraAlpha.name,
+                    MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name
+                ]
+            );
+            await order.validatePriceExclusiveWithSubtotal(
+                [
+                    MenuList.menus.atMenuBiasaGoreng.name, MenuList.menus.atMenuExtraAlpha.name,
+                    MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name],
+                [
+                    MenuList.menus.anggurHijauKawaKawa600ml.shortName, MenuList.menus.anggurMerahOT620ml.shortName,
+                    MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, MenuList.menuPackages.sprite250ml.shortName,
+                    MenuList.menuPackages.gilbeysWhisky350ml.shortName
+                ]);
+            await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+            await editOrder.editQtySelector(2);
+            await editOrder.actionButtonFooter("Apply");
+            await order.validateQtyOrderWithMenu(
+                [
+                    MenuList.menus.atMenuBiasaGoreng.name, MenuList.menus.atMenuExtraAlpha.name,
+                    MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name
+                ]
+            );
+            await order.validatePriceExclusiveWithSubtotal(
+                [
+                    MenuList.menus.atMenuBiasaGoreng.name, MenuList.menus.atMenuExtraAlpha.name,
+                    MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name],
+                [
+                    MenuList.menus.anggurHijauKawaKawa600ml.shortName, MenuList.menus.anggurMerahOT620ml.shortName,
+                    MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, MenuList.menuPackages.sprite250ml.shortName,
+                    MenuList.menuPackages.gilbeysWhisky350ml.shortName
+                ]);
+            await order.saveOrder();
+        });
+
+
 });
