@@ -7,7 +7,7 @@ import {Keyboard} from "../../../../base/constants/Keyboard";
 
 
 export default class StockMenuPage extends BasePosLitePage implements StockMenuScenario {
-    private branch = "Test Cabang Edit"
+    private branch = "Anugerah Food";
     private menuName = "Kopi Panas"
 
     private apiStockMenu = "/stock-menu"

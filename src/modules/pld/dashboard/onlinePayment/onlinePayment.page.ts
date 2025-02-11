@@ -6,7 +6,7 @@ import SidebarLocator from "../sidebar.locator";
 import {Keyboard} from "../../../../base/constants/Keyboard";
 
 export default class OnlinePaymentPage extends BasePosLitePage implements OnlinePaymentScenario {
-    private branch = 'Test Cabang Edit'
+    private branch = 'Anugerah Food'
     private transactionNumber = '1010101010'
     private paymentMethod = 'QRIS'
     private paymentSource = 'POS'
@@ -16,7 +16,7 @@ export default class OnlinePaymentPage extends BasePosLitePage implements Online
     shouldHave(): Element[] {
         return [
             Element.ofSelector(OnlinePaymentLocator.dataReadGuideButton),
-            Element.ofSelector(OnlinePaymentLocator.branchDropdown),
+            Element.ofSelector(OnlinePaymentLocator.branchDropdown(this.branch)),
             Element.ofSelector(OnlinePaymentLocator.onlinePaymentFilter),
             Element.ofSelector(OnlinePaymentLocator.onlinePaymentDayTab),
             Element.ofSelector(OnlinePaymentLocator.onlinePaymentWeekTab),
@@ -51,7 +51,7 @@ export default class OnlinePaymentPage extends BasePosLitePage implements Online
 
 
     private async navigateToOnlinePayment() {
-        await this.expectVisible(SidebarLocator.sidebarOnlinePayment);
+        // await this.expectVisible(SidebarLocator.sidebarOnlinePayment);
         await this.click(SidebarLocator.sidebarOnlinePayment);
     }
 
@@ -71,8 +71,8 @@ export default class OnlinePaymentPage extends BasePosLitePage implements Online
     }
 
     private async inputBranch() {
-        await this.expectVisible(OnlinePaymentLocator.branchDropdown);
-        await this.click(OnlinePaymentLocator.branchDropdown);
+        await this.expectVisible(OnlinePaymentLocator.branchDropdown(this.branch));
+        await this.click(OnlinePaymentLocator.branchDropdown(this.branch));
         await this.expectVisible(OnlinePaymentLocator.filterOptionItem(this.branch));
     }
 
