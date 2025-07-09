@@ -100,4 +100,8 @@ export default interface OrderScenario extends BaseScenario {
 
     expectDisabledMoveItem(): Promise<void>;
 
+    validateQtyOrderWithMenu(menuNames: string | string[]): Promise<void>;
+
+    validatePriceExclusiveWithSubtotal(menuNames: string[], extraPackageNames: string[]): Promise<void>
+
 }

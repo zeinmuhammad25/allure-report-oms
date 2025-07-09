@@ -315,4 +315,65 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.expectTextVisible(name);
     }
 
+    async validateQtyOrderWithMenu(menuNames: string | string[]): Promise<void> {
+        let totalQtyFromMenus = 0;
+        const menuNameArray = Array.isArray(menuNames) ? menuNames : [menuNames];
+
+        for (const menuName of menuNameArray) {
+            const qtyText = await this.getTextValue(OrderLocator.qtyForMenu(menuName));
+            let qtyValue = parseInt(qtyText.trim(), 10);
+
+            if (!isNaN(qtyValue)) {
+                totalQtyFromMenus += qtyValue;
+            }
+        }
+
+        const qtyOrder = await this.getTextValue(OrderLocator.qtyForOrder);
+        let qtyOrderValue = parseInt(qtyOrder.split("Total")[1]?.trim() || "0", 10);
+
+        if (isNaN(qtyOrderValue)) {
+            throw new Error(`Failed to extract numeric qty from order: ${qtyOrder}`);
+        }
+
+        if (qtyOrderValue === totalQtyFromMenus) {
+            console.log(`Validation successful! Qty Order (${qtyOrderValue}) matches total qty from menus (${totalQtyFromMenus}).`);
+        } else {
+            throw new Error(`Validation failed! Qty Order (${qtyOrderValue}) does not match total qty from menus (${totalQtyFromMenus}).`);
+        }
+    }
+
+    async validatePriceExclusiveWithSubtotal(menuNames: string[], extraPackageNames: string[]): Promise<void> {
+        let totalCalculated = 0;
+
+        for (const menuName of menuNames) {
+            const locator = OrderLocator.priceMenu(menuName);
+            const priceText = await this.getTextValue(locator);
+            const price = parseFloat(priceText.split("Total:")
+                [1]?.trim().replace(/\./g, "").replace(",", "."));
+            if (!isNaN(price)) {
+                totalCalculated += price;
+            }
+        }
+
+        for (const extraPackageName of extraPackageNames) {
+            const extraPackageLocator = OrderLocator.priceMenuExtraAndPackage(extraPackageName);
+            const extraPackageText = await this.getTextValue(extraPackageLocator);
+            const extraPrice = parseFloat(extraPackageText.split("Total:")
+                [1]?.trim().replace(/\./g, "").replace(",", "."));
+            if (!isNaN(extraPrice)) {
+                totalCalculated += extraPrice;
+            }
+        }
+
+        const subtotalText = await this.getTextValue(OrderLocator.valueSubtotal);
+        const subtotal = parseFloat(subtotalText.trim().replace(/\./g, "").replace(",", "."));
+
+        if (totalCalculated === subtotal) {
+            console.log(`Total menu price matches the subtotal. Total Menu Price: ${totalCalculated}, Subtotal: ${subtotal}`);
+        } else {
+            throw new Error(`Price mismatch! Total Menu Price: ${totalCalculated}, Subtotal: ${subtotal}`);
+        }
+    }
+
+
 }

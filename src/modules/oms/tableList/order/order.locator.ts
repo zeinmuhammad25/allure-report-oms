@@ -31,8 +31,6 @@ export default class OrderLocator extends BaseLocator {
     static saveOrderButton: string = this.bottomButton("Save Order");
     static printBillButton: string = this.bottomButton("Print Bill");
     static printCheckerButton: string = this.bottomButton("Checker");
-    static splitBillButton: string = this.bottomButton("Split Bill");
-    static splitBillDisabledButton: string = this.bottomDisabledButton("Split Bill");
 
     static mergeTableButton: string = this.bottomButton("Merge Table");
     static mergeTableDisabledButton: string = this.bottomDisabledButton("Merge Table");
@@ -67,4 +65,10 @@ export default class OrderLocator extends BaseLocator {
     static menuInHoldTable = (tableName: string, menuName: string): string => `//mat-expansion-panel//span[normalize-space(text())='Table ${tableName}']` +
         `//following::li[contains(text(), '${menuName}')]`;
     static buttonCloseHoldTable: string = "//i[@class='glyphicon glyphicon-remove ic-close']";
+    static qtyForMenu = (menuName: string): string => `//div[normalize-space(span/text())='${menuName}']//preceding-sibling::div[contains(@class, 'text-primary pointer')]`;
+    static qtyForOrder: string = "//div[@class='text-center']";
+    static priceMenu = (menuName: string): string => `//span[contains(text(), '${menuName}')]/following-sibling::span[contains(text(), 'Total:')]`;
+    static priceMenuExtraAndPackage = (menuName: string): string => `//div[contains(@class, 'd-flex flex-column flex-grow-1') and contains(text(), '${menuName}')]
+    /span[contains(text(), 'Total:')]`;
+    static valueSubtotal: string = "//div[contains(@class, 'flex-grow-1 text-right') and .//strong[text()='Subtotal']]/div[@class='ng-star-inserted']";
 }

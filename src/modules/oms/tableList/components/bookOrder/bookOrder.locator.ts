@@ -1,7 +1,7 @@
 import BaseLocator from "../../../../../base/base-locator";
 
 export default class BookOrderLocator extends BaseLocator {
-    static paxButton = (numberOfPax: number): string => `//span[@class='mat-button-wrapper'][normalize-space()='${numberOfPax}']`;
+    static paxButton = (numberOfPax: number): string => `//button[@color='primary']//span[@class='mat-button-wrapper' and normalize-space()='${numberOfPax}']`;
     static salesModeButton = (salesModeName: string): string => `//button[contains(@class,'btn-vp')]//span[contains(text(),'${salesModeName}')]`;
     static numberOfPaxField = "(//app-number-input//input)[1]";
     static orderTimeOutField = "(//app-number-input//input)[2]";
