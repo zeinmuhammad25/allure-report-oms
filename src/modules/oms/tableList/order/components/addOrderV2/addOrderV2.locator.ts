@@ -13,7 +13,7 @@ export default class AddOrderV2Locator extends BaseLocator {
     static downPagePackageItemList: string = "//span//img[@class='next-paginator-img']";
 
     private static qtyButtonDetailMenu = (menuName: string, symbol: string): string =>
-        `//div[span[normalize-space() = '${menuName}']]/following-sibling::div//button[contains(@class, 'qty-btn')]//span[normalize-space() = '${symbol}']`;
+        `//div[span[normalize-space()='${menuName}']]/following-sibling::*//button[contains(@class, 'qty-btn')]//span[normalize-space()='${symbol}']`;
     static plusQtyPackageDetail = (menuName: string): string => this.qtyButtonDetailMenu(menuName, "+");
     static minusQtyPackageDetail = (menuName: string): string => this.qtyButtonDetailMenu(menuName, "-");
 
@@ -25,7 +25,10 @@ export default class AddOrderV2Locator extends BaseLocator {
     static disableButtonNext: string = this.buttonFunctionDisabled("Next");
     static buttonAddToCart: string = this.buttonFunction("Add to cart");
     static buttonCancel: string = this.buttonFunction("Cancel");
-    static notesDetailMenu: string = this.buttonFunction("Notes");
+    private static buttonNotesFunction = (menuName: string, label: string): string =>
+        `//div[span[normalize-space()='${menuName}']]/following-sibling::*//button[.//span[normalize-space()='${label}']]`;
+
+    static notesDetailMenu = (menuName: string): string => this.buttonNotesFunction(menuName, "Notes");
     static disableNotesDetailMenu: string = this.buttonFunctionDisabled("Notes");
     static fieldNotesDetailMenu: string = "//app-menu-notes-v2//textarea";
     static popUpNotesDetailMenu: string = "//app-menu-notes-v2";

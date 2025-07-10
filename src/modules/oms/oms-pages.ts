@@ -21,6 +21,7 @@ import ToolsScenario from "./tools/tools.scenario";
 import TroubleshootScenario from "./tools/troubleshoot/troubleshoot.scenario";
 import TopNavBarScenario from "./components/topNavBar/topNavBar.scenario";
 import MoveTableScenario from "./tableList/order/components/moveTable/moveTable.scenario";
+import AddOrderV2Scenario from "./tableList/order/components/addOrderV2/addOrderV2.scenario";
 
 export type OmsPages = {
     synchronizeData: SynchronizeDataScenario
@@ -32,6 +33,7 @@ export type OmsPages = {
     promotionList: PromotionListScenario
     splitBill: SplitBillScenario
     addOrder: AddOrderScenario
+    addOrderV2: AddOrderV2Scenario
     editOrder: EditOrderScenario
     linkTable: LinkTableScenario
     mergeTable: MergeTableScenario

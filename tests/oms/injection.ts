@@ -23,6 +23,7 @@ import ApplicationSettingPage from "../../src/modules/oms/tools/applicationSetti
 import ToolsPage from "../../src/modules/oms/tools/tools.page";
 import TroubleshootComponent from "../../src/modules/oms/tools/troubleshoot/troubleshoot.component";
 import MoveTableComponent from "../../src/modules/oms/tableList/order/components/moveTable/moveTable.component";
+import AddOrderV2Component from "../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.component";
 
 export const test = base.extend<OmsPages>({
     synchronizeData: async ({page}, use) => await use(new SynchronizeDataPage(page)),
@@ -34,6 +35,7 @@ export const test = base.extend<OmsPages>({
     promotionList: async ({page}, use) => await use(new PromotionListComponent(page)),
     splitBill: async ({page}, use) => await use(new SplitBillComponent(page)),
     addOrder: async ({page}, use) => await use(new AddOrderComponent(page)),
+    addOrderV2: async ({page}, use) => await use(new AddOrderV2Component(page)),
     editOrder: async ({page}, use) => await use(new EditOrderComponents(page)),
     linkTable: async ({page}, use) => await use(new LinkTableComponent(page)),
     mergeTable: async ({page}, use) => await use(new MergeTableComponent(page)),
@@ -47,5 +49,5 @@ export const test = base.extend<OmsPages>({
     terminalID: async ({page}, use) => await use(new TerminalIDPage(page)),
     applicationSetting: async ({page}, use) => await use(new ApplicationSettingPage(page)),
     tools: async ({page}, use) => await use(new ToolsPage(page)),
-    troubleshoot: async ({page}, use) => await use(new TroubleshootComponent(page)),
+    troubleshoot: async ({page}, use) => await use(new TroubleshootComponent(page))
 });
