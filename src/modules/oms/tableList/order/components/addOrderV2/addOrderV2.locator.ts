@@ -2,6 +2,7 @@ import BaseLocator from "../../../../../../base/base-locator";
 
 export default class AddOrderV2Locator extends BaseLocator {
 
+    static InputQty: string = "//input[@class='qty-input ng-valid ng-star-inserted ng-dirty ng-touched']";
     static plusQtyPackageHead: string = "//button[@class='qty-button qty-button-active mat-stroked-button ng-star-inserted']";
     static minusQtyPackageHead: string = "//button[@class='qty-button mat-stroked-button ng-star-inserted']";
     static buttonSelectPackage = (menuName: string): string =>
@@ -33,8 +34,8 @@ export default class AddOrderV2Locator extends BaseLocator {
     static fieldNotesDetailMenu: string = "//app-menu-notes-v2//textarea";
     static popUpNotesDetailMenu: string = "//app-menu-notes-v2";
     static addNotesMenu: string = this.buttonFunction("Add Menu Notes");
-    static fieldNotesMenu: string = "//app-menu-edit-v2";
-    static popUpNotesMenu: string = "//app-menu-edit-v2//textarea";
+    static fieldNotesMenu: string = "//app-menu-edit-v2//textarea";
+    static popUpNotesMenu: string = "//app-menu-edit-v2";
     static buttonApplyNotes: string = "//span[@class='mat-button-wrapper'][normalize-space()='Confirm']";
     static buttonBackNotes: string = "//span[@class='mat-button-wrapper'][normalize-space()='Back']";
     static buttonPromotion: string = this.buttonFunction("Apply Promotion");
