@@ -88,6 +88,13 @@ export default class EditOrderV2Components extends BaseOmsPage implements EditOr
         }
     }
 
+    async modifyEditDetailPackage(menuOrder: AddMenuModel[]): Promise<void> {
+        await this.waitForResponse("/get-menu-package");
+        for (let i = 0; i < menuOrder.length; i++) {
+            await this.editMenuModifier(menuOrder[i]);
+        }
+    }
+
     async addPromotionMenu(): Promise<void> {
         await this.expectVisible(EditOrderV2Locator.buttonPromotion);
         await this.click(EditOrderV2Locator.buttonPromotion);
