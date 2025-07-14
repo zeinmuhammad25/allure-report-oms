@@ -102,6 +102,18 @@ export default interface OrderScenario extends BaseScenario {
 
     validateQtyOrderWithMenu(menuNames: string | string[]): Promise<void>;
 
-    validatePriceExclusiveWithSubtotal(menuNames: string[], extraPackageNames: string[]): Promise<void>
+    validatePriceExclusiveWithSubtotal(menuNames: string[], extraPackageNames: string[]): Promise<void>;
+
+    printNowPrintingSetting(): Promise<void>;
+
+    printSplitPerPaxPrintingSetting(pax: number): Promise<void>;
+
+    cancelPrintSplitPerPaxPrintingSetting(pax: number): Promise<void>;
+
+    activatePosFilterAccess(): Promise<void>;
+
+    activateOrderingV2(): Promise<void>;
+
+    activatePaymentV2(): Promise<void>;
 
 }
