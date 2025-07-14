@@ -91,6 +91,39 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.waitForResponse("/order/print-bill");
     }
 
+    async printNowPrintingSetting(): Promise<void> {
+        await this.expectVisible(OrderLocator.printBillButton);
+        await this.click(OrderLocator.printBillButton);
+        await this.expectVisible(OrderLocator.printBillNowButton);
+        await this.click(OrderLocator.printBillNowButton);
+        await this.waitForResponse("/order/print-bill");
+        await this.expectVisible(OrderLocator.closePrintingSetting);
+        await this.click(OrderLocator.closePrintingSetting);
+    }
+
+    async printSplitPerPaxPrintingSetting(pax: number): Promise<void> {
+        await this.expectVisible(OrderLocator.printBillButton);
+        await this.click(OrderLocator.printBillButton);
+        await this.expectVisible(OrderLocator.printBillSplitPerPaxButton);
+        await this.click(OrderLocator.printBillSplitPerPaxButton);
+        await this.expectVisible(OrderLocator.inputNumberOfPax);
+        await this.fill(OrderLocator.inputNumberOfPax, pax.toString());
+        await this.expectVisible(OrderLocator.printSplitPerPax);
+        await this.click(OrderLocator.printSplitPerPax);
+        await this.waitForResponse("/order/print-bill");
+    }
+
+    async cancelPrintSplitPerPaxPrintingSetting(pax: number): Promise<void> {
+        await this.expectVisible(OrderLocator.printBillButton);
+        await this.click(OrderLocator.printBillButton);
+        await this.expectVisible(OrderLocator.printBillSplitPerPaxButton);
+        await this.click(OrderLocator.printBillSplitPerPaxButton);
+        await this.expectVisible(OrderLocator.inputNumberOfPax);
+        await this.fill(OrderLocator.inputNumberOfPax, pax.toString());
+        await this.expectVisible(OrderLocator.cancelSplitPerPax);
+        await this.click(OrderLocator.cancelSplitPerPax);
+    }
+
     async splitBill(): Promise<void> {
         await this.expectVisible(OrderLocator.splitBillButton);
         await this.click(OrderLocator.splitBillButton);
@@ -307,6 +340,21 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
 
     async notActivateKitchenFireManagement(): Promise<void> {
         const query: string = "UPDATE ms_setting SET value1 = 0 WHERE key1 = 'POS' AND key2 = 'Kitchen Fire Management';";
+        await this.sqlExecute(this.configs.get.dbConfig, query);
+    }
+
+    async activatePosFilterAccess(): Promise<void> {
+        const query: string = "UPDATE lk_posfilteraccess set subNodes = '/payment,/take-away/payment,/take-away-classic/payment,/payment/v2,/take-away/payment/v2,/take-away-classic/payment/v2' where posAccessID = 'A' && filterAccessID = 'A9';";
+        await this.sqlExecute(this.configs.get.dbConfig, query);
+    }
+
+    async activateOrderingV2(): Promise<void> {
+        const query: string = "INSERT INTO ms_setting (key1, key2, value1, value2)  VALUES ('POS', 'Show New Ordering Layout Version', \"true\", '');";
+        await this.sqlExecute(this.configs.get.dbConfig, query);
+    }
+
+    async activatePaymentV2(): Promise<void> {
+        const query: string = "INSERT INTO ms_setting (key1, key2, value1, value2) VALUES ('POS', 'Show New Payment Version', \"true\", '');";
         await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
