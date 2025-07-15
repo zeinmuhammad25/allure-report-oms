@@ -22,4 +22,10 @@ export default interface BookOrderScenario extends BaseScenario {
     scanQuickService(): Promise<void>;
 
     skipCustomerPhoneNumber(): Promise<void>;
+
+    bookTableWithCekLogicAndSkipCustomerPhoneNumber(): Promise<void>;
+
+    bookAndOrderWithCekLogicAndSkipCustomerPhoneNumber(): Promise<void>;
+
+    applyQuickServiceWithCekLogicAndSkipCustomerPhoneNumber(): Promise<void>;
 }
