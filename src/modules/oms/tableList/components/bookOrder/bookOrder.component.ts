@@ -79,6 +79,7 @@ export default class BookOrderComponent extends BaseOmsPage implements BookOrder
         await this.expectVisible(BookOrderLocator.bookTableButton);
         await this.click(BookOrderLocator.bookTableButton);
         const popUpCustomerNumber = await this.isVisible(BookOrderLocator.popUpCustomerData);
+        await this.wait(300);
         if (popUpCustomerNumber) {
             await this.click(BookOrderLocator.laterCustomerDataButton);
             await this.wait(300);
@@ -91,6 +92,7 @@ export default class BookOrderComponent extends BaseOmsPage implements BookOrder
         await this.expectVisible(BookOrderLocator.bookOrderButton);
         await this.click(BookOrderLocator.bookOrderButton);
         const popUpCustomerNumber = await this.isVisible(BookOrderLocator.popUpCustomerData);
+        await this.wait(300);
         if (popUpCustomerNumber) {
             await this.click(BookOrderLocator.laterCustomerDataButton);
             await this.wait(300);
@@ -102,6 +104,7 @@ export default class BookOrderComponent extends BaseOmsPage implements BookOrder
     async applyQuickServiceWithCekLogicAndSkipCustomerPhoneNumber(): Promise<void> {
         await this.expectVisible(BookOrderLocator.bookScanAndApplyButton("Apply"));
         await this.click(BookOrderLocator.bookScanAndApplyButton("Apply"));
+        await this.wait(300);
         const popUpCustomerNumber = await this.isVisible(BookOrderLocator.popUpCustomerData);
         if (popUpCustomerNumber) {
             await this.click(BookOrderLocator.laterCustomerDataButton);
