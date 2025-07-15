@@ -89,12 +89,12 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
             await this.click(StartDayLocator.getLocatorStartDay("Yes"));
 
             const onVisible = async () => {
-                const buttonOk = await this.isVisible(StartDayLocator.getLocatorStartDay("Ok"));
+                const buttonOk = await this.isVisible(StartDayLocator.getLocatorStartDay("Close"));
                 if (buttonOk) {
-                    await this.click(StartDayLocator.getLocatorStartDay("Ok"));
+                    await this.click(StartDayLocator.getLocatorStartDay("Close"));
                 }
             };
-            await this.waitForVisible(StartDayLocator.notificationSuccess, onVisible, 10000, 5);
+            await this.waitForVisible(StartDayLocator.notificationSuccess, onVisible, 10000, 10);
             await this.waitForResponse("/table");
         } else {
             await this.expectTextVisible("AC ROOM");
