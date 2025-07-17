@@ -65,20 +65,4 @@ export default class PaymentList {
         ReceiptSection: "Receipt"
     };
 
-    // Grid Select Cash Board
-    public static PaymentBord = {
-        Board1: "1",
-        Board2: "2",
-        Board3: "3",
-        Board4: "4",
-        Board5: "5",
-        Board6: "6",
-        Board7: "7",
-        Board8: "8",
-        Board9: "9",
-        Board000: "000",
-        BoardComa: ","
-
-    };
-
 }
