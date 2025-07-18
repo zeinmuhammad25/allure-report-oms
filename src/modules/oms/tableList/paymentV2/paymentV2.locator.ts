@@ -15,8 +15,8 @@ export default class PaymentV2Locator extends BaseLocator {
     static scanVoucher: string = "//div//span[normalize-space()='Scan Voucher']";
     static cancelVoucher: string = "//button[@class='btn-close ng-star-inserted']//img";
     static saveVoucher: string = "//div[@class='d-flex justify-center align-items-center save-voucher-btn-wrapper']//button[@type='button']";
-    static gridPaymentBoard = (value:string): string => `//div//button//span[@class='numeric-text'][normalize-space()='${value}']`;
-    static disabledSave :string="//button[@disabled and normalize-space()='Save']";
+    static gridPaymentBoard = (value: string): string => `//div//button//span[@class='numeric-text'][normalize-space()='${value}']`;
+    static disabledSave: string = "//button[@disabled and normalize-space()='Save']";
     static paymentSection = (sectionName: PaymentList): string => `//div[contains(@class, 'mat-tab-labels')]//div[contains(text(), '${sectionName}')]`;
     static cancelPayment: string = "//button[@class='delete-button mat-stroked-button ng-star-inserted']//span[@class='mat-button-wrapper']";
     static popUpCancelPayment: string = "//app-confirm-dialog//div[contains(@class, 'modal-body')]";
