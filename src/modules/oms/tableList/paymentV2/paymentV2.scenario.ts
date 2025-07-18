@@ -1,8 +1,7 @@
 import BaseScenario from "../../../../base/base-scenario";
 import PaymentList from "../../objects/paymentList";
-import {PaymentObject} from "../payment/PaymentObject";
 
-export default interface PaymentV2Scenario extends BaseScenario {
+    export default interface PaymentV2Scenario extends BaseScenario {
     paymentPinUserAuthorization(Pin: string): Promise<void>;
 
     PaymentType(paymentType: PaymentList): Promise<void>;
