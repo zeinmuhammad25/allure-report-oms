@@ -48,8 +48,8 @@ export default class PaymentList {
         ClosePayment: "Close",
         DonePayment: "Done",
         NextPayment: "Next",
-        PrintQr:"Print QR",
-        PopUpCancelPayment:"Cancel",
+        PrintQr: "Print QR",
+        PopUpCancelPayment: "Cancel"
     };
 
     // Payment Debit: Action input in payment debit process
