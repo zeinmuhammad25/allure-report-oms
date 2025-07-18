@@ -33,7 +33,6 @@ export default class PaymentV2Locator extends BaseLocator {
     static buttonPayFullAmount: string = "//div[@class='col-sm-4 d-flex flex-column']/div[1]/div[1]";
 
 
-
     //sectionPaymentDebit
     static getLocatorInputPaymentDebit = (inputField: PaymentList): string => `//input[@placeholder='${inputField}']`;
     static buttonAddCardDetails: string = "//button/span[normalize-space()='Add card details']";
@@ -60,8 +59,7 @@ export default class PaymentV2Locator extends BaseLocator {
     static valueOutstanding: string = "//div[contains(@class, 'dialog-content-wrapper')]//h1[contains(@class, 'font-weight-bold')]";
 
     //QA Section
-    static popUpQrPayment: string ="//app-qr-code-payment[@class='ng-star-inserted']//div[@class='main']"
-
+    static popUpQrPayment: string = "//app-qr-code-payment[@class='ng-star-inserted']//div[@class='main']";
 
 
 }
