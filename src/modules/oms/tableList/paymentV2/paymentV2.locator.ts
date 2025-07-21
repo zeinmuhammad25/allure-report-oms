@@ -15,16 +15,23 @@ export default class PaymentV2Locator extends BaseLocator {
     static scanVoucher: string = "//div//span[normalize-space()='Scan Voucher']";
     static cancelVoucher: string = "//button[@class='btn-close ng-star-inserted']//img";
     static saveVoucher: string = "//div[@class='d-flex justify-center align-items-center save-voucher-btn-wrapper']//button[@type='button']";
-    static gridPaymentBoard = (value:string): string => `//div//button//span[@class='numeric-text'][normalize-space()='${value}']`;
+    static gridPaymentBoard = (value: string): string => `//div//button//span[@class='numeric-text'][normalize-space()='${value}']`;
+    static disabledSave: string = "//button[@disabled and normalize-space()='Save']";
     static paymentSection = (sectionName: PaymentList): string => `//div[contains(@class, 'mat-tab-labels')]//div[contains(text(), '${sectionName}')]`;
     static cancelPayment: string = "//button[@class='delete-button mat-stroked-button ng-star-inserted']//span[@class='mat-button-wrapper']";
     static popUpCancelPayment: string = "//app-confirm-dialog//div[contains(@class, 'modal-body')]";
     static buttonValidation = (validation: string): string => `//button[contains(@class, 'btn-action')]//span[normalize-space()='${validation}']`;
-    static getLocatorButtonAction = (actionPayment: PaymentList): string => `//span[normalize-space()='${actionPayment}']`;
-    static getLocatorButtonArrow = (actionArrow: PaymentList): string => `//i[@class='glyphicon glyphicon-arrow-${actionArrow}']`;
-    static getLocatorPaymentType = (paymentType: PaymentList): string => `//span[contains(text(),'${paymentType}')]`;
-    static getLocatorPaymentMethod = (paymentMethod: PaymentList): string => `//span[contains(text(),'${paymentMethod}')]`;
+    static getLocatorButtonAction = (actionPayment: PaymentList, isDisabled = false): string =>
+        `//span[normalize-space()='${actionPayment}']${isDisabled ? "/ancestor::button[@disabled]" : ""}`;
+    static getLocatorButtonArrow = (actionArrow: PaymentList, isDisabled = false): string =>
+        `//i[@class='glyphicon glyphicon-arrow-${actionArrow}']${isDisabled ? "/ancestor::button[@disabled]" : ""}`;
+    static getLocatorPaymentType = (paymentType: PaymentList, isDisabled = false): string =>
+        `//span[contains(text(),'${paymentType}')]${isDisabled ? "/ancestor::button[@disabled]" : ""}`;
+    static getLocatorPaymentMethod = (paymentMethod: PaymentList, isDisabled = false): string =>
+        `//span[contains(text(),'${paymentMethod}')]${isDisabled ? "/ancestor::button[@disabled]" : ""}`;
+
     static buttonPayFullAmount: string = "//div[@class='col-sm-4 d-flex flex-column']/div[1]/div[1]";
+
 
     //sectionPaymentDebit
     static getLocatorInputPaymentDebit = (inputField: PaymentList): string => `//input[@placeholder='${inputField}']`;
@@ -49,7 +56,10 @@ export default class PaymentV2Locator extends BaseLocator {
     static inputPinOrOtpField: string = "//app-auth-modal//div[contains(@class, 'mat-form-field-infix')]//input[contains(@class, 'mat-input-element')]";
     static authorizeButton: string = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Authorize']";
     static cancelButton: string = "//div[@class='modal-footer justify-content-center']//span[@class='mat-button-wrapper'][normalize-space()='Cancel']";
-    static valueOutstanding: string = "//div[contains(@class, 'd-flex') and contains(@class, 'row-dialog')]//div[label/text()='Outstanding']//input[@class='form-control pos-number'] ";
+    static valueOutstanding: string = "//div[contains(@class, 'dialog-content-wrapper')]//h1[contains(@class, 'font-weight-bold')]";
+
+    //QA Section
+    static popUpQrPayment: string = "//app-qr-code-payment[@class='ng-star-inserted']//div[@class='main']";
 
 
 }

@@ -47,7 +47,9 @@ export default class PaymentList {
         BackPayment: "Back",
         ClosePayment: "Close",
         DonePayment: "Done",
-        NextPayment: "Next"
+        NextPayment: "Next",
+        PrintQr: "Print QR",
+        PopUpCancelPayment: "Cancel"
     };
 
     // Payment Debit: Action input in payment debit process
