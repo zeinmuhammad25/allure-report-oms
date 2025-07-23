@@ -34,11 +34,12 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         ]);
     };
 
-    const selectMenuExtra = async (order: OrderScenario, quantity = 1) => {
-        await order.selectCategoryMenu(MenuList.atCategory.name);
-        await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-        await order.selectMenu(MenuList.menus.atMenuExtraAlpha.name, quantity);
-        await order.clickMenuDetail(MenuList.menus.atMenuExtraAlpha.name);
+    const selectMenuExtra = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
+        await addOrderV2.selectPackageGroup("Menu Extra")
+        await addOrderV2.extraCategory(MenuList.atCategory.name);
+        await addOrderV2.modifyExtraPackage([
+            {menuName: MenuList.menus.atMenuExtraAlpha.shortName, qty: quantity, notes: null}
+        ]);
     };
 
     const selectMenuBiasaSpecialPrice = async (order: OrderScenario, quantity = 1) => {
@@ -152,20 +153,23 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         });
 
     test("[TC_0205003] Validate logic when user able to add Menu Extra",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuExtra(order);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await editOrder.actionButtonFooter("Next");
-            await editOrder.escapeKeyboard();
-            await selectExtraMenuItems(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.validateQtyOrderWithMenu(MenuList.menus.atMenuExtraAlpha.name);
-            await order.saveOrder();
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaket(order, addOrderV2);
+                await selectMenuExtra(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2}, testInfo);
         });
 
     test("[TC_0205004] Validate logic when user able to edit qty Menu Biasa",
