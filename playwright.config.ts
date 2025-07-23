@@ -7,8 +7,6 @@ import {defineConfig, devices} from "@playwright/test";
 import * as dotenv from "dotenv";
 import * as path from "path";
 
-// setup global function untuk safeTest
-import "./src/base/utils/safeTest";
 
 // Read from ".env" file.
 dotenv.config({path: path.resolve(__dirname, ".env")});
