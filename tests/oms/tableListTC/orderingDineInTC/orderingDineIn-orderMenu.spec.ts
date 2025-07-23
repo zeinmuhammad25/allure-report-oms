@@ -209,14 +209,14 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         });
 
     test("[TC_0205006] Validate logic when user able to edit qty Menu Extra",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2,paymentV2}, testInfo) => {
-            await safeTest(async ({order, tableList, bookOrder, addOrderV2,paymentV2}) => {
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2, paymentV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaket(order, addOrderV2,2);
-                await selectMenuExtra(order, addOrderV2,3);
+                await selectMenuPaket(order, addOrderV2, 2);
+                await selectMenuExtra(order, addOrderV2, 3);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
                 await order.saveOrder();
@@ -225,7 +225,31 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {order, tableList, bookOrder, addOrderV2,paymentV2}, testInfo);
+            }, {order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo);
+        });
+
+    test("[TC_0205007] Validate order list ketika user update dengan pilih promo dan back MENU BIASA ",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuBiasa(order, 3);
+                await order.validateQtyOrderWithMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+                await editOrderV2.addPromotionMenu();
+                await editOrderV2.applyViaSearchPromotionMenu("MENU DISC RP ALL CATEGORY");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0205007] Validate logic when user able to delete menu biasa before Save Order",
