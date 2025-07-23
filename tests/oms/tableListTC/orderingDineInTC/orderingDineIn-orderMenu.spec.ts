@@ -35,7 +35,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     };
 
     const selectMenuExtra = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
-        await addOrderV2.selectPackageGroup("Menu Extra")
+        await addOrderV2.selectPackageGroup("Menu Extra");
         await addOrderV2.extraCategory(MenuList.atCategory.name);
         await addOrderV2.modifyExtraPackage([
             {menuName: MenuList.menus.atMenuExtraAlpha.shortName, qty: quantity, notes: null}
@@ -137,14 +137,14 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
                 await selectMenuPaket(order, addOrderV2);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
@@ -157,7 +157,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac2.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
                 await salesModeInclusive(bookOrder);
                 await selectMenuPaket(order, addOrderV2);
                 await selectMenuExtra(order, addOrderV2);
@@ -165,7 +165,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac2.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
@@ -173,18 +173,25 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         });
 
     test("[TC_0205004] Validate logic when user able to edit qty Menu Biasa",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, 2);
-            await order.validateQtyOrderWithMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuBiasa(order, 2);
+                await order.validateQtyOrderWithMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2}, testInfo);
         });
 
     test("[TC_0205005] Validate logic when user able to edit qty Menu Paket",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrder, editOrder}) => {
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrder, editOrder},testInfo) => {
             await tableList.goHere();
             await tableList.selectRoom(Table.acRoom.name);
             await tableList.selectTable(Table.acRoom.ac1.name);
