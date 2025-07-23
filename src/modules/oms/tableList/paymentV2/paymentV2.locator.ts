@@ -17,6 +17,7 @@ export default class PaymentV2Locator extends BaseLocator {
     static saveVoucher: string = "//div[@class='d-flex justify-center align-items-center save-voucher-btn-wrapper']//button[@type='button']";
     static gridPaymentBoard = (value: string): string => `//div//button//span[@class='numeric-text'][normalize-space()='${value}']`;
     static disabledSave: string = "//button[@disabled and normalize-space()='Save']";
+    static buttonPayPayment: string = "//button//span[normalize-space()='Pay']";
     static paymentSection = (sectionName: PaymentList): string => `//div[contains(@class, 'mat-tab-labels')]//div[contains(text(), '${sectionName}')]`;
     static cancelPayment: string = "//button[@class='delete-button mat-stroked-button ng-star-inserted']//span[@class='mat-button-wrapper']";
     static popUpCancelPayment: string = "//app-confirm-dialog//div[contains(@class, 'modal-body')]";
@@ -31,7 +32,6 @@ export default class PaymentV2Locator extends BaseLocator {
         `//span[contains(text(),'${paymentMethod}')]${isDisabled ? "/ancestor::button[@disabled]" : ""}`;
 
     static buttonPayFullAmount: string = "//div[@class='col-sm-4 d-flex flex-column']/div[1]/div[1]";
-
 
     //sectionPaymentDebit
     static getLocatorInputPaymentDebit = (inputField: PaymentList): string => `//input[@placeholder='${inputField}']`;
@@ -60,6 +60,4 @@ export default class PaymentV2Locator extends BaseLocator {
 
     //QA Section
     static popUpQrPayment: string = "//app-qr-code-payment[@class='ng-star-inserted']//div[@class='main']";
-
-
 }

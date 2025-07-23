@@ -1,4 +1,5 @@
 import BaseLocator from "../../../../../../base/base-locator";
+import MenuList from "../../../../objects/menuList";
 
 export default class AddOrderV2Locator extends BaseLocator {
 
@@ -6,7 +7,8 @@ export default class AddOrderV2Locator extends BaseLocator {
     static plusQtyPackageHead: string = "//button[@class='qty-button qty-button-active mat-stroked-button ng-star-inserted']";
     static minusQtyPackageHead: string = "//button[@class='qty-button mat-stroked-button ng-star-inserted']";
     static buttonSelectPackage = (menuName: string): string =>
-        `//div[contains(@class, 'menu-package-group-active')]//span[starts-with(normalize-space(), '${menuName} ')]`;
+        `//div[contains(@class, 'menu-package-group')]//span[starts-with(normalize-space(), '${menuName}')]`;
+    static buttonSelectCategoryMenuExtra = (categoryExtra: MenuList): string => `//app-grid-package-v2//div//span[contains(text(),'${categoryExtra}')]`;
     static filedSearchV2: string = "//input[@placeholder='Search menu']";
     static nextPagePackageList: string = "//img[@src='assets/images/icon-chevron-single-right.png']";
     static backPagePackageList: string = "//div[@class='cdk-overlay-container']//div[@class='d-flex flex-column']//button[1]";
@@ -47,4 +49,5 @@ export default class AddOrderV2Locator extends BaseLocator {
     static buttonBackPromotionList = "//mat-icon[normalize-space()='chevron_left']";
     static buttonApplyPromotion: string = this.buttonFunction("Apply");
     static buttonBackPromotion: string = this.buttonFunction("Back");
+
 }
