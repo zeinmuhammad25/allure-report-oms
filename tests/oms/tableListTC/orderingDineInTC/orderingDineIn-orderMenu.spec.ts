@@ -9,6 +9,7 @@ import {safeTest} from "../../../../src/base/utils/safeTest";
 import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
 import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
+import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
 
 
 test.setTimeout(100000);
@@ -21,11 +22,11 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
     };
 
-    const selectMenuPaket = async (order: OrderScenario, addOrder: AddOrderScenario, quantity = 1) => {
+    const selectMenuPaket = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
         await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-        await addOrder.modifyMenuDetailPackage([
+        await addOrderV2.modifyDetailPackage([
             {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes: null},
             {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: null},
             {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: null},
@@ -112,38 +113,42 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await signPin.storeAuthState();
     });
 
-    test("[TC_0205001] Validate logic when user able to add Menu Biasa", {tag: tags + "@positive"}, async ({
-                                                                                                               order,
-                                                                                                               tableList,
-                                                                                                               bookOrder,
-                                                                                                               paymentV2
-                                                                                                           }, testInfo) => {
-        await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, 3);
-            await order.validateQtyOrderWithMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.printNowPrintingSetting();
-            await order.gotoPayment();
-            await paymentCashFull(paymentV2);
-        }, {order, tableList, bookOrder, paymentV2}, testInfo);
-    });
+    test("[TC_0205001] Validate logic when user able to add Menu Biasa",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuBiasa(order, 3);
+                await order.validateQtyOrderWithMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2}, testInfo);
+        });
 
     test("[TC_0205002] Validate logic when user able to add Menu Paket",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuPaket(order, addOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await order.saveOrder();
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaket(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2}, testInfo);
+
         });
 
     test("[TC_0205003] Validate logic when user able to add Menu Extra",
