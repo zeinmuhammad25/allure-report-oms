@@ -22,6 +22,8 @@ import TroubleshootScenario from "./tools/troubleshoot/troubleshoot.scenario";
 import TopNavBarScenario from "./components/topNavBar/topNavBar.scenario";
 import MoveTableScenario from "./tableList/order/components/moveTable/moveTable.scenario";
 import AddOrderV2Scenario from "./tableList/order/components/addOrderV2/addOrderV2.scenario";
+import EditOrderV2Scenario from "./tableList/order/components/editOrderV2/editOrderV2.scenario";
+import PaymentV2Scenario from "./tableList/paymentV2/paymentV2.scenario";
 
 export type OmsPages = {
     synchronizeData: SynchronizeDataScenario
@@ -35,6 +37,7 @@ export type OmsPages = {
     addOrder: AddOrderScenario
     addOrderV2: AddOrderV2Scenario
     editOrder: EditOrderScenario
+    editOrderV2: EditOrderV2Scenario
     linkTable: LinkTableScenario
     mergeTable: MergeTableScenario
     moveItem: MoveItemScenario
@@ -42,6 +45,7 @@ export type OmsPages = {
     order: OrderScenario
     dineIn: DineInScenario
     paymentPos: PaymentPosScenario
+    paymentV2: PaymentV2Scenario
     quickServiceList: QuickServiceListScenario
     tableList: TableListScenario
     terminalID: TerminalIDScenario
