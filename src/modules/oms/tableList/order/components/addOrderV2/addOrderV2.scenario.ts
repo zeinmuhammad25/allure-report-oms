@@ -14,4 +14,8 @@ export default interface AddOrderV2Scenario extends BaseScenario {
     addToCartMenuDetailPackage(): Promise<void>;
 
     cancelMenuDetailPackage(): Promise<void>;
+
+    extraCategory(categoryExtra: string): Promise<void>;
+
+    modifyExtraPackage(menuOrder: AddMenuModel[]): Promise<void>;
 }
