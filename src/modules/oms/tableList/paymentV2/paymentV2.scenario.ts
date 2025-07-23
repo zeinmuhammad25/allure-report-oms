@@ -1,12 +1,12 @@
 import BaseScenario from "../../../../base/base-scenario";
 import PaymentList from "../../objects/paymentList";
 
-    export default interface PaymentV2Scenario extends BaseScenario {
+export default interface PaymentV2Scenario extends BaseScenario {
     paymentPinUserAuthorization(Pin: string): Promise<void>;
 
-    PaymentType(paymentType: PaymentList): Promise<void>;
+    paymentType(paymentType: PaymentList): Promise<void>;
 
-    PaymentMethod(paymentMethod: PaymentList): Promise<void>;
+    paymentMethod(paymentMethod: PaymentList): Promise<void>;
 
     actionPayment(actionPayment: PaymentList): Promise<void>;
 
@@ -60,4 +60,7 @@ import PaymentList from "../../objects/paymentList";
 
     fillPaymentAmountWithGrandTotal(adjustment?: number): Promise<void>;
 
+    payPayment(): Promise<void>;
+
 }
+
