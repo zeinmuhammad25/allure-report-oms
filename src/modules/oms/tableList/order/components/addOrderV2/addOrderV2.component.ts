@@ -3,6 +3,7 @@ import BaseOmsPage from "../../../../base-oms-page";
 import AddOrderV2Locator from "./addOrderV2.locator";
 import AddOrderV2Scenario from "./addOrderV2.scenario";
 import AddMenuModel from "../../addMenu.model";
+import MenuList from "../../../../objects/menuList";
 
 
 export default class AddOrderV2Component extends BaseOmsPage implements AddOrderV2Scenario {
@@ -75,9 +76,22 @@ export default class AddOrderV2Component extends BaseOmsPage implements AddOrder
         }
     }
 
+    async modifyExtraPackage(menuOrder: AddMenuModel[]): Promise<void> {
+        for (let i = 0; i < menuOrder.length; i++) {
+            await this.menuModifier(menuOrder[i]);
+        }
+    }
+
+
     async selectPackageGroup(groupName: string): Promise<void> {
+        await this.wait(400);
         await this.expectVisible(AddOrderV2Locator.buttonSelectPackage(groupName));
         await this.click(AddOrderV2Locator.buttonSelectPackage(groupName));
+    }
+
+    async extraCategory(categoryExtra: MenuList): Promise<void> {
+        await this.expectVisible(AddOrderV2Locator.buttonSelectCategoryMenuExtra(categoryExtra));
+        await this.click(AddOrderV2Locator.buttonSelectCategoryMenuExtra(categoryExtra));
     }
 
     async nextMoveOtherMenuDetailPackage(): Promise<void> {
