@@ -28,13 +28,13 @@ export default class PaymentV2Page extends BaseOmsPage implements PaymentV2Scena
         await this.click(PaymentV2Locator.authorizeButton);
     }
 
-    async PaymentType(paymentType: PaymentList): Promise<void> {
+    async paymentType(paymentType: PaymentList): Promise<void> {
         await this.wait(300);
         await this.expectVisible(PaymentV2Locator.getLocatorPaymentType(paymentType));
         await this.click(PaymentV2Locator.getLocatorPaymentType(paymentType));
     }
 
-    async PaymentMethod(paymentMethod: PaymentList): Promise<void> {
+    async paymentMethod(paymentMethod: PaymentList): Promise<void> {
         await this.expectVisible(PaymentV2Locator.getLocatorPaymentType(paymentMethod));
         await this.click(PaymentV2Locator.getLocatorPaymentType(paymentMethod));
     }
@@ -43,6 +43,11 @@ export default class PaymentV2Page extends BaseOmsPage implements PaymentV2Scena
         await this.wait(500);
         await this.expectVisible(PaymentV2Locator.getLocatorPaymentMethod(actionPayment));
         await this.click(PaymentV2Locator.getLocatorPaymentMethod(actionPayment));
+    }
+
+    async payPayment(): Promise<void> {
+        await this.expectVisible(PaymentV2Locator.buttonPayPayment);
+        await this.click(PaymentV2Locator.buttonPayPayment);
     }
 
     async paymentInputAmount(inputAmount: string): Promise<void> {
@@ -99,7 +104,8 @@ export default class PaymentV2Page extends BaseOmsPage implements PaymentV2Scena
                                                                      FROM fnb_dev1.tr_salespaymentgateway
                                                                      WHERE branchID = ${branchId}
                                                                        AND paymentTransactionStatus = 'pending'
-                                                                     ORDER BY transactionDate DESC LIMIT 1) AS latestTxn);`;
+                                                                     ORDER BY transactionDate
+                                                                         DESC LIMIT 1) AS latestTxn);`;
         await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
