@@ -6,7 +6,6 @@ import BookOrderScenario from "../../../../src/modules/oms/tableList/components/
 import AddOrderScenario from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.scenario";
 import EditOrderScenario from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.scenario";
 import {safeTest} from "../../../../src/base/utils/safeTest";
-import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
 import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
 import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
@@ -102,7 +101,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test.beforeEach(async () => {
     });
 
-    test.afterEach(async ({tableList}) => {
+    test.afterEach(async () => {
         await Promise.all([]);
     });
 
@@ -192,7 +191,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
 
     test("[TC_0205005] Validate logic when user able to edit qty Menu Paket",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
-            await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2, paymentV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
@@ -206,24 +205,27 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {order, tableList, bookOrder, paymentV2}, testInfo);
+            }, {order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0205006] Validate logic when user able to edit qty Menu Extra",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuExtra(order, 2);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await editOrder.actionButtonFooter("Next");
-            await editOrder.escapeKeyboard();
-            await selectExtraMenuItems(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.validateQtyOrderWithMenu(MenuList.menus.atMenuExtraAlpha.name);
-            await order.saveOrder();
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2,paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2,paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaket(order, addOrderV2,2);
+                await selectMenuExtra(order, addOrderV2,3);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, addOrderV2,paymentV2}, testInfo);
         });
 
     test("[TC_0205007] Validate logic when user able to delete menu biasa before Save Order",
