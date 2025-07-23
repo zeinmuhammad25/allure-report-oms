@@ -5,6 +5,11 @@ import OrderScenario from "../../../../src/modules/oms/tableList/order/order.sce
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
 import AddOrderScenario from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.scenario";
 import EditOrderScenario from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.scenario";
+import {safeTest} from "../../../../src/base/utils/safeTest";
+import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
+import PaymentList from "../../../../src/modules/oms/objects/paymentList";
+import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
+
 
 test.setTimeout(100000);
 test.describe.serial("Ordering Dine In Order Menu", () => {
@@ -83,17 +88,23 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await bookOrder.skipCustomerPhoneNumber();
     };
 
+    const paymentCashFull = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Cash);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.CashPayment);
+        await paymentV2.paymentFullAmount();
+        await paymentV2.actionPayment(PaymentList.ActionPayment.SavePayment);
+        await paymentV2.payPayment();
+    };
+
+
     test.beforeEach(async () => {
     });
 
     test.afterEach(async ({tableList}) => {
-        await Promise.all([
-            tableList.cancelAllQuickServices(),
-            tableList.cancelAllTables()
-        ]);
+        await Promise.all([]);
     });
 
-    test("Setup", {}, async ({terminalID, signPin}) => {
+    test("Setup", {}, async ({terminalID, signPin, order}) => {
         await terminalID.goHere();
         await terminalID.performTerminalID();
         await signPin.inputPinByTouch("22");
@@ -101,8 +112,13 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await signPin.storeAuthState();
     });
 
-    test("[TC_0205001] Validate logic when user able to add Menu Biasa",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder}) => {
+    test("[TC_0205001] Validate logic when user able to add Menu Biasa", {tag: tags + "@positive"}, async ({
+                                                                                                               order,
+                                                                                                               tableList,
+                                                                                                               bookOrder,
+                                                                                                               paymentV2
+                                                                                                           }, testInfo) => {
+        await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
             await tableList.goHere();
             await tableList.selectRoom(Table.acRoom.name);
             await tableList.selectTable(Table.acRoom.ac1.name);
@@ -110,7 +126,13 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             await selectMenuBiasa(order, 3);
             await order.validateQtyOrderWithMenu(MenuList.menus.atMenuBiasaGoreng.name);
             await order.saveOrder();
-        });
+            await tableList.selectRoom(Table.acRoom.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await order.printNowPrintingSetting();
+            await order.gotoPayment();
+            await paymentCashFull(paymentV2);
+        }, {order, tableList, bookOrder, paymentV2}, testInfo);
+    });
 
     test("[TC_0205002] Validate logic when user able to add Menu Paket",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrder, editOrder}) => {
