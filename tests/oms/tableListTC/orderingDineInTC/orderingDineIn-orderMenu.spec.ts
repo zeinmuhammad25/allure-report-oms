@@ -373,9 +373,9 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, addOrderV2}, testInfo);
         });
 
-    test("[TC_0205009] Validate Logic When User Able To Delete Menu Extra Sebelum Save Order",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
-            await safeTest(async ({order, tableList, bookOrder, addOrderV2, paymentV2}) => {
+    test("[TC_0205014] Validate Logic When User Able To Delete Menu Extra Sebelum Save Order",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
@@ -383,14 +383,9 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await selectMenuPaket(order, addOrderV2, 2);
                 await selectMenuExtra(order, addOrderV2, 3);
                 await addOrderV2.addToCartMenuDetailPackage();
-                await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
                 await order.saveOrder();
-                await tableList.selectRoom(Table.smokingRoom.name);
-                await tableList.selectTable(Table.smokingRoom.sr1.name);
-                await order.printNowPrintingSetting();
-                await order.gotoPayment();
-                await paymentCashFull(paymentV2);
-            }, {order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo);
+            }, {order, tableList, bookOrder, addOrderV2}, testInfo);
         });
 
     test("[TC_0205010] Validate logic when user able to delete Menu Biasa after Save Order",
