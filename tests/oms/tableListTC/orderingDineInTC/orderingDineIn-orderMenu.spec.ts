@@ -10,7 +10,6 @@ import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
 import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
 
-
 test.setTimeout(100000);
 test.describe.serial("Ordering Dine In Order Menu", () => {
     const tags = "@smokeTest @oms @orderingDineIn @orderMenu ";
@@ -105,7 +104,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await Promise.all([]);
     });
 
-    test("Setup", {}, async ({terminalID, signPin, order}) => {
+    test("Setup", {}, async ({terminalID, signPin}) => {
         await terminalID.goHere();
         await terminalID.performTerminalID();
         await signPin.inputPinByTouch("22");
@@ -251,6 +250,21 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await paymentCashFull(paymentV2);
             }, {order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo);
         });
+
+    test("[TC_0205008][Validate fungsi suggestion notes saat pertama kali membuka pop-up menu BIASA",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, editOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuBiasa(order, 3);
+                await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+                await editOrderV2.selectSuggestionNotes("COBA AT", "COBA 1");
+                await order.validateQtyOrderWithMenu(MenuList.menus.atMenuBiasaGoreng.name);
+            }, {order, tableList, bookOrder, editOrderV2}, testInfo);
+        });
+
 
     test("[TC_0205007] Validate logic when user able to delete menu biasa before Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder}) => {
