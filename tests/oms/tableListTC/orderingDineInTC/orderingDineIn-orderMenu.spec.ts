@@ -452,20 +452,27 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo);
         });
 
-    test("[TC_0205013] Validate logic when user able to edit qty Menu Biasa after Save Order > Increase Qty",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, 5);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
-            await editOrder.editQtySelector(7);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205018] Validate logic when user able to edit qty Menu Biasa after Save Order > Increase Qty",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuBiasa(order, 3);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+                await editOrderV2.modifyEditHeadPackage([6]);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0205014] Validate logic when user able to edit qty Menu Paket after Save Order > Increase Qty",
