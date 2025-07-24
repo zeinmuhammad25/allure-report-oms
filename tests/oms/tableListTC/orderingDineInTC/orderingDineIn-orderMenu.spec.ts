@@ -499,25 +499,33 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo);
         });
 
-    test("[TC_0205015] Validate logic when user able to edit qty Menu Extra after Save Order > Increase Qty",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuExtra(order, 5);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await editOrder.actionButtonFooter("Next");
-            await selectExtraMenuItems(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.clickMenuDetail(MenuList.menus.atMenuExtraAlpha.name);
-            await editOrder.editQtySelector(7);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205020] Validate logic when user able to edit qty Menu Extra after Save Order > Increase Qty",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2, editOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaket(order, addOrderV2, 2);
+                await selectMenuExtra(order, addOrderV2, 3);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await order.clickMenuDetail(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await addOrderV2.selectPackageGroup("Menu Extra");
+                await addOrderV2.extraCategory(MenuList.atCategory.name);
+                await addOrderV2.modifyExtraPackage([
+                    {menuName: MenuList.menus.atMenuExtraAlpha.shortName, qty: 4, notes: null}
+                ]);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);;
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, editOrderV2, addOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0205016] Validate logic when user able to edit qty Menu Biasa after Save Order > Decrease Qty",
