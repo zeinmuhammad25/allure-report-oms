@@ -359,33 +359,38 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder}, testInfo);
         });
 
-    test("[TC_0205008] Validate logic when user able to delete menu paket before Save Order",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuPaket(order, addOrder, 2);
-            await editOrder.actionButtonFooter("Apply");
-            await order.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await order.saveOrder();
+    test("[TC_0205013] Validate logic when user able to delete menu paket before Save Order",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaket(order, addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.saveOrder();
+            }, {order, tableList, bookOrder, addOrderV2}, testInfo);
         });
 
-    test("[TC_0205009] Validate logic when user able to delete menu extra before Save Order",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuExtra(order, 2);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await editOrder.actionButtonFooter("Next");
-            await editOrder.escapeKeyboard();
-            await selectExtraMenuItems(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.deleteMenu(MenuList.menus.atMenuExtraAlpha.name);
-            await order.saveOrder();
+    test("[TC_0205009] Validate Logic When User Able To Delete Menu Extra Sebelum Save Order",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaket(order, addOrderV2, 2);
+                await selectMenuExtra(order, addOrderV2, 3);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0205010] Validate logic when user able to delete Menu Biasa after Save Order",
