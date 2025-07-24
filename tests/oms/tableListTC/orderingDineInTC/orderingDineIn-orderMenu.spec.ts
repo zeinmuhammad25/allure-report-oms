@@ -346,15 +346,17 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         });
 
 
-    test("[TC_0205007] Validate logic when user able to delete menu biasa before Save Order",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, 2);
-            await order.deleteMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
+    test("[TC_0205012] Validate logic when user able to delete menu biasa before Save Order",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuBiasa(order, 2);
+                await order.deleteMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+            }, {order, tableList, bookOrder}, testInfo);
         });
 
     test("[TC_0205008] Validate logic when user able to delete menu paket before Save Order",
