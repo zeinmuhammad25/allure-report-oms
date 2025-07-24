@@ -291,7 +291,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
 
     test("[TC_0205009] Validate logic ketika user mengisi notes dengan > 10 character MENU PAKET",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
-            await safeTest(async ({order, tableList, bookOrder, addOrderV2, paymentV2}) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
@@ -388,21 +388,23 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, addOrderV2}, testInfo);
         });
 
-    test("[TC_0205010] Validate logic when user able to delete Menu Biasa after Save Order",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, 2);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.deleteMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.cancelMenuAfterSave("CANCEL MENU");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205015] Validate logic when user able to delete Menu Biasa after Save Order",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, editOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuBiasa(order, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.deleteMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await order.saveOrder();
+            }, {order, tableList, bookOrder, editOrderV2}, testInfo);
         });
 
     test("[TC_0205011] Validate logic when user able to Delete Menu Paket after Save Order",
