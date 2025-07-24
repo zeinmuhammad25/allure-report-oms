@@ -9,6 +9,7 @@ import {safeTest} from "../../../../src/base/utils/safeTest";
 import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
 import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
+import TableListScenario from "../../../../src/modules/oms/tableList/tableList.scenario";
 
 test.setTimeout(100000);
 test.describe.serial("Ordering Dine In Order Menu", () => {
@@ -124,8 +125,11 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test.beforeEach(async () => {
     });
 
-    test.afterEach(async () => {
-        await Promise.all([]);
+    test.afterEach(async ({tableList}) => {
+        await Promise.all([
+            // tableList.cancelAllQuickServices(),
+            // tableList.cancelAllTables()
+        ]);
     });
 
     test("Setup", {}, async ({terminalID, signPin}) => {
@@ -427,27 +431,25 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, editOrderV2, addOrderV2}, testInfo);
         });
 
-    test("[TC_0205012] Validate logic when user able to Delete Menu Extra before Save Order",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuExtra(order, 2);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await editOrder.actionButtonFooter("Next");
-            await editOrder.escapeKeyboard();
-            await selectExtraMenuItems(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.deleteMenu(MenuList.menus.atMenuExtraAlpha.name);
-            await order.cancelMenuAfterSave("CANCEL MENU");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205017] Validate logic when user able to Delete Menu Extra before Save Order",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2, editOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaket(order, addOrderV2, 2);
+                await selectMenuExtra(order, addOrderV2, 3);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await order.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await order.saveOrder();
+            }, {order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo);
         });
 
     test("[TC_0205013] Validate logic when user able to edit qty Menu Biasa after Save Order > Increase Qty",
