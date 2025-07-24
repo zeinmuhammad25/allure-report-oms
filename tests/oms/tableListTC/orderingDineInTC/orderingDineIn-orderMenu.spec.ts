@@ -25,9 +25,33 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
         await addOrderV2.modifyDetailPackage([
-            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes:"test notes detail paket 1"},
-            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: "test notes detail paket 2"},
-            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: "test notes detail paket 3"},
+            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: null}
+        ]);
+    };
+
+    const selectMenuPaketWithNotes = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
+        await order.selectCategoryMenu(MenuList.atCategory.name);
+        await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+        await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+        await addOrderV2.modifyDetailPackage([
+            {
+                menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName,
+                qty: quantity,
+                notes: "test notes detail paket 1"
+            },
+            {
+                menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName,
+                qty: quantity,
+                notes: "test notes detail paket 2"
+            },
+            {
+                menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName,
+                qty: quantity,
+                notes: "test notes detail paket 3"
+            },
             {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: "test notes detail paket 4"}
         ]);
     };
@@ -265,7 +289,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, editOrderV2}, testInfo);
         });
 
-    test("[TC_0205009] Validate logic ketika user mengisi notes dengan > 10 character MENU PAKET" ,
+    test("[TC_0205009] Validate logic ketika user mengisi notes dengan > 10 character MENU PAKET",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, paymentV2}) => {
                 await tableList.goHere();
@@ -280,8 +304,8 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         });
 
     test("[TC_0205010] Validate logic button Apply Promo ketika user berhasil melakukan Apply Promo",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2,addOrderV2}, testInfo) => {
-            await safeTest(async ({order, tableList, bookOrder, paymentV2,addOrderV2}) => {
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
@@ -297,7 +321,28 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {order, tableList, bookOrder, paymentV2,addOrderV2}, testInfo);
+            }, {order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo);
+        });
+
+    test("[TC_0205011] Validate logic button Apply Notes ketika user berhasil melakukan Apply Notes",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketWithNotes(order, addOrderV2, 2);
+                await addOrderV2.addPromotionMenu();
+                await addOrderV2.applyViaSearchPromotionMenu("MENU DISC RP ALL CATEGORY");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo);
         });
 
 
