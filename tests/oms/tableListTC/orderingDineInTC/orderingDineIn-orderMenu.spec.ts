@@ -475,21 +475,28 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0205014] Validate logic when user able to edit qty Menu Paket after Save Order > Increase Qty",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder, addOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuPaket(order, addOrder, 5);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.clickMenuDetail(MenuList.menus.atMenuPaketMahal.name);
-            await editOrder.editQtySelector(7);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205019] Validate logic when user able to edit qty Menu Paket after Save Order > Increase Qty",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketWithNotes(order, addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await order.clickMenuDetail(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await editOrderV2.modifyEditHeadPackage([9]);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo);
         });
 
     test("[TC_0205015] Validate logic when user able to edit qty Menu Extra after Save Order > Increase Qty",
