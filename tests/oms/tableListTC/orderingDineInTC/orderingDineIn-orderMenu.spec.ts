@@ -25,10 +25,10 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
         await addOrderV2.modifyDetailPackage([
-            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: null}
+            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes:"test notes 1"},
+            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: "test notes 2"},
+            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: "test notes 3"},
+            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: "test notes 4"}
         ]);
     };
 
@@ -263,6 +263,20 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await editOrderV2.selectSuggestionNotes("COBA AT", "COBA 1");
                 await order.validateQtyOrderWithMenu(MenuList.menus.atMenuBiasaGoreng.name);
             }, {order, tableList, bookOrder, editOrderV2}, testInfo);
+        });
+
+    test("[TC_0205009] Validate logic ketika user mengisi notes dengan > 10 character MENU PAKET" ,
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaket(order, addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.saveOrder();
+            }, {order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo);
         });
 
 
