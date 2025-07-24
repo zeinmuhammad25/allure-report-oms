@@ -25,10 +25,10 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
         await addOrderV2.modifyDetailPackage([
-            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes:"test notes 1"},
-            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: "test notes 2"},
-            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: "test notes 3"},
-            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: "test notes 4"}
+            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes:"test notes detail paket 1"},
+            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: "test notes detail paket 2"},
+            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: "test notes detail paket 3"},
+            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: "test notes detail paket 4"}
         ]);
     };
 
@@ -277,6 +277,27 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
                 await order.saveOrder();
             }, {order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo);
+        });
+
+    test("[TC_0205010] Validate logic button Apply Promo ketika user berhasil melakukan Apply Promo",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2,addOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2,addOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaket(order, addOrderV2, 2);
+                await addOrderV2.addPromotionMenu();
+                await addOrderV2.applyViaSearchPromotionMenu("MENU DISC RP ALL CATEGORY");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2,addOrderV2}, testInfo);
         });
 
 
