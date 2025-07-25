@@ -1085,15 +1085,25 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
                 await tableList.goHere();
-                await tableList.selectRoom(Table.smokingRoom.name);
-                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
                 await salesModeInclusive(bookOrder);
                 await selectMenuOpenPrice(order);
                 await editOrderV2.inputPriceMenuOpenPrice("100.000");
                 await editOrderV2.escapeKeyboard();
                 await editOrderV2.actionButtonFooter("Apply");
-                await order.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
                 await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await order.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
+                await editOrderV2.modifyEditHeadPackage([5]);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
             }, {order, tableList, bookOrder, paymentV2}, testInfo);
         });
 
