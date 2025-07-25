@@ -835,21 +835,23 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder}, testInfo);
         });
 
-    test("[TC_0205029] Validate logic when user able to edit qty Menu Biasa Special Price after Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasaSpecialPrice(order, 5);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.deleteMenu(MenuList.menus.menuSpecialPriceDelights.shortName);
-            await order.cancelMenuAfterSave("CANCEL MENU");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205034] Validate Logic When User Able To Delete Menu Biasa Special Price After Save",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, editOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuBiasaSpecialPrice(order, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await order.deleteMenu(MenuList.menus.menuSpecialPriceDelights.name);
+                await order.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await order.saveOrder();
+            }, {order, tableList, bookOrder, editOrderV2}, testInfo);
         });
 
     test("[TC_0205030] Validate logic when user able to add Menu Biasa Special Price with Notes before Save",
