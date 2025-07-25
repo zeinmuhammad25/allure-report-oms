@@ -963,17 +963,18 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, paymentV2,editOrderV2}, testInfo);
         });
 
-    test("[TC_0205035] Validate logic when user able to delete Menu Paket Special Price before Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder, addOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuPaketSpecialPrice(order, addOrder);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.deleteMenu(MenuList.menus.menuPaketSpecialSelections.shortName);
-            await order.saveOrder();
+    test("[TC_0205040] Validate logic when user able to delete Menu Paket Special Price before Save",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder,addOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder,addOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketSpecialPrice(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.deleteMenu(MenuList.menus.menuPaketSpecialSelections.shortName);
+                await order.saveOrder();
+            }, {order, tableList, bookOrder,addOrderV2}, testInfo);
         });
 
     test("[TC_0205036] Validate logic when user able to delete Menu Paket Special Price after Save",
