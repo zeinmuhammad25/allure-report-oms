@@ -695,19 +695,28 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0205023] Validate logic when user able to add notes to Menu Paket after Save Order",
-        {tag: tags + "@negative"}, async ({tableList, order, bookOrder, editOrder, addOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuPaket(order, addOrder, 5);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.clickMenuDetail(MenuList.menus.atMenuPaketMahal.name);
-            await editOrder.inputNotesMenuInvisible();
+    test("[TC_0205028] Validate Logic When User Able To Edit Menu Paket With Notes After Save Order",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "COBA COBA NOTES BEFORE SAFE");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await order.clickMenuDetail(MenuList.menus.atMenuPaketMahal.name);
+                await editOrderV2.modifyEditHeadPackage([6]);
+                await editOrderV2.disableInputMenuNotesPackageHead();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}, testInfo);
         });
 
     test("[TC_0205024] Validate logic when user able to add notes to Menu Extra after Save Order",
