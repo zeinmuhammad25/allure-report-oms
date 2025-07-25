@@ -1015,20 +1015,27 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo);
         });
 
-    test("[TC_0205038] Validate logic when user able to add Menu Paket Special Price with notes after Save",
-        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, editOrder, addOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuPaketSpecialPrice(order, addOrder);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.clickMenuDetail(MenuList.menus.menuPaketSpecialSelections.shortName);
-            await editOrder.inputNotesMenuInvisible();
+    test("[TC_0205043] Validate logic when user able to add Menu Paket Special Price with notes after Save",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketSpecialPriceNotes(order, addOrderV2, 2, "COBA COBA NOTES BEFORE SAFE");
+                await addOrderV2.inputMenuNotesPackageHead("COBA NOTES BEFORE SAFE");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.clickMenuDetail(MenuList.menus.menuPaketSpecialSelections.shortName);
+                await editOrderV2.escapeKeyboardV2();
+                await editOrderV2.disableInputMenuNotesAddedPackageHead();
+                await editOrderV2.actionCancel();
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}, testInfo);
         });
 
     test("[TC_0205039] Validate logic when user able to add Menu Open Price Special Price",
