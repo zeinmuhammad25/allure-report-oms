@@ -185,7 +185,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
             }, {order, tableList, bookOrder, paymentV2}, testInfo);
-
         });
 
     test("[TC_0205003] Validate logic when user able to add Menu Extra",
@@ -895,16 +894,22 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0205032] Validate logic when user able to add Menu Paket Special Price",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder, addOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuPaketSpecialPrice(order, addOrder);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205037] Validate Logic When User Able To Add Menu Paket Special Price",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketSpecialPrice(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2}, testInfo);
         });
 
     test("[TC_0205033] Validate logic when user able to edit qty Menu Paket Special Price",
