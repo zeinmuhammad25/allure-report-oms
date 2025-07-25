@@ -963,7 +963,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, paymentV2,editOrderV2}, testInfo);
         });
 
-    test("[TC_0205040] Validate logic when user able to delete Menu Paket Special Price before Save",
+    test("[TC_0205040] Validate Logic When User Able To Delete Menu Paket Special Price Before Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder,addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder,addOrderV2}) => {
                 await tableList.goHere();
@@ -977,23 +977,24 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder,addOrderV2}, testInfo);
         });
 
-    test("[TC_0205036] Validate logic when user able to delete Menu Paket Special Price after Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder, addOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuPaketSpecialPrice(order, addOrder);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.deleteMenu(MenuList.menus.menuPaketSpecialSelections.shortName);
-            await order.cancelMenuAfterSave("CANCEL MENU");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205041] Validate Logic When User Able To Delete Menu Paket Special Price After Save",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, addOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, editOrderV2, addOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.deleteMenu(MenuList.menus.menuPaketSpecialSelections.shortName);
+                await order.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await order.saveOrder();
+            }, {order, tableList, bookOrder, editOrderV2, addOrderV2}, testInfo);
         });
 
     test("[TC_0205037] Validate logic when user able to add Menu Paket Special Price with notes before Save",
