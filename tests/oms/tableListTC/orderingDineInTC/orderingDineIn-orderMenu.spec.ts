@@ -781,7 +781,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
                 await selectMenuBiasaSpecialPrice(order, 1);
-                await order.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.name);
+                await order.clickMenuDetail(MenuList.menus.menuPa.name);
                 await editOrderV2.modifyEditHeadPackage([15]);
                 await editOrderV2.actionUpdate();
                 await order.saveOrder();
@@ -912,19 +912,25 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, paymentV2}, testInfo);
         });
 
-    test("[TC_0205033] Validate logic when user able to edit qty Menu Paket Special Price",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder, addOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuPaketSpecialPrice(order, addOrder);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.clickMenuDetail(MenuList.menus.menuPaketSpecialSelections.shortName);
-            await editOrder.editQtySelector(4);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205038] Validate Logic When User Able To Edit Qty Menu Paket Special Price",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2,editOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2, editOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketSpecialPrice(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.clickMenuDetail(MenuList.menus.menuPaketSpecialSelections.shortName);
+                await editOrderV2.modifyEditHeadPackage([6]);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2,editOrderV2}, testInfo);
         });
 
     test("[TC_0205034] Validate logic when user able to edit qty Menu Paket Special Price after Save",
