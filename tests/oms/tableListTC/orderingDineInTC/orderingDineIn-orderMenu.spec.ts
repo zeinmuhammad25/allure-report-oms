@@ -712,8 +712,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaket(order, addOrderV2, 2);
-                await selectMenuExtra(order, addOrderV2, 2);
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "COBA COBA NOTES BEFORE SAFE");
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -721,7 +720,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.clickMenuDetail(MenuList.menus.atMenuPaketMahal.name);
                 await editOrderV2.modifyEditHeadPackage([6]);
                 await editOrderV2.disableInputMenuNotesPackageHead();
-                await editOrderV2.actionUpdate();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
@@ -738,7 +736,8 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketWithNotes(order, addOrderV2, 2, "COBA COBA NOTES AFTER SAFE");
+                await selectMenuPaket(order, addOrderV2, 2);
+                await selectMenuExtra(order, addOrderV2, 2);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -781,7 +780,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
                 await selectMenuBiasaSpecialPrice(order, 1);
-                await order.clickMenuDetail(MenuList.menus.menuPa.name);
+                await order.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.name);
                 await editOrderV2.modifyEditHeadPackage([15]);
                 await editOrderV2.actionUpdate();
                 await order.saveOrder();
@@ -997,20 +996,23 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, editOrderV2, addOrderV2}, testInfo);
         });
 
-    test("[TC_0205037] Validate logic when user able to add Menu Paket Special Price with notes before Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder, addOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuPaketSpecialPrice(order, addOrder);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.clickMenuDetail(MenuList.menus.menuPaketSpecialSelections.shortName);
-            await editOrder.inputNotesMenu("Test");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205042] Validate Logic When User Able To Add Menu Paket Special Price With Notes Before Save",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketSpecialPriceNotes(order, addOrderV2, 2, "COBA COBA NOTES BEFORE SAFE");
+                await addOrderV2.inputMenuNotesPackageHead("COBA NOTES BEFORE SAFE");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo);
         });
 
     test("[TC_0205038] Validate logic when user able to add Menu Paket Special Price with notes after Save",
