@@ -1038,16 +1038,24 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}, testInfo);
         });
 
-    test("[TC_0205039] Validate logic when user able to add Menu Open Price Special Price",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuOpenPrice(order);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205044] Validate Logic When User Able To Add Menu Open Price Special Price",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuOpenPrice(order);
+                await editOrderV2.inputPriceMenuOpenPrice("100.000");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply")
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2}, testInfo);
         });
 
     test("[TC_0205040] Validate logic when user able to edit qty Menu Open Price Special Price",
