@@ -776,14 +776,24 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, paymentV2}, testInfo);
         });
 
-    test("[TC_0205026] Validate logic when user able to edit qty Menu Biasa Special Price",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasaSpecialPrice(order, 5);
-            await order.saveOrder();
+    test("[TC_0205031] Validate logic when user able to edit qty Menu Biasa Special Price",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2,editOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2,editOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuBiasaSpecialPrice(order, 1);
+                await order.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.name);
+                await editOrderV2.modifyEditHeadPackage([15]);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2,editOrderV2}, testInfo);
         });
 
     test("[TC_0205027] Validate logic when user able to edit qty Menu Biasa Special Price after Save",
