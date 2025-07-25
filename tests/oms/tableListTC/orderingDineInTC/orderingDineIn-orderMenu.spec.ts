@@ -71,15 +71,27 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await order.selectMenu(MenuList.menus.menuSpecialPriceDelights.shortName, quantity);
     };
 
-    const selectMenuPaketSpecialPrice = async (order: OrderScenario, addOrder: AddOrderScenario) => {
+    const selectMenuPaketSpecialPrice = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
         await order.selectCategoryMenu(MenuList.atSpecialPrice.name);
         await order.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.name);
         await order.selectMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
-        await addOrder.modifyMenuDetailPackage([
-            {menuName: MenuList.menuPackages.anggurHijauKawaKawa600ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.anggurPutihOT620ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.anggurMerahOTGold620ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.anggurMerahKawaKawa600ml.shortName, qty: 2, notes: null}
+        await addOrderV2.modifyDetailPackage([
+            {menuName: MenuList.menuPackages.anggurHijauKawaKawa600ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.anggurPutihOT620ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.anggurMerahOTGold620ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.anggurMerahKawaKawa600ml.shortName, qty: quantity, notes: null}
+        ]);
+    };
+
+    const selectMenuPaketSpecialPriceNotes = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1,notes:string) => {
+        await order.selectCategoryMenu(MenuList.atSpecialPrice.name);
+        await order.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.name);
+        await order.selectMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+        await addOrderV2.modifyDetailPackage([
+            {menuName: MenuList.menuPackages.anggurHijauKawaKawa600ml.shortName, qty: quantity, notes: notes},
+            {menuName: MenuList.menuPackages.anggurPutihOT620ml.shortName, qty: quantity, notes: notes},
+            {menuName: MenuList.menuPackages.anggurMerahOTGold620ml.shortName, qty: quantity, notes: notes},
+            {menuName: MenuList.menuPackages.anggurMerahKawaKawa600ml.shortName, qty: quantity, notes: notes}
         ]);
     };
 
@@ -747,14 +759,21 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}, testInfo);
         });
 
-    test("[TC_0205025] Validate logic when user able to add Menu Biasa Special Price",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasaSpecialPrice(order, 3);
-            await order.saveOrder();
+    test("[TC_0205030] Validate Logic When User Able To Add Menu Biasa Special Price",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuBiasaSpecialPrice(order, 3);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2}, testInfo);
         });
 
     test("[TC_0205026] Validate logic when user able to edit qty Menu Biasa Special Price",
