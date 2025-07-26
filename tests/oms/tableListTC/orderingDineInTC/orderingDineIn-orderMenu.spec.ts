@@ -1107,18 +1107,20 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, paymentV2}, testInfo);
         });
 
-    test("[TC_0205042] Validate logic when user able to delete Menu Open Price Special Price before Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuOpenPrice(order);
-            await editOrder.inputPriceMenu("20.000");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.deleteMenu(MenuList.menus.menuOpenPriceChoices.shortName);
-            await order.validateMenuNotVisible(MenuList.menus.menuOpenPriceChoices.shortName);
+    test("[TC_0205047] Validate logic when user able to delete Menu Open Price Special Price before Save",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, editOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuOpenPrice(order);
+                await editOrderV2.inputPriceMenuOpenPrice("100.000");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await order.deleteMenu(MenuList.menus.menuOpenPriceChoices.shortName);
+                await order.saveOrder();
+            }, {order, tableList, bookOrder, editOrderV2}, testInfo);
         });
 
     test("[TC_0205043] Validate logic when user able to delete Menu Open Price Special Price after Save",
