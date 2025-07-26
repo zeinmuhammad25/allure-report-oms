@@ -1290,18 +1290,24 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo);
         });
 
-    test("[TC_0205051] Validate logic when user able to add Menu Extra Special Price with notes before Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuExtraSpecialPrice(order, 5);
-            await order.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await editOrder.inputNotesMenu("Test");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205056] Validate logic when user able to add Menu Extra Special Price with notes before Save",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketSpecialPriceNotes(order, addOrderV2, 2, "COBA NOTES BEFORE SAFE");
+                await selectMenuExtra(order, addOrderV2, 5);
+                await addOrderV2.inputMenuNotesPackageHead("COBA NOTES BEFORE SAFE SEPECIAL PRICE EXTRA");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo);
         });
 
     test("[TC_0205052] Validate logic when user able to add Menu Extra Special Price with notes after Save",
