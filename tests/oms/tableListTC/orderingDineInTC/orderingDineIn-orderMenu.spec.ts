@@ -441,7 +441,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, editOrderV2, addOrderV2}, testInfo);
         });
 
-    test("[TC_0205017] Validate logic when user able to Delete Menu Extra before Save Order",
+    test("[TC_0205017] Validate Logic When User Able To Delete Menu Extra Sesudah Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, editOrderV2}) => {
                 await tableList.goHere();
@@ -1269,21 +1269,25 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, addOrderV2}, testInfo);
         });
 
-    test("[TC_0205050] Validate logic when user able to delete Menu Extra Special Price after Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuExtraSpecialPrice(order, 5);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.deleteMenu(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await order.cancelMenuAfterSave("CANCEL MENU");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205055] Validate logic when user able to delete Menu Extra Special Price after Save",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2, editOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketSpecialPriceNotes(order, addOrderV2, 2, "EXTRA SPECIAL PRICE");
+                await selectMenuExtra(order, addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await order.deleteMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+                await order.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await order.saveOrder();
+            }, {order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo);
         });
 
     test("[TC_0205051] Validate logic when user able to add Menu Extra Special Price with notes before Save",
