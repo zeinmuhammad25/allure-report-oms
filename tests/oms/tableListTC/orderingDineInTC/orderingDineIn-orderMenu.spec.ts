@@ -1048,7 +1048,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await selectMenuOpenPrice(order);
                 await editOrderV2.inputPriceMenuOpenPrice("100.000");
                 await editOrderV2.escapeKeyboard();
-                await editOrderV2.actionButtonFooter("Apply")
+                await editOrderV2.applyOpenPrice();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
@@ -1068,7 +1068,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await selectMenuOpenPrice(order);
                 await editOrderV2.inputPriceMenuOpenPrice("100.000");
                 await editOrderV2.escapeKeyboard();
-                await editOrderV2.actionButtonFooter("Apply");
+                await editOrderV2.applyOpenPrice();
                 await order.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
                 await editOrderV2.modifyEditHeadPackage([5]);
                 await editOrderV2.actionUpdate();
@@ -1091,7 +1091,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await selectMenuOpenPrice(order);
                 await editOrderV2.inputPriceMenuOpenPrice("100.000");
                 await editOrderV2.escapeKeyboard();
-                await editOrderV2.actionButtonFooter("Apply");
+                await editOrderV2.applyOpenPrice();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac4.name);
@@ -1117,7 +1117,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await selectMenuOpenPrice(order);
                 await editOrderV2.inputPriceMenuOpenPrice("100.000");
                 await editOrderV2.escapeKeyboard();
-                await editOrderV2.actionButtonFooter("Apply");
+                await editOrderV2.applyOpenPrice();
                 await order.deleteMenu(MenuList.menus.menuOpenPriceChoices.shortName);
                 await order.saveOrder();
             }, {order, tableList, bookOrder, editOrderV2}, testInfo);
@@ -1133,7 +1133,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await selectMenuOpenPrice(order);
                 await editOrderV2.inputPriceMenuOpenPrice("100.000");
                 await editOrderV2.escapeKeyboard();
-                await editOrderV2.actionButtonFooter("Apply");
+                await editOrderV2.applyOpenPrice();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac3.name);
@@ -1145,19 +1145,26 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, editOrderV2}, testInfo);
         });
 
-    test("[TC_0205044] Validate logic when user able to add Menu Open Price Special Price with notes before Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuOpenPrice(order);
-            await editOrder.inputPriceMenu("20.000");
-            await editOrder.escapeKeyboard();
-            await editOrder.inputNotesOpenPrice("Notes Open Price");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205049] Validate logic when user able to add Menu Open Price Special Price with notes before Save",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuOpenPrice(order);
+                await editOrderV2.inputPriceMenuOpenPrice("100.000");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.inputNoteMenuOpenPrice("TEST NOTES OPEN PRICE");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.applyOpenPrice();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, paymentV2}, testInfo);
         });
 
     test("[TC_0205045] Validate logic when user able to add Menu Open Price Special Price with notes after Save",
