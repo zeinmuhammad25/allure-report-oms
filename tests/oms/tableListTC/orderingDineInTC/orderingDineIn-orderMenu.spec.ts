@@ -1199,7 +1199,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
                 await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
-                await selectMenuExtra(order, addOrderV2, 2);
+                await selectMenuExtra(order, addOrderV2);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -1210,17 +1210,23 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, paymentV2}, testInfo);
         });
 
-    test("[TC_0205047] Validate logic when user able to edit qty Menu Extra Special Price",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuExtraSpecialPrice(order);
-            await order.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await editOrder.editQtySelector(5);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205052] Validate logic when user able to edit qty Menu Extra Special Price",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2, paymentV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
+                await selectMenuExtra(order, addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0205048] Validate logic when user able to edit qty Menu Extra Special Price after Save",
