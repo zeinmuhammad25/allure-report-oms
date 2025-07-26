@@ -1230,14 +1230,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         });
 
     test("[TC_0205053] Validate logic when user able to edit qty Menu Extra Special Price after Save",
-        {tag: tags + "@positive"}, async ({
-                                              order,
-                                              tableList,
-                                              bookOrder,
-                                              editOrderV2,
-                                              addOrderV2,
-                                              paymentV2
-                                          }, testInfo) => {
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, addOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, editOrderV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
@@ -1261,15 +1254,19 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
             }, {order, tableList, bookOrder, editOrderV2, addOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0205049] Validate logic when user able to delete Menu Extra Special Price before Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuExtraSpecialPrice(order, 5);
-            await order.deleteMenu(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await order.saveOrder();
+    test("[TC_0205054] Validate logic when user able to delete Menu Extra Special Price before Save",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
+                await tableList.goHere();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await salesModeInclusive(bookOrder);
+                await selectMenuPaketSpecialPriceNotes(order, addOrderV2, 2,"EXTRA SPECIAL PRICE");
+                await selectMenuExtra(order, addOrderV2, 3);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.deleteMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+                await order.saveOrder();
+            }, {order, tableList, bookOrder, addOrderV2}, testInfo);
         });
 
     test("[TC_0205050] Validate logic when user able to delete Menu Extra Special Price after Save",
