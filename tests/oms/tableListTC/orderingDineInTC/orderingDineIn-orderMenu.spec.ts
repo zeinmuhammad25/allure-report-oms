@@ -3,7 +3,6 @@ import MenuList from "../../../../src/modules/oms/objects/menuList";
 import Table from "../../../../src/modules/oms/objects/table";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
-import EditOrderScenario from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.scenario";
 import {safeTest} from "../../../../src/base/utils/safeTest";
 import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
@@ -31,7 +30,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         ]);
     };
 
-    const selectMenuPaketWithNotes = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1, notes:string) => {
+    const selectMenuPaketWithNotes = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1, notes: string) => {
         await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
@@ -81,7 +80,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         ]);
     };
 
-    const selectMenuPaketSpecialPriceNotes = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1,notes:string) => {
+    const selectMenuPaketSpecialPriceNotes = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1, notes: string) => {
         await order.selectCategoryMenu(MenuList.atSpecialPrice.name);
         await order.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.name);
         await order.selectMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
@@ -106,11 +105,12 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await order.selectMenu(MenuList.menus.menuOpenPriceChoices.shortName, quantity);
     };
 
-    const selectExtraMenuItems = async (editOrder: EditOrderScenario) => {
-        await editOrder.selectMenuExtraCategory(MenuList.anggur.name);
-        await editOrder.selectMenuExtra(MenuList.menus.anggurHijauKawaKawa600ml.shortName);
-        await editOrder.selectMenuExtra(MenuList.menus.anggurMerahOT620ml.shortName);
-    };
+    // unutk code ini tidak di hapus caser soon dari oms akan ada extra unntuk menu alcarte pada order v2
+    // const selectExtraMenuItems = async (editOrder: EditOrderScenario) => {
+    //     await editOrder.selectMenuExtraCategory(MenuList.anggur.name);
+    //     await editOrder.selectMenuExtra(MenuList.menus.anggurHijauKawaKawa600ml.shortName);
+    //     await editOrder.selectMenuExtra(MenuList.menus.anggurMerahOT620ml.shortName);
+    // };
 
     const salesModeInclusive = async (bookOrder: BookOrderScenario) => {
         await bookOrder.selectSalesMode("AT INCLUSIVE");
@@ -132,15 +132,16 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await paymentV2.payPayment();
     };
 
+    const cancelTableSelectNotes = async (order: OrderScenario, reason: "Cancel" | "Tidak Jadi" | "Testing A" | "Testing B") => {
+        await order.cancelTableSelectNotes(reason);
+        await order.confirmationCloseTable("Yes");
+    };
+
 
     test.beforeEach(async () => {
     });
 
-    test.afterEach(async ({tableList}) => {
-        await Promise.all([
-            // tableList.cancelAllQuickServices(),
-            // tableList.cancelAllTables()
-        ]);
+    test.afterEach(async () => {
     });
 
     test("Setup", {}, async ({terminalID, signPin}) => {
@@ -299,7 +300,12 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await selectMenuBiasa(order, 3);
                 await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
                 await editOrderV2.selectSuggestionNotes("COBA AT", "COBA 1");
+                await editOrderV2.actionUpdate();
                 await order.validateQtyOrderWithMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, editOrderV2}, testInfo);
         });
 
@@ -310,10 +316,13 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketWithNotes(order, addOrderV2, 2,"COBA COBA NOTES MENU");
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "COBA COBA NOTES MENU");
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.validateQtyOrderWithMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
                 await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo);
         });
 
@@ -345,7 +354,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketWithNotes(order, addOrderV2, 2,"COBA COBA 1");
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "COBA COBA 1");
                 await addOrderV2.addPromotionMenu();
                 await addOrderV2.applyViaSearchPromotionMenu("MENU DISC RP ALL CATEGORY");
                 await addOrderV2.addToCartMenuDetailPackage();
@@ -370,6 +379,9 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await selectMenuBiasa(order, 2);
                 await order.deleteMenu(MenuList.menus.atMenuBiasaGoreng.name);
                 await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder}, testInfo);
         });
 
@@ -384,6 +396,9 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
                 await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, addOrderV2}, testInfo);
         });
 
@@ -399,6 +414,9 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
                 await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, addOrderV2}, testInfo);
         });
 
@@ -418,6 +436,10 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await editOrderV2.escapeKeyboard();
                 await editOrderV2.actionButtonFooter("Apply");
                 await order.saveOrder();
+                await order.confirmationCloseTable("Yes");
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, editOrderV2}, testInfo);
         });
 
@@ -428,7 +450,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketWithNotes(order, addOrderV2, 2,"CEK 1234");
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "CEK 1234");
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -438,6 +460,10 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await editOrderV2.escapeKeyboard();
                 await editOrderV2.actionButtonFooter("Apply");
                 await order.saveOrder();
+                await order.confirmationCloseTable("Yes");
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, editOrderV2, addOrderV2}, testInfo);
         });
 
@@ -459,6 +485,10 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await editOrderV2.escapeKeyboard();
                 await editOrderV2.actionButtonFooter("Apply");
                 await order.saveOrder();
+                await order.confirmationCloseTable("Yes");
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo);
         });
 
@@ -492,7 +522,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketWithNotes(order, addOrderV2, 2,"TEST TEST");
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "TEST TEST");
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -565,13 +595,13 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         });
 
     test("[TC_0205022] Validate logic when user able to edit qty Menu Paket after Save Order > Decrease Qty",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, addOrderV2, paymentV2}, testInfo) => {
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, addOrderV2, paymentV2},testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketWithNotes(order, addOrderV2, 2,"TEST TEST NOTES");
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "TEST TEST NOTES");
                 await addOrderV2.modifyHeadPackage([7]);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.saveOrder();
@@ -648,7 +678,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketWithNotes(order, addOrderV2, 2,"COBA COBA NOTES BEFORE SAFE");
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "COBA COBA NOTES BEFORE SAFE");
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -774,8 +804,8 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         });
 
     test("[TC_0205031] Validate logic when user able to edit qty Menu Biasa Special Price",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2,editOrderV2}, testInfo) => {
-            await safeTest(async ({order, tableList, bookOrder, paymentV2,editOrderV2}) => {
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, paymentV2, editOrderV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
@@ -790,7 +820,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {order, tableList, bookOrder, paymentV2,editOrderV2}, testInfo);
+            }, {order, tableList, bookOrder, paymentV2, editOrderV2}, testInfo);
         });
 
     test("[TC_0205032] Validate Logic When User Able To Delete Menu Biasa Special Price Before Save",
@@ -829,6 +859,9 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await selectMenuBiasaSpecialPrice(order, 4);
                 await order.deleteMenu(MenuList.menus.menuSpecialPriceDelights.name);
                 await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder}, testInfo);
         });
 
@@ -848,6 +881,10 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await editOrderV2.escapeKeyboard();
                 await editOrderV2.actionButtonFooter("Apply");
                 await order.saveOrder();
+                await order.confirmationCloseTable("Yes");
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, editOrderV2}, testInfo);
         });
 
@@ -901,7 +938,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketSpecialPrice(order, addOrderV2,2);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
@@ -913,13 +950,13 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         });
 
     test("[TC_0205038] Validate Logic When User Able To Edit Qty Menu Paket Special Price",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2,editOrderV2}, testInfo) => {
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, editOrderV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketSpecialPrice(order, addOrderV2,2);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.clickMenuDetail(MenuList.menus.menuPaketSpecialSelections.shortName);
                 await editOrderV2.modifyEditHeadPackage([6]);
@@ -930,17 +967,17 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {order, tableList, bookOrder, paymentV2,editOrderV2}, testInfo);
+            }, {order, tableList, bookOrder, paymentV2, editOrderV2}, testInfo);
         });
 
     test("[TC_0205039] Validate Logic When User Able To Edit Qty Menu Paket Special Price After Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2,editOrderV2}, testInfo) => {
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, editOrderV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketSpecialPrice(order, addOrderV2,2);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.clickMenuDetail(MenuList.menus.menuPaketSpecialSelections.shortName);
                 await editOrderV2.modifyEditHeadPackage([4]);
@@ -960,21 +997,24 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {order, tableList, bookOrder, paymentV2,editOrderV2}, testInfo);
+            }, {order, tableList, bookOrder, paymentV2, editOrderV2}, testInfo);
         });
 
     test("[TC_0205040] Validate Logic When User Able To Delete Menu Paket Special Price Before Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder,addOrderV2}, testInfo) => {
-            await safeTest(async ({order, tableList, bookOrder,addOrderV2}) => {
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketSpecialPrice(order, addOrderV2,2);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.deleteMenu(MenuList.menus.menuPaketSpecialSelections.shortName);
                 await order.saveOrder();
-            }, {order, tableList, bookOrder,addOrderV2}, testInfo);
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await cancelTableSelectNotes(order, "Testing A");
+            }, {order, tableList, bookOrder, addOrderV2}, testInfo);
         });
 
     test("[TC_0205041] Validate Logic When User Able To Delete Menu Paket Special Price After Save",
@@ -994,6 +1034,10 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await editOrderV2.escapeKeyboard();
                 await editOrderV2.actionButtonFooter("Apply");
                 await order.saveOrder();
+                await order.confirmationCloseTable("Yes");
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, editOrderV2, addOrderV2}, testInfo);
         });
 
@@ -1121,6 +1165,9 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await editOrderV2.applyOpenPrice();
                 await order.deleteMenu(MenuList.menus.menuOpenPriceChoices.shortName);
                 await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, editOrderV2}, testInfo);
         });
 
@@ -1143,6 +1190,10 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await editOrderV2.escapeKeyboard();
                 await editOrderV2.actionButtonFooter("Apply");
                 await order.saveOrder();
+                await order.confirmationCloseTable("Yes");
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, editOrderV2}, testInfo);
         });
 
@@ -1261,11 +1312,14 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
-                await selectMenuPaketSpecialPriceNotes(order, addOrderV2, 2,"EXTRA SPECIAL PRICE");
+                await selectMenuPaketSpecialPriceNotes(order, addOrderV2, 2, "EXTRA SPECIAL PRICE");
                 await selectMenuExtra(order, addOrderV2, 3);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.deleteMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
                 await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, addOrderV2}, testInfo);
         });
 
@@ -1287,6 +1341,10 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await editOrderV2.escapeKeyboard();
                 await editOrderV2.actionButtonFooter("Apply");
                 await order.saveOrder();
+                await order.confirmationCloseTable("Yes");
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await cancelTableSelectNotes(order, "Testing A");
             }, {order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo);
         });
 
@@ -1311,7 +1369,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         });
 
     test("[TC_0205057] Validate logic when user able to add Menu Extra Special Price with notes after Save",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2},testInfo) => {
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}) => {
                 await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -1419,6 +1477,5 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.saveOrder();
             }, {order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo);
         });
-
 
 });
