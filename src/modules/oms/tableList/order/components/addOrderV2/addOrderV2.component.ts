@@ -113,4 +113,49 @@ export default class AddOrderV2Component extends BaseOmsPage implements AddOrder
         await this.click(AddOrderV2Locator.buttonCancel);
     }
 
+    async addPromotionMenu(): Promise<void> {
+        await this.expectVisible(AddOrderV2Locator.buttonPromotion);
+        await this.click(AddOrderV2Locator.buttonPromotion);
+    }
+
+    async applyViaSearchPromotionMenu(promotionName: string): Promise<void> {
+        await this.expectVisible(AddOrderV2Locator.addOrderSearchPromotion);
+        await this.click(AddOrderV2Locator.addOrderSearchPromotion);
+        await this.fill(AddOrderV2Locator.addOrderSearchPromotion, promotionName);
+        await this.expectVisible(AddOrderV2Locator.addOrderPromotionName(promotionName));
+        await this.click(AddOrderV2Locator.addOrderPromotionName(promotionName));
+        await this.expectVisible(AddOrderV2Locator.buttonApplyPromotion);
+        await this.click(AddOrderV2Locator.buttonApplyPromotion);
+    }
+
+    async inputMenuNotesSingelMenu(notesSingelMenu: string): Promise<void> {
+        await this.expectVisible(AddOrderV2Locator.fieldNotesMenu);
+        await this.click(AddOrderV2Locator.fieldNotesMenu);
+        await this.fill(AddOrderV2Locator.fieldNotesMenu, notesSingelMenu);
+        await this.click(AddOrderV2Locator.popUpNotesMenu);
+    }
+
+    async inputMenuNotesPackageHead(notesHeadPackage: string): Promise<void> {
+        await this.expectVisible(AddOrderV2Locator.addNotesMenu);
+        await this.click(AddOrderV2Locator.addNotesMenu);
+        await this.expectVisible(AddOrderV2Locator.fieldNotesMenu);
+        await this.fill(AddOrderV2Locator.fieldNotesMenu, notesHeadPackage);
+        await this.click(AddOrderV2Locator.popUpNotesMenu);
+        await this.expectVisible(AddOrderV2Locator.buttonApplyNotes);
+        await this.click(AddOrderV2Locator.buttonApplyNotes);
+    }
+
+    async disableInputMenuNotesSingelMenu(): Promise<void> {
+        await this.expectVisible(AddOrderV2Locator.fieldNotesMenuDisabled);
+    }
+
+    async disableInputMenuNotesPackageHead(): Promise<void> {
+        await this.expectVisible(AddOrderV2Locator.addDisabledNotesMenu);
+    }
+
+    async escapeKeyboardV2(): Promise<void> {
+        await this.expectVisible(AddOrderV2Locator.popUpAddOrder);
+        await this.click(AddOrderV2Locator.popUpAddOrder);
+    }
+
 }

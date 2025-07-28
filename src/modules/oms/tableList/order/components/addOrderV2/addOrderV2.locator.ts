@@ -2,10 +2,11 @@ import BaseLocator from "../../../../../../base/base-locator";
 import MenuList from "../../../../objects/menuList";
 
 export default class AddOrderV2Locator extends BaseLocator {
-
+    static popUpAddOrder: string = "//mat-dialog-container//app-menu-edit-v2[@class='ng-star-inserted']";
     static InputQty: string = "//input[@class='qty-input ng-valid ng-star-inserted ng-dirty ng-touched']";
-    static plusQtyPackageHead: string = "//button[@class='qty-button qty-button-active mat-stroked-button ng-star-inserted']";
-    static minusQtyPackageHead: string = "//button[@class='qty-button mat-stroked-button ng-star-inserted']";
+    static plusQtyPackageHead: string = "//button//span[contains(text(),'+')]";
+    static minusQtyPackageHead: string = "//button//span[contains(text(),'-')]";
+
     static buttonSelectPackage = (menuName: string): string =>
         `//div[contains(@class, 'menu-package-group')]//span[starts-with(normalize-space(), '${menuName}')]`;
     static buttonSelectCategoryMenuExtra = (categoryExtra: MenuList): string => `//app-grid-package-v2//div//span[contains(text(),'${categoryExtra}')]`;
@@ -34,13 +35,17 @@ export default class AddOrderV2Locator extends BaseLocator {
     static notesDetailMenu = (menuName: string): string => this.buttonNotesFunction(menuName, "Notes");
     static disableNotesDetailMenu: string = this.buttonFunctionDisabled("Notes");
     static fieldNotesDetailMenu: string = "//app-menu-notes-v2//textarea";
+    static fieldNotesDetailMenuDisabled: string = "//app-menu-notes-v2//textarea[@disabled]";
     static popUpNotesDetailMenu: string = "//app-menu-notes-v2";
     static addNotesMenu: string = this.buttonFunction("Add Menu Notes");
+    static addDisabledNotesMenu: string = this.buttonFunctionDisabled("Add Menu Notes");
     static fieldNotesMenu: string = "//app-menu-edit-v2//textarea";
+    static fieldNotesMenuDisabled: string = "//app-menu-edit-v2//textarea[@disabled]";
     static popUpNotesMenu: string = "//app-menu-edit-v2";
     static buttonApplyNotes: string = "//span[@class='mat-button-wrapper'][normalize-space()='Confirm']";
     static buttonBackNotes: string = "//span[@class='mat-button-wrapper'][normalize-space()='Back']";
-    static buttonPromotion: string = this.buttonFunction("Apply Promotion");
+    static buttonPromotion: string = this.buttonFunction("Apply Promo");
+
     static addOrderSearchPromotion: string = "//input[@placeholder='Search Promo']";
     static addOrderPromotionType: string = "//div[@class='mat-select-arrow-wrapper']";
     static addOrderPromotionTypeList = (typeName: string) => `//span[@class='mat-option-text'][normalize-space()='${typeName}']`;
