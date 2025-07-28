@@ -191,23 +191,26 @@ test.describe.serial("Dine in Cancel Table", () => {
         });
 
     test("[TC_0205135] Validate Logic when User still can Cancel Table after Move Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, moveTable, addOrder}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.categoryDetail.atMenuBiasa.name);
-            await orderMenuPaketMahal(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.moveTable();
-            await moveTable.selectRoom(Table.smokingRoom.name);
-            await moveTable.selectTable(Table.smokingRoom.sr2.name);
-            await cancelTableSelectNotes(order, "Cancel");
-        }
-    );
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, moveTable, addOrderV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 2, 5, 7);
+                await order.selectCategoryDetailMenu(MenuList.categoryDetail.atMenuBiasa.name);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.moveTable();
+                await moveTable.selectRoom(Table.smokingRoom.name);
+                await moveTable.selectTable(Table.smokingRoom.sr2.name);
+                await cancelTableSelectNotes(order, "Cancel");
+            }, {tableList, bookOrder, order, moveTable, addOrderV2}, testInfo);
+        });
 
     test("[TC_0205137] Validate Logic when User can Cancel Table empty order",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
