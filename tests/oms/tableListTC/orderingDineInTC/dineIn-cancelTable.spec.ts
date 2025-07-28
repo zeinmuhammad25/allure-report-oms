@@ -2,9 +2,8 @@ import {test} from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import Table from "../../../../src/modules/oms/objects/table";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
-import AddOrderScenario from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.scenario";
-import EditOrderScenario from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
+import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
 
 test.setTimeout(100000);
 test.describe.serial("Dine in Cancel Table", () => {
@@ -16,46 +15,43 @@ test.describe.serial("Dine in Cancel Table", () => {
         await bookOrder.skipCustomerPhoneNumber();
     };
 
-    const orderSingleMenu = async (order: OrderScenario) => {
+    const orderSingleMenu = async (order: OrderScenario, qty1: number, qty2: number, qty3: number) => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 4);
-        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 6);
-        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 4);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty1);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, qty2);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, qty3);
     };
 
-    const orderMenuExtraWhisky = async (order: OrderScenario, editOrder: EditOrderScenario) => {
-        await order.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await editOrder.actionButtonFooter("Next");
-        await editOrder.selectMenuExtraCategory(MenuList.whisky.name);
-        await editOrder.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
-        await editOrder.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
-        await editOrder.actionButtonFooter("Apply");
+    const selectMenuExtra = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
+        await addOrderV2.selectPackageGroup("Menu Extra");
+        await addOrderV2.extraCategory(MenuList.atCategory.name);
+        await addOrderV2.modifyExtraPackage([
+            {menuName: MenuList.menus.atMenuExtraAlpha.shortName, qty: quantity, notes: null}
+        ]);
     };
 
-    const orderMenuPaketMurah = async (order: OrderScenario, addOrder: AddOrderScenario) => {
+    const orderMenuPaketMurah = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
+        await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-        await addOrder.modifyMenuDetailPackage([
-            {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-            {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 3, notes: null},
-            {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 1, notes: null},
-            {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 2, notes: null}
+        await addOrderV2.modifyDetailPackage([
+            {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: quantity, notes: null}
         ]);
-        await addOrder.applyMenuDetailPackage();
     };
 
-    const orderMenuPaketMahal = async (order: OrderScenario, addOrder: AddOrderScenario) => {
+    const orderMenuPaketMahal = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
+        await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-        await addOrder.modifyMenuDetailPackage([
-            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: 3, notes: null},
-            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 1, notes: "test notes1"}
+        await addOrderV2.modifyDetailPackage([
+            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: null}
         ]);
-        await addOrder.applyMenuDetailPackage();
     };
 
     const cancelTableSelectNotes = async (order: OrderScenario, reason: "Cancel" | "Tidak Jadi" | "Testing A" | "Testing B") => {
@@ -75,7 +71,7 @@ test.describe.serial("Dine in Cancel Table", () => {
     test.beforeEach(async ({terminalID, signPin, tableList, order}) => {
         const testWithAuthentication = [
             "[TC_0205131] Validate Logic when User can Cancel the order in Link Table with Cancel Table to the main table",
-            "[TC_0205144] Validate Logic when User already Hold menu, user can Cancel Table",
+            "[TC_02051quantity4] Validate Logic when User already Hold menu, user can Cancel Table",
             "[TC_0205145] Validate Logic when User already Hold menu, user can Cancel Table",
             "[TC_0205146] Validate Logic when User already Hold menu, user can Cancel Table",
             "[TC_0205147] Validate Logic when User already Fire all menu, user can Cancel Table"
