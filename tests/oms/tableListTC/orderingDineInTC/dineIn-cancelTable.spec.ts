@@ -213,13 +213,14 @@ test.describe.serial("Dine in Cancel Table", () => {
         });
 
     test("[TC_0205137] Validate Logic when User can Cancel Table empty order",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order},testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
             await tableList.selectRoom(Table.acRoom.name);
             await tableList.selectTable(Table.acRoom.ac1.name);
             await makeOrder("AT INCLUSIVE", bookOrder);
             await cancelTable(order);
-        }
-    );
+            }, {tableList, bookOrder, order}, testInfo);
+        });
 
     test("[TC_0205138] Validate Logic when User cannot Cancel Table before Save Order without input Cancel Notes",
         {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, addOrder}) => {
