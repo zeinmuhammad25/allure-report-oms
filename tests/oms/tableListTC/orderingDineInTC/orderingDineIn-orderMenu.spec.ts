@@ -137,12 +137,15 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await order.confirmationCloseTable("Yes");
     };
 
-    test.beforeEach(async ({terminalID, signPin}) => {
+    test.beforeEach(async ({terminalID, signPin, sideNavBar}) => {
         await terminalID.goHere();
         await terminalID.performTerminalID();
         await signPin.inputPinByTouch("22");
         await signPin.validateShowStarCash("20.000");
         await signPin.storeAuthState();
+        await sideNavBar.gotoPageTools();
+        await sideNavBar.selectStation("KASIR");
+        await sideNavBar.gotoPageTableList();
     });
 
     test.afterEach(async () => {
