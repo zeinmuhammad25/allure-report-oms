@@ -70,6 +70,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     async deleteMenu(menuName: string): Promise<void> {
         await this.expectVisible(OrderLocator.deleteMenuButton(menuName));
         await this.click(OrderLocator.deleteMenuButton(menuName));
+        await this.wait(100);
     }
 
     async saveOrder(): Promise<void> {
