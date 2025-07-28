@@ -4,6 +4,7 @@ import Table from "../../../../src/modules/oms/objects/table";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
 import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
+import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
 test.describe.serial("Dine in Cancel Table", () => {
@@ -104,35 +105,36 @@ test.describe.serial("Dine in Cancel Table", () => {
     });
 
     test.afterEach(async ({tableList}) => {
-        await Promise.all([
-            tableList.cancelAllQuickServices(),
-            tableList.cancelAllTables()
-        ]);
+        // await Promise.all([
+        //     tableList.cancelAllQuickServices(),
+        //     tableList.cancelAllTables()
+        // ]);
     });
 
     test("[TC_0205131] Validate Logic when User can Cancel the order in Link Table with Cancel Table to the main table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrder}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await linkTable.singleLinkTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await cancelTable(order);
-        }
-    );
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order,2,5,7);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await linkTable.singleLinkTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await cancelTable(order);
+            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+        });
 
     test("[TC_0205132] Validate Logic when User can Cancel Table after Link Table",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrder}) => {
