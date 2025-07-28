@@ -29,4 +29,22 @@ export default interface EditOrderV2Scenario extends BaseScenario {
 
     cancelOpenPrice(): Promise<void>;
 
+    selectSuggestionNotes(notesCategory: string, notes: string): Promise<void>;
+
+    actionButtonFooter(actionName: string): Promise<void>;
+
+    actionCancel(): Promise<void>;
+
+    actionUpdate(): Promise<void>;
+
+    escapeKeyboard(): Promise<void>;
+
+    disableInputMenuNotesSingelMenu(): Promise<void>;
+
+    disableInputMenuNotesPackageHead(): Promise<void>;
+
+    escapeKeyboardV2(): Promise<void>;
+
+    disableInputMenuNotesAddedPackageHead(): Promise<void>;
+
 }
