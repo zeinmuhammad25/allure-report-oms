@@ -268,20 +268,23 @@ test.describe.serial("Dine in Cancel Table", () => {
         });
 
     test("[TC_0205141] Validate Logic when User can undo Cancel Table after Save Order with button Cancel",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, addOrder}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr4.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.categoryDetail.atMenuBiasa.name);
-            await orderMenuPaketMahal(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr4.name);
-            await UndoCancelTable(order, "Cancel");
-        }
-    );
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, addOrderV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 2, 5, 7);
+                await order.selectCategoryDetailMenu(MenuList.categoryDetail.atMenuBiasa.name);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await UndoCancelTable(order, "Cancel");
+            }, {tableList, bookOrder, order, addOrderV2}, testInfo);
+        });
 
     test("[TC_0205142] Validate Logic when User can Cancel Table to Parent (Main) Split Bill",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, editOrder}) => {
