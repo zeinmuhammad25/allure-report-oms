@@ -162,13 +162,14 @@ test.describe.serial("Dine in Cancel Table", () => {
         });
 
     test("[TC_0205133] Validate Logic when User can Cancel Table before saving order",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await cancelTableSelectNotes(order, "Testing A");
-        }
-    );
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await cancelTableSelectNotes(order, "Testing A");
+            }, {tableList, bookOrder, order}, testInfo);
+        });
 
     test("[TC_0205134] Validate Logic when User can Cancel Table after saving order",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, addOrder}) => {
