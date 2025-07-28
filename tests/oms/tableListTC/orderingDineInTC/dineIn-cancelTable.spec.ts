@@ -223,17 +223,19 @@ test.describe.serial("Dine in Cancel Table", () => {
         });
 
     test("[TC_0205138] Validate Logic when User cannot Cancel Table before Save Order without input Cancel Notes",
-        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, addOrder}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.categoryDetail.atMenuBiasa.name);
-            await orderMenuPaketMahal(order, addOrder);
-            await order.disabledCancelTable();
-        }
-    );
+        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, addOrderV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 2, 5, 7);
+                await order.selectCategoryDetailMenu(MenuList.categoryDetail.atMenuBiasa.name);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await order.disabledCancelTable();
+            }, {tableList, bookOrder, order, addOrderV2}, testInfo);
+        });
 
     test("[TC_0205139] Validate Logic when User cannot Cancel Table after Save Order without input Cancel Notes",
         {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, addOrder}) => {
