@@ -233,25 +233,29 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await order.selectCategoryDetailMenu(MenuList.categoryDetail.atMenuBiasa.name);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
                 await orderMenuPaketMahal(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
                 await order.disabledCancelTable();
             }, {tableList, bookOrder, order, addOrderV2}, testInfo);
         });
 
     test("[TC_0205139] Validate Logic when User cannot Cancel Table after Save Order without input Cancel Notes",
-        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, addOrder}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.categoryDetail.atMenuBiasa.name);
-            await orderMenuPaketMahal(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await order.cancelTableApplyDisabled();
-        }
-    );
+        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, addOrderV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 2, 5, 7);
+                await order.selectCategoryDetailMenu(MenuList.categoryDetail.atMenuBiasa.name);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await order.cancelTableApplyDisabled();
+            }, {tableList, bookOrder, order, addOrderV2}, testInfo);
+        });
 
     test("[TC_0205140] Validate Logic when User can undo Cancel Table before Save Order with button Cancel",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
