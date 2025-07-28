@@ -151,7 +151,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205001] Validate logic when user able to add Menu Biasa",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -169,7 +168,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205002] Validate logic when user able to add Menu Paket",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
@@ -188,7 +186,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205003] Validate logic when user able to add Menu Extra",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac3.name);
                 await salesModeInclusive(bookOrder);
@@ -208,7 +205,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205004] Validate logic when user able to edit qty Menu Biasa",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac4.name);
                 await salesModeInclusive(bookOrder);
@@ -226,7 +222,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205005] Validate logic when user able to edit qty Menu Paket",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -245,7 +240,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205006] Validate logic when user able to edit qty Menu Extra",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
@@ -265,7 +259,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205007] Validate order list ketika user update dengan pilih promo dan back MENU BIASA ",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -289,7 +282,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205008][Validate fungsi suggestion notes saat pertama kali membuka pop-up menu BIASA",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -308,7 +300,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205009] Validate logic ketika user mengisi notes dengan > 10 character MENU PAKET",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
                 await salesModeInclusive(bookOrder);
@@ -325,7 +316,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205010] Validate logic button Apply Promo ketika user berhasil melakukan Apply Promo",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await salesModeInclusive(bookOrder);
@@ -346,7 +336,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205011] Validate logic button Apply Notes ketika user berhasil melakukan Apply Notes",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await salesModeInclusive(bookOrder);
@@ -368,7 +357,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205012] Validate logic when user able to delete menu biasa before Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -384,7 +372,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205013] Validate logic when user able to delete menu paket before Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await salesModeInclusive(bookOrder);
@@ -401,7 +388,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205014] Validate Logic When User Able To Delete Menu Extra Sebelum Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
@@ -419,7 +405,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205015] Validate logic when user able to delete Menu Biasa after Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -442,7 +427,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205016] Validate logic when user able to Delete Menu Paket after Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
@@ -466,7 +450,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205017] Validate Logic When User Able To Delete Menu Extra Sesudah Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
                 await salesModeInclusive(bookOrder);
@@ -491,7 +474,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205018] Validate logic when user able to edit qty Menu Biasa after Save Order > Increase Qty",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -521,7 +503,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                                               paymentV2
                                           }, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await salesModeInclusive(bookOrder);
@@ -552,7 +533,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                                               paymentV2
                                           }, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
                 await salesModeInclusive(bookOrder);
@@ -581,7 +561,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205021] Validate logic when user able to edit qty Menu Biasa after Save Order > Decrease Qty",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -614,7 +593,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                                               paymentV2
                                           }, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await salesModeInclusive(bookOrder);
@@ -649,7 +627,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                                               paymentV2
                                           }, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
                 await salesModeInclusive(bookOrder);
@@ -678,7 +655,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205024] Validate logic when user able to add notes to Menu Biasa before Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -698,7 +674,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205025] Validate logic when user able to add Menu Paket with notes before Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
@@ -716,7 +691,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205026] Validate logic when user able to add Menu Extra with notes before Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
                 await salesModeInclusive(bookOrder);
@@ -736,7 +710,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205027] Validate Logic When User Able To Edit Menu Biasa With Notes After Save Order",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -770,7 +743,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                                               editOrderV2
                                           }, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
@@ -801,7 +773,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                                               editOrderV2
                                           }, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
@@ -827,7 +798,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205030] Validate Logic When User Able To Add Menu Biasa Special Price",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -844,7 +814,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205031] Validate logic when user able to edit qty Menu Biasa Special Price",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
@@ -864,7 +833,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205032] Validate Logic When User Able To Delete Menu Biasa Special Price Before Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -890,7 +858,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205033] Validate Logic When User Able To Delete Menu Biasa Special Price Before Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -906,7 +873,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205034] Validate Logic When User Able To Delete Menu Biasa Special Price After Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac4.name);
                 await salesModeInclusive(bookOrder);
@@ -929,7 +895,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205035] Validate Logic When User Able To Add Menu Biasa Special Price With Notes Before Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
@@ -949,7 +914,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205036] Validate logic when user able to add Menu Biasa Special Price with Notes after Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
@@ -972,7 +936,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205037] Validate Logic When User Able To Add Menu Paket Special Price",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
@@ -997,7 +960,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                                               editOrderV2
                                           }, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
@@ -1025,7 +987,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                                               editOrderV2
                                           }, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
@@ -1055,7 +1016,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205040] Validate Logic When User Able To Delete Menu Paket Special Price Before Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
@@ -1072,7 +1032,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205041] Validate Logic When User Able To Delete Menu Paket Special Price After Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
@@ -1096,7 +1055,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205042] Validate Logic When User Able To Add Menu Paket Special Price With Notes Before Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
@@ -1122,7 +1080,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                                               editOrderV2
                                           }, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
@@ -1145,7 +1102,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205044] Validate Logic When User Able To Add Menu Open Price Special Price",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
@@ -1165,7 +1121,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205045] Validate logic when user able to edit qty Menu Open Price Special Price",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
@@ -1188,7 +1143,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205046] Validate logic when user able to edit qty Menu Open Price Special Price after Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac4.name);
                 await salesModeInclusive(bookOrder);
@@ -1214,7 +1168,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205047] Validate logic when user able to delete Menu Open Price Special Price before Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
@@ -1233,7 +1186,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205048] Validate Logic When User Able To Delete Menu Open Price Special Price After Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac3.name);
                 await salesModeInclusive(bookOrder);
@@ -1259,7 +1211,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205049] Validate logic when user able to add Menu Open Price Special Price with notes before Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeInclusive(bookOrder);
@@ -1281,7 +1232,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205050] Validate Logic When User Able To Add Menu Open Price Special Price With Notes After Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, editOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, editOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
                 await salesModeInclusive(bookOrder);
@@ -1304,7 +1254,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205051] Validate logic when user able to add Menu Extra Special Price",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
@@ -1323,7 +1272,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205052] Validate logic when user able to edit qty Menu Extra Special Price",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, paymentV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, paymentV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
@@ -1349,7 +1297,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                                               paymentV2
                                           }, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeInclusive(bookOrder);
@@ -1374,7 +1321,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205054] Validate logic when user able to delete Menu Extra Special Price before Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
@@ -1392,7 +1338,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205055] Validate logic when user able to delete Menu Extra Special Price after Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac4.name);
                 await salesModeInclusive(bookOrder);
@@ -1417,7 +1362,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205056] Validate logic when user able to add Menu Extra Special Price with notes before Save",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, paymentV2, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await salesModeInclusive(bookOrder);
@@ -1444,7 +1388,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                                               editOrderV2
                                           }, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, paymentV2, addOrderV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await salesModeInclusive(bookOrder);
@@ -1469,7 +1412,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205202] Validate Quantity for Menu and Subtotal of Menu Exclusive Price",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await salesModeExclusive(bookOrder);
@@ -1502,7 +1444,6 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
     test("[TC_0205203] Validate Quantity for Menu and Subtotal of Menu Exclusive Price After Reducing Menu Quantity",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, addOrderV2, editOrderV2}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, addOrderV2, editOrderV2}) => {
-                await tableList.goHere();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await salesModeExclusive(bookOrder);
