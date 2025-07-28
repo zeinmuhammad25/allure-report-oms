@@ -258,13 +258,14 @@ test.describe.serial("Dine in Cancel Table", () => {
         });
 
     test("[TC_0205140] Validate Logic when User can undo Cancel Table before Save Order with button Cancel",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr3.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await UndoCancelTable(order, "Cancel");
-        }
-    );
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await UndoCancelTable(order, "Cancel");
+            }, {tableList, bookOrder, order}, testInfo);
+        });
 
     test("[TC_0205141] Validate Logic when User can undo Cancel Table after Save Order with button Cancel",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, addOrder}) => {
