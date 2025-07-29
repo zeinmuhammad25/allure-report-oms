@@ -259,7 +259,7 @@ test.describe.serial("Dine in Cancel Table", () => {
 
     test("[TC_0205140] Validate Logic when User can undo Cancel Table before Save Order with button Cancel",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, addOrderV2}) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -350,21 +350,23 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await cancelTable(order);
             }, {tableList, bookOrder, order},testInfo);
         });
+
     test("[TC_0205145] Validate Logic when User already Hold menu, user can Cancel Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.holdAllMenu();
-            await order.confirmationCloseTable("Yes");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await cancelTableSelectNotes(order, "Testing B");
-        }
-    );
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order},testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order})=>{
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 2, 2, 2);
+                await order.holdAllMenu();
+                await order.confirmationCloseTable("Yes");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await cancelTableSelectNotes(order, "Testing B");
+            },{tableList, bookOrder, order},testInfo)
+        });
 
     test("[TC_0205146] Validate Logic when User already Hold menu, user can Cancel Table",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
