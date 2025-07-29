@@ -231,23 +231,29 @@ test.describe.serial("Dine in Merge Table", () => {
             },{tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2},testInfo);
         });
 
-    test("[TC_0205057] Validate Logic when User can Merge Table with unordered table and empty table",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.acRoom.name);
-            await mergeTable.selectTable(Table.acRoom.ac3.name, "active");
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-        }
-    );
+    test("[TC_0205152] Validate Logic when User can Merge Table with unordered table and empty table",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, paymentV2}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 2, 5, 7);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.acRoom.name);
+                await mergeTable.selectTable(Table.acRoom.ac3.name, "active");
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {tableList, bookOrder, order, mergeTable, paymentV2}, testInfo);
+        });
 
     test("[TC_0205058] Validate Logic when User can Merge Table with unordered table, empty ordered table and filled table",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrder}) => {
