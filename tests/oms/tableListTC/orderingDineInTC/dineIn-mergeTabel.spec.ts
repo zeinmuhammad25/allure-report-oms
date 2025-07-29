@@ -125,7 +125,7 @@ test.describe.serial("Dine in Merge Table", () => {
         ]);
     });
 
-    test("[TC_0205053] Validate Logic when User can Merge Table with same Sales Mode",
+    test("[TC_0205148] Validate Logic when User can Merge Table with same Sales Mode",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2},testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}) => {
                 await tableList.selectRoom(Table.acRoom.name);
