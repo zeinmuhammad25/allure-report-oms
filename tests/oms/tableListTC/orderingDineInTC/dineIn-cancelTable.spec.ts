@@ -369,23 +369,24 @@ test.describe.serial("Dine in Cancel Table", () => {
         });
 
     test("[TC_0205146] Validate Logic when User already Hold menu, user can Cancel Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac4.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.holdMenu(MenuList.menus.atMenuBiasaBakar.name);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac4.name);
-            await order.fireMenu(MenuList.menus.atMenuBiasaBakar.name);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac4.name);
-            await cancelTable(order);
-        }
-    );
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 6, 6, 8);
+                await order.holdMenu(MenuList.menus.atMenuBiasaBakar.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await order.fireMenu(MenuList.menus.atMenuBiasaBakar.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await cancelTable(order);
+            }, {tableList, bookOrder, order}, testInfo);
+        });
 
     test("[TC_0205147] Validate Logic when User already Fire all menu, user can Cancel Table",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
