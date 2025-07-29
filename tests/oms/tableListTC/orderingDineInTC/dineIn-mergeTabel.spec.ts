@@ -334,29 +334,30 @@ test.describe.serial("Dine in Merge Table", () => {
             }, {tableList, bookOrder, order, mergeTable}, testInfo);
         });
 
-    test("[TC_0205061] Validate Logic when User can undo Merge Table from Parent Table",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await bookedOrder("AT INCLUSIVE", bookOrder);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await bookedOrder("AT INCLUSIVE", bookOrder);
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.smokingRoom.name);
-            await mergeTable.selectTable(Table.smokingRoom.sr2.name, "active");
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.smokingRoom.name);
-            await mergeTable.selectTable(Table.smokingRoom.sr2.name, "occupied");
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-        }
-    );
+    test("[TC_0205156] Validate Logic when User can undo Merge Table from Parent Table",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, mergeTable}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await bookedOrder("AT INCLUSIVE", bookOrder);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await bookedOrder("AT INCLUSIVE", bookOrder);
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.smokingRoom.name);
+                await mergeTable.selectTable(Table.smokingRoom.sr2.name, "active");
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.smokingRoom.name);
+                await mergeTable.selectTable(Table.smokingRoom.sr2.name, "occupied");
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+            }, {tableList, bookOrder, order, mergeTable}, testInfo);
+        });
 
     test("[TC_0205062] Validate Logic when User can undo Merge Table from Parent Table",
         {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable}) => {
