@@ -105,8 +105,8 @@ test.describe.serial("Dine in Cancel Table", () => {
     });
 
     test.afterEach(async ({tableList}) => {
-        console.log("case ini kepanggil");
         await Promise.all([
+            tableList.cancelAllQuickServices(),
             tableList.cancelAllTables()
         ]);
     });
