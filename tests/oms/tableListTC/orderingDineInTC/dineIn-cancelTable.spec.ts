@@ -105,10 +105,10 @@ test.describe.serial("Dine in Cancel Table", () => {
     });
 
     test.afterEach(async ({tableList}) => {
-        // await Promise.all([
-        //     tableList.cancelAllQuickServices(),
-        //     tableList.cancelAllTables()
-        // ]);
+        console.log("case ini kepanggil");
+        await Promise.all([
+            tableList.cancelAllTables()
+        ]);
     });
 
     test("[TC_0205131] Validate Logic when User can Cancel the order in Link Table with Cancel Table to the main table",
@@ -348,12 +348,12 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await cancelTable(order);
-            }, {tableList, bookOrder, order},testInfo);
+            }, {tableList, bookOrder, order}, testInfo);
         });
 
     test("[TC_0205145] Validate Logic when User already Hold menu, user can Cancel Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order},testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order})=>{
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -365,7 +365,7 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await cancelTableSelectNotes(order, "Testing B");
-            },{tableList, bookOrder, order},testInfo)
+            }, {tableList, bookOrder, order}, testInfo);
         });
 
     test("[TC_0205146] Validate Logic when User already Hold menu, user can Cancel Table",
@@ -389,24 +389,25 @@ test.describe.serial("Dine in Cancel Table", () => {
         });
 
     test("[TC_0205147] Validate Logic when User already Fire all menu, user can Cancel Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.holdAllMenu();
-            await order.confirmationCloseTable("Yes");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await order.fireAllMenu();
-            await order.confirmationCloseTable("Yes");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await cancelTableSelectNotes(order, "Testing B");
-        }
-    );
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 3, 3);
+                await order.holdAllMenu();
+                await order.confirmationCloseTable("Yes");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await order.fireAllMenu();
+                await order.confirmationCloseTable("Yes");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await cancelTableSelectNotes(order, "Testing B");
+            }, {tableList, bookOrder, order}, testInfo);
+        });
 
 });
