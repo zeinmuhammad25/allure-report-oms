@@ -148,7 +148,11 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
         await sideNavBar.gotoPageTableList();
     });
 
-    test.afterEach(async () => {
+    test.afterEach(async ({tableList}) => {
+        await Promise.all([
+            tableList.cancelAllQuickServices(),
+            tableList.cancelAllTables()
+        ]);
     });
 
     test("[TC_0205001] Validate logic when user able to add Menu Biasa",
