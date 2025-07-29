@@ -3,8 +3,10 @@ import Table from "../../../../src/modules/oms/objects/table";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
-import EditOrderScenario from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.scenario";
-import AddOrderScenario from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.scenario";
+import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
+import {safeTest} from "../../../../src/base/utils/safeTest";
+import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
+import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 
 test.setTimeout(100000);
 test.describe.serial("Dine in Merge Table", () => {
@@ -22,54 +24,60 @@ test.describe.serial("Dine in Merge Table", () => {
         await bookOrder.skipCustomerPhoneNumber();
     };
 
-    const orderSingleMenu = async (order: OrderScenario) => {
+    const orderSingleMenu = async (order: OrderScenario, qty1: number, qty2: number, qty3: number) => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 4);
-        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 6);
-        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 4);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty1);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, qty2);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, qty3);
     };
 
-    const orderMenuExtraAnggur = async (order: OrderScenario, editOrder: EditOrderScenario) => {
-        await order.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await editOrder.actionButtonFooter("Next");
-        await editOrder.selectMenuExtraCategory(MenuList.anggur.name);
-        await editOrder.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName, 2);
-        await editOrder.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 2);
-        await editOrder.actionButtonFooter("Apply");
+    const selectMenuExtra = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
+        await addOrderV2.selectPackageGroup("Menu Extra");
+        await addOrderV2.extraCategory(MenuList.atCategory.name);
+        await addOrderV2.modifyExtraPackage([
+            {menuName: MenuList.menus.atMenuExtraAlpha.shortName, qty: quantity, notes: null}
+        ]);
     };
 
-    const orderMenuPaketMurah = async (order: OrderScenario, addOrder: AddOrderScenario) => {
+    const orderMenuPaketMurah = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
+        await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-        await addOrder.modifyMenuDetailPackage([
-            {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-            {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 3, notes: null},
-            {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 1, notes: null},
-            {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 2, notes: null}
+        await addOrderV2.modifyDetailPackage([
+            {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: quantity, notes: null}
         ]);
-        await addOrder.applyMenuDetailPackage();
     };
 
-    const orderMenuPaketMahal = async (order: OrderScenario, addOrder: AddOrderScenario) => {
+    const orderMenuPaketMahal = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
+        await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-        await addOrder.modifyMenuDetailPackage([
-            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: 3, notes: null},
-            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 1, notes: "test notes1"}
+        await addOrderV2.modifyDetailPackage([
+            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: null}
         ]);
-        await addOrder.applyMenuDetailPackage();
     };
+
+    const paymentCashFull = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Cash);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.CashPayment);
+        await paymentV2.paymentFullAmount();
+        await paymentV2.actionPayment(PaymentList.ActionPayment.SavePayment);
+        await paymentV2.payPayment();
+    };
+
 
     const cancelTable = async (order: OrderScenario) => {
         await order.cancelTable("Cancel");
         await order.confirmationCloseTable("Yes");
     };
 
-    test.beforeEach(async ({terminalID, signPin, tableList, order}) => {
+    test.beforeEach(async ({terminalID, signPin, tableList, order, sideNavBar}) => {
         const testWithAuthentication = [
             "[TC_0205053] Validate Logic when User can Merge Table with same Sales Mode",
             "[TC_0205071] Validate Logic when User can Merge Table with filled table after Hold menu",
@@ -84,6 +92,10 @@ test.describe.serial("Dine in Merge Table", () => {
                 await signPin.inputPinByTouch("22");
                 await signPin.validateShowStarCash("20.000");
                 await signPin.storeAuthState();
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.selectStation("KASIR");
+                await sideNavBar.gotoPageTableList();
+
             } else if ([
                 testWithAuthentication[1],
                 testWithAuthentication[2],
@@ -96,6 +108,9 @@ test.describe.serial("Dine in Merge Table", () => {
                 await signPin.inputPinByTouch("22");
                 await signPin.validateShowStarCash("20.000");
                 await signPin.storeAuthState();
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.selectStation("KASIR");
+                await sideNavBar.gotoPageTableList();
             }
         } else {
             await order.notActivateKitchenFireManagement();
@@ -111,26 +126,32 @@ test.describe.serial("Dine in Merge Table", () => {
     });
 
     test("[TC_0205053] Validate Logic when User can Merge Table with same Sales Mode",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrder}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.saveOrder();
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMahal(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.acRoom.name);
-            await mergeTable.selectTable(Table.acRoom.ac2.name, "occupied");
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2},testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 2, 5, 7);
+                await order.saveOrder();
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.acRoom.name);
+                await mergeTable.selectTable(Table.acRoom.ac2.name, "occupied");
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}, testInfo);
+        });
 
     test("[TC_0205054] Validate Logic when User can Merge Table with empty table",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrder}) => {
