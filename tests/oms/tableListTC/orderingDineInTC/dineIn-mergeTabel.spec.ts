@@ -256,8 +256,8 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205153] Validate Logic when User can Merge Table with unordered table, empty ordered table and filled table",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2,paymentV2},testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2,paymentV2}) => {
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -285,28 +285,29 @@ test.describe.serial("Dine in Merge Table", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            },{tableList, bookOrder, order, mergeTable, addOrderV2,paymentV2},testInfo);
+            }, {tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0205059] Validate Logic when User can cancel the Merge Table action with button Cancel",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await bookedOrder("AT INCLUSIVE", bookOrder);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await bookedOrder("AT INCLUSIVE", bookOrder);
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.smokingRoom.name);
-            await mergeTable.selectTable(Table.smokingRoom.sr2.name, "active");
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await cancelTable(order);
-        }
-    );
+    test("[TC_0205154] Validate Logic when User can cancel the Merge Table action with button Cancel",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, mergeTable}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await bookedOrder("AT INCLUSIVE", bookOrder);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await bookedOrder("AT INCLUSIVE", bookOrder);
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.smokingRoom.name);
+                await mergeTable.selectTable(Table.smokingRoom.sr2.name, "active");
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await cancelTable(order);
+            }, {tableList, bookOrder, order, mergeTable}, testInfo);
+        });
 
     test("[TC_0205060] Validate Logic when User can Cancel Merge Table edit/selection",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable}) => {
