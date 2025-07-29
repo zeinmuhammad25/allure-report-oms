@@ -72,7 +72,7 @@ test.describe.serial("Dine in Cancel Table", () => {
     test.beforeEach(async ({terminalID, signPin, tableList, order}) => {
         const testWithAuthentication = [
             "[TC_0205131] Validate Logic when User can Cancel the order in Link Table with Cancel Table to the main table",
-            "[TC_02051quantity4] Validate Logic when User already Hold menu, user can Cancel Table",
+            "[TC_0205144] Validate Logic when User already Hold menu, user can Cancel Table",
             "[TC_0205145] Validate Logic when User already Hold menu, user can Cancel Table",
             "[TC_0205146] Validate Logic when User already Hold menu, user can Cancel Table",
             "[TC_0205147] Validate Logic when User already Fire all menu, user can Cancel Table"
@@ -336,20 +336,20 @@ test.describe.serial("Dine in Cancel Table", () => {
         });
 
     test("[TC_0205144] Validate Logic when User already Hold menu, user can Cancel Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.holdMenu(MenuList.menus.atMenuBiasaBakar.name);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await cancelTable(order);
-        }
-    );
-
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 2, 5, 7);
+                await order.holdMenu(MenuList.menus.atMenuBiasaBakar.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await cancelTable(order);
+            }, {tableList, bookOrder, order},testInfo);
+        });
     test("[TC_0205145] Validate Logic when User already Hold menu, user can Cancel Table",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}) => {
             await tableList.selectRoom(Table.acRoom.name);
