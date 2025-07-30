@@ -497,48 +497,49 @@ test.describe.serial("Dine in Merge Table", () => {
             }, {tableList, bookOrder, order, mergeTable, addOrderV2, linkTable}, testInfo);
         });
 
-    test("[TC_0205067] Validate Logic when User cannot Merge Table with other Merged Table",
-        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, addOrder}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await bookedOrder("AT INCLUSIVE", bookOrder);
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.smokingRoom.name);
-            await mergeTable.selectTable(Table.smokingRoom.sr2.name, "active");
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr3.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr4.name);
-            await bookedOrder("AT INCLUSIVE", bookOrder);
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr3.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.smokingRoom.name);
-            await mergeTable.selectTable(Table.smokingRoom.sr4.name, "active");
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.smokingRoom.name);
-            await mergeTable.selectTable(Table.smokingRoom.sr3.name, "disable");
-            await mergeTable.selectTable(Table.smokingRoom.sr4.name, "disable");
-        }
-    );
+    test("[TC_0205162] Validate Logic when User cannot Merge Table with other Merged Table",
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2},testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await bookedOrder("AT INCLUSIVE", bookOrder);
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.smokingRoom.name);
+                await mergeTable.selectTable(Table.smokingRoom.sr2.name, "active");
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order,2,2,2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await bookedOrder("AT INCLUSIVE", bookOrder);
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.smokingRoom.name);
+                await mergeTable.selectTable(Table.smokingRoom.sr4.name, "active");
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.smokingRoom.name);
+                await mergeTable.selectTable(Table.smokingRoom.sr3.name, "disable");
+                await mergeTable.selectTable(Table.smokingRoom.sr4.name, "disable");
+            }, {tableList, bookOrder, order, mergeTable, addOrderV2}, testInfo);
+        });
 
     test("[TC_0205068] Validate Logic when User can Merge Table with both tables emptied",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, mergeTable}) => {
