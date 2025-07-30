@@ -359,7 +359,7 @@ test.describe.serial("Dine in Merge Table", () => {
             }, {tableList, bookOrder, order, mergeTable}, testInfo);
         });
 
-    test("[TC_0205057] Validate Logic when User can undo Merge Table from Parent Table",
+    test("[TC_0205157] Validate Logic when User can undo Merge Table from Parent Table",
         {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -382,23 +382,24 @@ test.describe.serial("Dine in Merge Table", () => {
             }, {tableList, bookOrder, order, mergeTable}, testInfo);
         });
 
-    test("[TC_0205063] Validate Logic when User cannot Merge Table with different Sales Mode",
-        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, addOrder}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await bookedOrder("AT INCLUSIVE", bookOrder);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await makeOrder("AT EXCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.smokingRoom.name);
-            await mergeTable.selectTable(Table.smokingRoom.sr2.name, "disable");
-        }
-    );
+    test("[TC_0205158] Validate Logic when User cannot Merge Table with different Sales Mode",
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2},testInfo) => {
+           await safeTest(async ({})=>{
+               await tableList.selectRoom(Table.smokingRoom.name);
+               await tableList.selectTable(Table.smokingRoom.sr1.name);
+               await bookedOrder("AT INCLUSIVE", bookOrder);
+               await tableList.selectTable(Table.smokingRoom.sr2.name);
+               await makeOrder("AT EXCLUSIVE", bookOrder);
+               await orderMenuPaketMahal(order, addOrderV2);
+               await addOrderV2.addToCartMenuDetailPackage();
+               await order.saveOrder();
+               await tableList.selectRoom(Table.smokingRoom.name);
+               await tableList.selectTable(Table.smokingRoom.sr1.name);
+               await order.mergeTable();
+               await mergeTable.selectRoom(Table.smokingRoom.name);
+               await mergeTable.selectTable(Table.smokingRoom.sr2.name, "disable");
+            },{tableList, bookOrder, order, mergeTable, addOrderV2},testInfo)
+        });
 
     test("[TC_0205064] Validate Logic when user cannot Merge Table while not having access",
         {tag: tags + "@negative"}, async ({topNavBar, signPin, tableList, bookOrder, order, addOrder}) => {
