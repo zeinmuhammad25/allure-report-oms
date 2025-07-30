@@ -3,15 +3,19 @@ import MenuList from "../../../../src/modules/oms/objects/menuList";
 import Table from "../../../../src/modules/oms/objects/table";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
+import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
+import PaymentList from "../../../../src/modules/oms/objects/paymentList";
+import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
 test.describe.serial("Ordering Dine In Move Table", () => {
     const tags = "@smokeTest @oms @orderingDineIn @moveTable ";
 
-    const selectMenuBiasa = async (order: OrderScenario, quantity = 1) => {
-        await order.selectCategoryMenu(MenuList.atCategory.name);
+    const orderSingleMenu = async (order: OrderScenario, qty1: number, qty2: number, qty3: number) => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty1);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, qty2);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, qty3);
     };
 
     const salesModeInclusive = async (bookOrder: BookOrderScenario) => {
@@ -20,9 +24,18 @@ test.describe.serial("Ordering Dine In Move Table", () => {
         await bookOrder.skipCustomerPhoneNumber();
     };
 
-    test.beforeEach(async ({terminalID, signPin}) => {
+    const paymentCashFull = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Cash);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.CashPayment);
+        await paymentV2.paymentFullAmount();
+        await paymentV2.actionPayment(PaymentList.ActionPayment.SavePayment);
+        await paymentV2.payPayment();
+        await paymentV2.closePopUpPaymentSuccessFul()
+    };
+
+    test.beforeEach(async ({terminalID, signPin,sideNavBar}) => {
         const testWithReauthentication = [
-            "[TC_0205074] Validate Logic when User can Move Table to the other table",
+            "[TC_0205169] Validate Logic when User can Move Table to the other table",
             "[TC_0205083] Validate Logic when User can cancel Move Table action with button Cancel",
             "[TC_0205084] Validate Logic when User can Move Table after Hold the menu"
         ];
@@ -33,6 +46,9 @@ test.describe.serial("Ordering Dine In Move Table", () => {
             await signPin.inputPinByTouch("22");
             await signPin.validateShowStarCash("20.000");
             await signPin.storeAuthState();
+            await sideNavBar.gotoPageTools();
+            await sideNavBar.selectStation("KASIR");
+            await sideNavBar.gotoPageTableList();
         }
     });
 
@@ -43,18 +59,23 @@ test.describe.serial("Ordering Dine In Move Table", () => {
         ]);
     });
 
-    test("[TC_0205074] Validate Logic when User can Move Table to the other table",
-        async ({order, tableList, bookOrder, moveTable}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, 3);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveTable();
-            await moveTable.autoMoveTable();
+    test("[TC_0205169] Validate Logic when User can Move Table to the other table",
+        async ({order, tableList, bookOrder, moveTable, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, moveTable, paymentV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 2, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.moveTable();
+                await moveTable.autoMoveTable();
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, moveTable, paymentV2}, testInfo);
         });
 
     test("[TC_0205075] Validate Logic when User can Move Table to the other table with the same Table Section",
