@@ -92,7 +92,9 @@ test.describe.serial("Dine in Merge Table", () => {
                 await signPin.inputPinByTouch("22");
                 await signPin.validateShowStarCash("20.000");
                 await signPin.storeAuthState();
-
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.selectStation("KASIR");
+                await sideNavBar.gotoPageTableList();
             } else if ([
                 testWithAuthentication[1],
                 testWithAuthentication[2],
