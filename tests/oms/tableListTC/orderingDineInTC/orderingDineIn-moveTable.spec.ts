@@ -108,28 +108,36 @@ test.describe.serial("Ordering Dine In Move Table", () => {
             }, {order, tableList, bookOrder, moveTable, paymentV2}, testInfo);
         });
 
-    test("[TC_0205077] Validate Logic when User cannot Move Table to own child linked table",
-        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable, linkTable}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await salesModeInclusive(bookOrder);
-            await linkTable.singleLinkTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveTable();
-            await moveTable.selectRoom(Table.acRoom.name);
-            await moveTable.disableButtonByLabel(Table.acRoom.ac1.name);
+    test("[TC_0205172] Validate Logic when User cannot Move Table to own child linked table",
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable, linkTable}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, moveTable, linkTable}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 2, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await salesModeInclusive(bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 2, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await linkTable.singleLinkTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.moveTable();
+                await moveTable.selectRoom(Table.acRoom.name);
+                await moveTable.disableButtonByLabel(Table.acRoom.ac1.name);
+            }, {order, tableList, bookOrder, moveTable, linkTable}, testInfo);
         });
 
-    test("[TC_0205078] Validate Logic when User cannot Move Table to own child merged table",
+    test("[TC_0205173] Validate Logic when User cannot Move Table to own child merged table",
         {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable, mergeTable}) => {
-            await tableList.goHere();
+
             await tableList.selectRoom(Table.acRoom.name);
             await tableList.selectTable(Table.acRoom.ac1.name);
             await salesModeInclusive(bookOrder);
