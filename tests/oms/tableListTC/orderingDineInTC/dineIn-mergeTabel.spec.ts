@@ -424,41 +424,43 @@ test.describe.serial("Dine in Merge Table", () => {
                 await signPin.storeAuthState();
             }, {topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo);
         });
-    test("[TC_0205065] Validate Logic when User cannot Merge Table with the Split Bill table",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrder, splitBill}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr3.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.smokingRoom.name);
-            await mergeTable.selectTable(Table.smokingRoom.sr3.name, "occupied");
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await order.splitBill();
-            await splitBill.addBill("child");
-            await splitBill.moveMenu("child", MenuList.menus.atMenuBiasaBakar.name, "2");
-            await splitBill.closeSplitBill();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await tableList.selectTableSplitBill("Bill 2");
-            await order.cancelTable("Cancel");
-            await order.confirmationCloseTable("Yes");
-        }
-    );
+    test("[TC_0205160] Validate Logic when User cannot Merge Table with the Split Bill table",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2, splitBill},testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, splitBill}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order,2,3,3);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.smokingRoom.name);
+                await mergeTable.selectTable(Table.smokingRoom.sr3.name, "occupied");
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await order.splitBill();
+                await splitBill.addBill("child");
+                await splitBill.moveMenu("child", MenuList.menus.atMenuBiasaBakar.name, "2");
+                await splitBill.closeSplitBill();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await tableList.selectTableSplitBill("Bill 2");
+                await order.cancelTable("Cancel");
+                await order.confirmationCloseTable("Yes");
+            }, {tableList, bookOrder, order, mergeTable, addOrderV2, splitBill}, testInfo);
+
+        });
 
     test("[TC_0205066] Validate Logic when User cannot Merge Table with the linked Merge Table",
         {tag: tags + "@Negative"}, async ({
