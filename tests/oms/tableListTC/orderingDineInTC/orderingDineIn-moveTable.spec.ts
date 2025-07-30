@@ -136,21 +136,27 @@ test.describe.serial("Ordering Dine In Move Table", () => {
         });
 
     test("[TC_0205173] Validate Logic when User cannot Move Table to own child merged table",
-        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable, mergeTable}) => {
-
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.acRoom.name);
-            await mergeTable.selectRoom(Table.acRoom.ac2.name);
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveTable();
-            await moveTable.selectRoom(Table.acRoom.name);
-            await moveTable.disableButtonByLabel(Table.acRoom.ac2.name);
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable, mergeTable}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, moveTable, mergeTable}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 2, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.acRoom.name);
+                await mergeTable.selectRoom(Table.acRoom.ac2.name);
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.moveTable();
+                await moveTable.selectRoom(Table.acRoom.name);
+                await moveTable.disableButtonByLabel(Table.acRoom.ac2.name);
+            }, {order, tableList, bookOrder, moveTable, mergeTable}, testInfo);
         });
 
     test("[TC_0205079] Validate Logic when user cannot Move Table to the other filled table",
