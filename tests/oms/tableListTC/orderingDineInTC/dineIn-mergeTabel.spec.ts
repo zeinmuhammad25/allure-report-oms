@@ -82,7 +82,7 @@ test.describe.serial("Dine in Merge Table", () => {
             "[TC_0205148] Validate Logic when User can Merge Table with same Sales Mode",
             "[TC_0205166] Validate Logic when User can Merge Table with filled table after Hold menu",
             "[TC_0205167] Validate Logic when User cannot Merge Table with filled table after Hold All menu",
-            "[TC_0205073] Validate Logic when User can Merge Table with emptied table after Hold All menu"
+            "[TC_0205168] Validate Logic when User can Merge Table with emptied table after Hold All menu"
         ];
 
         if (testWithAuthentication.includes(test.info().title)) {
@@ -110,7 +110,6 @@ test.describe.serial("Dine in Merge Table", () => {
                 await sideNavBar.gotoPageTableList();
             }
         } else {
-            console.log("jalan apa ngga ")
             await order.notActivateKitchenFireManagement();
             await tableList.goHere();
         }
@@ -668,7 +667,7 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205168] Validate Logic when User can Merge Table with emptied table after Hold All menu",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, mergeTable, editOrder},testInfo) => {
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2},testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2}) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
