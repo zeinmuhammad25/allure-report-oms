@@ -89,18 +89,23 @@ test.describe.serial("Ordering Dine In Move Table", () => {
             }, {order, tableList, bookOrder, moveTable, paymentV2}, testInfo);
         });
 
-    test("[TC_0205076] Validate Logic when User can Move Table to the other table with different Table Section",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, 3);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveTable();
-            await moveTable.selectTableAndApplyInSmokingRoom();
+    test("[TC_0205171] Validate Logic when User can Move Table to the other table with different Table Section",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable, paymentV2}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, moveTable, paymentV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 2, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.moveTable();
+                await moveTable.selectTableAndApplyInSmokingRoom();
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {order, tableList, bookOrder, moveTable, paymentV2}, testInfo);
         });
 
     test("[TC_0205077] Validate Logic when User cannot Move Table to own child linked table",
