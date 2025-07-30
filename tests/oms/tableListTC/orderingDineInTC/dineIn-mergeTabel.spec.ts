@@ -383,46 +383,47 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205158] Validate Logic when User cannot Merge Table with different Sales Mode",
-        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2},testInfo) => {
-           await safeTest(async ({})=>{
-               await tableList.selectRoom(Table.smokingRoom.name);
-               await tableList.selectTable(Table.smokingRoom.sr1.name);
-               await bookedOrder("AT INCLUSIVE", bookOrder);
-               await tableList.selectTable(Table.smokingRoom.sr2.name);
-               await makeOrder("AT EXCLUSIVE", bookOrder);
-               await orderMenuPaketMahal(order, addOrderV2);
-               await addOrderV2.addToCartMenuDetailPackage();
-               await order.saveOrder();
-               await tableList.selectRoom(Table.smokingRoom.name);
-               await tableList.selectTable(Table.smokingRoom.sr1.name);
-               await order.mergeTable();
-               await mergeTable.selectRoom(Table.smokingRoom.name);
-               await mergeTable.selectTable(Table.smokingRoom.sr2.name, "disable");
-            },{tableList, bookOrder, order, mergeTable, addOrderV2},testInfo)
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await bookedOrder("AT INCLUSIVE", bookOrder);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.smokingRoom.name);
+                await mergeTable.selectTable(Table.smokingRoom.sr2.name, "disable");
+            }, {tableList, bookOrder, order, mergeTable, addOrderV2}, testInfo);
         });
 
-    test("[TC_0205064] Validate Logic when user cannot Merge Table while not having access",
-        {tag: tags + "@negative"}, async ({topNavBar, signPin, tableList, bookOrder, order, addOrder}) => {
-            await topNavBar.userSignOut();
-            await signPin.inputPinByTouch("6");
-            await signPin.validateShowStarCash("20.000");
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await order.disabledMergeTable();
-            await order.cancelTable("Cancel");
-            await order.confirmationCloseTable("Yes");
-            await topNavBar.userSignOut();
-            await signPin.inputPinByTouch("22");
-            await signPin.validateShowStarCash("20.000");
-            await signPin.storeAuthState();
-        }
-    );
+    test("[TC_0205159] Validate Logic when user cannot Merge Table while not having access",
+        {tag: tags + "@negative"}, async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2},testInfo) => {
+            await safeTest(async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2}) => {
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("6");
+                await signPin.validateShowStarCash("20.000");
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await order.disabledMergeTable();
+                await order.cancelTable("Cancel");
+                await order.confirmationCloseTable("Yes");
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+            }, {topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo);
+        });
     test("[TC_0205065] Validate Logic when User cannot Merge Table with the Split Bill table",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrder, splitBill}) => {
             await tableList.selectRoom(Table.smokingRoom.name);
