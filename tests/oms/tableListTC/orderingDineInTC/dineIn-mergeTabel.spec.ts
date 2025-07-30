@@ -123,7 +123,14 @@ test.describe.serial("Dine in Merge Table", () => {
     });
 
     test("[TC_0205148] Validate Logic when User can Merge Table with same Sales Mode",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2},testInfo) => {
+        {tag: tags + "@positive"}, async ({
+                                              tableList,
+                                              bookOrder,
+                                              order,
+                                              mergeTable,
+                                              addOrderV2,
+                                              paymentV2
+                                          }, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
@@ -151,7 +158,14 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205149] Validate Logic when User can Merge Table with empty table",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}, testInfo) => {
+        {tag: tags + "@positive"}, async ({
+                                              tableList,
+                                              bookOrder,
+                                              order,
+                                              mergeTable,
+                                              addOrderV2,
+                                              paymentV2
+                                          }, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
@@ -174,7 +188,14 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205150] Validate Logic when User can Merge Table with empty table and filled table",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}, testInfo) => {
+        {tag: tags + "@positive"}, async ({
+                                              tableList,
+                                              bookOrder,
+                                              order,
+                                              mergeTable,
+                                              addOrderV2,
+                                              paymentV2
+                                          }, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
@@ -200,8 +221,15 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205151] Validate Logic when User can Merge Table with unordered table and filled table",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2},testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2})=>{
+        {tag: tags + "@positive"}, async ({
+                                              tableList,
+                                              bookOrder,
+                                              order,
+                                              mergeTable,
+                                              addOrderV2,
+                                              paymentV2
+                                          }, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -225,7 +253,7 @@ test.describe.serial("Dine in Merge Table", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            },{tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2},testInfo);
+            }, {tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0205152] Validate Logic when User can Merge Table with unordered table and empty table",
@@ -253,7 +281,14 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205153] Validate Logic when User can Merge Table with unordered table, empty ordered table and filled table",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}, testInfo) => {
+        {tag: tags + "@positive"}, async ({
+                                              tableList,
+                                              bookOrder,
+                                              order,
+                                              mergeTable,
+                                              addOrderV2,
+                                              paymentV2
+                                          }, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, paymentV2}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
@@ -399,7 +434,7 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205159] Validate Logic when user cannot Merge Table while not having access",
-        {tag: tags + "@negative"}, async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2},testInfo) => {
+        {tag: tags + "@negative"}, async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo) => {
             await safeTest(async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2}) => {
                 await topNavBar.userSignOut();
                 await signPin.inputPinByTouch("6");
@@ -422,7 +457,14 @@ test.describe.serial("Dine in Merge Table", () => {
             }, {topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo);
         });
     test("[TC_0205160] Validate Logic when User cannot Merge Table with the Split Bill table",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2, splitBill},testInfo) => {
+        {tag: tags + "@positive"}, async ({
+                                              tableList,
+                                              bookOrder,
+                                              order,
+                                              mergeTable,
+                                              addOrderV2,
+                                              splitBill
+                                          }, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, splitBill}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
@@ -434,7 +476,7 @@ test.describe.serial("Dine in Merge Table", () => {
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
-                await orderSingleMenu(order,2,3,3);
+                await orderSingleMenu(order, 2, 3, 3);
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
@@ -460,13 +502,20 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205161] Validate Logic when User cannot Merge Table with the linked Merge Table",
-        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2, linkTable},testInfo) => {
+        {tag: tags + "@Negative"}, async ({
+                                              tableList,
+                                              bookOrder,
+                                              order,
+                                              mergeTable,
+                                              addOrderV2,
+                                              linkTable
+                                          }, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2, linkTable}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
-                await orderSingleMenu(order,2,2,2);
+                await orderSingleMenu(order, 2, 2, 2);
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
@@ -495,7 +544,7 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205162] Validate Logic when User cannot Merge Table with other Merged Table",
-        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2},testInfo) => {
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
@@ -517,7 +566,7 @@ test.describe.serial("Dine in Merge Table", () => {
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
-                await orderSingleMenu(order,2,2,2);
+                await orderSingleMenu(order, 2, 2, 2);
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
@@ -539,7 +588,7 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205163] Validate Logic when User can Merge Table with both tables emptied",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, mergeTable},testInfo) => {
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, mergeTable}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
@@ -564,7 +613,7 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205164] Validate Logic when User cannot Merge Table on different Sales Mode with both tables emptied",
-        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable},testInfo) => {
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
@@ -589,7 +638,7 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205165] Validate Logic when User can open Child Merge Table and redirect to Parent Merge Table",
-        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2},testInfo) => {
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
@@ -618,7 +667,7 @@ test.describe.serial("Dine in Merge Table", () => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
-                await orderMenuPaketMahal(order,addOrderV2);
+                await orderMenuPaketMahal(order, addOrderV2);
                 await selectMenuExtra(order, addOrderV2);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.holdMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
@@ -626,7 +675,7 @@ test.describe.serial("Dine in Merge Table", () => {
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
-                await orderSingleMenu(order,2,2,2);
+                await orderSingleMenu(order, 2, 2, 2);
                 await order.saveOrder();
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await order.mergeTable();
@@ -638,24 +687,23 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205167] Validate Logic when User cannot Merge Table with filled table after Hold All menu",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2},testInfo) => {
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2}) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
-                await orderMenuPaketMahal(order,addOrderV2);
+                await orderMenuPaketMahal(order, addOrderV2);
                 await selectMenuExtra(order, addOrderV2);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-                await order.selectCategoryMenu(MenuList.atCategory.name);
-                await orderSingleMenu(order,1,3,4);
+                await orderSingleMenu(order, 1, 3, 4);
                 await order.holdAllMenu();
                 await order.confirmationCloseTable("Yes");
                 await order.saveOrder();
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
-                await orderSingleMenu(order,1,3,4);
+                await orderSingleMenu(order, 1, 3, 4);
                 await order.saveOrder();
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await order.mergeTable();
@@ -667,17 +715,16 @@ test.describe.serial("Dine in Merge Table", () => {
         });
 
     test("[TC_0205168] Validate Logic when User can Merge Table with emptied table after Hold All menu",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2},testInfo) => {
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, mergeTable, addOrderV2}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, mergeTable, addOrderV2}) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
-                await orderMenuPaketMahal(order,addOrderV2);
+                await orderMenuPaketMahal(order, addOrderV2);
                 await selectMenuExtra(order, addOrderV2);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-                await order.selectCategoryMenu(MenuList.atCategory.name);
-                await orderSingleMenu(order,1,3,4);
+                await orderSingleMenu(order, 1, 3, 4);
                 await order.holdAllMenu();
                 await order.confirmationCloseTable("Yes");
                 await order.saveOrder();
