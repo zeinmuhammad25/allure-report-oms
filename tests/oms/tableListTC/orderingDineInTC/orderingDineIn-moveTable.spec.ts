@@ -159,13 +159,14 @@ test.describe.serial("Ordering Dine In Move Table", () => {
             }, {order, tableList, bookOrder, moveTable, mergeTable}, testInfo);
         });
 
-    test("[TC_0205079] Validate Logic when user cannot Move Table to the other filled table",
-        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable}) => {
-            await tableList.goHere();
+    test("[TC_0205174] Validate Logic when user cannot Move Table to the other filled table",
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable},testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, moveTable}) => {
             await tableList.selectRoom(Table.acRoom.name);
             await tableList.selectTable(Table.acRoom.ac2.name);
             await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, 3);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await orderSingleMenu(order, 3, 2, 2);
             await order.saveOrder();
             await tableList.selectRoom(Table.acRoom.name);
             await tableList.selectTable(Table.acRoom.ac1.name);
@@ -173,6 +174,7 @@ test.describe.serial("Ordering Dine In Move Table", () => {
             await order.moveTable();
             await moveTable.selectRoom(Table.acRoom.name);
             await moveTable.disableButtonByLabel(Table.acRoom.ac2.name);
+            }, {order, tableList, bookOrder, moveTable}, testInfo);
         });
 
     test("[TC_0205080] Validate Logic when user cannot Move Table to the other filled table with the same Table Section",
