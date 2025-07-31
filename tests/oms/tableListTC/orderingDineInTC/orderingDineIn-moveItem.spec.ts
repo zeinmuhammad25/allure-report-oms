@@ -169,27 +169,34 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205185] Validate Logic when User can Move Item to the other filled table with the same Sales Mode",
-        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
-            await selectTable(tableList, bookOrder);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, true, 3);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await bookOrder.setPax(2);
-            await salesModeInclusive(bookOrder);
-            await selectMultipleMenuBiasa(order, true, 2);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.moveItem();
-            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac1.name);
-            await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaRebus.name);
-            await moveItem.actionApplyMoveItem();
-            await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaRebus.name, 2);
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, paymentV2}, testInfo) => {
+            await safeTest(async ({bookOrder, order, tableList, moveItem, paymentV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 3);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 3, 4, 5);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.moveItem();
+                await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac1.name);
+                await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaRebus.name, 4);
+                await moveItem.actionApplyMoveItem();
+                await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaRebus.name, 5);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+            }, {bookOrder, order, tableList, moveItem, paymentV2}, testInfo);
+        });
 
     test("[TC_0205186] Validate Logic when User can Move Item to the empty table with the same Sales Mode",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
