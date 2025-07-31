@@ -195,20 +195,22 @@ test.describe.serial("Ordering Dine In Move Table", () => {
             }, {order, tableList, bookOrder, moveTable}, testInfo);
         });
 
-    test("[TC_0205081] Validate Logic when user cannot Move Table to the other filled table with different Table Section",
-        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, 3);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await order.moveTable();
-            await moveTable.selectRoom(Table.smokingRoom.name);
-            await moveTable.disableButtonByLabel(Table.smokingRoom.sr1.name);
+    test("[TC_0205176] Validate Logic when user cannot Move Table to the other filled table with different Table Section",
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable},testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, moveTable}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await salesModeInclusive(bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 2, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await order.moveTable();
+                await moveTable.selectRoom(Table.smokingRoom.name);
+                await moveTable.disableButtonByLabel(Table.smokingRoom.sr1.name);
+            },{order, tableList, bookOrder, moveTable},testInfo);
         });
 
     test("[TC_0205082] Validate Logic when user cannot Move Table while not having access",
