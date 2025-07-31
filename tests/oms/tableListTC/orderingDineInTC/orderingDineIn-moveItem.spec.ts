@@ -3,7 +3,8 @@ import MenuList from "../../../../src/modules/oms/objects/menuList";
 import Table from "../../../../src/modules/oms/objects/table";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
-import TableListScenario from "../../../../src/modules/oms/tableList/tableList.scenario";
+import PaymentList from "../../../../src/modules/oms/objects/paymentList";
+import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
 
 test.setTimeout(100000);
 test.describe.serial("Ordering Dine In Move Item", () => {
@@ -26,6 +27,16 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         await bookOrder.bookAndOrder();
         await bookOrder.skipCustomerPhoneNumber();
     };
+
+    const paymentCashFull = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Cash);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.CashPayment);
+        await paymentV2.paymentFullAmount();
+        await paymentV2.actionPayment(PaymentList.ActionPayment.SavePayment);
+        await paymentV2.payPayment();
+        await paymentV2.closePopUpPaymentSuccessFul();
+    };
+
 
     test.beforeEach(async ({terminalID, signPin, tableList, order, sideNavBar}) => {
         const testWithAuthentication = [
