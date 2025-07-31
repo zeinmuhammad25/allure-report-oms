@@ -33,16 +33,45 @@ test.describe.serial("Ordering Dine In Move Table", () => {
         await paymentV2.closePopUpPaymentSuccessFul()
     };
 
-    test.beforeEach(async ({terminalID, signPin, sideNavBar}) => {
-        await terminalID.goHere();
-        await terminalID.performTerminalID();
-        await signPin.inputPinByTouch("22");
-        await signPin.validateShowStarCash("20.000");
-        await signPin.storeAuthState();
-        await sideNavBar.gotoPageTools();
-        await sideNavBar.selectStation("KASIR");
-        await sideNavBar.gotoPageTableList();
+    test.beforeEach(async ({terminalID, signPin, tableList, order, sideNavBar}) => {
+        const testWithAuthentication = [
+            "[TC_0205169] Validate Logic when User can Move Table to the other table",
+            "[TC_0205179] Validate Logic when User can Move Table after Hold the menu",
+            "[TC_0205180] Validate Logic when User can Move Table after Hold All the menu",
+        ];
+
+        if (testWithAuthentication.includes(test.info().title)) {
+            if (test.info().title === testWithAuthentication[0]) {
+                await terminalID.goHere();
+                await terminalID.performTerminalID();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.selectStation("KASIR");
+                await sideNavBar.gotoPageTableList();
+            } else if ([
+                testWithAuthentication[1],
+                testWithAuthentication[2],
+                testWithAuthentication[3],
+                testWithAuthentication[4]
+            ].includes(test.info().title)) {
+                await order.activateKitchenFireManagement();
+                await terminalID.goHere();
+                await terminalID.performTerminalID();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.selectStation("KASIR");
+                await sideNavBar.gotoPageTableList();
+            }
+        } else {
+            await order.notActivateKitchenFireManagement();
+            await tableList.goHere();
+        }
     });
+
 
     test.afterEach(async ({tableList}) => {
         await Promise.all([
@@ -249,23 +278,25 @@ test.describe.serial("Ordering Dine In Move Table", () => {
             }, {order, tableList, bookOrder, moveTable}, testInfo);
         });
 
-    test("[TC_0205084] Validate Logic when User can Move Table after Hold the menu",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
-            await tableList.goHere();
-            await order.activateKitchenFireManagement();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, 3);
-            await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveTable();
-            await moveTable.selectTableAndApplyInSmokingRoom();
+    test("[TC_0205179] Validate Logic when User can Move Table after Hold the menu",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, moveTable}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 2, 2);
+                await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.moveTable();
+                await moveTable.selectTableAndApplyInSmokingRoom();
+                await order.saveOrder();
+            }, {order, tableList, bookOrder, moveTable}, testInfo);
         });
 
-    test("[TC_0205085] Validate Logic when User can Move Table after Hold All the menu",
+    test("[TC_0205180] Validate Logic when User can Move Table after Hold All the menu",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
             await tableList.goHere();
             await tableList.selectRoom(Table.acRoom.name);
@@ -281,7 +312,7 @@ test.describe.serial("Ordering Dine In Move Table", () => {
             await moveTable.selectTableAndApplyInSmokingRoom();
         });
 
-    test("[TC_0205086] Validate Logic when User can Move Table while having no ordered items",
+    test("[TC_0205181] Validate Logic when User can Move Table while having no ordered items",
         {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
             await tableList.goHere();
             await order.notActivateKitchenFireManagement();
