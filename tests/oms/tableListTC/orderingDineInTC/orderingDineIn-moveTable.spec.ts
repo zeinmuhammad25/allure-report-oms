@@ -30,14 +30,14 @@ test.describe.serial("Ordering Dine In Move Table", () => {
         await paymentV2.paymentFullAmount();
         await paymentV2.actionPayment(PaymentList.ActionPayment.SavePayment);
         await paymentV2.payPayment();
-        await paymentV2.closePopUpPaymentSuccessFul()
+        await paymentV2.closePopUpPaymentSuccessFul();
     };
 
     test.beforeEach(async ({terminalID, signPin, tableList, order, sideNavBar}) => {
         const testWithAuthentication = [
             "[TC_0205169] Validate Logic when User can Move Table to the other table",
             "[TC_0205179] Validate Logic when User can Move Table after Hold the menu",
-            "[TC_0205180] Validate Logic when User can Move Table after Hold All the menu",
+            "[TC_0205180] Validate Logic when User can Move Table after Hold All the menu"
         ];
 
         if (testWithAuthentication.includes(test.info().title)) {
@@ -189,43 +189,43 @@ test.describe.serial("Ordering Dine In Move Table", () => {
         });
 
     test("[TC_0205174] Validate Logic when user cannot Move Table to the other filled table",
-        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable},testInfo) => {
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, moveTable}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await salesModeInclusive(bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order, 3, 2, 2);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await order.moveTable();
-            await moveTable.selectRoom(Table.acRoom.name);
-            await moveTable.disableButtonByLabel(Table.acRoom.ac2.name);
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await salesModeInclusive(bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 2, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await order.moveTable();
+                await moveTable.selectRoom(Table.acRoom.name);
+                await moveTable.disableButtonByLabel(Table.acRoom.ac2.name);
             }, {order, tableList, bookOrder, moveTable}, testInfo);
         });
 
     test("[TC_0205175] Validate Logic when user cannot Move Table to the other filled table with the same Table Section",
-        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable},testInfo) => {
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, moveTable}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await salesModeInclusive(bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order, 3, 2, 2);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await order.moveTable();
-            await moveTable.selectRoom(Table.acRoom.name);
-            await moveTable.disableButtonByLabel(Table.acRoom.ac2.name);
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await salesModeInclusive(bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 2, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await order.moveTable();
+                await moveTable.selectRoom(Table.acRoom.name);
+                await moveTable.disableButtonByLabel(Table.acRoom.ac2.name);
             }, {order, tableList, bookOrder, moveTable}, testInfo);
         });
 
     test("[TC_0205176] Validate Logic when user cannot Move Table to the other filled table with different Table Section",
-        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable},testInfo) => {
+        {tag: tags + "@negative"}, async ({order, tableList, bookOrder, moveTable}, testInfo) => {
             await safeTest(async ({order, tableList, bookOrder, moveTable}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
@@ -239,7 +239,7 @@ test.describe.serial("Ordering Dine In Move Table", () => {
                 await order.moveTable();
                 await moveTable.selectRoom(Table.smokingRoom.name);
                 await moveTable.disableButtonByLabel(Table.smokingRoom.sr1.name);
-            },{order, tableList, bookOrder, moveTable},testInfo);
+            }, {order, tableList, bookOrder, moveTable}, testInfo);
         });
 
     test("[TC_0205177] Validate Logic when user cannot Move Table while not having access",
@@ -314,19 +314,18 @@ test.describe.serial("Ordering Dine In Move Table", () => {
             }, {order, tableList, bookOrder, moveTable}, testInfo);
         });
 
-    test("[TC_0205181] Validate Logic when User can Move Table while having no ordered items",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
-            await tableList.goHere();
-            await order.notActivateKitchenFireManagement();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveTable();
-            await moveTable.selectTableAndApplyInSmokingRoom();
-            await order.saveOrder();
-            await order.notActivateKitchenFireManagement();
+    test("[TC_0205181] Validate Logic when User can Move Item to the other table",
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, moveTable}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.moveTable();
+                await moveTable.selectTableAndApplyInSmokingRoom();
+                await order.saveOrder();
+            }, {order, tableList, bookOrder, moveTable}, testInfo);
         });
 });
