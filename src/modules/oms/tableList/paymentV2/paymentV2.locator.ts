@@ -33,6 +33,10 @@ export default class PaymentV2Locator extends BaseLocator {
 
     static buttonPayFullAmount: string = "//div[@class='col-sm-4 d-flex flex-column']/div[1]/div[1]";
 
+    static popUpPaymentSuccessFul: string = "//app-payment-result-dialog//mat-card[contains(@class, 'dialog-wrapper')]";
+    static buttonOkPaymentSuccessFul: string = "//button[contains(@class, 'close-btn mat-flat-button mat-primary')]";
+    static buttonEmailPaymentSuccessFul: string = "//app-payment-result-dialog//button[contains(@class, 'email-btn')]";
+
     //sectionPaymentDebit
     static getLocatorInputPaymentDebit = (inputField: PaymentList): string => `//input[@placeholder='${inputField}']`;
     static buttonAddCardDetails: string = "//button/span[normalize-space()='Add card details']";

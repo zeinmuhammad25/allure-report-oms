@@ -62,5 +62,6 @@ export default interface PaymentV2Scenario extends BaseScenario {
 
     payPayment(): Promise<void>;
 
-}
+    closePopUpPaymentSuccessFul(): Promise<void>;
 
+}
