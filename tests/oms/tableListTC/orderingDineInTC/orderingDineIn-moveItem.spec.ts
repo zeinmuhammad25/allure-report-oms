@@ -199,21 +199,30 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205186] Validate Logic when User can Move Item to the empty table with the same Sales Mode",
-        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
-            await selectTable(tableList, bookOrder);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, true, 3);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveItem();
-            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac2.name);
-            await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await moveItem.actionApplyMoveItem();
-            await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaGoreng.name, 3);
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, paymentV2}, testInfo) => {
+            await safeTest(async ({bookOrder, order, tableList, moveItem, paymentV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 6);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.moveItem();
+                await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac2.name);
+                await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaBakar.name, 3);
+                await moveItem.actionApplyMoveItem();
+                await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaBakar.name, 6);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {bookOrder, order, tableList, moveItem, paymentV2}, testInfo);
+        });
 
     test("[TC_0205187] Validate Logic when User can Move Item to the empty table with all Menu(s) selected",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
