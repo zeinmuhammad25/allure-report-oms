@@ -99,8 +99,7 @@ test.describe.serial("Dine in Merge Table", () => {
             } else if ([
                 testWithAuthentication[1],
                 testWithAuthentication[2],
-                testWithAuthentication[3],
-                testWithAuthentication[4]
+                testWithAuthentication[3]
             ].includes(test.info().title)) {
                 await order.activateKitchenFireManagement();
                 await terminalID.goHere();
