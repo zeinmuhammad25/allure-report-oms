@@ -297,19 +297,21 @@ test.describe.serial("Ordering Dine In Move Table", () => {
         });
 
     test("[TC_0205180] Validate Logic when User can Move Table after Hold All the menu",
-        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}) => {
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, 3);
-            await order.holdAllMenu();
-            await order.confirmationCloseTable("Yes");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveTable();
-            await moveTable.selectTableAndApplyInSmokingRoom();
+        {tag: tags + "@positive"}, async ({order, tableList, bookOrder, moveTable}, testInfo) => {
+            await safeTest(async ({order, tableList, bookOrder, moveTable}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 2, 2);
+                await order.holdAllMenu();
+                await order.confirmationCloseTable("Yes");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.moveTable();
+                await moveTable.selectTableAndApplyInSmokingRoom();
+            }, {order, tableList, bookOrder, moveTable}, testInfo);
         });
 
     test("[TC_0205181] Validate Logic when User can Move Table while having no ordered items",
