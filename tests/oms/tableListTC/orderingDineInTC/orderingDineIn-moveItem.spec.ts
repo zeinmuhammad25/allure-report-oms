@@ -51,33 +51,48 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         await bookOrder.setPax(2);
     };
 
-    test.beforeEach(async ({terminalID, signPin, tableList, order}) => {
+    test.beforeEach(async ({terminalID, signPin, tableList, order, sideNavBar}) => {
         const testWithAuthentication = [
-            "[TC_0205087] Validate Logic when User can Move Item to the other table"
+            "[TC_0205182] Validate Logic when User can Move Item to the other table",
+            "[TC_0205207] Validate Logic when User cannot Move Item to emptied table after Hold the menu",
+            "[TC_0205208] Validate Logic when User cannot Move Item to emptied table after Hold All the menu",
+            "[TC_0205209] Validate Logic when User cannot Move Item to filled table after Hold the menu",
+            "[TC_0205210] Validate Logic when User cannot Move Item to filled table after Hold All the menu"
         ];
-        const excludedTests = [
-            "[TC_0205111] Validate Logic when User cannot Move Item to emptied table after Hold the menu",
-            "[TC_0205112] Validate Logic when User cannot Move Item to emptied table after Hold All the menu",
-            "[TC_0205113] Validate Logic when User cannot Move Item to filled table after Hold the menu",
-            "[TC_0205114] Validate Logic when User cannot Move Item to filled table after Hold All the menu"
-        ];
-        if (testWithAuthentication.includes(test.info().title)) {
-            await terminalID.goHere();
-            await terminalID.performTerminalID();
-            await signPin.inputPinByTouch("22");
-            await signPin.validateShowStarCash("20.000");
-            await signPin.storeAuthState();
 
+        if (testWithAuthentication.includes(test.info().title)) {
+            if (test.info().title === testWithAuthentication[0]) {
+                await terminalID.goHere();
+                await terminalID.performTerminalID();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.selectStation("KASIR");
+                await sideNavBar.gotoPageTableList();
+            } else if ([
+                testWithAuthentication[1],
+                testWithAuthentication[2],
+                testWithAuthentication[3],
+                testWithAuthentication[4]
+            ].includes(test.info().title)) {
+                await order.activateKitchenFireManagement();
+                await terminalID.goHere();
+                await terminalID.performTerminalID();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.selectStation("KASIR");
+                await sideNavBar.gotoPageTableList();
+            }
+        } else {
+            await order.notActivateKitchenFireManagement();
+            await tableList.goHere();
         }
-        if (excludedTests.includes(test.info().title)) {
-            await order.activateKitchenFireManagement();
-            await terminalID.goHere();
-            await terminalID.performTerminalID();
-            await signPin.inputPinByTouch("22");
-            await signPin.validateShowStarCash("20.000");
-        }
-        await tableList.goHere();
     });
+
+
 
 
     test.afterEach(async ({tableList}) => {
@@ -87,7 +102,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         ]);
     });
 
-    test("[TC_0205087] Validate Logic when User can Move Item to the other table",
+    test("[TC_0205182] Validate Logic when User can Move Item to the other table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -104,7 +119,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205088] Validate Logic when User can Move Item to the other table with the same Table Section",
+    test("[TC_0205183] Validate Logic when User can Move Item to the other table with the same Table Section",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -121,7 +136,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205089] Validate Logic when User can Move Item to the other table with different Table Section",
+    test("[TC_0205184] Validate Logic when User can Move Item to the other table with different Table Section",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -138,7 +153,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205090] Validate Logic when User can Move Item to the other filled table with the same Sales Mode",
+    test("[TC_0205185] Validate Logic when User can Move Item to the other filled table with the same Sales Mode",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -161,7 +176,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205091] Validate Logic when User can Move Item to the empty table with the same Sales Mode",
+    test("[TC_0205186] Validate Logic when User can Move Item to the empty table with the same Sales Mode",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -178,7 +193,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205092] Validate Logic when User can Move Item to the empty table with all Menu(s) selected",
+    test("[TC_0205187] Validate Logic when User can Move Item to the empty table with all Menu(s) selected",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -198,7 +213,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205093] Validate Logic when User can Move Item to the other filled table with all Menu(s) selected",
+    test("[TC_0205189] Validate Logic when User can Move Item to the other filled table with all Menu(s) selected",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -223,7 +238,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205094] Validate Logic when User can Move Item to the empty table with a Menu selected",
+    test("[TC_0205190] Validate Logic when User can Move Item to the empty table with a Menu selected",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -240,7 +255,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205095] Validate Logic when User can Move Item to the filled table with a Menu selected",
+    test("[TC_0205191] Validate Logic when User can Move Item to the filled table with a Menu selected",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -257,7 +272,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205096] Validate Logic when User can Increase an item with ≥ 1 Qty in Move Item to the other table",
+    test("[TC_0205192] Validate Logic when User can Increase an item with ≥ 1 Qty in Move Item to the other table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -282,7 +297,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205097] Validate Logic when User can Decrease an item with ≥ 1 Qty selected in Move Item to the other table",
+    test("[TC_0205193] Validate Logic when User can Decrease an item with ≥ 1 Qty selected in Move Item to the other table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -308,7 +323,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205098] Validate Logic when User can Move All an item with ≥ 1 Qty in Move Item to the other table",
+    test("[TC_0205194] Validate Logic when User can Move All an item with ≥ 1 Qty in Move Item to the other table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -333,7 +348,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205099] Validate Logic when User can undo the Move Item action with button Cancel",
+    test("[TC_0205195] Validate Logic when User can undo the Move Item action with button Cancel",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -350,7 +365,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205100] Validate Logic when User cannot Move Item to the other filled table with different Sales Mode",
+    test("[TC_0205196] Validate Logic when User cannot Move Item to the other filled table with different Sales Mode",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -370,7 +385,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205101] Validate Logic when User cannot Move Item to the other filled table with different Sales Mode in different Table Section",
+    test("[TC_0205197] Validate Logic when User cannot Move Item to the other filled table with different Sales Mode in different Table Section",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -390,7 +405,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205102] Validate Logic when User can Move Item from Dine-In to Quick Service",
+    test("[TC_0205198] Validate Logic when User can Move Item from Dine-In to Quick Service",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -407,7 +422,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205103] Validate Logic when User cannot Move Item while not having access",
+    test("[TC_0205199] Validate Logic when User cannot Move Item while not having access",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, topNavBar, signPin}) => {
             await topNavBar.userSignOut();
             await signPin.inputPinByTouch("0000");
@@ -427,7 +442,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205104] Validate Logic when User cannot Move Item without ordered item to the other table",
+    test("[TC_0205200] Validate Logic when User cannot Move Item without ordered item to the other table",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -440,7 +455,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205105] Validate Logic when User can Move Item to emptied table from Parent Merge Table",
+    test("[TC_0205201] Validate Logic when User can Move Item to emptied table from Parent Merge Table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, mergeTable, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -464,7 +479,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205106] Validate Logic when User can Move Item to filled table from Parent Merge Table",
+    test("[TC_0205202] Validate Logic when User can Move Item to filled table from Parent Merge Table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, mergeTable}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -493,7 +508,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205107] Validate Logic when User can Move Item to Parent Merge Table",
+    test("[TC_0205203] Validate Logic when User can Move Item to Parent Merge Table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, mergeTable}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -521,7 +536,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205108] Validate Logic when User can Move Item to Child Merge Table",
+    test("[TC_0205204] Validate Logic when User can Move Item to Child Merge Table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, mergeTable}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -554,7 +569,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205109] Validate Logic when User can Move Item to emptied table from Child Merge Table",
+    test("[TC_0205205] Validate Logic when User can Move Item to emptied table from Child Merge Table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, mergeTable}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -587,7 +602,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205110] Validate Logic when User can Move Item to filled table from Child Merge Table",
+    test("[TC_0205206] Validate Logic when User can Move Item to filled table from Child Merge Table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, mergeTable}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -621,7 +636,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205111] Validate Logic when User cannot Move Item to emptied table after Hold the menu",
+    test("[TC_0205207] Validate Logic when User cannot Move Item to emptied table after Hold the menu",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -638,7 +653,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205112] Validate Logic when User cannot Move Item to emptied table after Hold All the menu",
+    test("[TC_0205208] Validate Logic when User cannot Move Item to emptied table after Hold All the menu",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -658,7 +673,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205113] Validate Logic when User cannot Move Item to filled table after Hold the menu",
+    test("[TC_0205209] Validate Logic when User cannot Move Item to filled table after Hold the menu",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
@@ -679,7 +694,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         }
     );
 
-    test("[TC_0205114] Validate Logic when User cannot Move Item to filled table after Hold All the menu",
+    test("[TC_0205210] Validate Logic when User cannot Move Item to filled table after Hold All the menu",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
             await selectTable(tableList, bookOrder);
             await salesModeInclusive(bookOrder);
