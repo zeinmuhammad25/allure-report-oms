@@ -69,6 +69,7 @@ test.describe.serial("Dine in Merge Table", () => {
         await paymentV2.paymentFullAmount();
         await paymentV2.actionPayment(PaymentList.ActionPayment.SavePayment);
         await paymentV2.payPayment();
+        await paymentV2.closePopUpPaymentSuccessFul();
     };
 
 
