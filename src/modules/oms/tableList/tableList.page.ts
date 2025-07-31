@@ -20,7 +20,7 @@ export default class TableListPage extends BaseOmsPage implements TableListScena
         ];
     }
 
-    private apiBaseUrl = "http://localhost/fnb-pos-v2/api/web/v1";
+    private apiBaseUrl = process.env.OMS_API_URL;
 
     async goHere(): Promise<void> {
         await this.navigateHere();
