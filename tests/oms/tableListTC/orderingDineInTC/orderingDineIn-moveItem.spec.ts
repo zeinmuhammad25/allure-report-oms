@@ -9,46 +9,22 @@ test.setTimeout(100000);
 test.describe.serial("Ordering Dine In Move Item", () => {
     const tags = "@smokeTest @oms @orderingDineIn @moveItem ";
 
-    const selectMenuBiasa = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
-        await order.selectCategoryMenu(MenuList.atCategory.name);
+    const selectMenuBiasa = async (order: OrderScenario, qty1: number) => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        if (isWithQuantity) {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
-        } else {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name);
-        }
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty1);
     };
 
-    const selectMultipleMenuBiasa = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
-        await order.selectCategoryMenu(MenuList.atCategory.name);
+    const selectMultipleMenuBiasa = async (order: OrderScenario, qty1: number, qty2: number, qty3: number) => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        if (isWithQuantity) {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
-            await order.selectMenu(MenuList.menus.atMenuBiasaRebus.name, quantity);
-            await order.selectMenu(MenuList.menus.atMenuBiasaBakar.name, quantity);
-        } else {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.selectMenu(MenuList.menus.atMenuBiasaRebus.name);
-            await order.selectMenu(MenuList.menus.atMenuBiasaBakar.name);
-        }
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty1);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, qty2);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, qty3);
     };
 
-    const salesModeExclusive = async (bookOrder: BookOrderScenario) => {
-        await bookOrder.selectSalesMode("AT EXCLUSIVE");
+    const makeOrder = async (salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario) => {
+        await bookOrder.selectSalesMode(salesMode);
         await bookOrder.bookAndOrder();
         await bookOrder.skipCustomerPhoneNumber();
-    };
-
-    const salesModeInclusive = async (bookOrder: BookOrderScenario) => {
-        await bookOrder.selectSalesMode("AT INCLUSIVE");
-        await bookOrder.bookAndOrder();
-        await bookOrder.skipCustomerPhoneNumber();
-    };
-
-    const selectTable = async (tableList: TableListScenario, bookOrder: BookOrderScenario) => {
-        await tableList.selectRoom(Table.acRoom.name);
-        await tableList.selectTable(Table.acRoom.ac1.name);
-        await bookOrder.setPax(2);
     };
 
     test.beforeEach(async ({terminalID, signPin, tableList, order, sideNavBar}) => {
@@ -91,8 +67,6 @@ test.describe.serial("Ordering Dine In Move Item", () => {
             await tableList.goHere();
         }
     });
-
-
 
 
     test.afterEach(async ({tableList}) => {
