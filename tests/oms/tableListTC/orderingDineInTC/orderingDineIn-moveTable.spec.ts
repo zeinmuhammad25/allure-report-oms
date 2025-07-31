@@ -52,9 +52,7 @@ test.describe.serial("Ordering Dine In Move Table", () => {
                 await sideNavBar.gotoPageTableList();
             } else if ([
                 testWithAuthentication[1],
-                testWithAuthentication[2],
-                testWithAuthentication[3],
-                testWithAuthentication[4]
+                testWithAuthentication[2]
             ].includes(test.info().title)) {
                 await order.activateKitchenFireManagement();
                 await terminalID.goHere();
