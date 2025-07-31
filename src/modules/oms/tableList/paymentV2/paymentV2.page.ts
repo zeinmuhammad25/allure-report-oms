@@ -50,6 +50,12 @@ export default class PaymentV2Page extends BaseOmsPage implements PaymentV2Scena
         await this.click(PaymentV2Locator.buttonPayPayment);
     }
 
+    async closePopUpPaymentSuccessFul(): Promise<void> {
+        await this.expectVisible(PaymentV2Locator.popUpPaymentSuccessFul);
+        await this.expectVisible(PaymentV2Locator.buttonOkPaymentSuccessFul);
+        await this.click(PaymentV2Locator.buttonOkPaymentSuccessFul);
+    }
+
     async paymentInputAmount(inputAmount: string): Promise<void> {
         await this.expectVisible(PaymentV2Locator.inputPaymentAmount);
         await this.click(PaymentV2Locator.inputPaymentAmount);
