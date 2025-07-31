@@ -213,17 +213,24 @@ test.describe.serial("Ordering Dine In Move Table", () => {
             },{order, tableList, bookOrder, moveTable},testInfo);
         });
 
-    test("[TC_0205082] Validate Logic when user cannot Move Table while not having access",
-        {tag: tags + "@negative"}, async ({terminalID, signPin, tableList, order, bookOrder}) => {
-            await terminalID.goHere();
-            await terminalID.performTerminalID();
-            await signPin.inputPinByTouch("0000");
-            await signPin.validateShowStarCash("20.000");
-            await tableList.goHere();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await salesModeInclusive(bookOrder);
-            await order.expectDisabledMoveTable();
+    test("[TC_0205177] Validate Logic when user cannot Move Table while not having access",
+        {tag: tags + "@negative"}, async ({terminalID, topNavBar, signPin, tableList, order, bookOrder}, testInfo) => {
+            await safeTest(async ({terminalID, topNavBar, signPin, tableList, order, bookOrder}) => {
+                await terminalID.goHere();
+                await terminalID.performTerminalID();
+                await signPin.inputPinByTouch("0000");
+                await signPin.validateShowStarCash("20.000");
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await salesModeInclusive(bookOrder);
+                await order.expectDisabledMoveTable();
+                await order.cancelTable("Cancel");
+                await order.confirmationCloseTable("Yes");
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+            }, {terminalID, topNavBar, signPin, tableList, order, bookOrder}, testInfo);
         });
 
     test("[TC_0205083] Validate Logic when User can cancel Move Table action with button Cancel",
