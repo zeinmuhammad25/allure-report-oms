@@ -93,6 +93,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async printNowPrintingSetting(): Promise<void> {
+        await this.wait(100)
         await this.expectVisible(OrderLocator.printBillButton);
         await this.click(OrderLocator.printBillButton);
         await this.expectVisible(OrderLocator.printBillNowButton);
