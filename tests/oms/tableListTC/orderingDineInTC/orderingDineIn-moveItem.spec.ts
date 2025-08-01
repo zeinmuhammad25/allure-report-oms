@@ -422,21 +422,23 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205194] Validate Logic when User can undo the Move Item action with button Cancel",
-        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
-            await selectTable(tableList, bookOrder);
-            await salesModeInclusive(bookOrder);
-            await selectMultipleMenuBiasa(order, true, 2);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveItem();
-            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac2.name);
-            await moveItem.moveSelectAllItemMenu();
-            await moveItem.actionCancelMoveItem();
-            await order.validateMenuVisible(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}, testInfo) => {
+            await safeTest(async ({bookOrder, order, tableList, moveItem}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 3, 4, 5);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await order.moveItem();
+                await moveItem.moveItemToSectionDineIn(Table.smokingRoom.name, Table.smokingRoom.sr1.name);
+                await moveItem.moveSelectAllItemMenu();
+                await moveItem.actionCancelMoveItem();
+                await order.validateMenuVisible(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+            }, {bookOrder, order, tableList, moveItem}, testInfo);
+        });
 
     test("[TC_0205195] Validate Logic when User cannot Move Item to the other filled table with different Sales Mode",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
