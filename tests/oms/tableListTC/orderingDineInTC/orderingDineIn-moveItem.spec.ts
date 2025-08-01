@@ -544,28 +544,32 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205200] Validate Logic when User can Move Item to emptied table from Parent Merge Table",
-        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, mergeTable, moveItem}) => {
-            await selectTable(tableList, bookOrder);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, true, 4);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.acRoom.name);
-            await mergeTable.selectTable(Table.acRoom.ac2.name, "active");
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveItem();
-            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaGoreng.name, 2);
-            await moveItem.actionApplyMoveItem();
-            await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaGoreng.name, 4);
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, mergeTable, paymentV2}, testInfo) => {
+            await safeTest(async ({bookOrder, order, tableList, moveItem, mergeTable, paymentV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 6);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.acRoom.name);
+                await mergeTable.selectTable(Table.acRoom.ac2.name, "active");
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.moveItem();
+                await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+                await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaBakar.name, 2);
+                await moveItem.actionApplyMoveItem();
+                await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaBakar.name, 6);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {bookOrder, order, tableList, moveItem, mergeTable, paymentV2}, testInfo);
+        });
 
     test("[TC_0205201] Validate Logic when User can Move Item to filled table from Parent Merge Table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, mergeTable}) => {
