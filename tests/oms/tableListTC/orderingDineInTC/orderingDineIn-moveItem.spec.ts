@@ -528,15 +528,19 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205199] Validate Logic when User cannot Move Item without ordered item to the other table",
-        {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
-            await selectTable(tableList, bookOrder);
-            await salesModeInclusive(bookOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveItem();
-            await moveItem.actionCancelMoveItem();
-            await order.saveOrder();
+        {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}, testInfo) => {
+            await safeTest(async ({bookOrder, order, tableList, moveItem}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.moveItem();
+                await moveItem.moveItemToSectionDineIn(Table.smokingRoom.name, Table.smokingRoom.sr1.name);
+                await moveItem.actionCancelMoveItem();
+                await order.saveOrder();
+            }, {bookOrder, order, tableList, moveItem}, testInfo);
         });
 
     test("[TC_0205200] Validate Logic when User can Move Item to emptied table from Parent Merge Table",
