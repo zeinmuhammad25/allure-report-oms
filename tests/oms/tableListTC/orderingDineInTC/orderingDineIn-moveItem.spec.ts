@@ -441,24 +441,26 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205195] Validate Logic when User cannot Move Item to the other filled table with different Sales Mode",
-        {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
-            await selectTable(tableList, bookOrder);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, true, 3);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await salesModeExclusive(bookOrder);
-            await selectMultipleMenuBiasa(order, true, 4);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await order.moveItem();
-            await moveItem.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac1.name);
-            await moveItem.actionCancelMoveItem();
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}, testInfo) => {
+            await safeTest(async ({bookOrder, order, tableList, moveItem}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 3, 4, 5);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await order.moveItem();
+                await moveItem.expectDisabledTable(Table.smokingRoom.name, Table.smokingRoom.sr1.name);
+                await moveItem.actionCancelMoveItem();
+                await order.saveOrder();
+            }, {bookOrder, order, tableList, moveItem}, testInfo);
+        });
 
     test("[TC_0205196] Validate Logic when User cannot Move Item to the other filled table with different Sales Mode in different Table Section",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
