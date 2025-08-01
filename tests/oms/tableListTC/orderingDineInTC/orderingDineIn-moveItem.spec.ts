@@ -873,28 +873,42 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205209] Validate Logic when User cannot Move Item to filled table after Hold All the menu",
-        {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
-            await selectTable(tableList, bookOrder);
-            await salesModeInclusive(bookOrder);
-            await selectMultipleMenuBiasa(order, true, 2);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await salesModeInclusive(bookOrder);
-            await selectMultipleMenuBiasa(order, true, 3);
-            await order.holdAllMenu();
-            await order.confirmationCloseTable("Yes");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await order.moveItem();
-            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac1.name);
-            await moveItem.expectDisabledButtonMoveAll(MenuList.menus.atMenuBiasaGoreng.name);
-            await moveItem.expectDisabledButtonMoveAll(MenuList.menus.atMenuBiasaRebus.name);
-            await moveItem.expectDisabledButtonMoveAll(MenuList.menus.atMenuBiasaBakar.name);
-            await moveItem.actionCancelMoveItem();
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem, paymentV2}, testInfo) => {
+            await safeTest(async ({bookOrder, order, tableList, moveItem, paymentV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 10, 10, 10);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 10, 10, 10);
+                await order.holdAllMenu();
+                await order.confirmationCloseTable("Yes");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await order.moveItem();
+                await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac1.name);
+                await moveItem.expectDisabledButtonMoveAll(MenuList.menus.atMenuBiasaGoreng.name);
+                await moveItem.expectDisabledButtonMoveAll(MenuList.menus.atMenuBiasaRebus.name);
+                await moveItem.expectDisabledButtonMoveAll(MenuList.menus.atMenuBiasaBakar.name);
+                await moveItem.actionCancelMoveItem();
+                await order.fireAllMenu();
+                await order.confirmationCloseTable("Yes");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {bookOrder, order, tableList, moveItem, paymentV2}, testInfo);
+        });
 
 });
