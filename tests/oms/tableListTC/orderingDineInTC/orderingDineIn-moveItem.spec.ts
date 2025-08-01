@@ -393,29 +393,33 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205193] Validate Logic when User can Move All an item with ≥ 1 Qty in Move Item to the other table",
-        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
-            await selectTable(tableList, bookOrder);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, true, 2);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await salesModeInclusive(bookOrder);
-            await selectMultipleMenuBiasa(order, true, 4);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await order.moveItem();
-            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac1.name);
-            await moveItem.moveSelectAllItemMenu();
-            await moveItem.actionApplyMoveItem();
-            await order.confirmationCloseTable("Yes");
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.validateMenuVisible(MenuList.menus.atMenuBiasaRebus.name);
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, paymentV2}, testInfo) => {
+            await safeTest(async ({bookOrder, order, tableList, moveItem, paymentV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 3, 4, 5);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await order.moveItem();
+                await moveItem.moveItemToSectionDineIn(Table.smokingRoom.name, Table.smokingRoom.sr1.name);
+                await moveItem.moveSelectAllItemMenu();
+                await moveItem.actionApplyMoveItem();
+                await order.confirmationCloseTable("Yes");
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.validateMenuVisible(MenuList.menus.atMenuBiasaRebus.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {bookOrder, order, tableList, moveItem, paymentV2}, testInfo);
+        });
 
     test("[TC_0205194] Validate Logic when User can undo the Move Item action with button Cancel",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
