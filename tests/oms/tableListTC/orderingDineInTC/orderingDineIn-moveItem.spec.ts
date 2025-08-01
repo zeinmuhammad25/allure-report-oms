@@ -486,7 +486,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
 
     test("[TC_0205197] Validate Logic when User can Move Item from Dine-In to Quick Service",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, paymentV2}, testInfo) => {
-            await safeTest(async ({bookOrder, order, tableList, moveItem}) => {
+            await safeTest(async ({bookOrder, order, tableList, moveItem, paymentV2}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -506,24 +506,26 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205198] Validate Logic when User cannot Move Item while not having access",
-        {tag: tags + "@negative"}, async ({bookOrder, order, tableList, topNavBar, signPin}) => {
-            await topNavBar.userSignOut();
-            await signPin.inputPinByTouch("0000");
-            await signPin.validateShowStarCash("20.000");
-            await selectTable(tableList, bookOrder);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, true, 3);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.expectDisabledMoveItem();
-            await order.saveOrder();
-            await topNavBar.userSignOut();
-            await signPin.inputPinByTouch("22");
-            await signPin.validateShowStarCash("20.000");
-            await signPin.storeAuthState();
-        }
-    );
+        {tag: tags + "@negative"}, async ({bookOrder, order, tableList, topNavBar, signPin}, testInfo) => {
+            await safeTest(async ({bookOrder, order, tableList, topNavBar, signPin}) => {
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("0000");
+                await signPin.validateShowStarCash("20.000");
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 6);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.expectDisabledMoveItem();
+                await order.saveOrder();
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+            }, {bookOrder, order, tableList, topNavBar, signPin}, testInfo);
+        });
 
     test("[TC_0205199] Validate Logic when User cannot Move Item without ordered item to the other table",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}) => {
@@ -535,8 +537,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
             await order.moveItem();
             await moveItem.actionCancelMoveItem();
             await order.saveOrder();
-        }
-    );
+        });
 
     test("[TC_0205200] Validate Logic when User can Move Item to emptied table from Parent Merge Table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, mergeTable, moveItem}) => {
