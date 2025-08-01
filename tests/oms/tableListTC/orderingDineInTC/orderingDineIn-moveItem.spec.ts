@@ -485,7 +485,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205197] Validate Logic when User can Move Item from Dine-In to Quick Service",
-        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}, testInfo) => {
+        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, paymentV2}, testInfo) => {
             await safeTest(async ({bookOrder, order, tableList, moveItem}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
@@ -499,8 +499,10 @@ test.describe.serial("Ordering Dine In Move Item", () => {
                 await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaBakar.name, 2);
                 await moveItem.actionApplyMoveItem();
                 await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaBakar.name, 6);
-                await order.saveOrder();
-            }, {bookOrder, order, tableList, moveItem}, testInfo);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {bookOrder, order, tableList, moveItem, paymentV2}, testInfo);
         });
 
     test("[TC_0205198] Validate Logic when User cannot Move Item while not having access",
