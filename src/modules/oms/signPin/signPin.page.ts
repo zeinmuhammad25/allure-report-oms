@@ -79,6 +79,7 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
         if (isPopUpCheckCustomerPaymentsVisible) {
             await this.click(SignPinLocator.buttonPopUpNotNow);
         }
+        await this.wait(800);
         const isStartingCashVisible = await this.isVisible(StartDayLocator.startingCash);
         if (isStartingCashVisible) {
             await this.fill(StartDayLocator.startingCash, inputCash);
