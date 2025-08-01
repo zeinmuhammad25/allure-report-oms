@@ -572,33 +572,45 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205201] Validate Logic when User can Move Item to filled table from Parent Merge Table",
-        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, mergeTable}) => {
-            await selectTable(tableList, bookOrder);
-            await salesModeInclusive(bookOrder);
-            await selectMultipleMenuBiasa(order, true, 3);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.acRoom.name);
-            await mergeTable.selectTable(Table.acRoom.ac2.name, "active");
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveItem();
-            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaBakar.name, 2);
-            await moveItem.actionApplyMoveItem();
-            await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaBakar.name, 3);
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, mergeTable, paymentV2}, testInfo) => {
+            await safeTest(async ({bookOrder, order, tableList, moveItem, mergeTable, paymentV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 6, 6, 6);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 6);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.acRoom.name);
+                await mergeTable.selectTable(Table.acRoom.ac2.name, "active");
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.moveItem();
+                await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+                await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaRebus.name, 2);
+                await moveItem.actionApplyMoveItem();
+                await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaRebus.name, 6);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {bookOrder, order, tableList, moveItem, mergeTable, paymentV2}, testInfo);
+        });
 
     test("[TC_0205202] Validate Logic when User can Move Item to Parent Merge Table",
         {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, mergeTable}) => {
