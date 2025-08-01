@@ -255,6 +255,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.expectVisible(OrderLocator.buttonConfirmCloseTable(action));
         await this.click(OrderLocator.buttonConfirmCloseTable(action));
         await this.waitForResponse("/table");
+        await this.wait(800)
     }
 
     async validateMenuNotVisible(menu: string): Promise<void> {
