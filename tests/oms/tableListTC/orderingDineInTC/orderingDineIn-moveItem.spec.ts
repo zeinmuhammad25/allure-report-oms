@@ -485,21 +485,23 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205197] Validate Logic when User can Move Item from Dine-In to Quick Service",
-        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}) => {
-            await selectTable(tableList, bookOrder);
-            await salesModeInclusive(bookOrder);
-            await selectMenuBiasa(order, true, 3);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.moveItem();
-            await moveItem.moveItemToSectionQuickService();
-            await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaGoreng.name, 2);
-            await moveItem.actionApplyMoveItem();
-            await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaGoreng.name, 3);
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem}, testInfo) => {
+            await safeTest(async ({bookOrder, order, tableList, moveItem}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 6);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.moveItem();
+                await moveItem.moveItemToSectionQuickService();
+                await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaBakar.name, 2);
+                await moveItem.actionApplyMoveItem();
+                await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaBakar.name, 6);
+                await order.saveOrder();
+            }, {bookOrder, order, tableList, moveItem}, testInfo);
+        });
 
     test("[TC_0205198] Validate Logic when User cannot Move Item while not having access",
         {tag: tags + "@negative"}, async ({bookOrder, order, tableList, topNavBar, signPin}) => {
