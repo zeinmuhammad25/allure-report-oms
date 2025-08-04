@@ -2,70 +2,78 @@ import {test} from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import Table from "../../../../src/modules/oms/objects/table";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
-import TableListScenario from "../../../../src/modules/oms/tableList/tableList.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
+import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
+import PaymentList from "../../../../src/modules/oms/objects/paymentList";
+import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(60000);
 test.describe.serial("Ordering Dine In Hold Menu", () => {
     const tags = "@smokeTest @oms @orderingDineIn @holdMenu ";
 
-    const selectMenuBiasa = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
+    const selectMenuBiasa = async (order: OrderScenario, quantity = 1) => {
         await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        if (isWithQuantity) {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
-        } else {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name);
-        }
+        await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
     };
 
-    const selectMultipleMenuBiasa = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
+    const selectMultipleMenuBiasa = async (order: OrderScenario, qty1: number, qty2: number, qty3: number) => {
         await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        if (isWithQuantity) {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
-            await order.selectMenu(MenuList.menus.atMenuBiasaRebus.name, quantity);
-            await order.selectMenu(MenuList.menus.atMenuBiasaBakar.name, quantity);
-        } else {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.selectMenu(MenuList.menus.atMenuBiasaRebus.name);
-            await order.selectMenu(MenuList.menus.atMenuBiasaBakar.name);
-        }
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty1);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, qty2);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, qty3);
     };
 
-    const selectTable = async (tableList: TableListScenario, bookOrder: BookOrderScenario) => {
-        await tableList.selectRoom(Table.smokingRoom.name);
-        await tableList.selectTable(Table.smokingRoom.sr1.name);
-        await bookOrder.setPax(2);
-        await bookOrder.selectSalesMode("AT EXCLUSIVE");
+    const makeOrder = async (salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario) => {
+        await bookOrder.selectSalesMode(salesMode);
         await bookOrder.bookAndOrder();
         await bookOrder.skipCustomerPhoneNumber();
     };
 
-    test.beforeEach(async ({terminalID, signPin, order, tableList}) => {
+    const paymentCashFull = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Cash);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.CashPayment);
+        await paymentV2.paymentFullAmount();
+        await paymentV2.actionPayment(PaymentList.ActionPayment.SavePayment);
+        await paymentV2.payPayment();
+        await paymentV2.closePopUpPaymentSuccessFul();
+    };
+
+
+    test.beforeEach(async ({terminalID, signPin, tableList, order, sideNavBar}) => {
         const testWithAuthentication = [
-            "[TC_0205190] Validate Logic when User can Hold menu before Save Order",
-            "[TC_0205198] Validate Logic when User cannot Hold/Hold all and/or Fire/Fire all the menu while not having access"
+            "[TC_0205226] Validate Logic when User can Hold menu before Save Order",
+            "[TC_0205234] Validate Logic when User cannot Hold/Hold all and/or Fire/Fire all the menu while not having access"
         ];
 
         if (testWithAuthentication.includes(test.info().title)) {
-            if (test.info().title === "[TC_0205190] Validate Logic when User can Hold menu before Save Order") {
+            if (test.info().title === testWithAuthentication[0]) {
                 await order.activateKitchenFireManagement();
                 await terminalID.goHere();
                 await terminalID.performTerminalID();
                 await signPin.inputPinByTouch("22");
                 await signPin.validateShowStarCash("20.000");
                 await signPin.storeAuthState();
-            } else if (test.info().title === "[TC_0205198] Validate Logic when User cannot Hold/Hold all and/or Fire/Fire all the menu while not having access") {
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.selectStation("KASIR");
+                await sideNavBar.gotoPageTableList();
+
+            } else if ([
+                testWithAuthentication[1]
+            ].includes(test.info().title)) {
                 await order.notActivateKitchenFireManagement();
                 await terminalID.goHere();
                 await terminalID.performTerminalID();
                 await signPin.inputPinByTouch("22");
                 await signPin.validateShowStarCash("20.000");
                 await signPin.storeAuthState();
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.selectStation("KASIR");
+                await sideNavBar.gotoPageTableList();
+
             }
         } else {
-            await order.activateKitchenFireManagement();
             await tableList.goHere();
         }
     });
@@ -77,16 +85,19 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         ]);
     });
 
-    test("[TC_0205190] Validate Logic when User can Hold menu before Save Order",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
-            await selectTable(tableList, bookOrder);
-            await selectMenuBiasa(order);
-            await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
-        }
-    );
+    test("[TC_0205226] Validate Logic when User can Hold menu before Save Order",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order);
+                await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+            }, {tableList, bookOrder, order}, testInfo);
+        });
 
-    test("[TC_0205191] Validate Logic when User can Hold all menu before Save Order",
+    test("[TC_0205227] Validate Logic when User can Hold all menu before Save Order",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
             await selectTable(tableList, bookOrder);
             await selectMultipleMenuBiasa(order);
@@ -96,7 +107,7 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         }
     );
 
-    test("[TC_0205192] Validate Logic when User can Fire menu after Save Order",
+    test("[TC_0205228] Validate Logic when User can Fire menu after Save Order",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
             await selectTable(tableList, bookOrder);
             await selectMenuBiasa(order);
@@ -109,7 +120,7 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         }
     );
 
-    test("[TC_0205193] Validate Logic when User can Fire all menu after Save Order",
+    test("[TC_0205229] Validate Logic when User can Fire all menu after Save Order",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
             await selectTable(tableList, bookOrder);
             await selectMultipleMenuBiasa(order);
@@ -124,7 +135,7 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         }
     );
 
-    test("[TC_0205194] Validate Logic when User cannot Hold menu after Save Order",
+    test("[TC_0205230] Validate Logic when User cannot Hold menu after Save Order",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
             await selectTable(tableList, bookOrder);
             await selectMenuBiasa(order);
@@ -136,7 +147,7 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         }
     );
 
-    test("[TC_0205195] Validate Logic when User cannot Hold all menu after Save Order",
+    test("[TC_0205231] Validate Logic when User cannot Hold all menu after Save Order",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
             await selectTable(tableList, bookOrder);
             await selectMultipleMenuBiasa(order);
@@ -148,7 +159,7 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         }
     );
 
-    test("[TC_0205196] Validate Logic when User cannot Fire menu before user Hold and Save Order",
+    test("[TC_0205232] Validate Logic when User cannot Fire menu before user Hold and Save Order",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
             await selectTable(tableList, bookOrder);
             await selectMenuBiasa(order);
@@ -160,7 +171,7 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         }
     );
 
-    test("[TC_0205197] Validate Logic when User cannot Fire all before user Hold and Save Order",
+    test("[TC_0205233] Validate Logic when User cannot Fire all before user Hold and Save Order",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
             await selectTable(tableList, bookOrder);
             await selectMultipleMenuBiasa(order);
@@ -172,7 +183,7 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         }
     );
 
-    test("[TC_0205198] Validate Logic when User cannot Hold/Hold all and/or Fire/Fire all the menu while not having access",
+    test("[TC_0205234] Validate Logic when User cannot Hold/Hold all and/or Fire/Fire all the menu while not having access",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
             await selectTable(tableList, bookOrder);
             await selectMultipleMenuBiasa(order);
@@ -187,7 +198,7 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         }
     );
 
-    test("[TC_0205199] Validate Logic when User can check table info for Holded menu that already ordered in menu Table List",
+    test("[TC_0205235] Validate Logic when User can check table info for Holded menu that already ordered in menu Table List",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
             await selectTable(tableList, bookOrder);
             await selectMenuBiasa(order);
@@ -199,7 +210,7 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         }
     );
 
-    test("[TC_0205200] Validate Logic when User cannot proceed to payment before Fire the menu",
+    test("[TC_0205236] Validate Logic when User cannot proceed to payment before Fire the menu",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
             await selectTable(tableList, bookOrder);
             await selectMenuBiasa(order);
@@ -212,7 +223,7 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         }
     );
 
-    test("[TC_0205201] Validate Logic when User cannot proceed to payment before Fire All the menu",
+    test("[TC_0205237] Validate Logic when User cannot proceed to payment before Fire All the menu",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
             await selectTable(tableList, bookOrder);
             await selectMultipleMenuBiasa(order);
