@@ -155,28 +155,44 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         });
 
     test("[TC_0205230] Validate Logic when User cannot Hold menu after Save Order",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
-            await selectTable(tableList, bookOrder);
-            await selectMenuBiasa(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.holdMenuButtonNotDisplayed(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, paymentV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, paymentV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.holdMenuButtonNotDisplayed(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {tableList, bookOrder, order, paymentV2}, testInfo);
+        });
 
     test("[TC_0205231] Validate Logic when User cannot Hold all menu after Save Order",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
-            await selectTable(tableList, bookOrder);
-            await selectMultipleMenuBiasa(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.holdAllMenuButtonNotDisplayed();
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, paymentV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, paymentV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 3, 4, 5);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.holdAllMenuButtonNotDisplayed();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {tableList, bookOrder, order, paymentV2}, testInfo);
+        });
 
     test("[TC_0205232] Validate Logic when User cannot Fire menu before user Hold and Save Order",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
