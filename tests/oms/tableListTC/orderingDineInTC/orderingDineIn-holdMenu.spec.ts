@@ -111,17 +111,25 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         });
 
     test("[TC_0205228] Validate Logic when User can Fire menu after Save Order",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
-            await selectTable(tableList, bookOrder);
-            await selectMenuBiasa(order);
-            await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.fireMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, paymentV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, paymentV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order);
+                await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await order.fireMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {tableList, bookOrder, order, paymentV2}, testInfo);
+        });
 
     test("[TC_0205229] Validate Logic when User can Fire all menu after Save Order",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
