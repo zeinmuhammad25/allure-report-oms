@@ -91,18 +91,18 @@ test.describe.serial("Ordering Dine In Move Item", () => {
     });
 
     test("[TC_0205182] Validate Logic when User can Move Item to the other table",
-        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, paymentV2},testInfo) => {
+        {tag: tags + "@positive"}, async ({bookOrder, order, tableList, moveItem, paymentV2}, testInfo) => {
             await safeTest(async ({bookOrder, order, tableList, moveItem, paymentV2}) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
-                await selectMenuBiasa(order,3);
+                await selectMenuBiasa(order, 3);
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await order.moveItem();
                 await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac2.name);
-                await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaBakar.name,2);
+                await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaBakar.name, 2);
                 await moveItem.actionApplyMoveItem();
                 await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaBakar.name, 3);
                 await order.printNowPrintingSetting();
@@ -113,7 +113,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            },{bookOrder, order, tableList, moveItem, paymentV2},testInfo)
+            }, {bookOrder, order, tableList, moveItem, paymentV2}, testInfo);
         });
 
     test("[TC_0205183] Validate Logic when User can Move Item to the other table with the same Table Section",
@@ -463,7 +463,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
         });
 
     test("[TC_0205196] Validate Logic when User cannot Move Item to the other filled table with different Sales Mode in different Table Section",
-        {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem},testInfo) => {
+        {tag: tags + "@negative"}, async ({bookOrder, order, tableList, moveItem}, testInfo) => {
             await safeTest(async ({bookOrder, order, tableList, moveItem}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
@@ -764,7 +764,7 @@ test.describe.serial("Ordering Dine In Move Item", () => {
                 await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac2.name);
                 await moveItem.movePartialItemMenu(MenuList.menus.atMenuBiasaRebus.name, 7);
                 await moveItem.actionApplyMoveItem();
-                await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaRebus.name,10);
+                await moveItem.verifyCurrentQty(MenuList.menus.atMenuBiasaRebus.name, 10);
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
