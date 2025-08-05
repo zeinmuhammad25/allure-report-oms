@@ -259,17 +259,20 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         });
 
     test("[TC_0205236] Validate Logic when User cannot proceed to payment before Fire the menu",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order},testInfo) => {
-            await selectTable(tableList, bookOrder);
-            await selectMenuBiasa(order);
-            await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.expectDisabledPayment();
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order);
+                await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.expectDisabledPayment();
+                await order.saveOrder();
+            }, {tableList, bookOrder, order}, testInfo);
+        });
 
     test("[TC_0205237] Validate Logic when User cannot proceed to payment before Fire All the menu",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
