@@ -6,6 +6,9 @@ import OrderScenario from "../../../../src/modules/oms/tableList/order/order.sce
 import EditOrderScenario from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.scenario";
 import AddOrderScenario from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.scenario";
 import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
+import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
+import PaymentList from "../../../../src/modules/oms/objects/paymentList";
+import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
 test.describe.serial("Dine in Link Table", () => {
@@ -56,6 +59,15 @@ test.describe.serial("Dine in Link Table", () => {
         ]);
     };
 
+    const paymentCashFull = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Cash);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.CashPayment);
+        await paymentV2.paymentFullAmount();
+        await paymentV2.actionPayment(PaymentList.ActionPayment.SavePayment);
+        await paymentV2.payPayment();
+        await paymentV2.closePopUpPaymentSuccessFul();
+    };
+
     test.beforeEach(async ({terminalID, signPin, tableList, order}) => {
         const testWithAuthentication = [
             "[TC_0205210] Validate Logic when User can Link Table to other table with the same Sales Mode",
@@ -97,25 +109,31 @@ test.describe.serial("Dine in Link Table", () => {
     });
 
     test("[TC_0205210] Validate Logic when User can Link Table to other table with the same Sales Mode",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrder}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await linkTable.singleLinkTable();
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 2, 3, 4);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await linkTable.singleLinkTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo);
+        });
 
     test("[TC_0205211] Validate Logic when User can Link Table to other table with different Sales Mode",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, editOrder}) => {
