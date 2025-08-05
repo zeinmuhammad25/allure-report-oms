@@ -496,33 +496,32 @@ test.describe.serial("Dine in Link Table", () => {
         });
 
     test("[TC_0205222] Validate Logic when User cannot Link Table while not having access",
-        {tag: tags + "@Negative"}, async ({topNavBar, signPin, tableList, bookOrder, order, addOrder}) => {
-            await topNavBar.userSignOut();
-            await signPin.inputPinByTouch("6");
-            await signPin.validateShowStarCash("20.000");
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.disabledLinkTable();
-            await order.cancelTable("Cancel");
-            await order.confirmationCloseTable("Yes");
-            await topNavBar.userSignOut();
-            await signPin.inputPinByTouch("22");
-            await signPin.validateShowStarCash("20.000");
-            await signPin.storeAuthState();
-        }
-    );
+        {tag: tags + "@Negative"}, async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo) => {
+            await safeTest(async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2}) => {
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("6");
+                await signPin.validateShowStarCash("20.000");
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 3, 4, 5);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.disabledLinkTable();
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+            }, {topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo);
+        });
 
     test("[TC_02052222] Validate Logic when User cannot Unlink the Link Table from Child/Linked Table",
         {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, editOrder}) => {
