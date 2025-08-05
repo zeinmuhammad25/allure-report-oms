@@ -460,41 +460,42 @@ test.describe.serial("Dine in Link Table", () => {
             }, {tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2}, testInfo);
         });
 
-    test("[TC_0205220] Validate Logic when User cannot access payment on Link Table with Split Bill table from Child (Splitted) Split Bill",
-        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, addOrder, splitBill}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await linkTable.singleLinkTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.splitBill();
-            await splitBill.addBill("split");
-            await splitBill.moveMenu("split", MenuList.menus.atMenuBiasaBakar.name, "3");
-            await splitBill.closeSplitBill();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await tableList.selectTableSplitBill("Bill 2");
-            await order.expectDisabledPayment();
-            await order.cancelTable("Cancel");
-            await order.confirmationCloseTable("Yes");
-        }
-    );
+    test("[TC_0205221] Validate Logic when User cannot access payment on Link Table with Split Bill table from Child (Splitted) Split Bill",
+        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, addOrderV2, splitBill}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2, splitBill}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 5, 5, 6);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await linkTable.singleLinkTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.splitBill();
+                await splitBill.addBill("split");
+                await splitBill.moveMenu("split", MenuList.menus.atMenuBiasaBakar.name, "3");
+                await splitBill.closeSplitBill();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await tableList.selectTableSplitBill("Bill 2");
+                await order.expectDisabledPayment();
+                await order.cancelTable("Cancel");
+                await order.confirmationCloseTable("Yes");
+            }, {tableList, bookOrder, order, linkTable, addOrderV2, splitBill}, testInfo);
+        });
 
-    test("[TC_0205221] Validate Logic when User cannot Link Table while not having access",
+    test("[TC_0205222] Validate Logic when User cannot Link Table while not having access",
         {tag: tags + "@Negative"}, async ({topNavBar, signPin, tableList, bookOrder, order, addOrder}) => {
             await topNavBar.userSignOut();
             await signPin.inputPinByTouch("6");
