@@ -4,7 +4,7 @@ import BaseScenario from "./base-scenario";
 import BaseUrl from "./base-url";
 import {Keyboard} from "./constants/Keyboard";
 import BaseConfigs from "./base-configs";
-import Helper from "./utils/helper";
+import {ConnectionOptions, createConnection} from "mysql2/promise";
 
 export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs> implements BaseScenario {
     protected readonly _page: Page;
@@ -123,6 +123,13 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
     public expectTextVisible(text: string, exact: boolean = false): Promise<void> {
         console.log(`expect text visible:  ${text} | exact : ${exact}`);
         return expect(this._page.getByText(text, {exact: exact})).toBeVisible();
+    }
+
+    public async expectTextVisibleTimout(text: string, exact: boolean = false, timeout: number = 10000): Promise<void> {
+        console.log(`Expecting text visible: '${text}' | exact: ${exact}`);
+        const locator = this._page.getByText(text, {exact});
+        await locator.waitFor({state: "visible", timeout});
+        return expect(locator).toBeVisible();
     }
 
     protected expectTextInvisible(text: string, exact: boolean = false): Promise<void> {
@@ -255,52 +262,121 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.locator(selector);
     }
 
-    public async setGeoLocation(latitude: number, longitude: number): Promise<void> {
-        await this._page.context().setGeolocation({latitude: latitude, longitude: longitude});
-        await this._page.context().grantPermissions(['geolocation']);
+    public async makeApiRequest<T>(endpoint: string, options: {method?: string, headers?: Record<string, string>, body?: any, baseUrl?: string} = {}):
+        Promise<{ status: number; statusText: string; data: T }> {
+        console.log(`Making API request to: ${endpoint}`);
+        const { method = "GET", headers = {}, body, baseUrl = this.baseUrl} = options;
+        return this._page.evaluate(async ({ endpoint, method, headers, body }) => {
+            try {
+                const response = await fetch(endpoint, {
+                    method,
+                    headers,
+                    body: body ? JSON.stringify(body) : undefined,
+                });
+
+                const contentType = response.headers.get("content-type");
+                let data;
+
+                if (contentType && contentType.includes("application/json")) {
+                    data = await response.json();
+                } else {
+                    data = await response.text();
+                }
+
+                return {
+                    status: response.status,
+                    statusText: response.statusText,
+                    data,
+                };
+            } catch (error) {
+                console.error("Error during API request:", error);
+                throw error;
+            }
+        }, { endpoint: baseUrl + endpoint, method, headers, body });
     }
 
-    public async expectHasOneElement(selector: string) {
-        console.log(`expect only one element:  ${selector}`);
-        return expect(this._page.locator(selector).count()).toBe(1);
-    }
-
-    public async expectHasElements(selector: string) {
-        console.log(`expect one or more element:  ${selector}`);
-        return expect(await this._page.locator(selector).count()).toBeGreaterThanOrEqual(1)
-    }
-
-    public async expectHasEmptyElement(selector: string) {
-        console.log(`expect empty element:  ${selector}`);
-        return expect(await this._page.locator(selector).count()).toBe(0);
+    public async sqlExecute(dbConfig:ConnectionOptions, query:string):Promise<any> {
+        const connection = await createConnection(dbConfig);
+        try {
+            console.log("Connected to the database");
+            const result = await connection.execute(query);
+            console.log("Query executed successfully");
+            return result;
+        } catch (error) {
+            console.error("Error executing query:", error);
+        } finally {
+            await connection.end();
+        }
     }
 
     public async setLocalStorage(key: string, value: string): Promise<void> {
-        console.log(`set local storage key: ${key} and value : ${value} `);
-        return this._page.evaluate(({key, value}) => localStorage.setItem(key, value), ({key, value}));
+        try {
+            console.log(`Set local Storage "${key}" :"${value}"`);
+            await this._page.evaluate(async ([key, value]) => localStorage.setItem(key, value), [key, value])
+            console.log("Success set local Storage");
+        } catch (error) {
+            console.error("Error executing query:", error);
+        }
     }
 
-    public async getLocalStorage(key: string) {
-        console.log(`get local storage key: ${key}`);
-        return this._page.evaluate((key) => localStorage.getItem(key), key);
+    public async getLocalStorage(key: string): Promise<string> {
+        try {
+            console.log(`Get local Storage of "${key}"`);
+            const result = await this._page.evaluate((key) => localStorage.getItem(key), key);
+            console.log(`Success Get local Storage "${key}" : "${result}"`);
+            return result;
+        } catch (error) {
+            console.error("Error executing query:", error);
+        }
     }
 
-    public async removeLocalStorage(key: string) {
-        console.log(`remove local storage key: ${key}`);
-        return this._page.evaluate((key) => localStorage.removeItem(key), key);
+    public async removeLocalStorage(key: string): Promise<void> {
+        try {
+            console.log(`Remove local Storage of "${key}"`);
+            await this._page.evaluate((key) => localStorage.removeItem(key), key);
+            console.log(`Success remove local Storage of "${key}"`);
+        } catch (error) {
+            console.error("Error executing query:", error);
+        }
     }
 
-    public async clearLocalStorage() {
-        console.log(`remove all local storage`);
-        return this._page.evaluate(() => localStorage.clear())
+    public async clearLocalStorage(): Promise<void> {
+        try {
+            console.log(`Remove local Storage`);
+            await this._page.evaluate(() => localStorage.clear());
+            console.log(`Success clear all local Storage`);
+        } catch (error) {
+            console.error("Error executing query:", error);
+        }
     }
 
-    public async expectOpenNewTab(url: string) {
-        const newTabPromise = this._page.waitForEvent("popup");
-        const newTab = await newTabPromise;
-        await newTab.waitForLoadState();
-        console.log(`open url in new tab: ${url}`);
-        await expect(newTab).toHaveURL(url);
+    public async getAllLocalStorage(): Promise<object> {
+        try {
+            console.log(`Get All local Storage`);
+            return await this._page.evaluate(() => {
+                const allLocalStorage = {};
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    allLocalStorage[key] = localStorage.getItem(key);
+                }
+                return allLocalStorage;
+            });
+        } catch (error) {
+            console.error("Error executing query:", error);
+        }
     }
+
+    public async getInputValue(locator: string): Promise<string> {
+        return await this._page.locator(locator).inputValue();
+    }
+
+    public async getTextValue(locator: string): Promise<string> {
+        console.log(`Getting text value from locator: ${locator}`);
+        return await this._page.locator(locator).innerText();
+    }
+
+
+
+
 
 }

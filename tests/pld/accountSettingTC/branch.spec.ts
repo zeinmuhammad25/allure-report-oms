@@ -1,16 +1,16 @@
 import {test} from "@playwright/test";
 import LoginPage from "../../../src/modules/pld/login/login.page";
-import BranchPage from "../../../src/modules/pld/accountSetting/branch/branch.page";
+import BranchPage from "../../../src/modules/pld/branchSetting/branch/branch.page";
 import BranchTabMainPage
-    from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabMain/branchTabMain.page";
+    from "../../../src/modules/pld/branchSetting/branch/branchTabs/branchTabMain/branchTabMain.page";
 import BranchTabTransactionPage
-    from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabTransaction/branchTabTransaction.page";
+    from "../../../src/modules/pld/branchSetting/branch/branchTabs/branchTabTransaction/branchTabTransaction.page";
 import BranchTabSalesModePage
-    from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabSalesMode/branchTabSalesMode.page";
+    from "../../../src/modules/pld/branchSetting/branch/branchTabs/branchTabSalesMode/branchTabSalesMode.page";
 import BranchTabSettingPOSPage
-    from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabSettingPOS/branchTabSettingPOS.page";
+    from "../../../src/modules/pld/branchSetting/branch/branchTabs/branchTabSettingPOS/branchTabSettingPOS.page";
 import BranchTabNotePage
-    from "../../../src/modules/pld/accountSetting/branch/branchTabs/branchTabNote/branchTabNote.page";
+    from "../../../src/modules/pld/branchSetting/branch/branchTabs/branchTabNote/branchTabNote.page";
 
 
 test.describe.serial('Printer Tests', () => {

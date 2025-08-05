@@ -115,9 +115,6 @@ export default class LoginPage extends BasePosLitePage implements LoginScenario 
         await this.expectEnabled(LoginLocator.loginButton);
         await this.click(LoginLocator.loginButton);
         await this.waitForUrl(`${process.env.BASE_URL}${Urls.dashboard}`);
-        if (await this.isEnabled(DashboardLocator.buttonLater2)) {
-            await this.click(DashboardLocator.buttonLater2);
-        }
     }
 
 }
