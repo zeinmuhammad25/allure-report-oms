@@ -225,19 +225,22 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         });
 
     test("[TC_0205234] Validate Logic when User cannot Hold/Hold all and/or Fire/Fire all the menu while not having access",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
-            await selectTable(tableList, bookOrder);
-            await selectMultipleMenuBiasa(order);
-            await order.holdMenuButtonNotDisplayed(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.holdAllMenuButtonNotDisplayed();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.fireMenuButtonNotDisplayed(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.fireAllMenuButtonNotDisplayed();
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 4, 4, 4);
+                await order.holdMenuButtonNotDisplayed(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.holdAllMenuButtonNotDisplayed();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await order.fireMenuButtonNotDisplayed(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.fireAllMenuButtonNotDisplayed();
+                await order.saveOrder();
+            }, {tableList, bookOrder, order}, testInfo);
+        });
 
     test("[TC_0205235] Validate Logic when User can check table info for Holded menu that already ordered in menu Table List",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
