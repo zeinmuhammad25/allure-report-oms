@@ -79,6 +79,12 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         await this.expectHasValue(selector, value);
     }
 
+    public async fillPhone(selector: string, value: string, lastComplete: boolean = true): Promise<void> {
+        console.log(`fill ${selector} with ${value}`);
+        await this._page.fill(selector, value);
+        await this.expectHasValue(selector, Helper.formatPhoneNumber(value, lastComplete));
+    }
+
     public click(selector: string): Promise<void> {
         console.log(`click : ${selector}`);
         return this._page.click(selector);
@@ -245,8 +251,8 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.getByText(text).isVisible();
     }
 
-    protected async expectDownloadFile(filename: string, extension:string): Promise<void> {
-        const download =  await this._page.waitForEvent('download');
+    protected async expectDownloadFile(filename: string, extension: string): Promise<void> {
+        const download = await this._page.waitForEvent('download');
         const downloadedFile = download.suggestedFilename()
         console.log(`check if file Downloaded: ${filename}%${extension}`);
         return expect(downloadedFile.startsWith(filename) && downloadedFile.endsWith(extension)).toBe(true);
@@ -256,11 +262,16 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return this._page.locator(selector);
     }
 
-    public async makeApiRequest<T>(endpoint: string, options: {method?: string, headers?: Record<string, string>, body?: any, baseUrl?: string} = {}):
+    public async makeApiRequest<T>(endpoint: string, options: {
+        method?: string,
+        headers?: Record<string, string>,
+        body?: any,
+        baseUrl?: string
+    } = {}):
         Promise<{ status: number; statusText: string; data: T }> {
         console.log(`Making API request to: ${endpoint}`);
-        const { method = "GET", headers = {}, body, baseUrl = this.baseUrl} = options;
-        return this._page.evaluate(async ({ endpoint, method, headers, body }) => {
+        const {method = "GET", headers = {}, body, baseUrl = this.baseUrl} = options;
+        return this._page.evaluate(async ({endpoint, method, headers, body}) => {
             try {
                 const response = await fetch(endpoint, {
                     method,
@@ -286,10 +297,10 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
                 console.error("Error during API request:", error);
                 throw error;
             }
-        }, { endpoint: baseUrl + endpoint, method, headers, body });
+        }, {endpoint: baseUrl + endpoint, method, headers, body});
     }
 
-    public async sqlExecute(dbConfig:ConnectionOptions, query:string):Promise<any> {
+    public async sqlExecute(dbConfig: ConnectionOptions, query: string): Promise<any> {
         const connection = await createConnection(dbConfig);
         try {
             console.log("Connected to the database");
@@ -369,8 +380,34 @@ export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs>
         return await this._page.locator(locator).innerText();
     }
 
+    public async setGeoLocation(latitude: number, longitude: number): Promise<void> {
+        await this._page.context().setGeolocation({latitude: latitude, longitude: longitude});
+        await this._page.context().grantPermissions(['geolocation']);
+    }
+
+    public async expectHasOneElement(selector: string) {
+        console.log(`expect only one element:  ${selector}`);
+        return expect(this._page.locator(selector).count()).toBe(1);
+    }
+
+    public async expectHasElements(selector: string) {
+        console.log(`expect one or more element:  ${selector}`);
+        return expect(await this._page.locator(selector).count()).toBeGreaterThanOrEqual(1)
+    }
+
+    public async expectHasEmptyElement(selector: string) {
+        console.log(`expect empty element:  ${selector}`);
+        return expect(await this._page.locator(selector).count()).toBe(0);
+    }
+
+    public async expectOpenNewTab(url: string) {
+        const newTabPromise = this._page.waitForEvent("popup");
+        const newTab = await newTabPromise;
+        await newTab.waitForLoadState();
+        console.log(`open url in new tab: ${url}`);
+        await expect(newTab).toHaveURL(url);
 
 
-
+    }
 
 }
