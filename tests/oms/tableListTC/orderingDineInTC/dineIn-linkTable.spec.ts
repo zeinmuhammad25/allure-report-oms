@@ -72,7 +72,7 @@ test.describe.serial("Dine in Link Table", () => {
         const testWithAuthentication = [
             "[TC_0205210] Validate Logic when User can Link Table to other table with the same Sales Mode",
             "[TC_0205216] Validate Logic when User cannot Link Table while the other table doing Hold",
-            "[TC_0205224] Validate Logic when User cannot Link Table after Hold the menu",
+            "[TC_0205225] Validate Logic when User cannot Link Table after Hold the menu",
             "[TC_0205225] Validate Logic when User cannot Link Table after Hold All the menu"
         ];
 
@@ -495,7 +495,7 @@ test.describe.serial("Dine in Link Table", () => {
             }, {tableList, bookOrder, order, linkTable, addOrderV2, splitBill}, testInfo);
         });
 
-    test("[TC_02052223] Validate Logic when User cannot Link Table while not having access",
+    test("[TC_0205223] Validate Logic when User cannot Link Table while not having access",
         {tag: tags + "@Negative"}, async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo) => {
             await safeTest(async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2}) => {
                 await topNavBar.userSignOut();
@@ -523,7 +523,7 @@ test.describe.serial("Dine in Link Table", () => {
             }, {topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo);
         });
 
-    test("[TC_02052224] Validate Logic when User cannot Unlink the Link Table from Child/Linked Table",
+    test("[TC_0205224] Validate Logic when User cannot Unlink the Link Table from Child/Linked Table",
         {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, addOrderV2},testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -550,26 +550,27 @@ test.describe.serial("Dine in Link Table", () => {
         });
 
 
-    test("[TC_0205224] Validate Logic when User cannot Link Table after Hold the menu",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrder}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.holdMenu(MenuList.menus.atMenuBiasaBakar.name);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await linkTable.userMultiLinkTable();
-        }
-    );
+    test("[TC_0205225] Validate Logic when User cannot Link Table after Hold the menu",
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order,4,5,6);
+                await order.holdMenu(MenuList.menus.atMenuBiasaBakar.name);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await linkTable.userMultiLinkTable();
+            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+        });
 
     test("[TC_0205225] Validate Logic when User cannot Link Table after Hold All the menu",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrder}) => {
