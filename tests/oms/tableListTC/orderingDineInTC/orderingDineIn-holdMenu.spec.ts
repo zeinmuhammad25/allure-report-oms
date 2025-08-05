@@ -195,16 +195,19 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         });
 
     test("[TC_0205232] Validate Logic when User cannot Fire menu before user Hold and Save Order",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
-            await selectTable(tableList, bookOrder);
-            await selectMenuBiasa(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await order.fireMenuButtonNotDisplayed(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr3.name);
+                await order.fireMenuButtonNotDisplayed(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+            }, {tableList, bookOrder, order}, testInfo);
+        });
 
     test("[TC_0205233] Validate Logic when User cannot Fire all before user Hold and Save Order",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
