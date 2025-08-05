@@ -71,7 +71,7 @@ test.describe.serial("Dine in Link Table", () => {
     test.beforeEach(async ({terminalID, signPin, tableList, order}) => {
         const testWithAuthentication = [
             "[TC_0205210] Validate Logic when User can Link Table to other table with the same Sales Mode",
-            "[TC_0205223] Validate Logic when User cannot Link Table while the other table doing Hold",
+            "[TC_0205216] Validate Logic when User cannot Link Table while the other table doing Hold",
             "[TC_0205224] Validate Logic when User cannot Link Table after Hold the menu",
             "[TC_0205225] Validate Logic when User cannot Link Table after Hold All the menu"
         ];
@@ -277,6 +277,28 @@ test.describe.serial("Dine in Link Table", () => {
             }, {tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo);
         });
 
+    test("[TC_0205216] Validate Logic when User cannot Link Table while the other table doing Hold",
+        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 1, 4, 5);
+                await order.holdAllMenu();
+                await order.confirmationCloseTable("Yes");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await linkTable.userMultiLinkTable();
+            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+        });
 
     test("[TC_0205216] Validate Logic when User cannot Link Table while the Link Table on the other table already applied",
         {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, addOrder}) => {
