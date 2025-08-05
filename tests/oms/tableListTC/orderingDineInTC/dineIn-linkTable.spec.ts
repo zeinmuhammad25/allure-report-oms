@@ -495,7 +495,7 @@ test.describe.serial("Dine in Link Table", () => {
             }, {tableList, bookOrder, order, linkTable, addOrderV2, splitBill}, testInfo);
         });
 
-    test("[TC_0205222] Validate Logic when User cannot Link Table while not having access",
+    test("[TC_02052223] Validate Logic when User cannot Link Table while not having access",
         {tag: tags + "@Negative"}, async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo) => {
             await safeTest(async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2}) => {
                 await topNavBar.userSignOut();
@@ -523,31 +523,31 @@ test.describe.serial("Dine in Link Table", () => {
             }, {topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo);
         });
 
-    test("[TC_02052222] Validate Logic when User cannot Unlink the Link Table from Child/Linked Table",
-        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, editOrder}) => {
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await makeOrder("AT EXCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
-            await orderMenuExtraWhisky(order, editOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr2.name);
-            await linkTable.userMultiLinkTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.smokingRoom.name);
-            await tableList.selectTable(Table.smokingRoom.sr1.name);
-            await linkTable.userMultiLinkTable();
-        }
-    );
+    test("[TC_02052224] Validate Logic when User cannot Unlink the Link Table from Child/Linked Table",
+        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, addOrderV2},testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order,5,5,5);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await selectMenuExtra(order, addOrderV2, 4);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr2.name);
+                await linkTable.userMultiLinkTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await linkTable.userMultiLinkTable();
+            },{tableList, bookOrder, order, linkTable, addOrderV2},testInfo)
+        });
 
 
     test("[TC_0205224] Validate Logic when User cannot Link Table after Hold the menu",
