@@ -3,8 +3,8 @@ import BaseLocator from "../../../../base/base-locator";
 export default class OrderLocator extends BaseLocator {
     static memberPhoneButton: string = "//button//mat-icon[@class='mat-icon notranslate material-icons mat-icon-no-color']";
     static memberPhoneField: string = "//app-sales-contact-info//input";
-    static memberPhoneApplyButton: string = "//app-sales-contact-info//button//span[normalize-space()='Apply']";
-    static memberPhoneCancelButton: string = "//app-sales-contact-info//button//span[normalize-space()='Cancel']";
+    static memberPhoneApplyButton: string = "//app-sales-contact-info//button[normalize-space()='Apply']";
+    static memberPhoneCancelButton: string = "//app-sales-contact-info//button[normalize-space()='Cancel']";
     static additionalInfoField: string =
         "//app-order//input[@placeholder='Information will be printed on checker printout']";
     static editTableButton: string = "//button//i[@class='glyphicon glyphicon-user mr-3']";
@@ -30,8 +30,15 @@ export default class OrderLocator extends BaseLocator {
     private static bottomDisabledButton = (label: string): string => `//button[@disabled and normalize-space()='${label}']`;
     static saveOrderButton: string = this.bottomButton("Save Order");
     static printBillButton: string = this.bottomButton("Print Bill");
-    static printCheckerButton: string = this.bottomButton("Checker");
+    static printBillNowButton: string = this.bottomButton("Print Now");
+    static printBillSplitPerPaxButton: string = this.bottomButton("Split per Pax");
+    static closePrintingSetting: string = "//div[contains(@class, 'cdk-overlay-backdrop')]";
+    static backSplitPerPax: string = "//button//span//img[@src='assets/images/icon-chevron-single-left-black.png']";
+    static inputNumberOfPax: string = "//input[@placeholder='1']";
+    static printSplitPerPax: string = this.bottomButton("Print");
+    static cancelSplitPerPax: string = this.bottomButton("Cancel");
 
+    static printCheckerButton: string = this.bottomButton("Checker");
     static mergeTableButton: string = this.bottomButton("Merge Table");
     static mergeTableDisabledButton: string = this.bottomDisabledButton("Merge Table");
     static moveTableButton: string = this.bottomButton("Move Table");

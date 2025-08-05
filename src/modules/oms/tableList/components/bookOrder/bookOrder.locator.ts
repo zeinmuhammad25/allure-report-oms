@@ -10,6 +10,7 @@ export default class BookOrderLocator extends BaseLocator {
     static bookScanAndApplyButton = (action: "Apply" | "Scan / Input"): string => `//span[normalize-space()='${action}']`;
     static bookTableTab = "//app-table-open//button[normalize-space()='Book Table']";
     static bookingListTab = "//app-table-open//button[normalize-space()='Booking List']";
+    static popUpCustomerData = "//div[contains(@class, 'modal-header')]//h4[normalize-space()='Customer Data']";
     static customerDataPhoneField = "//app-sales-contact-info//input[@placeholder='8xx xxx xxx']";
     static laterCustomerDataButton = "//app-sales-contact-info//button[normalize-space()='Later']";
     static CustomerDataApplyButton = "//app-sales-contact-info//button[normalize-space()='Apply']";

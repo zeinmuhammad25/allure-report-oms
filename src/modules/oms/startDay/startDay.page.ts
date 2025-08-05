@@ -45,19 +45,19 @@ export default class StartDayPage extends BaseOmsPage implements StartDayScenari
         const onVisible = async () => {
             console.log("Success StartDay");
 
-            const buttonOk = await this.isVisible(StartDayLocator.getLocatorStartDay("Ok"));
+            const buttonOk = await this.isVisible(StartDayLocator.getLocatorStartDay("Close"));
 
             if (buttonOk) {
-                // If the locator exists, Click Ok
-                console.log("OK button is visible, click OK button");
-                await this.click(StartDayLocator.getLocatorStartDay("Ok"));
+                // If the locator exists, Click Close
+                console.log("Close button is visible, click Close button");
+                await this.click(StartDayLocator.getLocatorStartDay("Close"));
             } else {
-                // If OK locator is not found, log error
-                console.log("Error: OK button not found!");
+                // If Close locator is not found, log error
+                console.log("Error: Close button not found!");
             }
         };
 
-        await this.waitForVisible(StartDayLocator.notificationSuccess, onVisible, 10000, 5);
+        await this.waitForVisible(StartDayLocator.notificationSuccess, onVisible, 10000, 10);
         await this.waitForResponse("/table");
     }
 
