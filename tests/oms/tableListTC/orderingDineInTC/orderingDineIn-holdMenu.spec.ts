@@ -74,6 +74,7 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
 
             }
         } else {
+            await order.activateKitchenFireManagement();
             await tableList.goHere();
         }
     });
@@ -243,19 +244,22 @@ test.describe.serial("Ordering Dine In Hold Menu", () => {
         });
 
     test("[TC_0205235] Validate Logic when User can check table info for Holded menu that already ordered in menu Table List",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
-            await selectTable(tableList, bookOrder);
-            await selectMenuBiasa(order);
-            await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
-            await order.tableInfo();
-            await order.detailInfoHoldTable("SR 1");
-            await order.validateMenuInHoldTable("SR 1", MenuList.menus.atMenuBiasaGoreng.name);
-        }
-    );
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order);
+                await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+                await order.tableInfo();
+                await order.detailInfoHoldTable("SR 1");
+                await order.validateMenuInHoldTable("SR 1", MenuList.menus.atMenuBiasaGoreng.name);
+            }, {tableList, bookOrder, order}, testInfo);
+        });
 
     test("[TC_0205236] Validate Logic when User cannot proceed to payment before Fire the menu",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}) => {
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order},testInfo) => {
             await selectTable(tableList, bookOrder);
             await selectMenuBiasa(order);
             await order.holdMenu(MenuList.menus.atMenuBiasaGoreng.name);
