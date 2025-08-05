@@ -300,41 +300,42 @@ test.describe.serial("Dine in Link Table", () => {
             }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
         });
 
-    test("[TC_0205216] Validate Logic when User cannot Link Table while the Link Table on the other table already applied",
-        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, addOrder}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac2.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderMenuPaketMahal(order, addOrder);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await linkTable.userMultiLinkTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac4.name);
-            await makeOrder("AT INCLUSIVE", bookOrder);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac4.name);
-            await linkTable.userMultiLinkTable();
-        }
-    );
+    test("[TC_0205217] Validate Logic when User cannot Link Table while the Link Table on the other table already applied",
+        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 1, 2, 3);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await linkTable.userMultiLinkTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 2, 2, 2);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
+                await linkTable.userMultiLinkTable();
+            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+        });
 
     test("[TC_0205217] Validate Logic when User can Link Table with the Parent (Main) Split Bill table",
         {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrder, splitBill}) => {
@@ -342,7 +343,7 @@ test.describe.serial("Dine in Link Table", () => {
             await tableList.selectTable(Table.acRoom.ac1.name);
             await makeOrder("AT INCLUSIVE", bookOrder);
             await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
+            await orderSingleMenu(order,1,1,1);
             await order.saveOrder();
             await tableList.selectRoom(Table.acRoom.name);
             await tableList.selectTable(Table.acRoom.ac2.name);
