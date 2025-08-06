@@ -79,5 +79,18 @@ test.describe.serial("Transaction Edit Order", () => {
             }, {tableList, bookOrder, order}, testInfo);
         });
 
+    test("[TC_0205241] Validate logic POS when user edit Sales Mode within the order Page after order menu and the Sales Mode have default value",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.editSalesMode("AT INCLUSIVE", order);
+                await bookOrder.selectSalesMode("AT EXCLUSIVE", bookOrder);
+                await order.applySalesMode(order);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderSingleMenu(order, 2);
+            }, {tableList, bookOrder, order}, testInfo);
+        });
 
 });
