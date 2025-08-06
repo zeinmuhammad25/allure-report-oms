@@ -30,9 +30,9 @@ test.describe.serial("Transaction Edit Order", () => {
         await bookOrder.skipCustomerPhoneNumber();
     };
 
-    const orderSingleMenu = async (order: OrderScenario, qty1: number) => {
+    const orderSingleMenu = async (order: OrderScenario, qty: number) => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty1);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty);
     };
 
     test("[TC_0205238] Validate logic POS when user edit Sales Mode within the Order Page before order menu",
