@@ -28,5 +28,17 @@ test.describe.serial("Transaction Edit Order", () => {
         await bookOrder.skipCustomerPhoneNumber();
     };
 
+    test("[TC_0205238] Validate logic POS when user edit Sales Mode within the Order Page before order menu",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.editSalesMode("AT INCLUSIVE", order);
+                await bookOrder.selectSalesMode("AT EXCLUSIVE", bookOrder);
+                await order.applySalesMode(order);
+            }, {tableList, bookOrder, order}, testInfo);
+        });
+
 
 });
