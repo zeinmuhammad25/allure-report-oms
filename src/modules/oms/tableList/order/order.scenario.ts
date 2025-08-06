@@ -10,6 +10,10 @@ export default interface OrderScenario extends BaseScenario {
 
     addPromotion(): Promise<void>;
 
+    editSalesMode(modeName: string): Promise<void>;
+
+    applySalesMode(): Promise<void>;
+
     // Menu Action
     selectCategoryMenu(categoryName: string): Promise<void>;
 
