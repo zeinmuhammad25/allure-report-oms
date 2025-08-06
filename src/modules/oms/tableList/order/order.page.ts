@@ -53,6 +53,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     async applySalesMode(): Promise<void> {
         await this.expectVisible(OrderLocator.buttonApplySalesMode);
         await this.click(OrderLocator.buttonApplySalesMode);
+        await this.wait(200);
     }
 
     async selectCategoryMenu(categoryName: string): Promise<void> {
