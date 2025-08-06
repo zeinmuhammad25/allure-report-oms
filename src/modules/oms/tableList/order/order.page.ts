@@ -45,6 +45,16 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.click(OrderLocator.addPromotionButton);
     }
 
+    async editSalesMode(modeName: string): Promise<void> {
+        await this.expectVisible(OrderLocator.salesModeButton(modeName));
+        await this.click(OrderLocator.salesModeButton(modeName));
+    }
+
+    async applySalesMode(): Promise<void> {
+        await this.expectVisible(OrderLocator.buttonApplySalesMode);
+        await this.click(OrderLocator.buttonApplySalesMode);
+    }
+
     async selectCategoryMenu(categoryName: string): Promise<void> {
         await this.expectVisible(OrderLocator.categoryButton(categoryName));
         await this.click(OrderLocator.categoryButton(categoryName));
@@ -93,7 +103,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async printNowPrintingSetting(): Promise<void> {
-        await this.wait(100)
+        await this.wait(100);
         await this.expectVisible(OrderLocator.printBillButton);
         await this.click(OrderLocator.printBillButton);
         await this.expectVisible(OrderLocator.printBillNowButton);
@@ -255,7 +265,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.expectVisible(OrderLocator.buttonConfirmCloseTable(action));
         await this.click(OrderLocator.buttonConfirmCloseTable(action));
         await this.waitForResponse("/table");
-        await this.wait(800)
+        await this.wait(800);
     }
 
     async validateMenuNotVisible(menu: string): Promise<void> {

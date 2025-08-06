@@ -12,6 +12,9 @@ export default class OrderLocator extends BaseLocator {
     static editTablePaxField: string = "(//app-number-input//input)[1]";
     static editTableTimeOutField: string = "(//app-number-input//input)[2]";
     static addPromotionButton: string = "//button[span[normalize-space()='Add Promotion']]";
+    static salesModeButton = (salesMode:string): string => `//button[@class='flex-grow-1 mb-2 mat-flat-button mat-primary' and contains(., '${salesMode}')]`;
+    static buttonApplySalesMode: string = "//button[normalize-space()='Apply']";
+
 
     static clickMenu = (menu: string): string => `//div[contains(@class, 'd-flex table-cell hover')]//span[contains(text(), '${menu}')]`;
     static buttonConfirmCloseTable = (action: string): string => `//span[normalize-space()='${action}']`;
