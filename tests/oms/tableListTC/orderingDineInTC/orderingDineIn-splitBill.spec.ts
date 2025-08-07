@@ -198,26 +198,38 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
             }, {tableList, bookOrder, order, splitBill, paymentV2}, testInfo);
         });
 
-    test("[TC_0205152] Validate Logic when User can Split Bill only 1 ordered menu",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill}) => {
-            await selectFirstTable(tableList, bookOrder);
-            await selectMultipleMenuBiasa(order);
-            await order.addAdditionalInfo("Nadin Parent");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.splitBill();
-            await splitBill.addBill("Alpha Child");
-            await splitBill.moveMenu("Alpha Child", MenuList.menus.atMenuBiasaGoreng.name, "1");
-            await splitBill.closeSplitBill();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await tableList.selectTableSplitBill("Bill 2");
-            await order.validateMenuVisible(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.saveOrder();
-        }
-    );
+    test("[TC_0205246] Validate Logic when User can Split Bill only 1 ordered menu",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill, paymentV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, splitBill, paymentV2}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 6, 6, 6);
+                await order.addAdditionalInfo("HEAD");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.splitBill();
+                await splitBill.addBill("CHILD");
+                await splitBill.moveMenu("CHILD", MenuList.menus.atMenuBiasaBakar.name, "1");
+                await splitBill.closeSplitBill();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.expectVisibleCustomerName("CHILD");
+                await tableList.selectTableSplitBill("Bill 2");
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentQrESB(paymentV2);
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.expectVisibleCustomerName("HEAD");
+                await tableList.selectTableSplitBill("Main Bill");
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentQrESB(paymentV2);
+            }, {tableList, bookOrder, order, splitBill, paymentV2}, testInfo);
+        });
 
     test("[TC_0205153] Validate Logic when User can Split Bill the main bill after split the bill",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill}) => {
