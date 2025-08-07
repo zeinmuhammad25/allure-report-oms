@@ -612,33 +612,36 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
             }, {tableList, bookOrder, order, mergeTable, splitBill, paymentV2}, testInfo);
         });
 
-    test("[TC_0205167] Validate Logic when User cannot Split Bill the Child Merge Table",
-        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, splitBill}) => {
-            await selectFirstTable(tableList, bookOrder);
-            await selectMultipleMenuBiasa(order, true, 3);
-            await order.addAdditionalInfo("Nadin Parent");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.mergeTable();
-            await mergeTable.selectRoom(Table.acRoom.name);
-            await mergeTable.selectTable(Table.acRoom.ac2.name, "active");
-            await mergeTable.applyMergeTable();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.splitBill();
-            await splitBill.addBill("Alpha Child");
-            await splitBill.moveMenu("Alpha Child", MenuList.menus.atMenuBiasaGoreng.name, "1");
-            await splitBill.closeSplitBill();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await tableList.selectTableSplitBill("Bill 2");
-            await order.disabledSplitBill();
-            await order.saveOrder();
-        }
-    );
+    test("[TC_0205261] Validate Logic when User cannot Split Bill the Child Merge Table",
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, mergeTable, splitBill}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, mergeTable, splitBill}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 10, 10, 10);
+                await order.addAdditionalInfo("HEAD BILL");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.mergeTable();
+                await mergeTable.selectRoom(Table.acRoom.name);
+                await mergeTable.selectTable(Table.acRoom.ac2.name, "active");
+                await mergeTable.applyMergeTable();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.splitBill();
+                await splitBill.addBill("CHILD 1");
+                await splitBill.moveMenu("CHILD 1", MenuList.menus.atMenuBiasaGoreng.name, "4");
+                await splitBill.closeSplitBill();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTableSplitBill("Bill 2");
+                await order.disabledSplitBill();
+                await order.saveOrder();
+            }, {tableList, bookOrder, order, mergeTable, splitBill}, testInfo);
+        });
 
     test("[TC_0205168] Validate Logic when User can Split Bill table without any ordered menu",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill}) => {
