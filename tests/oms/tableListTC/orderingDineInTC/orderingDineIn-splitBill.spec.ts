@@ -262,8 +262,8 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
         });
 
     test("[TC_0205248] Validate Logic when User cannot Split Bill while not having access",
-        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, topNavBar, signPin, splitBill}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, topNavBar, signPin, splitBill}) => {
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, topNavBar, signPin}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, topNavBar, signPin}) => {
                 await topNavBar.userSignOut();
                 await signPin.inputPinByTouch("0000");
                 await signPin.validateShowStarCash("20.000");
@@ -280,7 +280,7 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
                 await signPin.inputPinByTouch("22");
                 await signPin.validateShowStarCash("20.000");
                 await signPin.storeAuthState();
-            }, {tableList, bookOrder, order, topNavBar, signPin, splitBill}, testInfo);
+            }, {tableList, bookOrder, order, topNavBar, signPin}, testInfo);
         });
 
     test("[TC_0205155] Validate Logic when User cannot Split Bill the spliited bill",
