@@ -330,7 +330,7 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
             }, {tableList, bookOrder, order, splitBill}, testInfo);
         });
 
-    test("[TC_0205157] Validate Logic when User can delete splitted Split Bill from the Main Bill",
+    test("[TC_0205251] Validate Logic when User can delete splitted Split Bill from the Main Bill",
         {tag: tags + "@negative"}, async ({tableList, bookOrder, order, splitBill}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, splitBill}) => {
                 await tableList.selectRoom(Table.acRoom.name);
