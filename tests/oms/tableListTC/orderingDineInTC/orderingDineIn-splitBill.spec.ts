@@ -306,12 +306,29 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
             }, {tableList, bookOrder, order, splitBill}, testInfo);
         });
 
-    test("[TC_0205156] Validate Logic when User can rename main Split Bill with valid keywords",
-        {tag: tags + "@negative"}, async ({tableList}) => {
-            // Test is skipped due to bug [TC_0205156]
-            await tableList.goHere();
-        }
-    );
+    test("[TC_0205250] Validate Logic when User can rename main Split Bill with valid keywords",
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, splitBill}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, splitBill}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 5, 3, 2);
+                await order.addAdditionalInfo("HEAD");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.splitBill();
+                await splitBill.addBill("CHILD 1");
+                await splitBill.moveMenu("CHILD 1", MenuList.menus.atMenuBiasaBakar.name, "1");
+                await splitBill.closeSplitBill();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTableSplitBill("Main Bill");
+                await order.splitBill();
+                await splitBill.setMainBillName("TEST HEAD")
+            }, {tableList, bookOrder, order, splitBill}, testInfo);
+        });
 
     test("[TC_0205157] Validate Logic when User can delete splitted Split Bill from the Main Bill",
         {tag: tags + "@negative"}, async ({tableList, bookOrder, order, splitBill}) => {
