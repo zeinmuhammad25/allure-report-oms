@@ -5,47 +5,37 @@ import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/Payme
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
 import TableListScenario from "../../../../src/modules/oms/tableList/tableList.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
+import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
+import PaymentList from "../../../../src/modules/oms/objects/paymentList";
+import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
 test.describe.serial("Ordering Dine In Split Bill", () => {
     const tags = "@smokeTest @oms @dineIn @splitBill ";
 
-    const selectMenuBiasa = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
-        await order.selectCategoryMenu(MenuList.atCategory.name);
-        await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        if (isWithQuantity) {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
-        } else {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name);
-        }
-    };
-
-    const selectMultipleMenuBiasa = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
-        await order.selectCategoryMenu(MenuList.atCategory.name);
-        await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        if (isWithQuantity) {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
-            await order.selectMenu(MenuList.menus.atMenuBiasaRebus.name, quantity);
-            await order.selectMenu(MenuList.menus.atMenuBiasaBakar.name, quantity);
-        } else {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.selectMenu(MenuList.menus.atMenuBiasaRebus.name);
-            await order.selectMenu(MenuList.menus.atMenuBiasaBakar.name);
-        }
-    };
-
-    const selectFirstTable = async (tableList: TableListScenario, bookOrder: BookOrderScenario) => {
-        await tableList.selectRoom(Table.acRoom.name);
-        await tableList.selectTable(Table.acRoom.ac1.name);
-        await bookOrder.setPax(2);
-        await bookOrder.selectSalesMode("AT EXCLUSIVE");
+    const makeOrder = async (salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario) => {
+        await bookOrder.selectSalesMode(salesMode);
         await bookOrder.bookAndOrder();
         await bookOrder.skipCustomerPhoneNumber();
     };
 
+    const selectMenuBiasa = async (order: OrderScenario, qty: number) => {
+        await order.selectCategoryMenu(MenuList.atCategory.name);
+        await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty);
+    };
+
+    const selectMultipleMenuBiasa = async (order: OrderScenario, qty1: number, qty2: number, qty3: number) => {
+        await order.selectCategoryMenu(MenuList.atCategory.name);
+        await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty1);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, qty2);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, qty3);
+    };
+
     test.beforeEach(async ({terminalID, signPin, tableList, sideNavBar}) => {
         const testWithAuthentication = [
-            "[TC_0205148] Validate Logic when User can Add Bill in Split Bill"
+            "[TC_0205242] Validate Logic when User can Add Bill in Split Bill"
         ];
 
         if (testWithAuthentication.includes(test.info().title)) {
@@ -61,25 +51,43 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
         await tableList.goHere();
     });
 
+    const paymentCashFull = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Cash);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.CashPayment);
+        await paymentV2.paymentFullAmount();
+        await paymentV2.actionPayment(PaymentList.ActionPayment.SavePayment);
+        await paymentV2.payPayment();
+        await paymentV2.closePopUpPaymentSuccessFul();
+    };
+
+    const paymentQrESB = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Card);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.QrisEsbPayment);
+        await paymentV2.paymentQrisEsb(265);
+    };
+
     test.afterEach(async ({tableList}) => {
         await Promise.all([
             tableList.cancelTableAndSplitBill()
         ]);
     });
 
-    test("[TC_0205148] Validate Logic when User can Add Bill in Split Bill",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill}) => {
-            await selectFirstTable(tableList, bookOrder);
-            await selectMenuBiasa(order);
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.splitBill();
-            await splitBill.addBill("Nadin Order");
-            await splitBill.closeSplitBill();
-            await order.saveOrder();
-        }
-    );
+    test("[TC_0205242] Validate Logic when User can Add Bill in Split Bill",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, splitBill}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 1);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.splitBill();
+                await splitBill.addBill("BILL TEST");
+                await splitBill.closeSplitBill();
+                await order.saveOrder();
+            }, {tableList, bookOrder, order, splitBill}, testInfo);
+        });
 
     test("[TC_0205149] Validate Logic when User can Add Bill in Split Bill",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill}) => {
