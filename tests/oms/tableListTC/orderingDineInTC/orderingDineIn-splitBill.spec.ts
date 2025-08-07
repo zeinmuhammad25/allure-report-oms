@@ -260,25 +260,28 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
                 await order.expectVisibleCustomerName("CHILD 2");
             }, {tableList, bookOrder, order, splitBill}, testInfo);
         });
-    
-    test("[TC_0205154] Validate Logic when User cannot Split Bill while not having access",
-        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, topNavBar, signPin}) => {
-            await topNavBar.userSignOut();
-            await signPin.inputPinByTouch("0000");
-            await signPin.validateShowStarCash("20.000");
-            await selectFirstTable(tableList, bookOrder);
-            await selectMultipleMenuBiasa(order);
-            await order.addAdditionalInfo("Nadin Parent");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.disabledSplitBill();
-            await topNavBar.userSignOut();
-            await signPin.inputPinByTouch("22");
-            await signPin.validateShowStarCash("20.000");
-            await signPin.storeAuthState();
-        }
-    );
+
+    test("[TC_0205248] Validate Logic when User cannot Split Bill while not having access",
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, topNavBar, signPin, splitBill}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, topNavBar, signPin, splitBill}) => {
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("0000");
+                await signPin.validateShowStarCash("20.000");
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 5, 3, 2);
+                await order.addAdditionalInfo("HEAD");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.disabledSplitBill();
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+            }, {tableList, bookOrder, order, topNavBar, signPin, splitBill}, testInfo);
+        });
 
     test("[TC_0205155] Validate Logic when User cannot Split Bill the spliited bill",
         {tag: tags + "@negative"}, async ({tableList, bookOrder, order, splitBill}) => {
