@@ -283,24 +283,28 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
             }, {tableList, bookOrder, order, topNavBar, signPin}, testInfo);
         });
 
-    test("[TC_0205155] Validate Logic when User cannot Split Bill the spliited bill",
-        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, splitBill}) => {
-            await selectFirstTable(tableList, bookOrder);
-            await selectMultipleMenuBiasa(order);
-            await order.addAdditionalInfo("Nadin Parent");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.splitBill();
-            await splitBill.addBill("Alpha Child");
-            await splitBill.closeSplitBill();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await tableList.selectTableSplitBill("Bill 2");
-            await order.disabledSplitBill();
-        }
-    );
+    test("[TC_0205249] Validate Logic when User cannot Split Bill the spliited bill",
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, splitBill}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, splitBill}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 5, 3, 2);
+                await order.addAdditionalInfo("HEAD");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.splitBill();
+                await splitBill.addBill("CHILD 1");
+                await splitBill.moveMenu("CHILD 1", MenuList.menus.atMenuBiasaBakar.name, "1");
+                await splitBill.closeSplitBill();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTableSplitBill("Bill 2");
+                await order.disabledSplitBill();
+            }, {tableList, bookOrder, order, splitBill}, testInfo);
+        });
 
     test("[TC_0205156] Validate Logic when User can rename main Split Bill with valid keywords",
         {tag: tags + "@negative"}, async ({tableList}) => {
