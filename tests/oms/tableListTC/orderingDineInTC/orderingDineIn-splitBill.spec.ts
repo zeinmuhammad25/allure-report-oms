@@ -643,7 +643,7 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
             }, {tableList, bookOrder, order, mergeTable, splitBill}, testInfo);
         });
 
-    test("[TC_0205168] Validate Logic when User can Split Bill table without any ordered menu",
+    test("[TC_0205262] Validate Logic when User can Split Bill table without any ordered menu",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, splitBill}) => {
                 await tableList.selectRoom(Table.acRoom.name);
@@ -668,24 +668,27 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
             }, {tableList, bookOrder, order, splitBill}, testInfo);
         });
 
-    test("[TC_0205169] Validate Logic when User cannot Split Bill the Holded Menu",
-        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, splitBill}) => {
-            await order.activateKitchenFireManagement();
-            await selectFirstTable(tableList, bookOrder);
-            await order.addAdditionalInfo("Nadin Parent");
-            await selectMultipleMenuBiasa(order, true, 2);
-            await order.holdAllMenu();
-            await order.confirmationCloseTable("Yes");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.splitBill();
-            await splitBill.moveMenuButtonInvisible(MenuList.menus.atMenuBiasaGoreng.name);
-            await splitBill.moveMenuButtonInvisible(MenuList.menus.atMenuBiasaRebus.name);
-            await splitBill.moveMenuButtonInvisible(MenuList.menus.atMenuBiasaBakar.name);
-            await splitBill.closeSplitBill();
-            await order.saveOrder();
-            await order.notActivateKitchenFireManagement();
-        }
-    );
+    test("[TC_0205263] Validate Logic when User cannot Split Bill the Holded Menu",
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, splitBill}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, splitBill}) => {
+                await order.activateKitchenFireManagement();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 10, 10, 10);
+                await order.addAdditionalInfo("HEAD BILL");
+                await order.holdAllMenu();
+                await order.confirmationCloseTable("Yes");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.splitBill();
+                await splitBill.moveMenuButtonInvisible(MenuList.menus.atMenuBiasaGoreng.name);
+                await splitBill.moveMenuButtonInvisible(MenuList.menus.atMenuBiasaRebus.name);
+                await splitBill.moveMenuButtonInvisible(MenuList.menus.atMenuBiasaBakar.name);
+                await splitBill.closeSplitBill();
+                await order.saveOrder();
+                await order.notActivateKitchenFireManagement();
+            }, {tableList, bookOrder, order, splitBill}, testInfo);
+        });
 });
