@@ -644,18 +644,29 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
         });
 
     test("[TC_0205168] Validate Logic when User can Split Bill table without any ordered menu",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill}) => {
-            await selectFirstTable(tableList, bookOrder);
-            await order.addAdditionalInfo("Nadin Parent");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.splitBill();
-            await splitBill.addBill("Alpha Child");
-            await splitBill.closeSplitBill();
-            await order.saveOrder();
-        }
-    );
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, splitBill}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await order.addAdditionalInfo("HEAD BILL");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.splitBill();
+                await splitBill.addBill("Child Bill");
+                await splitBill.closeSplitBill();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTableSplitBill("Main Bill");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTableSplitBill("Bill 2");
+                await order.saveOrder();
+            }, {tableList, bookOrder, order, splitBill}, testInfo);
+        });
 
     test("[TC_0205169] Validate Logic when User cannot Split Bill the Holded Menu",
         {tag: tags + "@negative"}, async ({tableList, bookOrder, order, splitBill}) => {
