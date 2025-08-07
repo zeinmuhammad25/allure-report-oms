@@ -3,7 +3,6 @@ import MenuList from "../../../../src/modules/oms/objects/menuList";
 import Table from "../../../../src/modules/oms/objects/table";
 import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
-import TableListScenario from "../../../../src/modules/oms/tableList/tableList.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
 import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
 import PaymentList from "../../../../src/modules/oms/objects/paymentList";
@@ -231,32 +230,37 @@ test.describe.serial("Ordering Dine In Split Bill", () => {
             }, {tableList, bookOrder, order, splitBill, paymentV2}, testInfo);
         });
 
-    test("[TC_0205153] Validate Logic when User can Split Bill the main bill after split the bill",
-        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill}) => {
-            await selectFirstTable(tableList, bookOrder);
-            await selectMultipleMenuBiasa(order);
-            await order.addAdditionalInfo("Nadin Parent");
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.splitBill();
-            await splitBill.addBill("Alpha Child");
-            await splitBill.closeSplitBill();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await tableList.selectTableSplitBill("Main Bill");
-            await order.splitBill();
-            await splitBill.addBill("Beta Child");
-            await splitBill.closeSplitBill();
-            await order.saveOrder();
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await order.expectVisibleCustomerName("Beta Child");
-        }
-    );
-
-
+    test("[TC_0205247] Validate Logic when User can Split Bill the main bill after split the bill",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, splitBill}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, splitBill}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT INCLUSIVE", bookOrder);
+                await selectMultipleMenuBiasa(order, 6, 6, 6);
+                await order.addAdditionalInfo("HEAD");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.splitBill();
+                await splitBill.addBill("CHILD 1");
+                await splitBill.moveMenu("CHILD 1", MenuList.menus.atMenuBiasaBakar.name, "1");
+                await splitBill.closeSplitBill();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTableSplitBill("Main Bill");
+                await order.splitBill();
+                await splitBill.addBill("CHILD 2");
+                await splitBill.moveMenu("CHILD 2", MenuList.menus.atMenuBiasaRebus.name, "1");
+                await splitBill.closeSplitBill();
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.expectVisibleCustomerName("CHILD 1");
+                await order.expectVisibleCustomerName("CHILD 2");
+            }, {tableList, bookOrder, order, splitBill}, testInfo);
+        });
+    
     test("[TC_0205154] Validate Logic when User cannot Split Bill while not having access",
         {tag: tags + "@negative"}, async ({tableList, bookOrder, order, topNavBar, signPin}) => {
             await topNavBar.userSignOut();
