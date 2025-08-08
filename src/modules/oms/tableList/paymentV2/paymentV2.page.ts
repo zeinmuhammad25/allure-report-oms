@@ -107,12 +107,12 @@ export default class PaymentV2Page extends BaseOmsPage implements PaymentV2Scena
                                SET paymentTransactionStatus = 'settlement'
                                WHERE salesPaymentGatewayNum = (SELECT salesPaymentGatewayNum
                                                                FROM (SELECT salesPaymentGatewayNum
-                                                                     FROM fnb_dev1.tr_salespaymentgateway
+                                                                     FROM tr_salespaymentgateway
                                                                      WHERE branchID = ${branchId}
                                                                        AND paymentTransactionStatus = 'pending'
                                                                      ORDER BY transactionDate
                                                                          DESC LIMIT 1) AS latestTxn);`;
-        await this.sqlExecute(this.configs.get.dbConfig, query);
+        await this.sqlExecute(this.configs.get.dbStgConfig, query);
     }
 
     async paymentQrisEsb(branchId: number): Promise<void> {
@@ -121,7 +121,7 @@ export default class PaymentV2Page extends BaseOmsPage implements PaymentV2Scena
         await this.settlementQrEsb(branchId);
         await this.waitForResponse("payment/check-sales-payment-qr");
         await this.expectVisible(PaymentV2Locator.escapeKeyboard);
-        await this.actionPayment(PaymentList.ActionPayment.PopUpCancelPayment);
+        await this.actionPayment(PaymentList.ActionPayment.ClosePayment);
     }
 
     async printQrisEsb(): Promise<void> {
