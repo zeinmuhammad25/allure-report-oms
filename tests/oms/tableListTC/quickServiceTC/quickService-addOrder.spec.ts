@@ -366,29 +366,23 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, sideNavBar, order, editOrderV2, tableList}, testInfo);
         });
 
-    test("[TC_0204011] Validate Logic When User Able To Delete Menu Paket Sesudah Save Order",
-        {tag: tag + "@positive"}, async ({
-                                             quickServiceList,
-                                             bookOrder,
-                                             order,
-                                             editOrder,
-                                             sideNavBar,
-                                             addOrder,
-                                             tableList
-                                         }) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuPaket(order, addOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await order.cancelMenuAfterSave("CANCEL MENU");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await order.confirmationCloseTable("Yes");
+    test("[TC_0205279] Validate Logic When User Able To Delete Menu Paket Sesudah Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, order, editOrderV2, tableList, addOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, order, editOrderV2, tableList, addOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaket(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await order.saveOrder();
+                await order.confirmationCloseTable("Yes");
+            }, {quickServiceList, bookOrder, sideNavBar, order, editOrderV2, tableList, addOrderV2}, testInfo);
         });
 
     test("[TC_0204012] Validate Logic When User Able To Delete Menu Extra Sesudah Save Order",
