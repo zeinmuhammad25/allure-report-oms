@@ -239,6 +239,17 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, paymentV2, editOrderV2}, testInfo);
         });
 
+    test("[TC_0205269] Validate logic ketika user mengisi notes dengan > 10 character MENU PAKET ",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, paymentV2, addOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, paymentV2, addOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "COBA COBA NOTES MENU");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, paymentV2, addOrderV2}, testInfo);
+        });
+
 
     test("[TC_0204004] Validate Logic When User Able To Edit Qty Menu Biasa",
         {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
