@@ -325,13 +325,15 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order}, testInfo);
         });
 
-    test("[TC_0204008] Validate Logic When User Able To Delete Menu Paket Sebelum Save Order",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder, addOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuPaket(order, addOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await order.validateMenuNotVisible(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+    test("[TC_0205276] Validate Logic When User Able To Delete Menu Paket Sebelum Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaket(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.deleteMenu(MenuList.menus.atMenuPaketMahal.name);
+                await order.validateMenuNotVisible(MenuList.menus.atMenuPaketMahal.name);
+            }, {quickServiceList, bookOrder, order, addOrderV2}, testInfo);
         });
 
     test("[TC_0204009] Validate Logic When User Able To Delete Menu Extra Sebelum Save Order",
