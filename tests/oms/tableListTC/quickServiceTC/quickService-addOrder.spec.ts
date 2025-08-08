@@ -209,6 +209,23 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo);
         });
 
+    test("[TC_0205267] Validate order list ketika user update dengan pilih promo dan back MENU BIASA",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, sideNavBar, tableList, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, sideNavBar, tableList, editOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 3);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+                await editOrderV2.addPromotionMenu();
+                await editOrderV2.applyViaSearchPromotionMenu("MENU DISC RP ALL CATEGORY");
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, sideNavBar, tableList, editOrderV2}, testInfo);
+        });
+
     test("[TC_0204004] Validate Logic When User Able To Edit Qty Menu Biasa",
         {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
             await addNewQuickService(quickServiceList, bookOrder);
