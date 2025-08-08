@@ -226,6 +226,20 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, sideNavBar, tableList, editOrderV2}, testInfo);
         });
 
+    test("[TC_0205268] Validate fungsi suggestion notes saat pertama kali membuka pop-up menu BIASA",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, paymentV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, paymentV2, editOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 3);
+                await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+                await editOrderV2.selectSuggestionNotes("COBA AT", "COBA 1");
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, paymentV2, editOrderV2}, testInfo);
+        });
+
+
     test("[TC_0204004] Validate Logic When User Able To Edit Qty Menu Biasa",
         {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
             await addNewQuickService(quickServiceList, bookOrder);
