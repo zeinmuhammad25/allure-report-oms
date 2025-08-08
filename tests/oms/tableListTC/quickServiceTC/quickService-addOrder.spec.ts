@@ -263,6 +263,19 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, paymentV2, addOrderV2}, testInfo);
         });
 
+    test("[TC_0205271] Validate logic button Apply Promo ketika user berhasil melakukan Apply Promo ",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, paymentV2, addOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, paymentV2, addOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "COBA COBA 1");
+                await addOrderV2.addPromotionMenu();
+                await addOrderV2.applyViaSearchPromotionMenu("MENU DISC RP ALL CATEGORY");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, paymentV2, addOrderV2}, testInfo);
+        });
+
 
     test("[TC_0204004] Validate Logic When User Able To Edit Qty Menu Biasa",
         {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
