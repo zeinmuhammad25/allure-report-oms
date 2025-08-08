@@ -315,12 +315,14 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0204007] Validate Logic When User Able To Delete Menu Biasa Sebelum Save Order",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuBiasa(order);
-            await order.deleteMenu(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.validateMenuNotVisible(MenuList.menus.atMenuBiasaGoreng.name);
+    test("[TC_0205275] Validate Logic When User Able To Delete Menu Biasa Sebelum Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order);
+                await order.deleteMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await order.validateMenuNotVisible(MenuList.menus.atMenuBiasaGoreng.name);
+            }, {quickServiceList, bookOrder, order}, testInfo);
         });
 
     test("[TC_0204008] Validate Logic When User Able To Delete Menu Paket Sebelum Save Order",
