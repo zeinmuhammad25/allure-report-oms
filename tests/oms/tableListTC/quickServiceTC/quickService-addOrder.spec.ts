@@ -5,106 +5,156 @@ import AddOrderScenario from "../../../../src/modules/oms/tableList/order/compon
 import EditOrderScenario from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.scenario";
 import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
+import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
+import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
+import PaymentList from "../../../../src/modules/oms/objects/paymentList";
+import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(600000);
 test.describe.serial("Quick Service Add Order", () => {
     const tag = "@smokeTest @oms @quickService @addOrder ";
 
-    const selectMenuBiasa = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
+    const selectMenuBiasa = async (order: OrderScenario, quantity = 1) => {
         await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        if (isWithQuantity) {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
-        } else {
-            await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name);
-        }
+        await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
     };
 
-    const selectMenuPaket = async (order: OrderScenario, addOrder: AddOrderScenario) => {
+    const selectMenuPaket = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
         await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-        await addOrder.modifyMenuDetailPackage([
-            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 2, notes: null}
+        await addOrderV2.modifyDetailPackage([
+            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: null}
         ]);
     };
 
-    const selectMenuExtra = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
+    const selectMenuPaketWithNotes = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1, notes: string) => {
         await order.selectCategoryMenu(MenuList.atCategory.name);
-        await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-        if (isWithQuantity) {
-            await order.selectMenu(MenuList.menus.atMenuExtraAlpha.name, quantity);
-        } else {
-            await order.selectMenu(MenuList.menus.atMenuExtraAlpha.name);
-        }
-        await order.clickMenuDetail(MenuList.menus.atMenuExtraAlpha.name);
+        await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+        await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+        await addOrderV2.modifyDetailPackage([
+            {
+                menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName,
+                qty: quantity,
+                notes: notes
+            },
+            {
+                menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName,
+                qty: quantity,
+                notes: notes
+            },
+            {
+                menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName,
+                qty: quantity,
+                notes: notes
+            },
+            {
+                menuName: MenuList.menuPackages.sprite250ml.shortName,
+                qty: quantity,
+                notes: notes
+            }
+        ]);
     };
 
-    const selectMenuBiasaSpecialPrice = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
+    const selectMenuExtra = async (addOrderV2: AddOrderV2Scenario, quantity = 1) => {
+        await addOrderV2.selectPackageGroup("Menu Extra");
+        await addOrderV2.extraCategory(MenuList.atCategory.name);
+        await addOrderV2.modifyExtraPackage([
+            {menuName: MenuList.menus.atMenuExtraAlpha.shortName, qty: quantity, notes: null}
+        ]);
+    };
+
+    const selectMenuBiasaSpecialPrice = async (order: OrderScenario, quantity = 1) => {
         await order.selectCategoryMenu(MenuList.atSpecialPrice.name);
         await order.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuBiasaSpecialPrice.name);
-        if (isWithQuantity) {
-            await order.selectMenu(MenuList.menus.menuSpecialPriceDelights.shortName, quantity);
-        } else {
-            await order.selectMenu(MenuList.menus.menuSpecialPriceDelights.shortName);
-        }
+        await order.selectMenu(MenuList.menus.menuSpecialPriceDelights.shortName, quantity);
     };
 
-    const selectMenuPaketSpecialPrice = async (order: OrderScenario, addOrder: AddOrderScenario) => {
+    const selectMenuPaketSpecialPrice = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
         await order.selectCategoryMenu(MenuList.atSpecialPrice.name);
         await order.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.name);
         await order.selectMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
-        await addOrder.modifyMenuDetailPackage([
-            {menuName: MenuList.menuPackages.anggurHijauKawaKawa600ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.anggurPutihOT620ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.anggurMerahOTGold620ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.anggurMerahKawaKawa600ml.shortName, qty: 2, notes: null}
+        await addOrderV2.modifyDetailPackage([
+            {menuName: MenuList.menuPackages.anggurHijauKawaKawa600ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.anggurPutihOT620ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.anggurMerahOTGold620ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.anggurMerahKawaKawa600ml.shortName, qty: quantity, notes: null}
         ]);
     };
 
-    const selectMenuExtraSpecialPrice = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
+    const selectMenuPaketSpecialPriceNotes = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1, notes: string) => {
         await order.selectCategoryMenu(MenuList.atSpecialPrice.name);
-        await order.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuExtraSpecialPrice.name);
-        if (isWithQuantity) {
-            await order.selectMenu(MenuList.menus.menuExtraSpecialFriedRice.shortName, quantity);
-        } else {
-            await order.selectMenu(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-        }
+        await order.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.name);
+        await order.selectMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+        await addOrderV2.modifyDetailPackage([
+            {menuName: MenuList.menuPackages.anggurHijauKawaKawa600ml.shortName, qty: quantity, notes: notes},
+            {menuName: MenuList.menuPackages.anggurPutihOT620ml.shortName, qty: quantity, notes: notes},
+            {menuName: MenuList.menuPackages.anggurMerahOTGold620ml.shortName, qty: quantity, notes: notes},
+            {menuName: MenuList.menuPackages.anggurMerahKawaKawa600ml.shortName, qty: quantity, notes: notes}
+        ]);
     };
 
-    const selectMenuOpenPrice = async (order: OrderScenario) => {
+    // const selectMenuExtraSpecialPrice = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
+    //     await order.selectCategoryMenu(MenuList.atSpecialPrice.name);
+    //     await order.selectCategoryDetailMenu(MenuList.atSpecialPrice.atMenuExtraSpecialPrice.name);
+    //     if (isWithQuantity) {
+    //         await order.selectMenu(MenuList.menus.menuExtraSpecialFriedRice.shortName, quantity);
+    //     } else {
+    //         await order.selectMenu(MenuList.menus.menuExtraSpecialFriedRice.shortName);
+    //     }
+    // };
+
+    const selectMenuOpenPrice = async (order: OrderScenario, quantity: number = 1) => {
         await order.selectCategoryMenu(MenuList.atOpenPrice.name);
         await order.selectCategoryDetailMenu(MenuList.atOpenPrice.atMenuBiasaOpenPrice.name);
-        await order.selectMenu(MenuList.menus.menuOpenPriceChoices.shortName);
+        await order.selectMenu(MenuList.menus.menuOpenPriceChoices.shortName, quantity);
     };
 
-    const selectExtraMenuItems = async (editOrder: EditOrderScenario) => {
-        await editOrder.selectMenuExtraCategory(MenuList.anggur.name);
-        await editOrder.selectMenuExtra(MenuList.menus.anggurHijauKawaKawa600ml.shortName);
-        await editOrder.selectMenuExtra(MenuList.menus.anggurMerahOT620ml.shortName);
-    };
+    // const selectExtraMenuItems = async (editOrder: EditOrderScenario) => {
+    //     await editOrder.selectMenuExtraCategory(MenuList.anggur.name);
+    //     await editOrder.selectMenuExtra(MenuList.menus.anggurHijauKawaKawa600ml.shortName);
+    //     await editOrder.selectMenuExtra(MenuList.menus.anggurMerahOT620ml.shortName);
+    // };
 
-    const selectExtraMenuItemsSpecial = async (editOrder: EditOrderScenario) => {
-        await editOrder.selectMenuExtraCategory(MenuList.whisky.name);
-        await editOrder.selectMenuExtra(MenuList.menus.bataviaBlended700ml.shortName);
-        await editOrder.selectMenuExtra(MenuList.menus.gilbeysWhisky350ml.shortName);
-        await editOrder.selectMenuExtra(MenuList.menus.pennyPacker700ml.shortName);
-    };
+    // const selectExtraMenuItemsSpecial = async (editOrder: EditOrderScenario) => {
+    //     await editOrder.selectMenuExtraCategory(MenuList.whisky.name);
+    //     await editOrder.selectMenuExtra(MenuList.menus.bataviaBlended700ml.shortName);
+    //     await editOrder.selectMenuExtra(MenuList.menus.gilbeysWhisky350ml.shortName);
+    //     await editOrder.selectMenuExtra(MenuList.menus.pennyPacker700ml.shortName);
+    // };
 
-    const addNewQuickService = async (quickServiceList: QuickServiceListScenario, bookOrder: BookOrderScenario) => {
+    const makeOrder = async (
+        salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario, quickServiceList: QuickServiceListScenario
+    ) => {
         await quickServiceList.addOrderQuickService();
         await bookOrder.setPax(2);
-        await bookOrder.selectSalesMode("AT EXCLUSIVE");
+        await bookOrder.selectSalesMode(salesMode);
         await bookOrder.applyQuickService();
         await bookOrder.skipCustomerPhoneNumber();
     };
 
-    test.beforeEach(async ({terminalID, signPin, tableList}) => {
+    const paymentCashFull = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Cash);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.CashPayment);
+        await paymentV2.paymentFullAmount();
+        await paymentV2.actionPayment(PaymentList.ActionPayment.SavePayment);
+        await paymentV2.payPayment();
+        await paymentV2.closePopUpPaymentSuccessFul();
+    };
+
+    const paymentQrESB = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Card);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.QrisEsbPayment);
+        await paymentV2.paymentQrisEsb(265);
+    };
+
+    test.beforeEach(async ({terminalID, signPin, tableList, sideNavBar}) => {
         const testWithAuthentication = [
-            "[TC_0204001] Validate Logic When User Able To Add Menu Biasa"
+            "[TC_0205264] Validate Logic When User Able To Add Menu Biasa"
         ];
         if (testWithAuthentication.includes(test.info().title)) {
             await terminalID.goHere();
@@ -112,6 +162,9 @@ test.describe.serial("Quick Service Add Order", () => {
             await signPin.inputPinByTouch("22");
             await signPin.validateShowStarCash("20.000");
             await signPin.storeAuthState();
+            await sideNavBar.gotoPageTools();
+            await sideNavBar.selectStation("KASIR");
+            await sideNavBar.gotoPageTableList();
         }
         await tableList.goHere();
     });
@@ -123,11 +176,14 @@ test.describe.serial("Quick Service Add Order", () => {
     });
 
 
-    test("[TC_0204001] Validate Logic When User Able To Add Menu Biasa",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuBiasa(order);
-            await order.saveOrder();
+    test("[TC_0205264] Validate Logic When User Able To Add Menu Biasa",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 3);
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, paymentV2}, testInfo);
         });
 
     test("[TC_0204002] Validate Logic When User Able To Add Menu Paket",
