@@ -303,19 +303,16 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
         });
 
-    test("[TC_0204006] Validate Logic When User Able To Edit Qty Menu Extra",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuExtra(order);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await editOrder.actionButtonFooter("Next");
-            await selectExtraMenuItems(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.clickMenuDetail(MenuList.menus.atMenuExtraAlpha.name);
-            await editOrder.editQtySelector(2);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205274] Validate Logic When User Able To Edit Qty Menu Extra",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaket(order, addOrderV2);
+                await selectMenuExtra(addOrderV2,2)
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0204007] Validate Logic When User Able To Delete Menu Biasa Sebelum Save Order",
