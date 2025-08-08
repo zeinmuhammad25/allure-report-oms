@@ -276,15 +276,17 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, paymentV2, addOrderV2}, testInfo);
         });
 
-
-    test("[TC_0204004] Validate Logic When User Able To Edit Qty Menu Biasa",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuBiasa(order);
-            await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
-            await editOrder.editQtySelector(2);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205272] Validate Logic When User Able To Edit Qty Menu Biasa",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, paymentV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, paymentV2, editOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order);
+                await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+                await editOrderV2.modifyEditHeadPackage([3]);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, paymentV2, editOrderV2}, testInfo);
         });
 
     test("[TC_0204005] Validate Logic When User Able To Edit Qty Menu Paket",
