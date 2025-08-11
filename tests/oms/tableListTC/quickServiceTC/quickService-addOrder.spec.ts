@@ -518,15 +518,18 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, editOrderV2, sideNavBar, tableList, addOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0204019] Validate Logic When User Able To Add Menu Biasa With Notes Before Save Order",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
+    test("[TC_0205287] Validate Logic When User Able To Add Menu Biasa With Notes Before Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrderV2, paymentV2},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, editOrderV2, paymentV2}) => {
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
             await selectMenuBiasa(order);
             await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
-            await editOrder.inputNotesMenu("Notes Menu Single");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
+            await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+            await editOrderV2.inputMenuNotesSingelMenu("COBA AT");
+            await editOrderV2.actionUpdate();
             await order.saveOrder();
+            await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, editOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0204020] Validate Logic When User Able To Add Menu Paket With Notes Before Save Order",
