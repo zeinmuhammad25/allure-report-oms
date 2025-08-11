@@ -524,7 +524,6 @@ test.describe.serial("Quick Service Add Order", () => {
             await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
             await selectMenuBiasa(order);
             await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
-            await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
             await editOrderV2.inputMenuNotesSingelMenu("COBA AT");
             await editOrderV2.actionUpdate();
             await order.saveOrder();
