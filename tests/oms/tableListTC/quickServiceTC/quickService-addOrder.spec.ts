@@ -635,21 +635,24 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, paymentV2, editOrderV2}, testInfo);
         });
 
-    test("[TC_0204027] Validate Logic When User Able To Edit Qty Menu Biasa Special Price After Save",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder, sideNavBar, tableList}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuBiasaSpecialPrice(order, true, 5);
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.shortName);
-            await editOrder.editQtySelector(3);
-            await editOrder.actionButtonFooter("Apply");
-            await order.cancelMenuAfterSave("Decrease Qty");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205295] Validate Logic When User Able To Edit Qty Menu Biasa Special Price After Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, paymentV2, editOrderV2, sideNavBar, tableList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, paymentV2, editOrderV2, sideNavBar, tableList}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasaSpecialPrice(order,10);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.name);
+                await editOrderV2.modifyEditHeadPackage([-7]);
+                await editOrderV2.actionUpdate();
+                await order.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await order.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, paymentV2, editOrderV2, sideNavBar, tableList}, testInfo);
         });
 
     test("[TC_0204028] Validate Logic When User Able To Delete Menu Biasa Special Price Before Save",
