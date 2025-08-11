@@ -592,21 +592,24 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, sideNavBar, tableList, editOrderV2, paymentV2, addOrderV2}, testInfo);
         });
 
-    test("[TC_0204024] Validate Logic When User Able To Edit Menu Extra With Notes After Save Order",
-        {tag: tag + "@negative"}, async ({quickServiceList, bookOrder, order, editOrder, sideNavBar, tableList}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuExtra(order);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await editOrder.actionButtonFooter("Next");
-            await selectExtraMenuItems(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.clickMenuDetail(MenuList.menus.atMenuExtraAlpha.name);
-            await editOrder.inputNotesMenuInvisible();
+    test("[TC_0205292] Validate Logic When User Able To Edit Menu Extra With Notes After Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList, editOrderV2, paymentV2, addOrderV2},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList, editOrderV2, paymentV2, addOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "COBA COBA NOTES BEFORE SAFE");
+                await selectMenuExtra(addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.clickMenuDetail(MenuList.menus.atMenuPaketMahal.name);
+                await editOrderV2.disableInputMenuNotesPackageHead();
+                await editOrderV2.escapeKeyboardV2();
+                await editOrderV2.actionCancel();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, sideNavBar, tableList, editOrderV2, paymentV2, addOrderV2}, testInfo);
         });
 
     test("[TC_0204025] Validate Logic When User Able To Add Menu Biasa Special Price",
