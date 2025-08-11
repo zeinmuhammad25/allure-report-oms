@@ -420,27 +420,22 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, sideNavBar, order, editOrderV2, tableList, paymentV2}, testInfo);
         });
 
-    test("[TC_0204014] Validate Logic When User Able To Edit Qty Menu Paket After Save Order > Increase Qty",
-        {tag: tag + "@positive"}, async ({
-                                             quickServiceList,
-                                             bookOrder,
-                                             order,
-                                             editOrder,
-                                             sideNavBar,
-                                             addOrder,
-                                             tableList
-                                         }) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuPaket(order, addOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.clickMenuDetail(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await editOrder.editQtySelector(7);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205282] Validate Logic When User Able To Edit Qty Menu Paket After Save Order > Increase Qty",
+        {tag: tag + "@positive"}, async ({quickServiceList, sideNavBar, tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2},testInfo) => {
+            await safeTest(async ({quickServiceList, sideNavBar, tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaket(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.clickMenuDetail(MenuList.menus.atMenuPaketMahal.name);
+                await editOrderV2.modifyEditHeadPackage([3]);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, sideNavBar, tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
         });
 
     test("[TC_0204015] Validate Logic When User Able To Edit Qty Menu Extra After Save Order > Increase Qty",
