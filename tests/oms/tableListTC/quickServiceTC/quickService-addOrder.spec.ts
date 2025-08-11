@@ -209,7 +209,7 @@ test.describe.serial("Quick Service Add Order", () => {
 
     test("[TC_0205267] Validate order list ketika user update dengan pilih promo dan back MENU BIASA",
         {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, sideNavBar, tableList, editOrderV2}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, sideNavBar, tableList, editOrderV2}) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, paymentV2, sideNavBar, tableList, editOrderV2}) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await selectMenuBiasa(order, 3);
                 await order.saveOrder();
@@ -555,16 +555,22 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0204022] Validate Logic When User Able To Edit Menu Biasa With Notes After Save Order",
-        {tag: tag + "@negative"}, async ({quickServiceList, bookOrder, order, editOrder, sideNavBar, tableList}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuBiasa(order);
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
-            await editOrder.inputNotesMenuInvisible();
+    test("[TC_0205290] Validate Logic When User Able To Edit Menu Biasa With Notes After Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList, editOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList, editOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+                await editOrderV2.disableInputMenuNotesSingelMenu();
+                await editOrderV2.escapeKeyboardV2();
+                await editOrderV2.actionCancel();
+                await order.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, sideNavBar, tableList, editOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0204023] Validate Logic When User Able To Edit Menu Paket With Notes After Save Order",
