@@ -622,14 +622,17 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, paymentV2}, testInfo);
         });
 
-    test("[TC_0204026] Validate Logic When User Able To Edit Qty Menu Biasa Special Price",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuBiasaSpecialPrice(order);
-            await order.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.shortName);
-            await editOrder.editQtySelector(2);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205294] Validate Logic When User Able To Edit Qty Menu Biasa Special Price",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, paymentV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, paymentV2, editOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasaSpecialPrice(order);
+                await order.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.name);
+                await editOrderV2.modifyEditHeadPackage([15]);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, paymentV2, editOrderV2}, testInfo);
         });
 
     test("[TC_0204027] Validate Logic When User Able To Edit Qty Menu Biasa Special Price After Save",
