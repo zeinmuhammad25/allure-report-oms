@@ -477,33 +477,26 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, sideNavBar, order, editOrderV2, tableList, paymentV2}, testInfo);
         });
 
-    test("[TC_0204017] Validate Logic When User Able To Edit Qty Menu Paket After Save Order > Decrease Qty",
-        {tag: tag + "@positive"}, async ({
-                                             quickServiceList,
-                                             bookOrder,
-                                             order,
-                                             editOrder,
-                                             addOrder,
-                                             sideNavBar,
-                                             tableList
-                                         }) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuPaket(order, addOrder);
-            await editOrder.actionButtonFooter("Back");
-            await editOrder.actionButtonFooter("Back");
-            await editOrder.editQtySelector(5);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.clickMenuDetail(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await editOrder.editQtySelector(3);
-            await editOrder.actionButtonFooter("Apply");
-            await order.cancelMenuAfterSave("Decrease Qty");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205285] Validate Logic When User Able To Edit Qty Menu Paket After Save Order > Decrease Qty",
+        {tag: tag + "@positive"}, async ({quickServiceList, sideNavBar, tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2},testInfo) => {
+            await safeTest(async ({quickServiceList, sideNavBar, tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaket(order, addOrderV2);
+                await addOrderV2.modifyHeadPackage([7]);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.clickMenuDetail(MenuList.menus.atMenuPaketMahal.name);
+                await editOrderV2.modifyEditHeadPackage([-4]);
+                await editOrderV2.actionUpdate();
+                await order.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, sideNavBar, tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
         });
 
     test("[TC_0204018] Validate Logic When User Able To Edit Qty Menu Extra After Save Order > Decrease Qty",
