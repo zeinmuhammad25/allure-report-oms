@@ -532,16 +532,15 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, editOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0204020] Validate Logic When User Able To Add Menu Paket With Notes Before Save Order",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrder, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuPaket(order, addOrder);
-            await editOrder.actionButtonFooter("Back");
-            await editOrder.actionButtonFooter("Back");
-            await editOrder.inputNotesMenu("Notes Menu Package");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205288] Validate Logic When User Able To Add Menu Paket With Notes Before Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "COBA COBA NOTES BEFORE SAFE");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0204021] Validate Logic When User Able To Add Menu Extra With Notes Before Save Order",
