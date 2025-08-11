@@ -573,25 +573,23 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, sideNavBar, tableList, editOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0204023] Validate Logic When User Able To Edit Menu Paket With Notes After Save Order",
-        {tag: tag + "@negative"}, async ({
-                                             quickServiceList,
-                                             bookOrder,
-                                             order,
-                                             addOrder,
-                                             editOrder,
-                                             sideNavBar,
-                                             tableList
-                                         }) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuPaket(order, addOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.clickMenuDetail(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-            await editOrder.inputNotesMenuInvisible();
+    test("[TC_0205291] Validate Logic When User Able To Edit Menu Paket With Notes After Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList, editOrderV2, paymentV2, addOrderV2},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList, editOrderV2, paymentV2, addOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketWithNotes(order, addOrderV2, 2, "COBA COBA NOTES BEFORE SAFE");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.clickMenuDetail(MenuList.menus.atMenuPaketMahal.name);
+                await editOrderV2.disableInputMenuNotesPackageHead();
+                await editOrderV2.escapeKeyboardV2();
+                await editOrderV2.actionCancel();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, sideNavBar, tableList, editOrderV2, paymentV2, addOrderV2}, testInfo);
         });
 
     test("[TC_0204024] Validate Logic When User Able To Edit Menu Extra With Notes After Save Order",
