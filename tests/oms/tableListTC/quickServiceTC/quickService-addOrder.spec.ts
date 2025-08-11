@@ -1,8 +1,6 @@
 import {test} from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
-import AddOrderScenario from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.scenario";
-import EditOrderScenario from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.scenario";
 import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
 import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
@@ -405,18 +403,21 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, sideNavBar, order, editOrderV2, tableList, addOrderV2}, testInfo);
         });
 
-    test("[TC_0204013] Validate Logic When User Able To Edit Qty Menu Biasa After Save Order > Increase Qty",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder, sideNavBar, tableList}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuBiasa(order, true, 3);
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
-            await editOrder.editQtySelector(7);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205281] Validate Logic When User Able To Edit Qty Menu Biasa After Save Order > Increase Qty",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, order, editOrderV2, tableList, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, order, editOrderV2, tableList, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 3);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+                await editOrderV2.modifyEditHeadPackage([3]);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, sideNavBar, order, editOrderV2, tableList, paymentV2}, testInfo);
         });
 
     test("[TC_0204014] Validate Logic When User Able To Edit Qty Menu Paket After Save Order > Increase Qty",
