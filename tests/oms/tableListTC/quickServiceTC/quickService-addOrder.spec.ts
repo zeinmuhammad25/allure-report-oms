@@ -909,16 +909,19 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, editOrderV2, sideNavBar, tableList}, testInfo);
         });
 
-    test("[TC_0204044] Validate Logic When User Able To Add Menu Open Price With Notes Before Save",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuOpenPrice(order);
-            await editOrder.inputPriceMenu("20.000");
-            await editOrder.escapeKeyboard();
-            await editOrder.inputNotesOpenPrice("Notes Open Price");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205312] Validate Logic When User Able To Add Menu Open Price With Notes Before Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, editOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuOpenPrice(order);
+                await editOrderV2.inputPriceMenuOpenPrice("100.000");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.inputNoteMenuOpenPrice("TEST NOTES OPEN PRICE");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.applyOpenPrice();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, editOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0204045] Validate Logic When User Able To Add Menu Open Price With Notes After Save",
