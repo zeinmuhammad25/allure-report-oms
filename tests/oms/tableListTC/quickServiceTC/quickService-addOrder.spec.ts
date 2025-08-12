@@ -763,13 +763,15 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2, sideNavBar, tableList}, testInfo);
         });
 
-    test("[TC_0204035] Validate Logic When User Able To Delete Menu Paket Special Price Before Save",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrder, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuPaketSpecialPrice(order, addOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.deleteMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
-            await order.validateMenuNotVisible(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+    test("[TC_0205303] Validate Logic When User Able To Delete Menu Paket Special Price Before Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.deleteMenu(MenuList.menus.menuPaketSpecialSelections.shortName);
+                await order.validateMenuNotVisible(MenuList.menus.menuSpecialPriceDelights.shortName);
+            }, {quickServiceList, bookOrder, order, addOrderV2}, testInfo);
         });
 
     test("[TC_0204036] Validate Logic When User Able To Delete Menu Paket Special Price After Save",
