@@ -969,27 +969,23 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0204048] Validate Logic When User Able To Edit Qty Menu Extra Special Price After Save",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder, sideNavBar, tableList}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuExtraSpecialPrice(order);
-            await order.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await editOrder.editQtySelector(5);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await selectExtraMenuItemsSpecial(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await editOrder.editQtySelector(3);
-            await editOrder.actionButtonFooter("Apply");
-            await order.cancelMenuAfterSave("Decrease Qty Menu special price");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205316] Validate Logic When User Able To Edit Qty Menu Extra Special Price After Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrderV2, addOrderV2, sideNavBar, tableList, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, editOrderV2, addOrderV2, sideNavBar, tableList, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.clickMenuDetail(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+                await selectMenuExtra(addOrderV2, -2);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, editOrderV2, addOrderV2, sideNavBar, tableList, paymentV2}, testInfo);
         });
 
     test("[TC_0204049] Validate Logic When User Able To Delete Menu Extra Special Price Before Save",
