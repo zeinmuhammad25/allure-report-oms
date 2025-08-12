@@ -945,29 +945,28 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, editOrderV2, paymentV2, sideNavBar, tableList}, testInfo);
         });
 
-    test("[TC_0204046] Validate Logic When User Able To Add Menu Extra Special Price",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuExtraSpecialPrice(order);
-            await order.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await selectExtraMenuItemsSpecial(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205314] Validate Logic When User Able To Add Menu Extra Special Price",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
+                await selectMenuExtra(addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0204047] Validate Logic When User Able To Edit Qty Menu Extra Special Price",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuExtraSpecialPrice(order);
-            await order.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await editOrder.editQtySelector(5);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await selectExtraMenuItemsSpecial(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205315] Validate Logic When User Able To Edit Qty Menu Extra Special Price",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
+                await selectMenuExtra(addOrderV2,5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0204048] Validate Logic When User Able To Edit Qty Menu Extra Special Price After Save",
