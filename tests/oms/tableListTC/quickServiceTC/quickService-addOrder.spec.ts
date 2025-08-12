@@ -696,16 +696,22 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, editOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0204031] Validate Logic When User Able To Add Menu Biasa Special Price With Notes After Save",
-        {tag: tag + "@negative"}, async ({quickServiceList, bookOrder, order, editOrder, sideNavBar, tableList}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuBiasaSpecialPrice(order);
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.shortName);
-            await editOrder.inputNotesMenuInvisible();
+    test("[TC_0205299] Validate Logic When User Able To Add Menu Biasa Special Price With Notes After Save",
+        {tag: tag + "@negative"}, async ({quickServiceList, bookOrder, order, editOrderV2, sideNavBar, tableList, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, editOrderV2, sideNavBar, tableList, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasaSpecialPrice(order);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.name);
+                await editOrderV2.disableInputMenuNotesSingelMenu();
+                await editOrderV2.escapeKeyboardV2();
+                await editOrderV2.actionCancel();
+                await order.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, editOrderV2, sideNavBar, tableList, paymentV2}, testInfo);
         });
 
     test("[TC_0204032] Validate Logic When User Able To Add Menu Paket Special Price",
