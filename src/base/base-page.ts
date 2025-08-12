@@ -5,6 +5,7 @@ import BaseUrl from "./base-url";
 import {Keyboard} from "./constants/Keyboard";
 import BaseConfigs from "./base-configs";
 import {ConnectionOptions, createConnection} from "mysql2/promise";
+import Helper from "./utils/helper";
 
 export default abstract class BasePage<T extends BaseUrl, U extends BaseConfigs> implements BaseScenario {
     protected readonly _page: Page;
