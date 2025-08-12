@@ -666,19 +666,21 @@ test.describe.serial("Quick Service Add Order", () => {
         });
 
     test("[TC_0205297] Validate Logic When User Able To Delete Menu Biasa Special Price After Save",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder, sideNavBar, tableList}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuBiasaSpecialPrice(order);
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.deleteMenu(MenuList.menus.menuSpecialPriceDelights.shortName);
-            await order.cancelMenuAfterSave("CANCEL MENU SPECIAL PRICE");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await order.confirmationCloseTable("Yes");
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrderV2, sideNavBar, tableList},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, editOrderV2, sideNavBar, tableList}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasaSpecialPrice(order,3);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.deleteMenu(MenuList.menus.menuSpecialPriceDelights.name);
+                await order.cancelMenuAfterSave("CANCEL MENU AFTER SAVE");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await order.saveOrder();
+                await order.confirmationCloseTable("Yes");
+            }, {quickServiceList, bookOrder, order, editOrderV2, sideNavBar, tableList}, testInfo);
         });
 
     test("[TC_0204030] Validate Logic When User Able To Add Menu Biasa Special Price With Notes Before Save",
