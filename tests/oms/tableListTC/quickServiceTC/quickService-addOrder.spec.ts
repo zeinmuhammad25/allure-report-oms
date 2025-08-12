@@ -655,12 +655,13 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, paymentV2, editOrderV2, sideNavBar, tableList}, testInfo);
         });
 
-    test("[TC_0204028] Validate Logic When User Able To Delete Menu Biasa Special Price Before Save",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuBiasaSpecialPrice(order);
+    test("[TC_0205296] Validate Logic When User Able To Delete Menu Biasa Special Price Before Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order}) => {await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasaSpecialPrice(order,3);
             await order.deleteMenu(MenuList.menus.menuSpecialPriceDelights.shortName);
             await order.validateMenuNotVisible(MenuList.menus.menuSpecialPriceDelights.shortName);
+            }, {quickServiceList, bookOrder, order}, testInfo);
         });
 
     test("[TC_0204029] Validate Logic When User Able To Delete Menu Biasa Special Price After Save",
