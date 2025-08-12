@@ -855,27 +855,24 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, editOrderV2, paymentV2}, testInfo);
         });
 
-    test("[TC_0204041] Validate Logic When User Able To Edit Qty Menu Open Price After Save",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder, sideNavBar, tableList}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuOpenPrice(order);
-            await editOrder.inputPriceMenu("20.000");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
-            await editOrder.editQtySelector(5);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
-            await editOrder.editQtySelector(3);
-            await editOrder.actionButtonFooter("Apply");
-            await order.cancelMenuAfterSave("Decrease Qty Open Price");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205309] Validate Logic When User Able To Edit Qty Menu Open Price After Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrderV2, paymentV2, sideNavBar, tableList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, editOrderV2, paymentV2, sideNavBar, tableList}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuOpenPrice(order);
+                await editOrderV2.inputPriceMenuOpenPrice("100.000");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.applyOpenPrice();
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.clickMenuDetail(MenuList.menus.menuOpenPriceChoices.shortName);
+                await editOrderV2.modifyEditHeadPackage([5]);
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, editOrderV2, paymentV2, sideNavBar, tableList}, testInfo);
         });
 
     test("[TC_0204042] Validate Logic When User Able To Delete Menu Open Price Before Save",
