@@ -1020,18 +1020,17 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, sideNavBar, tableList, editOrderV2}, testInfo);
         });
 
-    test("[TC_0204051] Validate Logic When User Able To Add Menu Extra Special Price With Notes Before Save",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuExtraSpecialPrice(order);
-            await order.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await editOrder.escapeKeyboard();
-            await editOrder.inputNotesMenu("Notes Menu Extra Special Price");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await selectExtraMenuItemsSpecial(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205319] Validate Logic When User Able To Add Menu Extra Special Price With Notes Before Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketSpecialPriceNotes(order, addOrderV2, 2, "COBA NOTES BEFORE SAFE");
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.inputMenuNotesPackageHead("COBA NOTES BEFORE SAFE SEPECIAL PRICE EXTRA");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0204052] Validate Logic When User Able To Add Menu Extra Special Price With Notes After Save",
