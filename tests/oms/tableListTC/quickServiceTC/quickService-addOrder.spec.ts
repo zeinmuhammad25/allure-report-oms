@@ -683,15 +683,17 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, editOrderV2, sideNavBar, tableList}, testInfo);
         });
 
-    test("[TC_0204030] Validate Logic When User Able To Add Menu Biasa Special Price With Notes Before Save",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuBiasaSpecialPrice(order);
-            await order.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.shortName);
-            await editOrder.inputNotesMenu("Notes Menu Single Special Price");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
+    test("[TC_0205298] Validate Logic When User Able To Add Menu Biasa Special Price With Notes Before Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrderV2, paymentV2},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, editOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasaSpecialPrice(order, 5);
+                await order.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.name);
+                await editOrderV2.inputMenuNotesSingelMenu("COBA NOTES BEFORE SAFE SPECIAL PRICE");
+                await editOrderV2.actionUpdate();
+                await order.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, editOrderV2, paymentV2}, testInfo);
         });
 
     test("[TC_0204031] Validate Logic When User Able To Add Menu Biasa Special Price With Notes After Save",
