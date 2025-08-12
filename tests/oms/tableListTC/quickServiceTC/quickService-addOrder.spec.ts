@@ -774,29 +774,24 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2}, testInfo);
         });
 
-    test("[TC_0204036] Validate Logic When User Able To Delete Menu Paket Special Price After Save",
-        {tag: tag + "@positive"}, async ({
-                                             quickServiceList,
-                                             bookOrder,
-                                             order,
-                                             addOrder,
-                                             editOrder,
-                                             sideNavBar,
-                                             tableList
-                                         }) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuPaketSpecialPrice(order, addOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.deleteMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
-            await order.cancelMenuAfterSave("CANCEL MENU");
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Apply");
-            await order.saveOrder();
-            await order.confirmationCloseTable("Yes");
+    test("[TC_0205304] Validate Logic When User Able To Delete Menu Paket Special Price After Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, sideNavBar ,tableList, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, sideNavBar, tableList, editOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.deleteMenu(MenuList.menus.menuPaketSpecialSelections.shortName);
+                await order.validateMenuNotVisible(MenuList.menus.menuSpecialPriceDelights.shortName);
+                await order.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await order.saveOrder();
+                await order.confirmationCloseTable("Yes");
+            }, {quickServiceList, bookOrder, order, addOrderV2, sideNavBar ,tableList, editOrderV2}, testInfo);
         });
 
     test("[TC_0204037] Validate Logic When User Able To Add Menu Paket Special Price With Notes Before Save",
