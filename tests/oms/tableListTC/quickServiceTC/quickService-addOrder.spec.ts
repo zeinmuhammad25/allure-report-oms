@@ -988,17 +988,16 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, editOrderV2, addOrderV2, sideNavBar, tableList, paymentV2}, testInfo);
         });
 
-    test("[TC_0204049] Validate Logic When User Able To Delete Menu Extra Special Price Before Save",
-        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, editOrder}) => {
-            await addNewQuickService(quickServiceList, bookOrder);
-            await selectMenuExtraSpecialPrice(order);
-            await order.clickMenuDetail(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await editOrder.escapeKeyboard();
-            await editOrder.actionButtonFooter("Next");
-            await selectExtraMenuItemsSpecial(editOrder);
-            await editOrder.actionButtonFooter("Apply");
-            await order.deleteMenu(MenuList.menus.menuExtraSpecialFriedRice.shortName);
-            await order.validateMenuNotVisible(MenuList.menus.menuExtraSpecialFriedRice.shortName);
+    test("[TC_0205317] Validate Logic When User Able To Delete Menu Extra Special Price Before Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketSpecialPrice(order, addOrderV2, 2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.deleteMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+                await order.validateMenuNotVisible(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+            }, {quickServiceList, bookOrder, order, addOrderV2}, testInfo);
         });
 
     test("[TC_0204050] Validate Logic When User Able To Delete Menu Extra Special Price After Save",
