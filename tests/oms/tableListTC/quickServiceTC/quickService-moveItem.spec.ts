@@ -7,26 +7,26 @@ import SideNavBarScenario from "../../../../src/modules/oms/components/sideNavBa
 import TableListScenario from "../../../../src/modules/oms/tableList/tableList.scenario";
 import MoveItemScenario from "../../../../src/modules/oms/tableList/order/components/moveItem/moveItem.scenario";
 import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
+import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
 test.describe.serial("Quick Service Move Item", () => {
     const tags = "@smokeTest @oms @quickService @moveItem ";
 
-    const makeOrder = async (bookOrder: BookOrderScenario, salesMode = "AT EXCLUSIVE", isQuickService = true) => {
+    const makeOrder = async (
+        salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario, quickServiceList: QuickServiceListScenario
+    ) => {
+        await quickServiceList.addOrderQuickService();
+        await bookOrder.setPax(2);
         await bookOrder.selectSalesMode(salesMode);
-        if (isQuickService) {
-            await bookOrder.applyQuickService();
-        } else {
-            await bookOrder.bookAndOrder();
-        }
+        await bookOrder.applyQuickService();
         await bookOrder.skipCustomerPhoneNumber();
     };
 
-    const orderMenuBiasa = async (order: OrderScenario, qty = 1) => {
+    const selectMenuBiasa = async (order: OrderScenario, quantity = 1) => {
         await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty);
-        await order.saveOrder();
+        await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
     };
 
     const createQuickServiceAndMoveItem = async (
@@ -41,13 +41,13 @@ test.describe.serial("Quick Service Move Item", () => {
         await quickServiceList.selectSalesNum("last");
         await order.moveItem();
         await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-        await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty);
+        await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, qty);
         await moveItem.actionApplyMoveItem();
     };
 
     test.beforeEach(async ({terminalID, signPin, tableList}) => {
         const testWithAuthentication = [
-            "[TC_0204102] Validate Logic when User can Move Item to new Quick Service order from Quick Service to Quick Service"
+            "[TC_0205328] Validate Logic when User can Move Item to new Quick Service order from Quick Service to Quick Service"
         ];
         if (testWithAuthentication.includes(test.info().title)) {
             await terminalID.goHere();
@@ -66,19 +66,20 @@ test.describe.serial("Quick Service Move Item", () => {
         ]);
     });
 
-    test("[TC_0204102] Validate Logic when User can Move Item to new Quick Service order from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order);
+    test("[TC_0205328] Validate Logic when User can Move Item to new Quick Service order from Quick Service to Quick Service",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasa(order);
+            await order.saveOrder();
             await sideNavBar.gotoPageTableList();
             await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
+            await quickServiceList.clickLastSalesNum();
             await order.moveItem();
             await moveItem.moveItemToSectionQuickService();
-            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
             await moveItem.actionApplyMoveItem();
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204103] Validate Logic when User can Move Item to the other order from Quick Service to Quick Service",
