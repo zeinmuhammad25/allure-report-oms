@@ -5,6 +5,8 @@ import OrderScenario from "../../../../src/modules/oms/tableList/order/order.sce
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
 import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
 import {safeTest} from "../../../../src/base/utils/safeTest";
+import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
+import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 
 test.setTimeout(100000);
 test.describe.serial("Quick Service Move Table", () => {
@@ -28,6 +30,12 @@ test.describe.serial("Quick Service Move Table", () => {
         await bookOrder.selectSalesMode(salesMode);
         await bookOrder.bookAndOrder();
         await bookOrder.skipCustomerPhoneNumber();
+    };
+
+    const paymentQrESB = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Card);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.QrisEsbPayment);
+        await paymentV2.paymentQrisEsb(265);
     };
 
 
@@ -128,25 +136,26 @@ test.describe.serial("Quick Service Move Table", () => {
             }, {terminalID, sideNavBar, signPin, tableList, order, bookOrder, quickServiceList, topNavBar}, testInfo);
         });
 
-    test("[TC_0204099] Validate logic when user can cancel Move Table action with button Cancel",
-        {tag: tags + "@positive"}, async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await bookOrder.selectSalesMode("AT EXCLUSIVE");
-            await bookOrder.applyQuickService();
-            await bookOrder.skipCustomerPhoneNumber();
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+    test("[TC_0205325] Validate logic when user can cancel Move Table action with button Cancel",
+        {tag: tags + "@positive"}, async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable, paymentV2},testInfo) => {
+            await safeTest(async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable, paymentV2}) => {
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasa(order, 4);
             await order.saveOrder();
             await sideNavBar.gotoPageTableList();
             await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
+            await quickServiceList.clickLastSalesNum();
             await order.moveTable();
             await moveTable.cancelMoveTableBackTableList();
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.clickLastSalesNum();
+            await order.saveOrder();
+            await paymentQrESB(paymentV2);
+            }, {tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable, paymentV2}, testInfo);
         });
 
-    test("[TC_0204100] Validate Logic when User can Move Table from Quick Service to Dine-In while having no ordered items",
+    test("[TC_0205326] Validate Logic when User can Move Table from Quick Service to Dine-In while having no ordered items",
         {tag: tags + "@positive"}, async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}) => {
             await quickServiceList.addOrderQuickService();
             await bookOrder.setPax(2);
