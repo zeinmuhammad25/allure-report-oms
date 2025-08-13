@@ -66,110 +66,172 @@ test.describe.serial("Quick Service Move Table", () => {
     });
 
     test("[TC_0205321] Validate Logic when User can Move Table from Quick Service to Dine-In",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList, moveTable},testInfo) => {
+        {tag: tags + "@positive"}, async ({
+                                              quickServiceList,
+                                              bookOrder,
+                                              order,
+                                              sideNavBar,
+                                              tableList,
+                                              moveTable
+                                          }, testInfo) => {
             await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList, moveTable}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await selectMenuBiasa(order, 3);
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.moveTable();
-            await moveTable.autoMoveTable();
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 3);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.moveTable();
+                await moveTable.autoMoveTable();
             }, {quickServiceList, bookOrder, order, sideNavBar, tableList, moveTable}, testInfo);
         });
 
     test("[TC_0205322] Validate Logic when user cannot Move Table from Quick Service to Dine-In filled table",
-        {tag: tags + "@negative"}, async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable},testInfo) => {
+        {tag: tags + "@negative"}, async ({
+                                              tableList,
+                                              quickServiceList,
+                                              bookOrder,
+                                              order,
+                                              sideNavBar,
+                                              moveTable
+                                          }, testInfo) => {
             await safeTest(async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await selectMenuBiasa(order, 4);
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.selectTable(Table.acRoom.ac1.name);
-            await makeOrderFs("AT EXCLUSIVE", bookOrder);
-            await selectMenuBiasa(order, 1);
-            await order.saveOrder();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.moveTable();
-            await moveTable.selectRoom(Table.acRoom.name);
-            await moveTable.disableButtonByLabel(Table.acRoom.ac1.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 4);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrderFs("AT EXCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 1);
+                await order.saveOrder();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.moveTable();
+                await moveTable.selectRoom(Table.acRoom.name);
+                await moveTable.disableButtonByLabel(Table.acRoom.ac1.name);
             }, {tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}, testInfo);
         });
 
     test("[TC_0205323] Validate logic when user cannot Move Table from Quick Service to Dine-In while table is not selected",
-        {tag: tags + "@negative"}, async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable},testInfo) => {
+        {tag: tags + "@negative"}, async ({
+                                              tableList,
+                                              quickServiceList,
+                                              bookOrder,
+                                              order,
+                                              sideNavBar,
+                                              moveTable
+                                          }, testInfo) => {
             await safeTest(async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await selectMenuBiasa(order, 4);
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.moveTable();
-            await moveTable.selectRoom(Table.acRoom.name);
-            await moveTable.disableButtonByLabel("Apply");
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 4);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.moveTable();
+                await moveTable.selectRoom(Table.acRoom.name);
+                await moveTable.disableButtonByLabel("Apply");
             }, {tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}, testInfo);
         });
 
     test("[TC_0205324] Validate Logic when user cannot Move Table while not having access",
-        {tag: tags + "@negative"}, async ({terminalID, sideNavBar, signPin, tableList, order, bookOrder, quickServiceList, topNavBar},testInfo) => {
-            await safeTest(async ({terminalID, sideNavBar, signPin, tableList, order, bookOrder, quickServiceList, topNavBar}) => {
-            await terminalID.goHere();
-            await terminalID.performTerminalID();
-            await signPin.inputPinByTouch("0000");
-            await signPin.validateShowStarCash("20.000");
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await selectMenuBiasa(order, 4);
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.expectDisabledMoveTable();
-            await order.cancelTable("Cancel");
-            await order.confirmationCloseTable("Yes");
-            await topNavBar.userSignOut();
-            await signPin.inputPinByTouch("22");
-            await signPin.validateShowStarCash("20.000");
-            await signPin.storeAuthState();
+        {tag: tags + "@negative"}, async ({
+                                              terminalID,
+                                              sideNavBar,
+                                              signPin,
+                                              tableList,
+                                              order,
+                                              bookOrder,
+                                              quickServiceList,
+                                              topNavBar
+                                          }, testInfo) => {
+            await safeTest(async ({
+                                      terminalID,
+                                      sideNavBar,
+                                      signPin,
+                                      tableList,
+                                      order,
+                                      bookOrder,
+                                      quickServiceList,
+                                      topNavBar
+                                  }) => {
+                await terminalID.goHere();
+                await terminalID.performTerminalID();
+                await signPin.inputPinByTouch("0000");
+                await signPin.validateShowStarCash("20.000");
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 4);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.expectDisabledMoveTable();
+                await order.cancelTable("Cancel");
+                await order.confirmationCloseTable("Yes");
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
             }, {terminalID, sideNavBar, signPin, tableList, order, bookOrder, quickServiceList, topNavBar}, testInfo);
         });
 
     test("[TC_0205325] Validate logic when user can cancel Move Table action with button Cancel",
-        {tag: tags + "@positive"}, async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable, paymentV2},testInfo) => {
-            await safeTest(async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable, paymentV2}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await selectMenuBiasa(order, 4);
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.moveTable();
-            await moveTable.cancelMoveTableBackTableList();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.saveOrder();
-            await paymentQrESB(paymentV2);
+        {tag: tags + "@positive"}, async ({
+                                              tableList,
+                                              quickServiceList,
+                                              bookOrder,
+                                              order,
+                                              sideNavBar,
+                                              moveTable,
+                                              paymentV2
+                                          }, testInfo) => {
+            await safeTest(async ({
+                                      tableList,
+                                      quickServiceList,
+                                      bookOrder,
+                                      order,
+                                      sideNavBar,
+                                      moveTable,
+                                      paymentV2
+                                  }) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 4);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.moveTable();
+                await moveTable.cancelMoveTableBackTableList();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
             }, {tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable, paymentV2}, testInfo);
         });
 
     test("[TC_0205326] Validate Logic when User can Move Table from Quick Service to Dine-In while having no ordered items",
-        {tag: tags + "@positive"}, async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable},testInfo) => {
+        {tag: tags + "@positive"}, async ({
+                                              tableList,
+                                              quickServiceList,
+                                              bookOrder,
+                                              order,
+                                              sideNavBar,
+                                              moveTable
+                                          }, testInfo) => {
             await safeTest(async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.saveOrder();
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.clickLastSalesNum();
-            await order.moveTable();
-            await moveTable.autoMoveTable();
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.moveTable();
+                await moveTable.autoMoveTable();
             }, {tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}, testInfo);
         });
 
     test("[TC_0205326] Validate Logic when User cannot Move Table from Quick Service to Dine-In while having no ordered items and not saving order first",
-        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, order},testInfo) => {
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, order}, testInfo) => {
             await safeTest(async ({quickServiceList, bookOrder, order}) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await order.expectDisabledMoveTable();
