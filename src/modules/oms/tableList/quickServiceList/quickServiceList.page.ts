@@ -13,7 +13,7 @@ export default class QuickServiceListPage extends BaseOmsPage implements QuickSe
         ];
     }
 
-    private apiBaseUrl = "http://localhost/fnb-pos-v2/api/web/v1";
+    private apiBaseUrl = process.env.OMS_API_URL;
 
     async addOrderQuickService(): Promise<void> {
         await this.click(QuickServiceListLocator.sectionQuickService);
