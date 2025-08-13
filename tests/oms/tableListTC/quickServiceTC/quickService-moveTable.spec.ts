@@ -1,14 +1,33 @@
 import {test} from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import Table from "../../../../src/modules/oms/objects/table";
+import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
+import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
+import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
+import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
 test.describe.serial("Quick Service Move Table", () => {
     const tags = "@smokeTest @oms @moveTable ";
 
-    test.beforeEach(async ({terminalID, signPin, tableList}) => {
+    const selectMenuBiasa = async (order: OrderScenario, quantity = 1) => {
+        await order.selectCategoryMenu(MenuList.atCategory.name);
+        await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+        await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
+    };
+
+    const makeOrder = async (salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario, quickServiceList: QuickServiceListScenario) => {
+        await quickServiceList.addOrderQuickService();
+        await bookOrder.setPax(2);
+        await bookOrder.selectSalesMode(salesMode);
+        await bookOrder.applyQuickService();
+        await bookOrder.skipCustomerPhoneNumber();
+    };
+
+
+    test.beforeEach(async ({terminalID, signPin, tableList, sideNavBar}) => {
         const testWithAuthentication = [
-            "[TC_0204095] Validate Logic when User can Move Table from Quick Service to Dine-In"
+            "[TC_0205321] Validate Logic when User can Move Table from Quick Service to Dine-In"
         ];
 
         if (testWithAuthentication.includes(test.info().title)) {
@@ -17,6 +36,9 @@ test.describe.serial("Quick Service Move Table", () => {
             await signPin.inputPinByTouch("22");
             await signPin.validateShowStarCash("20.000");
             await signPin.storeAuthState();
+            await sideNavBar.gotoPageTools();
+            await sideNavBar.selectStation("KASIR");
+            await sideNavBar.gotoPageTableList();
         }
         await tableList.goHere();
     });
@@ -29,22 +51,18 @@ test.describe.serial("Quick Service Move Table", () => {
         ]);
     });
 
-    test("[TC_0204095] Validate Logic when User can Move Table from Quick Service to Dine-In",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList, moveTable}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await bookOrder.selectSalesMode("AT EXCLUSIVE");
-            await bookOrder.applyQuickService();
-            await bookOrder.skipCustomerPhoneNumber();
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+    test("[TC_0205321] Validate Logic when User can Move Table from Quick Service to Dine-In",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList, moveTable},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList, moveTable}) => {
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasa(order, 3);
             await order.saveOrder();
             await sideNavBar.gotoPageTableList();
             await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
+            await quickServiceList.clickLastSalesNum();
             await order.moveTable();
             await moveTable.autoMoveTable();
+            }, {quickServiceList, bookOrder, order, sideNavBar, tableList, moveTable}, testInfo);
         });
 
     test("[TC_0204096] Validate Logic when user cannot Move Table from Quick Service to Dine-In filled table",
