@@ -90,23 +90,19 @@ test.describe.serial("Quick Service Move Table", () => {
             }, {tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}, testInfo);
         });
 
-    test("[TC_0204097] Validate logic when user cannot Move Table from Quick Service to Dine-In while table is not selected",
-        {tag: tags + "@negative"}, async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await bookOrder.selectSalesMode("AT EXCLUSIVE");
-            await bookOrder.applyQuickService();
-            await bookOrder.skipCustomerPhoneNumber();
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+    test("[TC_0205323] Validate logic when user cannot Move Table from Quick Service to Dine-In while table is not selected",
+        {tag: tags + "@negative"}, async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable},testInfo) => {
+            await safeTest(async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}) => {
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasa(order, 4);
             await order.saveOrder();
             await sideNavBar.gotoPageTableList();
             await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
+            await quickServiceList.clickLastSalesNum();
             await order.moveTable();
             await moveTable.selectRoom(Table.acRoom.name);
             await moveTable.disableButtonByLabel("Apply");
+            }, {tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}, testInfo);
         });
 
     test("[TC_0204098] Validate Logic when user cannot Move Table while not having access",
