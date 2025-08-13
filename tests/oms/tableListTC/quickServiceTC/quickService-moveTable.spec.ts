@@ -105,21 +105,27 @@ test.describe.serial("Quick Service Move Table", () => {
             }, {tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}, testInfo);
         });
 
-    test("[TC_0204098] Validate Logic when user cannot Move Table while not having access",
-        {tag: tags + "@negative"}, async () => {
-            // TODO:
-            //  Precondition:
-            //     POS
-            //     1. Open POS
-            //     Master POS User Role
-            //     1. Access Move Table = Not Active
-            //  Steps:
-            //     1. Create transaction Quick Service
-            //     2. Choose Sales Mode
-            //     3. Order menu
-            //     4. Click Save Order
-            //     5. Click transaction Quick Service again
-            //  Blocker : Depend on backend
+    test("[TC_0205324] Validate Logic when user cannot Move Table while not having access",
+        {tag: tags + "@negative"}, async ({terminalID, sideNavBar, signPin, tableList, order, bookOrder, quickServiceList, topNavBar},testInfo) => {
+            await safeTest(async ({terminalID, sideNavBar, signPin, tableList, order, bookOrder, quickServiceList, topNavBar}) => {
+            await terminalID.goHere();
+            await terminalID.performTerminalID();
+            await signPin.inputPinByTouch("0000");
+            await signPin.validateShowStarCash("20.000");
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasa(order, 4);
+            await order.saveOrder();
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.clickLastSalesNum();
+            await order.expectDisabledMoveTable();
+            await order.cancelTable("Cancel");
+            await order.confirmationCloseTable("Yes");
+            await topNavBar.userSignOut();
+            await signPin.inputPinByTouch("22");
+            await signPin.validateShowStarCash("20.000");
+            await signPin.storeAuthState();
+            }, {terminalID, sideNavBar, signPin, tableList, order, bookOrder, quickServiceList, topNavBar}, testInfo);
         });
 
     test("[TC_0204099] Validate logic when user can cancel Move Table action with button Cancel",
