@@ -24,6 +24,12 @@ test.describe.serial("Quick Service Move Table", () => {
         await bookOrder.skipCustomerPhoneNumber();
     };
 
+    const makeOrderFs = async (salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario) => {
+        await bookOrder.selectSalesMode(salesMode);
+        await bookOrder.bookAndOrder();
+        await bookOrder.skipCustomerPhoneNumber();
+    };
+
 
     test.beforeEach(async ({terminalID, signPin, tableList, sideNavBar}) => {
         const testWithAuthentication = [
@@ -65,31 +71,23 @@ test.describe.serial("Quick Service Move Table", () => {
             }, {quickServiceList, bookOrder, order, sideNavBar, tableList, moveTable}, testInfo);
         });
 
-    test("[TC_0204096] Validate Logic when user cannot Move Table from Quick Service to Dine-In filled table",
-        {tag: tags + "@negative"}, async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await bookOrder.selectSalesMode("AT EXCLUSIVE");
-            await bookOrder.applyQuickService();
-            await bookOrder.skipCustomerPhoneNumber();
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+    test("[TC_0205322] Validate Logic when user cannot Move Table from Quick Service to Dine-In filled table",
+        {tag: tags + "@negative"}, async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable},testInfo) => {
+            await safeTest(async ({tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}) => {
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasa(order, 4);
             await order.saveOrder();
             await sideNavBar.gotoPageTableList();
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await bookOrder.selectSalesMode("AT EXCLUSIVE");
-            await bookOrder.bookAndOrder();
-            await bookOrder.skipCustomerPhoneNumber();
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await tableList.selectTable(Table.acRoom.ac1.name);
+            await makeOrderFs("AT EXCLUSIVE", bookOrder);
+            await selectMenuBiasa(order, 1);
             await order.saveOrder();
             await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
+            await quickServiceList.clickLastSalesNum();
             await order.moveTable();
             await moveTable.selectRoom(Table.acRoom.name);
-            await moveTable.disableButtonByLabel(Table.acRoom.ac3.name);
+            await moveTable.disableButtonByLabel(Table.acRoom.ac1.name);
+            }, {tableList, quickServiceList, bookOrder, order, sideNavBar, moveTable}, testInfo);
         });
 
     test("[TC_0204097] Validate logic when user cannot Move Table from Quick Service to Dine-In while table is not selected",
