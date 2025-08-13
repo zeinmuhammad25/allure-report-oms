@@ -12,6 +12,6 @@ export default class MoveTableLocator extends BaseLocator {
     static nextArrow = "//app-grid-pager[@class='ng-star-inserted']//i[@class='glyphicon glyphicon-arrow-right']";
     static backArrow = "//app-grid-pager[@class='ng-star-inserted']//i[@class='glyphicon glyphicon-arrow-right']";
     static buttonApplyOrCancel = (label: "Apply" | "Cancel"): string => `//span[normalize-space()='${label}']`;
-    static buttonBackToTableList = "//a[@class='d-flex align-items-center active']";
+    static buttonBackToTableList = "//a[@class='d-flex align-items-center ng-star-inserted active']";
 }
 
