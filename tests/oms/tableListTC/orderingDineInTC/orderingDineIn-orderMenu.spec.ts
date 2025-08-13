@@ -762,6 +762,7 @@ test.describe.serial("Ordering Dine In Order Menu", () => {
                 await order.clickMenuDetail(MenuList.menus.atMenuPaketMahal.name);
                 await editOrderV2.modifyEditHeadPackage([6]);
                 await editOrderV2.disableInputMenuNotesPackageHead();
+                await editOrderV2.actionUpdate();
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
