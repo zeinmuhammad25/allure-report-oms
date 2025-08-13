@@ -180,6 +180,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async expectDisabledMoveTable(): Promise<void> {
+        await this.wait(100);
         const locatorMoveTable = await this.isVisible(OrderLocator.moveToTableDisabledButton)
             ? OrderLocator.moveToTableDisabledButton
             : OrderLocator.moveTableDisabledButton;
