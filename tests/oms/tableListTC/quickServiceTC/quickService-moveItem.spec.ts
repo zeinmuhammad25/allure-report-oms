@@ -491,17 +491,19 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204121] Validate Logic when User cannot select current order in Move Item from Quick Service to Quick Service",
-        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order, 5);
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
-            await order.moveItem();
-            await moveItem.moveItemToSectionQuickService();
+    test("[TC_0205347] Validate Logic when User cannot select current order in Move Item from Quick Service to Quick Service",
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 10);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.selectSalesNum("last");
+                await order.moveItem();
+                await moveItem.selectQuickService();
+                await moveItem.disableSalesNum();
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204122] Validate Logic when User cannot Move Item to the other filled order with different Sales Mode from Quick Service to Quick Service",
