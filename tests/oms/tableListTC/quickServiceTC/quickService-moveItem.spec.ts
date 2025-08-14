@@ -98,19 +98,26 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204104] Validate Logic when User can Move Item to the other filled order with the same Sales Mode from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order);
+    test("[TC_0205330] Validate Logic when User can Move Item to the other filled order with the same Sales Mode from Quick Service to Quick Service",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasa(order,3);
+            await order.saveOrder();
             await sideNavBar.gotoPageTableList();
             await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
+            await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasa(order,3);
+            await order.saveOrder();
+            await sideNavBar.gotoPageTableList();
+            await tableList.gotoQuickService();
+            await quickServiceList.clickLastSalesNum();
             await order.moveItem();
-            await moveItem.moveItemToSectionQuickService();
-            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.moveItemToOtherQuickServiceTransaction();
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
             await moveItem.actionApplyMoveItem();
+            await order.confirmationCloseTable("Yes");
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204105] Validate Logic when User can Move Item to the empty order with the same Sales Mode from Quick Service to Quick Service",
