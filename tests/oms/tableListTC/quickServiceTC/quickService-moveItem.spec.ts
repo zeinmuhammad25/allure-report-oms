@@ -545,17 +545,20 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204124] Validate Logic when User can Move Item from Dine-In to Quick Service",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order, 5);
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
-            await order.moveItem();
-            await moveItem.selectQuickService();
+    test("[TC_0205350] Validate Logic when User can Move Item from Dine-In to Quick Service",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.moveItem();
+                await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac2.name);
+                await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+                await moveItem.actionApplyMoveItem();
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204125] Validate Logic when User cannot Move Item while not having access",
