@@ -325,19 +325,28 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204113] Validate Logic when User can Move Item to the filled order with a Menu selected from Quick Service to Quick Service",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order);
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
-            await order.moveItem();
-            await moveItem.moveItemToSectionQuickService();
-            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItem.actionApplyMoveItem();
+    test("[TC_0205339] Validate Logic when User can Move Item to the filled order with a Menu selected from Quick Service to Quick Service",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await selectMultipleMenuBiasa(order,4,5,6);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.moveItem();
+                await moveItem.moveItemToOtherQuickServiceTransaction();
+                await moveItem.moveSelectAllItemMenu();
+                await moveItem.actionApplyMoveItem();
+                await order.confirmationCloseTable("Yes");
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204114] Validate Logic when User can Increase an item with ≥ 1 Qty in Move Item to the other order from Quick Service to Quick Service",
