@@ -595,12 +595,12 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204127] Validate Logic when User cannot Move Item from Quick Service to Quick Service while having no ordered items and not saving order first",
-        {tag: tags + "@negative"}, async ({quickServiceList, order, bookOrder}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await order.expectDisabledMoveTable();
+    test("[TC_0205353] Validate Logic when User cannot Move Item from Quick Service to Quick Service while having no ordered items and not saving order first",
+        {tag: tags + "@negative"}, async ({quickServiceList, order, bookOrder}, testInfo) => {
+            await safeTest(async ({quickServiceList, order, bookOrder}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.expectDisabledMoveTable();
+            }, {quickServiceList, order, bookOrder}, testInfo);
         });
 
     test("[TC_0204128] Validate Logic when User can Move Item from Quick Service to Dine-In other table",
