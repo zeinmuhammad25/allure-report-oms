@@ -747,13 +747,14 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204135] Validate Logic when User can Increase an item with ≥ 1 Qty in Move Item from Quick Service to Dine-In other table",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order, 4);
+    test("[TC_0205361] Validate Logic when User can Increase an item with ≥ 1 Qty in Move Item from Quick Service to Dine-In other table",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasa(order, 4);
+            await order.saveOrder();
             await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204136] Validate Logic when User can Decrease an item with ≥ 1 Qty selected in Move Item from Quick Service to Dine-In other table",
