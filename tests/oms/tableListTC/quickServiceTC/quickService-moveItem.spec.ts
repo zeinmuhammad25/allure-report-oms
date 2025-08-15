@@ -561,34 +561,25 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204125] Validate Logic when User cannot Move Item while not having access",
-        {tag: tags + "@negative"}, async () => {
-            //TODO :
-            // Precondition:
-            //  POS
-            //  1. Open POS
-            //  Master POS User Role
-            //  1. Access Move Item = Not Active
-            // Steps:
-            //  1. Create transaction Quick Service
-            //  2. Choose Sales Mode
-            //  3. Order menu
-            //  4. Click Save Order
-            //  5. Click transaction Quick Service again
-            // Blocker:
-            // Depend on ESB Core
-            // await quickServiceList.addOrderQuickService();
-            // await bookOrder.setPax(2);
-            // await makeOrder(bookOrder);
-            // await orderMenuBiasa(order, 5);
-            // await sideNavBar.gotoPageTableList();
-            // await tableList.gotoQuickService();
-            // await quickServiceList.selectSalesNum("last");
-            // await order.moveItem();
-            // await moveItem.moveItemToSectionQuickService();
-            // await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            // await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            // await moveItem.actionApplyMoveItem();
+    test("[TC_0205351] Validate Logic when User cannot Move Item while not having access",
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, topNavBar, signPin}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, topNavBar, signPin}) => {
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("6");
+                await signPin.validateShowStarCash("20.000");
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.expectDisabledMoveItem();
+                await order.saveOrder();
+                await topNavBar.userSignOut();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, topNavBar, signPin}, testInfo);
         });
 
     test("[TC_0204126] Validate Logic when User cannot Move Item without ordered item to the other order from Quick Service to Quick Service",
