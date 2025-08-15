@@ -823,21 +823,24 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204140] Validate Logic when User cannot Move Item from Quick Service to the other filled table with different Sales Mode on Dine-In",
-        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await makeOrder(bookOrder, "AT INCLUSIVE", false);
-            await orderMenuBiasa(order, 3);
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order, 5);
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
-            await order.moveItem();
-            await moveItem.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac3.name);
+    test("[TC_0205366] Validate Logic when User cannot Move Item from Quick Service to the other filled table with different Sales Mode on Dine-In",
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await makeOrderTable("AT EXCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 4);
+                await order.saveOrder();
+                await tableList.gotoQuickService();
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 4);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.moveItem();
+                await moveItem.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac3.name);
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204141] Validate Logic when User cannot Move Item from Quick Service to the other empty table with different Sales Mode in different Table Section on Dine-In",
