@@ -806,20 +806,21 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204139] Validate Logic when User can Deselect All Move Item to the other order from Quick Service to Dine-In",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order, 5);
+    test("[TC_0205365] Validate Logic when User can Deselect All Move Item to the other order from Quick Service to Dine-In",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+            await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasa(order, 4);
+            await order.saveOrder();
             await sideNavBar.gotoPageTableList();
             await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
+            await quickServiceList.clickLastSalesNum();
             await order.moveItem();
             await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
             await moveItem.deselectAllMenu();
-            await moveItem.verifyCurrentQty(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 0);
+            await moveItem.verifyCurrentQty(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 0);
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204140] Validate Logic when User cannot Move Item from Quick Service to the other filled table with different Sales Mode on Dine-In",
