@@ -702,23 +702,27 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204133] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with a Menu selected",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await makeOrder(bookOrder, "AT INCLUSIVE", false);
-            await order.saveOrder();
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder, "AT INCLUSIVE", true);
-            await orderMenuBiasa(order, 3);
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
-            await order.moveItem();
-            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItem.actionApplyMoveItem();
+    test("[TC_0205359] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with a Menu selected",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await makeOrderTable("AT INCLUSIVE", bookOrder);
+                await order.saveOrder();
+                await tableList.gotoQuickService();
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await selectMultipleMenuBiasa(order, 4,5,6);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.moveItem();
+                await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+                await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+                await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
+                await moveItem.actionApplyMoveItem();
+                await order.saveOrder();
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204134] Validate Logic when User can Move Item to the filled table with a Menu selected from Quick Service to Dine-In",
