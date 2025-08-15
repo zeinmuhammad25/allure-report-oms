@@ -642,17 +642,19 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204130] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with the same Sales Mode",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await makeOrder(bookOrder, "AT INCLUSIVE", false);
-            await order.saveOrder();
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder, "AT INCLUSIVE", true);
-            await orderMenuBiasa(order, 3);
-            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+    test("[TC_0205356] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with the same Sales Mode",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await makeOrderTable("AT INCLUSIVE", bookOrder);
+                await order.saveOrder();
+                await tableList.gotoQuickService();
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 4);
+                await order.saveOrder();
+                await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204131] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with all Menu(s) selected",
