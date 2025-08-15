@@ -11,6 +11,67 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
         return [];
     }
 
+    private apiBaseUrl = process.env.OMS_API_URL;
+
+    async getSalesNumsMoveItem(): Promise<string[]> {
+        const token = await this.getLocalStorage("session");
+        const result = await this.makeApiRequest<{ salesNum: string }[]>("/order/index-take-away/", {
+            baseUrl: this.apiBaseUrl,
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+        if (result.status === 200) {
+            return result.data.map(item => item.salesNum);
+        }
+        throw new Error("Failed to fetch sales numbers.");
+    }
+
+    async clickSalesNum(): Promise<void> {
+        const salesNums = await this.getSalesNumsMoveItem();
+        if (salesNums.length === 0) {
+            throw new Error("No salesNums found in the response");
+        }
+        for (const salesNum of salesNums) {
+            const locator = `//app-grid-table-move-item//button[not(@disabled)][.//div[normalize-space()="${salesNum}"]]`;
+
+            if (await this.isVisible(locator)) {
+                console.log(`Clicking salesNum: ${salesNum}`);
+                await this.expectVisible(locator);
+                await this.click(locator);
+                return;
+            }
+        }
+    }
+
+    async disableSalesNum(): Promise<void> {
+        const salesNums = await this.getSalesNumsMoveItem();
+        if (salesNums.length === 0) {
+            throw new Error("No salesNums found in the response");
+        }
+
+        for (const salesNum of salesNums) {
+            const locator = `//app-grid-table-move-item//button[@disabled and .//div[normalize-space()="${salesNum}"]]`;
+
+            if (await this.isVisible(locator)) {
+                console.log(`disabled salesNum: ${salesNum}`);
+                await this.expectVisible(locator);
+                return;
+            }
+        }
+        await this.actionCancelMoveItem();
+    }
+
+    async moveItemToOtherQuickServiceTransaction(): Promise<void> {
+        await this.expectVisible(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
+        await this.click(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
+        await this.clickSalesNum();
+        await this.expectVisible(MoveItemLocator.getLocatorButtonActionFooter("Next"));
+        await this.click(MoveItemLocator.getLocatorButtonActionFooter("Next"));
+    }
+
     async moveItemToSectionQuickService(): Promise<void> {
         await this.expectVisible(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
         await this.click(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
@@ -137,13 +198,23 @@ export default class MoveItemComponents extends BaseOmsPage implements MoveItemS
         await this.click(MoveItemLocator.getLocatorDestinationTable("Quick Service"));
     }
 
-    async expectDisabledButtonPlus(menuName:string):Promise<void>{
-        await this.expectVisible(MoveItemLocator.disableButtonPlusMenu(menuName))
+    async selectRoomNameDineIn(roomName: string): Promise<void> {
+        await this.expectVisible(MoveItemLocator.tableButton(roomName));
+        await this.click(MoveItemLocator.tableButton(roomName));
+    }
+
+    async selectTableNameDineIn(tableName: string): Promise<void> {
+        await this.expectVisible(MoveItemLocator.tableButton(tableName));
+        await this.click(MoveItemLocator.tableButton(tableName));
+    }
+
+    async expectDisabledButtonPlus(menuName: string): Promise<void> {
+        await this.expectVisible(MoveItemLocator.disableButtonPlusMenu(menuName));
         console.warn(`Validation passed: Button Plus Disabled in Menu ${menuName}.`);
     }
 
-    async expectDisabledButtonMoveAll(menuName:string):Promise<void>{
-        await this.expectVisible(MoveItemLocator.disableButtonMoveAll(menuName))
+    async expectDisabledButtonMoveAll(menuName: string): Promise<void> {
+        await this.expectVisible(MoveItemLocator.disableButtonMoveAll(menuName));
         console.warn(`Validation passed: Button MoveAll Disabled in Menu ${menuName}.`);
     }
 }
