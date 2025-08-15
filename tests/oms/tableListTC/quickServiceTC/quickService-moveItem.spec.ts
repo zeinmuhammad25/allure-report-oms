@@ -603,19 +603,18 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, order, bookOrder}, testInfo);
         });
 
-    test("[TC_0204128] Validate Logic when User can Move Item from Quick Service to Dine-In other table",
+    test("[TC_0205354] Validate Logic when User can Move Item from Quick Service to Dine-In other table",
         {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order, 5);
+            await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+            await selectMenuBiasa(order,4);
+            await order.saveOrder();
             await sideNavBar.gotoPageTableList();
             await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
+            await quickServiceList.clickLastSalesNum();
             await order.moveItem();
-            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac2.name);
-            await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac1.name);
+            await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+            await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
             await moveItem.actionApplyMoveItem();
         });
 
