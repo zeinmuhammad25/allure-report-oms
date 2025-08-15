@@ -880,7 +880,7 @@ test.describe.serial("Quick Service Move Item", () => {
             await safeTest(async ({quickServiceList, bookOrder, tableList, sideNavBar, order, mergeTable, moveItem}) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac3.name);
-                await makeOrderTable("AT EXCLUSIVE", bookOrder);
+                await makeOrderTable("AT INCLUSIVE", bookOrder);
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac3.name);
@@ -892,13 +892,8 @@ test.describe.serial("Quick Service Move Item", () => {
                 await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
                 await selectMenuBiasa(order, 4);
                 await order.saveOrder();
-                await sideNavBar.gotoPageTableList();
-                await tableList.gotoQuickService();
-                await quickServiceList.clickLastSalesNum();
-                await order.moveItem();
-                await moveItem.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac3.name);
-                await moveItem.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac1.name);
-            }, {quickServiceList, bookOrder, tableList, sideNavBar, order, mergeTable, moveItem}, testInfo);
+                await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+            }, {quickServiceList, bookOrder, tableList, sideNavBar, order, mergeTable, moveItem}, testInfo)
         });
 
     test("[TC_0205370] Validate Logic when User can Move Item to filled table from Quick Service to Dine-In Parent Merge Table",
@@ -906,7 +901,7 @@ test.describe.serial("Quick Service Move Item", () => {
             await safeTest(async ({quickServiceList, bookOrder, tableList, sideNavBar, order, mergeTable, moveItem}) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac3.name);
-                await makeOrderTable("AT EXCLUSIVE", bookOrder);
+                await makeOrderTable("AT INCLUSIVE", bookOrder);
                 await selectMenuBiasa(order, 6);
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
@@ -919,13 +914,8 @@ test.describe.serial("Quick Service Move Item", () => {
                 await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
                 await selectMenuBiasa(order, 4);
                 await order.saveOrder();
-                await sideNavBar.gotoPageTableList();
-                await tableList.gotoQuickService();
-                await quickServiceList.clickLastSalesNum();
-                await order.moveItem();
-                await moveItem.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac3.name);
-                await moveItem.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac1.name);
-            }, {quickServiceList, bookOrder, tableList, sideNavBar, order, mergeTable, moveItem}, testInfo);
+                await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+            }, {quickServiceList, bookOrder, tableList, sideNavBar, order, mergeTable, moveItem}, testInfo)
         });
 
     test("[TC_0205371] Validate Logic when User can Move Item from Quick Service to Dine-In Parent Merge Table",
