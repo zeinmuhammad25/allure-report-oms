@@ -23,6 +23,12 @@ test.describe.serial("Quick Service Move Item", () => {
         await bookOrder.skipCustomerPhoneNumber();
     };
 
+    const makeOrderTable = async (salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario) => {
+        await bookOrder.selectSalesMode(salesMode);
+        await bookOrder.bookAndOrder();
+        await bookOrder.skipCustomerPhoneNumber();
+    };
+
     const selectMenuBiasa = async (order: OrderScenario, quantity = 1) => {
         await order.selectCategoryMenu(MenuList.atCategory.name);
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
@@ -604,7 +610,8 @@ test.describe.serial("Quick Service Move Item", () => {
         });
 
     test("[TC_0205354] Validate Logic when User can Move Item from Quick Service to Dine-In other table",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
             await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
             await selectMenuBiasa(order,4);
             await order.saveOrder();
@@ -616,19 +623,23 @@ test.describe.serial("Quick Service Move Item", () => {
             await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
             await moveItem.movePartialItemMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
             await moveItem.actionApplyMoveItem();
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204129] Validate Logic when User can Move Item from Quick Service to Dine-In other filled table with the same Sales Mode",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await makeOrder(bookOrder, "AT INCLUSIVE", false);
-            await orderMenuBiasa(order, 3);
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder, "AT INCLUSIVE", true);
-            await orderMenuBiasa(order, 3);
-            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+    test("[TC_0205355] Validate Logic when User can Move Item from Quick Service to Dine-In other filled table with the same Sales Mode",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await makeOrderTable("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 6);
+                await order.saveOrder();
+                await tableList.gotoQuickService();
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 4);
+                await order.saveOrder();
+                await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem, 3);
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204130] Validate Logic when User can Move Item from Quick Service to Dine-In empty table with the same Sales Mode",
