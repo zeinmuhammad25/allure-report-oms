@@ -939,34 +939,27 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, tableList, sideNavBar, order, mergeTable, moveItem}, testInfo)
         });
 
-    test("[TC_0204146] Validate Logic when User cannot select current table in Move Item from Quick Service to Dine-In",
-        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await makeOrder(bookOrder, "AT EXCLUSIVE", false);
-            await orderMenuBiasa(order, 5);
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order, 5);
-            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
-        });
-
-    test("[TC_0204147] Validate Logic when User cannot select billed table in Move Item from Quick Service to Dine-In",
-        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await makeOrder(bookOrder, "AT EXCLUSIVE", false);
-            await orderMenuBiasa(order, 5);
-            await tableList.selectRoom(Table.acRoom.name);
-            await tableList.selectTable(Table.acRoom.ac3.name);
-            await order.printBill();
-            await order.saveOrder();
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order, 5);
-            await createQuickServiceAndMoveItem(order, sideNavBar, tableList, quickServiceList, moveItem);
+    test("[TC_0205372] Validate Logic when User cannot select billed table in Move Item from Quick Service to Dine-In",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, tableList, sideNavBar, order, mergeTable, moveItem},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, tableList, sideNavBar, order, mergeTable, moveItem}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await makeOrderTable("AT INCLUSIVE", bookOrder);
+                await selectMenuBiasa(order, 4);
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await order.printNowPrintingSetting();
+                await sideNavBar.gotoPageTableList();
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 4);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.moveItem();
+                await moveItem.expectDisabledTable(Table.acRoom.name, Table.acRoom.ac3.name);
+            }, {quickServiceList, bookOrder, tableList, sideNavBar, order, mergeTable, moveItem}, testInfo)
         });
 
     test("[TC_0204148] Validate Logic when User can Move Item to Child Merge Table from Quick Service to Dine-In",
