@@ -790,19 +790,20 @@ test.describe.serial("Quick Service Move Item", () => {
             }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
-    test("[TC_0204138] Validate Logic when User can Select All Move Item to the other order from Quick Service to Dine-In",
-        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
-            await quickServiceList.addOrderQuickService();
-            await bookOrder.setPax(2);
-            await makeOrder(bookOrder);
-            await orderMenuBiasa(order, 5);
-            await sideNavBar.gotoPageTableList();
-            await tableList.gotoQuickService();
-            await quickServiceList.selectSalesNum("last");
-            await order.moveItem();
-            await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
-            await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await moveItem.actionApplyMoveItem();
+    test("[TC_0205364] Validate Logic when User can Select All Move Item to the other order from Quick Service to Dine-In",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 4);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.moveItem();
+                await moveItem.moveItemToSectionDineIn(Table.acRoom.name, Table.acRoom.ac3.name);
+                await moveItem.moveAllMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+                await moveItem.actionApplyMoveItem();
+            }, {quickServiceList, bookOrder, sideNavBar, tableList, order, moveItem}, testInfo);
         });
 
     test("[TC_0204139] Validate Logic when User can Deselect All Move Item to the other order from Quick Service to Dine-In",
