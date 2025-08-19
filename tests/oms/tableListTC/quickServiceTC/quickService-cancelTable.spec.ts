@@ -118,6 +118,14 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
         });
 
+    test("[TC_0205381] Validate Logic when User cannot Cancel Order before Save Order without input Cancel Notes",
+        {tag: tag + "@Negative"}, async ({quickServiceList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMultipleMenuBiasa(order,1,1,1);
+                await order.disabledCancelTable();
+            }, {quickServiceList, bookOrder, order}, testInfo);
+        });
 
 
 
