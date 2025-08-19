@@ -27,14 +27,8 @@ test.describe.serial("Quick Service Add Order", () => {
         await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, qty3);
     };
 
-
     const cancelTableSelectNotes = async (order: OrderScenario, reason: "Cancel" | "Tidak Jadi" | "Testing A" | "Testing B") => {
         await order.cancelTableSelectNotes(reason);
-        await order.confirmationCloseTable("Yes");
-    };
-
-    const cancelTable = async (order: OrderScenario) => {
-        await order.cancelTable("Cancel");
         await order.confirmationCloseTable("Yes");
     };
 
@@ -161,6 +155,14 @@ test.describe.serial("Quick Service Add Order", () => {
                 await quickServiceList.clickLastSalesNum();
                 await UndoCancelTable(order, "Cancel");
             }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
+        });
+
+    test("[TC_0205385] Validate Logic when User cannot Cancel Order while having no ordered items and not saving order first",
+        {tag: tag + "@Negative"}, async ({quickServiceList, bookOrder, order}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await order.disabledCancelTable();
+            }, {quickServiceList, bookOrder, order}, testInfo);
         });
 
 });
