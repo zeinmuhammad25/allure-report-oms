@@ -109,6 +109,7 @@ test.describe.serial("Quick Service Add Order", () => {
         {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
             await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMultipleMenuBiasa(order,1,1,1);
                 await order.saveOrder();
                 await sideNavBar.gotoPageTableList();
                 await tableList.gotoQuickService();
