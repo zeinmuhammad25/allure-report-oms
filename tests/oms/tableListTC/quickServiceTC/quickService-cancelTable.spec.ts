@@ -3,9 +3,6 @@ import MenuList from "../../../../src/modules/oms/objects/menuList";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
 import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
-import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
-import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
-import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(600000);
@@ -96,6 +93,18 @@ test.describe.serial("Quick Service Add Order", () => {
                 await tableList.gotoQuickService();
                 await quickServiceList.clickLastSalesNum();
                 await cancelTableSelectNotes(order, "Cancel");
+            }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
+        });
+
+    test("[TC_0205379] Validate Logic when User cannot Cancel Order before Save Order without select Cancel Notes",
+        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await order.cancelTableApplyDisabled();
             }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
         });
 
