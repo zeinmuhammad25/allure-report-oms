@@ -87,6 +87,18 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
         });
 
+    test("[TC_0205378] Validate Logic when User can Cancel Order empty order",
+        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await cancelTableSelectNotes(order, "Cancel");
+            }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
+        });
+
 
 
 
