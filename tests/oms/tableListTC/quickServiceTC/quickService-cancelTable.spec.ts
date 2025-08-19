@@ -74,7 +74,18 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order}, testInfo);
         });
 
-
+    test("[TC_0205377] Validate Logic when User can't Cancel Order before saving order",
+        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMultipleMenuBiasa(order,1,1,1);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await cancelTableSelectNotes(order, "Cancel");
+            }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
+        });
 
 
 
