@@ -1,7 +1,13 @@
 import BaseScenario from "../../../../../../base/base-scenario";
 
 export default interface MoveItemScenario extends BaseScenario {
+    clickSalesNum(): Promise<void>;
+
+    disableSalesNum(): Promise<void>;
+
     moveItemToSectionQuickService(): Promise<void>;
+
+    moveItemToOtherQuickServiceTransaction(): Promise<void>;
 
     moveItemToSectionDineIn(roomName: string, tableName: string): Promise<void>;
 
@@ -30,6 +36,10 @@ export default interface MoveItemScenario extends BaseScenario {
     pagination(action: "next" | "previous"): Promise<void>;
 
     selectQuickService(): Promise<void>;
+
+    selectRoomNameDineIn(roomName: string): Promise<void>;
+
+    selectTableNameDineIn(tableName: string): Promise<void>;
 
     expectDisabledButtonPlus(menuName: string): Promise<void>;
 
