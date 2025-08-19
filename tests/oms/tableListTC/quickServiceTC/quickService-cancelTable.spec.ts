@@ -60,7 +60,7 @@ test.describe.serial("Quick Service Add Order", () => {
         {tag: tag + "@Negative"}, async ({quickServiceList, bookOrder, order}, testInfo) => {
             await safeTest(async ({quickServiceList, bookOrder, order}) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-                await selectMultipleMenuBiasa(order,1,1,1);
+                await selectMultipleMenuBiasa(order, 1, 1, 1);
                 await order.disabledCancelTable();
             }, {quickServiceList, bookOrder, order}, testInfo);
         });
@@ -69,7 +69,7 @@ test.describe.serial("Quick Service Add Order", () => {
         {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
             await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-                await selectMultipleMenuBiasa(order,1,1,1);
+                await selectMultipleMenuBiasa(order, 1, 1, 1);
                 await order.saveOrder();
                 await sideNavBar.gotoPageTableList();
                 await tableList.gotoQuickService();
@@ -94,7 +94,7 @@ test.describe.serial("Quick Service Add Order", () => {
         {tag: tag + "@Negative"}, async ({quickServiceList, bookOrder, order}, testInfo) => {
             await safeTest(async ({quickServiceList, bookOrder, order}) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-                await selectMultipleMenuBiasa(order,1,1,1);
+                await selectMultipleMenuBiasa(order, 1, 1, 1);
                 await order.disabledCancelTable();
             }, {quickServiceList, bookOrder, order}, testInfo);
         });
@@ -103,7 +103,7 @@ test.describe.serial("Quick Service Add Order", () => {
         {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
             await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-                await selectMultipleMenuBiasa(order,1,1,1);
+                await selectMultipleMenuBiasa(order, 1, 1, 1);
                 await order.saveOrder();
                 await sideNavBar.gotoPageTableList();
                 await tableList.gotoQuickService();
@@ -116,7 +116,7 @@ test.describe.serial("Quick Service Add Order", () => {
         {tag: tag + "@Negative"}, async ({quickServiceList, bookOrder, order}, testInfo) => {
             await safeTest(async ({quickServiceList, bookOrder, order}) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-                await selectMultipleMenuBiasa(order,1,1,1);
+                await selectMultipleMenuBiasa(order, 1, 1, 1);
                 await order.disabledCancelTable();
             }, {quickServiceList, bookOrder, order}, testInfo);
         });
@@ -125,7 +125,7 @@ test.describe.serial("Quick Service Add Order", () => {
         {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
             await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-                await selectMultipleMenuBiasa(order,2,2,2);
+                await selectMultipleMenuBiasa(order, 2, 2, 2);
                 await order.saveOrder();
                 await sideNavBar.gotoPageTableList();
                 await tableList.gotoQuickService();
@@ -136,9 +136,9 @@ test.describe.serial("Quick Service Add Order", () => {
 
     test("[TC_0205383] Validate Logic when User can undo Cancel Order before Save Order with button Cancel",
         {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar}) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-                await selectMultipleMenuBiasa(order,2,2,2);
+                await selectMultipleMenuBiasa(order, 2, 2, 2);
                 await sideNavBar.moveTableList();
                 await order.confirmationCloseTable("Yes");
             }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
@@ -148,7 +148,7 @@ test.describe.serial("Quick Service Add Order", () => {
         {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
             await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-                await selectMultipleMenuBiasa(order,2,2,2);
+                await selectMultipleMenuBiasa(order, 2, 2, 2);
                 await order.saveOrder();
                 await sideNavBar.gotoPageTableList();
                 await tableList.gotoQuickService();
