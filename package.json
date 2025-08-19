@@ -8,11 +8,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.45.2",
+    "@playwright/test": "^1.54.2",
     "@types/node": "^20.17.9"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "mysql2": "^3.11.5"
+  },
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
   }
 }
