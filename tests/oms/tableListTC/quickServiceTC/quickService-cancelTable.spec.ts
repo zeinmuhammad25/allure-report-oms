@@ -150,4 +150,17 @@ test.describe.serial("Quick Service Add Order", () => {
             }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
         });
 
+    test("[TC_0205384] Validate Logic when User can undo Cancel Order after Save Order with button Cancel",
+        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMultipleMenuBiasa(order,2,2,2);
+                await order.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await UndoCancelTable(order, "Cancel");
+            }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
+        });
+
 });
