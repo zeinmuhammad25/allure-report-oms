@@ -13,8 +13,7 @@ test.describe.serial("Quick Service Edit Order", () => {
     const tag = "@smokeTest @oms @quickService @addOrder ";
 
     const makeOrder = async (
-        salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario, quickServiceList: QuickServiceListScenario
-    ) => {
+        salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario, quickServiceList: QuickServiceListScenario) => {
         await quickServiceList.addOrderQuickService();
         await bookOrder.setPax(2);
         await bookOrder.selectSalesMode(salesMode);
@@ -29,7 +28,9 @@ test.describe.serial("Quick Service Edit Order", () => {
     };
 
     test.beforeEach(async ({terminalID, signPin, tableList, sideNavBar}) => {
-        const testWithAuthentication = [];
+        const testWithAuthentication = [
+            "[TC_0205386] Validate logic POS when user edit Sales Mode within the Order Page before order menu"
+        ];
         if (testWithAuthentication.includes(test.info().title)) {
             await terminalID.goHere();
             await terminalID.performTerminalID();
@@ -46,6 +47,17 @@ test.describe.serial("Quick Service Edit Order", () => {
             tableList.cancelAllTables()
         ]);
     });
+
+
+    test("[TC_0205386] Validate logic POS when user edit Sales Mode within the Order Page before order menu",
+        {tag: tag + "@positive"}, async ({order, quickServiceList, bookOrder}, testInfo) => {
+            await safeTest(async ({order, quickServiceList, bookOrder}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.editSalesMode("AT INCLUSIVE", order);
+                await bookOrder.selectSalesMode("AT EXCLUSIVE", bookOrder);
+                await order.applySalesMode(order);
+            }, {order, quickServiceList, bookOrder}, testInfo);
+        });
 
 
 });
