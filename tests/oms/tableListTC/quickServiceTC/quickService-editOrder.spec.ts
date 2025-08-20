@@ -3,9 +3,6 @@ import MenuList from "../../../../src/modules/oms/objects/menuList";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
 import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
-import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
-import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
-import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(600000);
@@ -48,7 +45,6 @@ test.describe.serial("Quick Service Edit Order", () => {
         ]);
     });
 
-
     test("[TC_0205386] Validate logic POS when user edit Sales Mode within the Order Page before order menu",
         {tag: tag + "@positive"}, async ({order, quickServiceList, bookOrder}, testInfo) => {
             await safeTest(async ({order, quickServiceList, bookOrder}) => {
@@ -56,6 +52,18 @@ test.describe.serial("Quick Service Edit Order", () => {
                 await order.editSalesMode("AT INCLUSIVE", order);
                 await bookOrder.selectSalesMode("AT EXCLUSIVE", bookOrder);
                 await order.applySalesMode(order);
+            }, {order, quickServiceList, bookOrder}, testInfo);
+        });
+
+    test("[TC_0205387] Validate logic POS when user edit Sales Mode within the Order Page after order menu",
+        {tag: tag + "@positive"}, async ({order, quickServiceList, bookOrder}, testInfo) => {
+            await safeTest(async ({order, quickServiceList, bookOrder}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuBiasa(order, 2);
+                await order.editSalesMode("AT INCLUSIVE", order);
+                await bookOrder.selectSalesMode("AT EXCLUSIVE", bookOrder);
+                await order.applySalesMode(order);
+                await order.confirmationClose("Yes");
             }, {order, quickServiceList, bookOrder}, testInfo);
         });
 
