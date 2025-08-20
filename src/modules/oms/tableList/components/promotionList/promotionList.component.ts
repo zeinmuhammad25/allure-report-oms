@@ -77,4 +77,10 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
     async gotoPromotionPage(type: "first" | "previous" | "next" | "last"): Promise<void> {
         await this.click(PromotionListLocator.paginationButton(type));
     }
+
+    async selectPromotionListCategory(category: "GENERAL" | "CONDITIONAL"): Promise<void> {
+        await this.expectVisible(PromotionListLocator.promotionListCategory(category));
+        await this.click(PromotionListLocator.promotionListCategory(category));
+    }
+
 }
