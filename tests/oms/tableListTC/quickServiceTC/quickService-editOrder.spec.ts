@@ -67,5 +67,17 @@ test.describe.serial("Quick Service Edit Order", () => {
             }, {order, quickServiceList, bookOrder}, testInfo);
         });
 
+    test("[TC_0205388] Validate logic POS when user edit Sales Mode within the order Page before order menu and the Sales Mode have default value",
+        {tag: tag + "@positive"}, async ({order, quickServiceList, bookOrder}, testInfo) => {
+            await safeTest(async ({order, quickServiceList, bookOrder}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.editSalesMode("AT INCLUSIVE", order);
+                await bookOrder.selectSalesMode("AT EXCLUSIVE", bookOrder);
+                await order.applySalesMode(order);
+                await order.editSalesMode("AT EXCLUSIVE", order);
+                await bookOrder.selectSalesMode("AT INCLUSIVE", bookOrder);
+                await order.applySalesMode(order);
+            }, {order, quickServiceList, bookOrder}, testInfo);
+        });
 
 });
