@@ -2,14 +2,17 @@ import {test} from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
-import EditOrderScenario from "../../../../src/modules/oms/tableList/order/components/editOrder/editOrder.scenario";
-import AddOrderScenario from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.scenario";
 import SideNavBarScenario from "../../../../src/modules/oms/components/sideNavBar/sideNavBar.scenario";
 import TableListScenario from "../../../../src/modules/oms/tableList/tableList.scenario";
 import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
-import PromotionListScenario
-    from "../../../../src/modules/oms/tableList/components/promotionList/promotionList.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
+import {ToolsTabs} from "../../../../src/modules/oms/tools/ToolsTabs";
+import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
+import EditOrderV2Scenario
+    from "../../../../src/modules/oms/tableList/order/components/editOrderV2/editOrderV2.scenario";
+import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
+import PaymentList from "../../../../src/modules/oms/objects/paymentList";
+import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(200000);
 test.describe.serial("Quick Service Promotion", () => {
@@ -26,59 +29,43 @@ test.describe.serial("Quick Service Promotion", () => {
         await bookOrder.skipCustomerPhoneNumber();
     };
 
-    const orderSingleMenu = async (order: OrderScenario) => {
+    const orderSingleMenu = async (order: OrderScenario, qty1: number, qty2: number, qty3: number) => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, 4);
-        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, 6);
-        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, 4);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name, qty1);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name, qty2);
+        await order.selectMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name, qty3);
     };
 
-    const orderMenuExtraWhisky = async (order: OrderScenario, editOrder: EditOrderScenario) => {
-        await order.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await editOrder.actionButtonFooter("Next");
-        await editOrder.selectMenuExtraCategory(MenuList.whisky.name);
-        await editOrder.selectMenuExtra(MenuList.whisky.minumanWhisky.bataviaBlended700ml.shortName, 3);
-        await editOrder.selectMenuExtra(MenuList.whisky.minumanWhisky.gilbeysWhisky700ml.shortName, 4);
-        await editOrder.actionButtonFooter("Apply");
+    const selectMenuExtra = async (addOrderV2: AddOrderV2Scenario, quantity = 1) => {
+        await addOrderV2.selectPackageGroup("Menu Extra");
+        await addOrderV2.extraCategory(MenuList.atCategory.name);
+        await addOrderV2.modifyExtraPackage([
+            {menuName: MenuList.menus.atMenuExtraAlpha.shortName, qty: quantity, notes: null}
+        ]);
     };
 
-    const orderMenuExtraAnggur = async (order: OrderScenario, editOrder: EditOrderScenario) => {
-        await order.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await editOrder.actionButtonFooter("Next");
-        await editOrder.selectMenuExtraCategory(MenuList.anggur.name);
-        await editOrder.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurHijauKawaKawa600ml.shortName, 2);
-        await editOrder.selectMenuExtra(MenuList.anggur.minumanAnggur.anggurMerahOT620ml.shortName, 2);
-        await editOrder.actionButtonFooter("Apply");
-    };
-
-    const orderMenuPaketMurah = async (order: OrderScenario, addOrder: AddOrderScenario) => {
+    const orderMenuPaketMurah = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
-        await addOrder.modifyMenuDetailPackage([
-            {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: 4, notes: null},
-            {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: 3, notes: null},
-            {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: 1, notes: null},
-            {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: 2, notes: null}
+        await addOrderV2.modifyDetailPackage([
+            {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: quantity, notes: null}
         ]);
-        await addOrder.applyMenuDetailPackage();
-
     };
 
-    const orderMenuPaketMahal = async (order: OrderScenario, addOrder: AddOrderScenario) => {
+    const orderMenuPaketMahal = async (order: OrderScenario, addOrderV2: AddOrderV2Scenario, quantity = 1) => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
-        await addOrder.modifyMenuDetailPackage([
-            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: 4, notes: null},
-            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: 3, notes: null},
-            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: 2, notes: null},
-            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: 1, notes: "test notes1"}
+        await addOrderV2.modifyDetailPackage([
+            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: null},
+            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: null}
         ]);
-        await addOrder.applyMenuDetailPackage();
     };
+
 
     const cancelOrderQuickService = async (
         order: OrderScenario, sideNavBar: SideNavBarScenario, tableList: TableListScenario, quickServiceList: QuickServiceListScenario
@@ -86,104 +73,63 @@ test.describe.serial("Quick Service Promotion", () => {
         await sideNavBar.gotoPageTableList();
         await tableList.gotoQuickService();
         await quickServiceList.selectSalesNum("last");
-        await order.cancelTable("test");
+        await order.cancelTable("CANCEL");
         await order.confirmationCloseTable("Yes");
     };
 
-    const freeItemAllCategory = async (promotionList: PromotionListScenario, editOrder: EditOrderScenario) => {
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await promotionList.searchPromotion("FREE ITEM ALL CATEGORY");
-        await promotionList.selectPromotionDetail("FREE ITEM ALL CATEGORY");
-        await editOrder.actionButtonFooter("Apply");
-        await promotionList.applyAllQtyPromoItem();
+    const freeItemAllCategory = async (editOrderV2: EditOrderV2Scenario) => {
+        await editOrderV2.addPromotionMenu();
+        await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM ALL CATEGORY");
     };
 
-    const freeItemAllCategoryInputQty = async (
-        promotionList: PromotionListScenario, editOrder: EditOrderScenario, qty: number
-    ) => {
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await promotionList.searchPromotion("FREE ITEM ALL CATEGORY");
-        await promotionList.selectPromotionDetail("FREE ITEM ALL CATEGORY");
-        await editOrder.actionButtonFooter("Apply");
-        await promotionList.applyInputQtyPromoItem(qty);
+    const freeItemMenuCategory = async (editOrderV2: EditOrderV2Scenario) => {
+        await editOrderV2.addPromotionMenu();
+        await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM MENU CATEGORY");
     };
 
-    const freeItemMenuCategory = async (promotionList: PromotionListScenario, editOrder: EditOrderScenario) => {
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await promotionList.searchPromotion("FREE ITEM MENU CATEGORY");
-        await promotionList.selectPromotionDetail("FREE ITEM MENU CATEGORY");
-        await editOrder.actionButtonFooter("Apply");
-        await promotionList.applyAllQtyPromoItem();
+    const freeItemMenuCategoryDetail = async (editOrderV2: EditOrderV2Scenario) => {
+        await editOrderV2.addPromotionMenu();
+        await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM MENU CATEGORY DETAIL");
     };
 
-    const freeItemMenuCategoryInputQty = async (
-        promotionList: PromotionListScenario, editOrder: EditOrderScenario, qty: number
-    ) => {
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await promotionList.searchPromotion("FREE ITEM MENU CATEGORY");
-        await promotionList.selectPromotionDetail("FREE ITEM MENU CATEGORY");
-        await editOrder.actionButtonFooter("Apply");
-        await promotionList.applyInputQtyPromoItem(qty);
+    const freeItemMenu = async (editOrderV2: EditOrderV2Scenario) => {
+        await editOrderV2.addPromotionMenu();
+        await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM MENU");
     };
 
-    const freeItemMenuCategoryDetail = async (promotionList: PromotionListScenario, editOrder: EditOrderScenario) => {
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await promotionList.searchPromotion("FREE ITEM MENU CATEGORY DETAIL");
-        await promotionList.selectPromotionDetail("FREE ITEM MENU CATEGORY DETAIL");
-        await editOrder.actionButtonFooter("Apply");
-        await promotionList.applyAllQtyPromoItem();
+    const paymentCashFull = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Cash);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.CashPayment);
+        await paymentV2.paymentFullAmount();
+        await paymentV2.actionPayment(PaymentList.ActionPayment.SavePayment);
+        await paymentV2.payPayment();
+        await paymentV2.closePopUpPaymentSuccessFul();
     };
 
-    const freeItemMenuCategoryDetailInputQty = async (
-        promotionList: PromotionListScenario, editOrder: EditOrderScenario, qty: number
-    ) => {
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await promotionList.searchPromotion("FREE ITEM MENU CATEGORY DETAIL");
-        await promotionList.selectPromotionDetail("FREE ITEM MENU CATEGORY DETAIL");
-        await editOrder.actionButtonFooter("Apply");
-        await promotionList.applyInputQtyPromoItem(qty);
+    const paymentQrESB = async (paymentV2: PaymentV2Scenario) => {
+        await paymentV2.paymentType(PaymentList.PaymentType.Card);
+        await paymentV2.paymentMethod(PaymentList.PaymentMethod.QrisEsbPayment);
+        await paymentV2.paymentQrisEsb(265);
     };
 
-    const freeItemMenu = async (promotionList: PromotionListScenario, editOrder: EditOrderScenario) => {
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await promotionList.searchPromotion("FREE ITEM MENU CATEGORY DETAIL");
-        await promotionList.selectPromotionDetail("FREE ITEM MENU CATEGORY DETAIL");
-        await editOrder.actionButtonFooter("Apply");
-        await promotionList.applyAllQtyPromoItem();
-    };
-
-    const freeItemMenuInputQty = async (
-        promotionList: PromotionListScenario, editOrder: EditOrderScenario, qty: number
-    ) => {
-        await editOrder.escapeKeyboard();
-        await editOrder.actionButtonFooter("Next");
-        await promotionList.searchPromotion("FREE ITEM MENU CATEGORY DETAIL");
-        await promotionList.selectPromotionDetail("FREE ITEM MENU CATEGORY DETAIL");
-        await editOrder.actionButtonFooter("Apply");
-        await promotionList.applyInputQtyPromoItem(qty);
-    };
-
-    test.beforeEach(async ({terminalID, signPin, tableList, sideNavBar}) => {
+    test.beforeEach(async ({terminalID, signPin, tableList, sideNavBar, tools, synchronizeData, order}) => {
         const testWithAuthentication = [
-            "[TC_0204053] Validate Logic When User Apply Promotion Head - Order Pages- Discount Bill Rp"
+            "[TC_0205390] Validate Logic When User Apply Promotion Head - Order Pages - Discount Bill Rp"
         ];
-
         if (testWithAuthentication.includes(test.info().title)) {
+            await order.calculationBeforeDiscount(265);
             await terminalID.goHere();
             await terminalID.performTerminalID();
             await signPin.inputPinByTouch("22");
             await signPin.validateShowStarCash("20.000");
             await signPin.storeAuthState();
             await sideNavBar.gotoPageTools();
+            await tools.selectTab(ToolsTabs.SynchronizeData);
+            await synchronizeData.synchronizeDataBranchSetting();
+            await synchronizeData.closePopUpAfterSync();
             await sideNavBar.selectStation("KASIR");
-            await sideNavBar.gotoPageTableList();
+            await order.activateOrderingV2();
+            await order.activatePaymentV2();
         }
         await tableList.goHere();
     });
@@ -195,29 +141,23 @@ test.describe.serial("Quick Service Promotion", () => {
         ]);
     });
 
-    test("[TC_0204053] Validate Logic When User Apply Promotion Head - Order Pages- Discount Bill Rp",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
-            await orderMenuExtraWhisky(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.addPromotion();
-            await promotionList.selectPromotion("BILL DISCOUNT RP");
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
+    test("[TC_0205390] Validate Logic When User Apply Promotion Head - Order Pages - Discount Bill Rp",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await selectMenuExtra(addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,1,1,1)
+                await order.addPromotion();
+                await promotionList.selectPromotion("BILL DISCOUNT RP");
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
+
 
     test("[TC_0204054] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % All Category",
         {tag: tags + "@positive"},
@@ -234,6 +174,7 @@ test.describe.serial("Quick Service Promotion", () => {
             await order.addPromotion();
             await promotionList.searchPromotion("DISCOUNT % ALL CATEGORY");
             await promotionList.selectPromotion("DISCOUNT % ALL CATEGORY");
+            await order.getOrderTotals()
             await order.saveOrder();
             await paymentPos.paymentType(PaymentObject.Cash);
             await paymentPos.paymentMethod(PaymentObject.CashPayment);
