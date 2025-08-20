@@ -22,4 +22,6 @@ export default interface SynchronizeDataScenario extends BaseScenario {
 
     synchronizeDataUser(): Promise<void>;
 
+    closePopUpAfterSync(): Promise<void>;
+
 }
