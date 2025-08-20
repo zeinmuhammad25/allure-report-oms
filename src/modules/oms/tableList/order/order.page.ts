@@ -148,7 +148,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async expectDisabledMoveItem(): Promise<void> {
-        await this.wait(100)
+        await this.wait(100);
         const locatorMoveTable = await this.isVisible(OrderLocator.moveToTableDisabledButton)
             ? OrderLocator.moveToTableDisabledButton
             : OrderLocator.moveTableDisabledButton;
@@ -268,6 +268,12 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.expectVisible(OrderLocator.buttonConfirmCloseTable(action));
         await this.click(OrderLocator.buttonConfirmCloseTable(action));
         await this.waitForResponse("/table");
+        await this.wait(800);
+    }
+
+    async confirmationClose(action: "Yes" | "No"): Promise<void> {
+        await this.expectVisible(OrderLocator.buttonConfirmCloseTable(action));
+        await this.click(OrderLocator.buttonConfirmCloseTable(action));
         await this.wait(800);
     }
 
