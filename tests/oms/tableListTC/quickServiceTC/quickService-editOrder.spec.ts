@@ -24,7 +24,7 @@ test.describe.serial("Quick Service Edit Order", () => {
         await order.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, quantity);
     };
 
-    test.beforeEach(async ({terminalID, signPin, tableList, sideNavBar}) => {
+    test.beforeEach(async ({terminalID, signPin, tableList}) => {
         const testWithAuthentication = [
             "[TC_0205386] Validate logic POS when user edit Sales Mode within the Order Page before order menu"
         ];
@@ -77,6 +77,24 @@ test.describe.serial("Quick Service Edit Order", () => {
                 await order.editSalesMode("AT EXCLUSIVE", order);
                 await bookOrder.selectSalesMode("AT INCLUSIVE", bookOrder);
                 await order.applySalesMode(order);
+            }, {order, quickServiceList, bookOrder}, testInfo);
+        });
+
+    test("[TC_0205389] Validate logic POS when user edit Sales Mode within the order Page after order menu and the Sales Mode have default value",
+        {tag: tag + "@positive"}, async ({order, quickServiceList, bookOrder}, testInfo) => {
+            await safeTest(async ({order, quickServiceList, bookOrder}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.editSalesMode("AT INCLUSIVE", order);
+                await bookOrder.selectSalesMode("AT EXCLUSIVE", bookOrder);
+                await order.applySalesMode(order);
+                await order.editSalesMode("AT EXCLUSIVE", order);
+                await bookOrder.selectSalesMode("AT INCLUSIVE", bookOrder);
+                await order.applySalesMode(order);
+                await selectMenuBiasa(order, 2);
+                await order.editSalesMode("AT INCLUSIVE", order);
+                await bookOrder.selectSalesMode("AT EXCLUSIVE", bookOrder);
+                await order.applySalesMode(order);
+                await order.confirmationClose("Yes");
             }, {order, quickServiceList, bookOrder}, testInfo);
         });
 
