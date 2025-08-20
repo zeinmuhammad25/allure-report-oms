@@ -6,7 +6,7 @@ import BookOrderScenario from "../../../../src/modules/oms/tableList/components/
 import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(600000);
-test.describe.serial("Quick Service Add Order", () => {
+test.describe.serial("Quick Service Cancel Order", () => {
     const tag = "@smokeTest @oms @quickService @addOrder ";
 
     const makeOrder = async (
