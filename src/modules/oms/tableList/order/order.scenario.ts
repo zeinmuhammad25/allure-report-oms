@@ -50,6 +50,8 @@ export default interface OrderScenario extends BaseScenario {
 
     confirmationCloseTable(action: "Yes" | "No"): Promise<void>;
 
+    confirmationClose(action: "Yes" | "No"): Promise<void>;
+
     validateMenuNotVisible(menu: string): Promise<void>;
 
     disabledMergeTable(): Promise<void>;
