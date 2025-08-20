@@ -148,7 +148,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async expectDisabledMoveItem(): Promise<void> {
-        await this.wait(100)
+        await this.wait(100);
         const locatorMoveTable = await this.isVisible(OrderLocator.moveToTableDisabledButton)
             ? OrderLocator.moveToTableDisabledButton
             : OrderLocator.moveTableDisabledButton;
@@ -371,6 +371,16 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
 
     async activatePaymentV2(): Promise<void> {
         const query: string = "INSERT INTO ms_setting (key1, key2, value1, value2) VALUES ('POS', 'Show New Payment Version', \"true\", '');";
+        await this.sqlExecute(this.configs.get.dbConfig, query);
+    }
+
+    async calculationBeforeDiscount(branchId: number): Promise<void> {
+        const query: string = "update fnb_dev1.ms_branch set posTaxCalculationID = 1, posOtherTaxCalculationID= 1 where branchID = ${branchId}";
+        await this.sqlExecute(this.configs.get.dbConfig, query);
+    }
+
+    async calculationAfterDiscount(branchId: number): Promise<void> {
+        const query: string = "update fnb_dev1.ms_branch set posTaxCalculationID = 2, posOtherTaxCalculationID= 2 where branchID = ${branchId}";
         await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
