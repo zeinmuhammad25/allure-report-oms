@@ -89,4 +89,9 @@ export default class SynchronizeDataPage extends BaseOmsPage implements Synchron
         await this.expectTextVisibleTimout("Synchronization process has completed", true, 30000);
     }
 
+    async closePopUpAfterSync(): Promise<void> {
+        await this.expectVisible(SynchronizeDataLocator.buttonCloseSyncPopup);
+        await this.click(SynchronizeDataLocator.buttonCloseSyncPopup);
+    }
+
 }
