@@ -14,4 +14,6 @@ export default interface PromotionListScenario extends BaseScenario {
     applyAllQtyPromoItem(): Promise<void>;
 
     gotoPromotionPage(type: "first" | "previous" | "next" | "last"): Promise<void>;
+
+    selectPromotionListCategory(category: "GENERAL" | "CONDITIONAL"): Promise<void>;
 }
