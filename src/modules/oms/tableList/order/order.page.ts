@@ -380,6 +380,16 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
         await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
+    async calculationBeforeDiscount(branchId: number): Promise<void> {
+        const query: string = `update fnb_dev1.ms_branch set posTaxCalculationID = 1, posOtherTaxCalculationID= 1 where branchID = ${branchId}`;
+        await this.sqlExecute(this.configs.get.dbConfig, query);
+    }
+
+    async calculationAfterDiscount(branchId: number): Promise<void> {
+        const query: string = `update fnb_dev1.ms_branch set posTaxCalculationID = 2, posOtherTaxCalculationID= 2 where branchID = ${branchId}`;
+        await this.sqlExecute(this.configs.get.dbConfig, query);
+    }
+
     async expectVisibleCustomerName(name: string): Promise<void> {
         await this.wait(800);
         await this.expectTextVisible(name);

@@ -122,4 +122,8 @@ export default interface OrderScenario extends BaseScenario {
 
     activatePaymentV2(): Promise<void>;
 
+    calculationBeforeDiscount(branchId: number): Promise<void>;
+
+    calculationAfterDiscount(branchId: number): Promise<void>;
+
 }
