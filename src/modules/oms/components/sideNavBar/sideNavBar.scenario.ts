@@ -4,6 +4,8 @@ export default interface SideNavBarScenario extends BaseScenario {
 
     gotoPageTableList(): Promise<void>;
 
+    moveTableList(): Promise<void>;
+
     gotoPageEsbOrderDashboard(): Promise<void>;
 
     gotoPageEsbOrderDeliveryHistory(): Promise<void>;

@@ -20,6 +20,11 @@ export default class SideNavBarComponents extends BaseOmsPage implements SideNav
         await this.waitForResponse("/table");
     }
 
+    async moveTableList(): Promise<void> {
+        await this.expectVisible(SideNavBarLocator.getSideNavBarButtons("/table"));
+        await this.click(SideNavBarLocator.getSideNavBarButtons("/table"));
+    }
+
     async gotoPageEsbOrderDashboard(): Promise<void> {
         await this.expectVisible(SideNavBarLocator.getSideNavBarButtons("/ezo-delivery"));
         await this.click(SideNavBarLocator.getSideNavBarButtons("/ezo-delivery"));
