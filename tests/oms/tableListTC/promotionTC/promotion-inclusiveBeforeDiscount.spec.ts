@@ -112,12 +112,17 @@ test.describe.serial("Quick Service Promotion", () => {
         await paymentV2.paymentQrisEsb(265);
     };
 
+    let featuresActivated = false;
+    let calculationActivated = false;
     test.beforeEach(async ({terminalID, signPin, tableList, sideNavBar, tools, synchronizeData, order}) => {
         const testWithAuthentication = [
             "[TC_0205390] Validate Logic When User Apply Promotion Head - Order Pages - Discount Bill Rp"
         ];
         if (testWithAuthentication.includes(test.info().title)) {
-            await order.calculationBeforeDiscount(265);
+            if (!calculationActivated) {
+                await order.calculationBeforeDiscount(265);
+                calculationActivated = true;
+            }
             await terminalID.goHere();
             await terminalID.performTerminalID();
             await signPin.inputPinByTouch("22");
@@ -128,8 +133,11 @@ test.describe.serial("Quick Service Promotion", () => {
             await synchronizeData.synchronizeDataBranchSetting();
             await synchronizeData.closePopUpAfterSync();
             await sideNavBar.selectStation("KASIR");
-            await order.activateOrderingV2();
-            await order.activatePaymentV2();
+            if (!featuresActivated) {
+                await order.activateOrderingV2();
+                await order.activatePaymentV2();
+                featuresActivated = true;
+            }
         }
         await tableList.goHere();
     });
@@ -159,30 +167,21 @@ test.describe.serial("Quick Service Promotion", () => {
         });
 
 
-    test("[TC_0204054] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % All Category",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMahal(order, addOrder);
-            await order.addPromotion();
-            await promotionList.searchPromotion("DISCOUNT % ALL CATEGORY");
-            await promotionList.selectPromotion("DISCOUNT % ALL CATEGORY");
-            await order.getOrderTotals()
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
+    test("[TC_0205391] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % All Category",
+            {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+                await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                    await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                    await order.selectCategoryMenu(MenuList.atCategory.name);
+                    await orderMenuPaketMahal(order, addOrderV2);
+                    await selectMenuExtra(addOrderV2, 2);
+                    await addOrderV2.addToCartMenuDetailPackage();
+                    await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                    await orderSingleMenu(order,1,1,1)
+                    await order.addPromotion();
+                    await promotionList.selectPromotion("DISCOUNT % ALL CATEGORY");
+                    await order.saveOrder();
+                    await paymentQrESB(paymentV2);
+                }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
     test("[TC_0204055] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu",
