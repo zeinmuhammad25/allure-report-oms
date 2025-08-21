@@ -417,31 +417,25 @@ test.describe.serial("Quick Service Promotion", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
-    test("[TC_0204067] Validate Logic When User Apply Promotion Head - Payment Pages - Discount Bill Rp",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMahal(order, addOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.AddPromo);
-            await promotionList.searchPromotion("BILL DISCOUNT RP");
-            await promotionList.selectPromotion("BILL DISCOUNT RP");
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
+    test("[TC_0205404] Validate Logic When User Apply Promotion Head - Payment Pages - Discount Bill Rp",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,6,7,8)
+                await order.saveOrder();
+                await paymentV2.paymentType(PaymentObject.AddPromo);
+                await promotionList.searchPromotion("BILL DISCOUNT RP");
+                await promotionList.selectPromotion("BILL DISCOUNT RP");
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
     test("[TC_0204068] Validate Logic When User Apply Promotion Head - Payment Pages - Discount % All Category",
