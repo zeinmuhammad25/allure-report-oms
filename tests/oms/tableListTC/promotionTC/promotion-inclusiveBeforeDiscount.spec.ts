@@ -160,6 +160,7 @@ test.describe.serial("Quick Service Promotion", () => {
                 await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
                 await orderSingleMenu(order,1,1,1)
                 await order.addPromotion();
+                await promotionList.searchPromotion("BILL DISCOUNT RP");
                 await promotionList.selectPromotion("BILL DISCOUNT RP");
                 await order.saveOrder();
                 await paymentQrESB(paymentV2);
@@ -178,35 +179,29 @@ test.describe.serial("Quick Service Promotion", () => {
                     await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
                     await orderSingleMenu(order,1,1,1)
                     await order.addPromotion();
+                    await promotionList.searchPromotion("DISCOUNT % ALL CATEGORY");
                     await promotionList.selectPromotion("DISCOUNT % ALL CATEGORY");
                     await order.saveOrder();
                     await paymentQrESB(paymentV2);
                 }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
-    test("[TC_0204055] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 6);
-            await orderMenuExtraWhisky(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.addPromotion();
-            await promotionList.searchPromotion("DISCOUNT % MENU");
-            await promotionList.selectPromotion("DISCOUNT % MENU");
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
+    test("[TC_0205392] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await selectMenuExtra(addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,1,1,1)
+                await order.addPromotion();
+                await promotionList.searchPromotion("DISCOUNT % MENU");
+                await promotionList.selectPromotion("DISCOUNT % MENU");
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
     test("[TC_0204056] Validate Logic When User Apply Promotion Head - Order Pages - Type: Discount % Menu Category",
