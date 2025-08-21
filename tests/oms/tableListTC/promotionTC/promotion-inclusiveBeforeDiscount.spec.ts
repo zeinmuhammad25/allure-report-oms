@@ -77,11 +77,6 @@ test.describe.serial("Quick Service Promotion", () => {
         await order.confirmationCloseTable("Yes");
     };
 
-    const freeItemAllCategory = async (editOrderV2: EditOrderV2Scenario) => {
-        await editOrderV2.addPromotionMenu();
-        await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM ALL CATEGORY");
-    };
-
     const freeItemMenuCategory = async (editOrderV2: EditOrderV2Scenario) => {
         await editOrderV2.addPromotionMenu();
         await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM MENU CATEGORY");
@@ -711,6 +706,172 @@ test.describe.serial("Quick Service Promotion", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
+    test("[TC_0205418] Validate Logic When User Apply Promotion - Apply All Qty - FREE ITEM ALL CATEGORY",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,4,3,4)
+                await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+                await editOrderV2.addPromotionMenu();
+                await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM ALL CATEGORY");
+                await order.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
+        });
+
+    test("[TC_0204096] Validate Logic When User Apply Promotion - Apply All Qty - FREE ITEM MENU CATEGORY",
+        {tag: tags + "@positive"},
+        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await orderSingleMenu(order);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
+            await orderMenuExtraAnggur(order, editOrder);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderMenuPaketMurah(order, addOrder);
+            await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+            await freeItemMenuCategory(promotionList, editOrder);
+            await order.saveOrder();
+            await paymentPos.paymentType(PaymentObject.Cash);
+            await paymentPos.paymentMethod(PaymentObject.CashPayment);
+            await paymentPos.paymentCashFullAmount();
+            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPos.actionPayment(PaymentObject.SavePayment);
+            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPos.actionPayment(PaymentObject.ClosePayment);
+        });
+
+    test("[TC_0204097] Validate Logic When User Apply Promotion - input Qty - FREE ITEM MENU CATEGORY",
+        {tag: tags + "@positive"},
+        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await orderSingleMenu(order);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
+            await orderMenuExtraAnggur(order, editOrder);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderMenuPaketMurah(order, addOrder);
+            await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
+            await freeItemMenuCategoryInputQty(promotionList, editOrder, 2);
+            await order.saveOrder();
+            await paymentPos.paymentType(PaymentObject.Cash);
+            await paymentPos.paymentMethod(PaymentObject.CashPayment);
+            await paymentPos.paymentCashFullAmount();
+            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPos.actionPayment(PaymentObject.SavePayment);
+            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPos.actionPayment(PaymentObject.ClosePayment);
+        });
+
+    test("[TC_0204098] Validate Logic When User Apply Promotion - Apply All Qty - FREE ITEM MENU CATEGORY DETAIL",
+        {tag: tags + "@positive"},
+        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await orderSingleMenu(order);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 10);
+            await orderMenuExtraAnggur(order, editOrder);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderMenuPaketMurah(order, addOrder);
+            await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+            await freeItemMenuCategoryDetail(promotionList, editOrder);
+            await order.saveOrder();
+            await paymentPos.paymentType(PaymentObject.Cash);
+            await paymentPos.paymentMethod(PaymentObject.CashPayment);
+            await paymentPos.paymentCashFullAmount();
+            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPos.actionPayment(PaymentObject.SavePayment);
+            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPos.actionPayment(PaymentObject.ClosePayment);
+        });
+
+    test("[TC_0204100] Validate Logic When User Apply Promotion - input Qty - FREE ITEM MENU CATEGORY DETAIL",
+        {tag: tags + "@positive"},
+        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await orderSingleMenu(order);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 10);
+            await orderMenuExtraAnggur(order, editOrder);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderMenuPaketMurah(order, addOrder);
+            await order.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
+            await freeItemMenuCategoryDetailInputQty(promotionList, editOrder, 5);
+            await order.saveOrder();
+            await paymentPos.paymentType(PaymentObject.Cash);
+            await paymentPos.paymentMethod(PaymentObject.CashPayment);
+            await paymentPos.paymentCashFullAmount();
+            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPos.actionPayment(PaymentObject.SavePayment);
+            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPos.actionPayment(PaymentObject.ClosePayment);
+        });
+
+    test("[TC_0204101] Validate Logic When User Apply Promotion - Apply All Qty - FREE ITEM MENU",
+        {tag: tags + "@positive"},
+        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await orderSingleMenu(order);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 10);
+            await orderMenuExtraAnggur(order, editOrder);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderMenuPaketMurah(order, addOrder);
+            await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+            await freeItemMenu(promotionList, editOrder);
+            await order.saveOrder();
+            await paymentPos.paymentType(PaymentObject.Cash);
+            await paymentPos.paymentMethod(PaymentObject.CashPayment);
+            await paymentPos.paymentCashFullAmount();
+            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPos.actionPayment(PaymentObject.SavePayment);
+            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPos.actionPayment(PaymentObject.ClosePayment);
+        });
+
+    test("[TC_0204102] Validate Logic When User Apply Promotion - input Qty - FREE ITEM MENU",
+        {tag: tags + "@positive"},
+        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
+            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+            await order.selectCategoryMenu(MenuList.atCategory.name);
+            await orderSingleMenu(order);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 10);
+            await orderMenuExtraAnggur(order, editOrder);
+            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+            await orderMenuPaketMurah(order, addOrder);
+            await order.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
+            await freeItemMenuInputQty(promotionList, editOrder, 9);
+            await order.saveOrder();
+            await paymentPos.paymentType(PaymentObject.Cash);
+            await paymentPos.paymentMethod(PaymentObject.CashPayment);
+            await paymentPos.paymentCashFullAmount();
+            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
+            await paymentPos.actionPayment(PaymentObject.SavePayment);
+            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
+            await paymentPos.actionPayment(PaymentObject.ClosePayment);
+        });
+
+
     test("[TC_0204081] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Bill Rp",
         {tag: tags + "@negative"},
         async ({order, sideNavBar, promotionList, editOrder, addOrder, tableList, quickServiceList, bookOrder}) => {
@@ -729,7 +890,6 @@ test.describe.serial("Quick Service Promotion", () => {
             await promotionList.searchPromotion("BILL DISCOUNT RP");
             await promotionList.selectPromotion("BILL DISCOUNT RP");
             await order.saveOrder();
-            await cancelOrderQuickService(order, sideNavBar, tableList, quickServiceList);
         });
 
     test("[TC_0204082] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % All Category",
@@ -1005,196 +1165,5 @@ test.describe.serial("Quick Service Promotion", () => {
             await cancelOrderQuickService(order, sideNavBar, tableList, quickServiceList);
         });
 
-    test("[TC_0204094] Validate Logic When User Apply Promotion - Apply All Qty - FREE ITEM ALL CATEGORY",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await freeItemAllCategory(promotionList, editOrder);
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
-        });
-
-    test("[TC_0204095] Validate Logic When User Apply Promotion - input Qty - FREE ITEM ALL CATEGORY",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
-            await freeItemAllCategoryInputQty(promotionList, editOrder, 3);
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
-        });
-
-    test("[TC_0204096] Validate Logic When User Apply Promotion - Apply All Qty - FREE ITEM MENU CATEGORY",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
-            await freeItemMenuCategory(promotionList, editOrder);
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
-        });
-
-    test("[TC_0204097] Validate Logic When User Apply Promotion - input Qty - FREE ITEM MENU CATEGORY",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 3);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
-            await freeItemMenuCategoryInputQty(promotionList, editOrder, 2);
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
-        });
-
-    test("[TC_0204098] Validate Logic When User Apply Promotion - Apply All Qty - FREE ITEM MENU CATEGORY DETAIL",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 10);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
-            await freeItemMenuCategoryDetail(promotionList, editOrder);
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
-        });
-
-    test("[TC_0204100] Validate Logic When User Apply Promotion - input Qty - FREE ITEM MENU CATEGORY DETAIL",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 10);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await freeItemMenuCategoryDetailInputQty(promotionList, editOrder, 5);
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
-        });
-
-    test("[TC_0204101] Validate Logic When User Apply Promotion - Apply All Qty - FREE ITEM MENU",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 10);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
-            await freeItemMenu(promotionList, editOrder);
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
-        });
-
-    test("[TC_0204102] Validate Logic When User Apply Promotion - input Qty - FREE ITEM MENU",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 10);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await freeItemMenuInputQty(promotionList, editOrder, 9);
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
-        });
 
 });
