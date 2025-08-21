@@ -8,8 +8,6 @@ import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quic
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
 import {ToolsTabs} from "../../../../src/modules/oms/tools/ToolsTabs";
 import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
-import EditOrderV2Scenario
-    from "../../../../src/modules/oms/tableList/order/components/editOrderV2/editOrderV2.scenario";
 import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
 import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import {safeTest} from "../../../../src/base/utils/safeTest";
@@ -65,7 +63,6 @@ test.describe.serial("Quick Service Promotion", () => {
             {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: null}
         ]);
     };
-
 
     const cancelOrderQuickService = async (
         order: OrderScenario, sideNavBar: SideNavBarScenario, tableList: TableListScenario, quickServiceList: QuickServiceListScenario
@@ -775,49 +772,23 @@ test.describe.serial("Quick Service Promotion", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
         });
 
-    test("[TC_0204102] Validate Logic When User Apply Promotion - input Qty - FREE ITEM MENU",
-        {tag: tags + "@positive"},
-        async ({order, paymentPos, promotionList, editOrder, addOrder, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 10);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.clickMenuDetail(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name);
-            await freeItemMenuInputQty(promotionList, editOrder, 9);
-            await order.saveOrder();
-            await paymentPos.paymentType(PaymentObject.Cash);
-            await paymentPos.paymentMethod(PaymentObject.CashPayment);
-            await paymentPos.paymentCashFullAmount();
-            await paymentPos.actionPayment(PaymentObject.ApplyPayment);
-            await paymentPos.actionPayment(PaymentObject.SavePayment);
-            await paymentPos.actionPayment(PaymentObject.ProcessPayment);
-            await paymentPos.actionPayment(PaymentObject.ClosePayment);
-        });
-
-
-    test("[TC_0204081] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount Bill Rp",
-        {tag: tags + "@negative"},
-        async ({order, sideNavBar, promotionList, editOrder, addOrder, tableList, quickServiceList, bookOrder}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 2);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMahal(order, addOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.addPromotion();
-            await promotionList.searchPromotion("BILL DISCOUNT RP");
-            await promotionList.selectPromotion("BILL DISCOUNT RP");
-            await order.saveOrder();
+    test("[TC_0205422] Validate Logic When User Apply Promotion Head Then Cancel 1 Menu - Order Pages - Discount Bill Rp",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await selectMenuExtra(addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,1,1,1)
+                await order.deleteMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+                await order.addPromotion();
+                await promotionList.searchPromotion("BILL DISCOUNT RP");
+                await promotionList.selectPromotion("BILL DISCOUNT RP");
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
     test("[TC_0204082] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Discount % All Category",
