@@ -20,6 +20,6 @@ export default class PromotionListLocator extends BaseLocator {
     static promotionItemFieldQty: string = "//input[@placeholder='e.g. 1']";
     static promotionItemApplyAllButton: string = "//span[normalize-space()='Apply All']";
     static promotionItemApplyButton: string = "//button[@class='btn-action apply-all-edit-menu mat-raised-button mat-primary']//span[normalize-space()='Apply']";
-    static promotionListCategory = (category: "GENERAL" | "CONDITIONAL"): string => `//button//span[contains(text(),'${category}')]]`;
+    static promotionListCategory = (category: "GENERAL" | "CONDITIONAL"): string => `//button//span[contains(text(),'${category}')]`;
 
 }
