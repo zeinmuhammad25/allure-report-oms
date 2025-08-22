@@ -64,16 +64,6 @@ test.describe.serial("Quick Service Promotion", () => {
         ]);
     };
 
-    const cancelOrderQuickService = async (
-        order: OrderScenario, sideNavBar: SideNavBarScenario, tableList: TableListScenario, quickServiceList: QuickServiceListScenario
-    ) => {
-        await sideNavBar.gotoPageTableList();
-        await tableList.gotoQuickService();
-        await quickServiceList.selectSalesNum("last");
-        await order.cancelTable("CANCEL");
-        await order.confirmationCloseTable("Yes");
-    };
-
     const paymentCashFull = async (paymentV2: PaymentV2Scenario) => {
         await paymentV2.paymentType(PaymentList.PaymentType.Cash);
         await paymentV2.paymentMethod(PaymentList.PaymentMethod.CashPayment);
@@ -1057,6 +1047,31 @@ test.describe.serial("Quick Service Promotion", () => {
                 await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
                 await editOrderV2.addPromotionMenu();
                 await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM ALL CATEGORY");
+                await order.deleteMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+                await order.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
+        });
+
+    test("[TC_0205437] Validate Logic When User Apply Promotion Head Then Cancel 1 Menu - Order Pages - FREE ITEM MENU CATEGORY",
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,4,3,4)
+                await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+                await editOrderV2.addPromotionMenu();
+                await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM MENU CATEGORY");
+                await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+                await editOrderV2.addPromotionMenu();
+                await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM MENU CATEGORY");
                 await order.deleteMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
                 await order.saveOrder();
                 await paymentCashFull(paymentV2);
