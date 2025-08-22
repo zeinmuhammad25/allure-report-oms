@@ -117,10 +117,26 @@ export default class EditOrderV2Components extends BaseOmsPage implements EditOr
         await this.expectVisible(EditOrderV2Locator.addDisabledNotesMenuAdded);
     }
 
-
     async addPromotionMenu(): Promise<void> {
+        await this.wait(300)
         await this.expectVisible(EditOrderV2Locator.buttonPromotion);
         await this.click(EditOrderV2Locator.buttonPromotion);
+    }
+
+    async searchPromotionMenu(promotionName: string): Promise<void> {
+        await this.expectVisible(EditOrderV2Locator.editOrderSearchPromotion);
+        await this.click(EditOrderV2Locator.editOrderSearchPromotion);
+        await this.fill(EditOrderV2Locator.editOrderSearchPromotion, promotionName);
+    }
+
+    async clickPromotionMenu(promotionName: string): Promise<void> {
+        await this.expectVisible(EditOrderV2Locator.editOrderPromotionName(promotionName));
+        await this.click(EditOrderV2Locator.editOrderPromotionName(promotionName));
+    }
+
+    async applyPromotion(): Promise<void> {
+        await this.expectVisible(EditOrderV2Locator.buttonApplyPromotion);
+        await this.click(EditOrderV2Locator.buttonApplyPromotion);
     }
 
     async applyViaSearchPromotionMenu(promotionName: string): Promise<void> {
@@ -131,6 +147,7 @@ export default class EditOrderV2Components extends BaseOmsPage implements EditOr
         await this.click(EditOrderV2Locator.editOrderPromotionName(promotionName));
         await this.expectVisible(EditOrderV2Locator.buttonApplyPromotion);
         await this.click(EditOrderV2Locator.buttonApplyPromotion);
+        await this.wait(800)
     }
 
     async inputPriceMenuOpenPrice(price: string): Promise<void> {
