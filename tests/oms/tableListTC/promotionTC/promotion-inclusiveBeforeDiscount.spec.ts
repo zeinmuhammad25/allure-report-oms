@@ -11,7 +11,7 @@ import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(200000);
-test.describe.serial("Quick Service Promotion", () => {
+test.describe.serial("Promotion Inclusive Before Discount", () => {
 
     const tags = "@smokeTest @oms @applyPromotion ";
 
