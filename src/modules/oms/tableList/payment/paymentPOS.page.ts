@@ -12,7 +12,7 @@ export default class PaymentPOSPage extends BaseOmsPage implements PaymentPosSce
         ];
     }
 
-    private apiBaseUrl = "http://localhost/fnb-pos-v2/api/web/v1";
+    private apiBaseUrl = process.env.OMS_API_URL;
 
     async paymentPinUserAuthorization(Pin: string): Promise<void> {
         await this.expectVisible(PaymentPOSLocator.popUpUserAuthorization);

@@ -17,6 +17,12 @@ export default interface EditOrderV2Scenario extends BaseScenario {
 
     addPromotionMenu(): Promise<void>;
 
+    searchPromotionMenu(promotionName: string): Promise<void>;
+
+    clickPromotionMenu(promotionName: string): Promise<void>;
+
+    applyPromotion(): Promise<void>;
+
     applyViaSearchPromotionMenu(promotionName: string): Promise<void>;
 
     inputPriceMenuOpenPrice(price: string): Promise<void>;

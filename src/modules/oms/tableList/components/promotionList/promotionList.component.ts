@@ -39,6 +39,7 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
             await this.click(PromotionListLocator.openBillDiscountApplyButton);
         }
         await this.click(PromotionListLocator.applyButton);
+        await this.wait(200);
     }
 
     async selectPromotionDetail(promotionName: string): Promise<void> {
