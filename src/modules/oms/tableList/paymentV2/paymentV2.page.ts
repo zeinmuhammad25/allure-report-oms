@@ -16,7 +16,7 @@ export default class PaymentV2Page extends BaseOmsPage implements PaymentV2Scena
         ];
     }
 
-    private apiBaseUrl = "http://localhost/fnb-pos-v2/api/web/v1";
+    private apiBaseUrl = process.env.OMS_API_URL;
 
     async paymentPinUserAuthorization(Pin: string): Promise<void> {
         await this.expectVisible(PaymentV2Locator.popUpUserAuthorization);
@@ -29,7 +29,7 @@ export default class PaymentV2Page extends BaseOmsPage implements PaymentV2Scena
     }
 
     async paymentType(paymentType: PaymentList): Promise<void> {
-        await this.wait(300);
+        await this.waitForResponse("setting/get-payment-method")
         await this.expectVisible(PaymentV2Locator.getLocatorPaymentType(paymentType));
         await this.click(PaymentV2Locator.getLocatorPaymentType(paymentType));
     }
