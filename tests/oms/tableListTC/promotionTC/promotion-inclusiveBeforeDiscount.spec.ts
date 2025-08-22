@@ -1000,25 +1000,23 @@ test.describe.serial("Quick Service Promotion", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
-    test("[TC_0204093] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Open Bill Dicount Rp",
-        {tag: tags + "@negative"},
-        async ({order, sideNavBar, promotionList, editOrder, addOrder, tableList, bookOrder, quickServiceList}) => {
-            await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
-            await order.selectCategoryMenu(MenuList.atCategory.name);
-            await orderSingleMenu(order);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 4);
-            await orderMenuExtraAnggur(order, editOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
-            await orderMenuPaketMahal(order, addOrder);
-            await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
-            await orderMenuPaketMurah(order, addOrder);
-            await order.addPromotion();
-            await promotionList.searchPromotion("OPEN BILL DISCOUNT RP");
-            await promotionList.selectPromotion("OPEN BILL DISCOUNT RP", 10000);
-            await order.saveOrder();
-            await cancelOrderQuickService(order, sideNavBar, tableList, quickServiceList);
+    test("[TC_0205434] Validate Logic When User Apply Promotion Head Then Cancel 1 Menu - Order Pages - Open Bill Dicount Rp",
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await selectMenuExtra(addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,10,10,9)
+                await order.deleteMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+                await order.addPromotion();
+                await promotionList.searchPromotion("OPEN BILL DISCOUNT RP");
+                await promotionList.selectPromotion("OPEN BILL DISCOUNT RP", 10000);
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
     test("[TC_0204094] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Open Bill Dicount %",
