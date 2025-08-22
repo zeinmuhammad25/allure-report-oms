@@ -10,7 +10,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     shouldHave(): Element[] {
         return [];
     }
-
+    
     async inputPhoneNumber(phoneNumber: string): Promise<void> {
         await this.expectVisible(OrderLocator.memberPhoneButton);
         await this.click(OrderLocator.memberPhoneButton);
@@ -381,12 +381,18 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async calculationBeforeDiscount(branchId: number): Promise<void> {
-        const query: string = `update fnb_dev1.ms_branch set posTaxCalculationID = 1, posOtherTaxCalculationID= 1 where branchID = ${branchId}`;
+        const query: string = `update ms_branch
+                               set posTaxCalculationID     = 1,
+                                   posOtherTaxCalculationID= 1
+                               where branchID = ${branchId}`;
         await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
     async calculationAfterDiscount(branchId: number): Promise<void> {
-        const query: string = `update fnb_dev1.ms_branch set posTaxCalculationID = 2, posOtherTaxCalculationID= 2 where branchID = ${branchId}`;
+        const query: string = `update ms_branch
+                               set posTaxCalculationID     = 2,
+                                   posOtherTaxCalculationID= 2
+                               where branchID = ${branchId}`;
         await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
