@@ -233,4 +233,26 @@ test.describe.serial("Promotion Inclusive After Discount", () => {
                 await paymentQrESB(paymentV2);
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
+
+    test("[TC_0205448] Validate Logic When User Apply Promotion Head - Order Pages - Discount Limit % Menu Category",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await selectMenuExtra(addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,6,4,6)
+                await order.addPromotion();
+                await promotionList.searchPromotion("DISC LIMIT % MENU CATEGORY");
+                await promotionList.selectPromotion("DISC LIMIT % MENU CATEGORY");
+                await order.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
+
 });
