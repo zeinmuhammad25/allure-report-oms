@@ -8,6 +8,7 @@ import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/comp
 import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
 import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import {safeTest} from "../../../../src/base/utils/safeTest";
+import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
 
 test.setTimeout(200000);
 test.describe.serial("Promotion Inclusive After Discount", () => {
@@ -398,6 +399,27 @@ test.describe.serial("Promotion Inclusive After Discount", () => {
                 await promotionList.searchPromotion("OPEN BILL DISCOUNT %");
                 await promotionList.selectPromotion("OPEN BILL DISCOUNT %", 75);
                 await order.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
+
+    test("[TC_0205456] Validate Logic When User Apply Promotion Head - Payment Pages - Discount Bill Rp",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,6,7,8)
+                await order.saveOrder();
+                await paymentV2.paymentType(PaymentObject.AddPromo);
+                await promotionList.searchPromotion("BILL DISCOUNT RP");
+                await promotionList.selectPromotion("BILL DISCOUNT RP");
                 await paymentCashFull(paymentV2);
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
