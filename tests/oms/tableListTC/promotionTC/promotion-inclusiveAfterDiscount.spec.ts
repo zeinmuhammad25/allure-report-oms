@@ -1,6 +1,5 @@
 import {test} from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
-import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
 import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
@@ -81,7 +80,7 @@ test.describe.serial("Promotion Inclusive After Discount", () => {
     let calculationActivated = false;
     test.beforeEach(async ({terminalID, signPin, tableList, sideNavBar, tools, synchronizeData, order}) => {
         const testWithAuthentication = [
-
+            "[TC_0205442] Validate Logic When User Apply Promotion Head - Order Pages - Discount Bill Rp"
         ];
         if (testWithAuthentication.includes(test.info().title)) {
             if (!calculationActivated) {
@@ -99,6 +98,7 @@ test.describe.serial("Promotion Inclusive After Discount", () => {
             await synchronizeData.closePopUpAfterSync();
             await sideNavBar.selectStation("KASIR");
             if (!featuresActivated) {
+                await order.activatePosFilterAccess();
                 await order.activateOrderingV2();
                 await order.activatePaymentV2();
                 featuresActivated = true;
