@@ -385,7 +385,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
                                set posTaxCalculationID     = 1,
                                    posOtherTaxCalculationID= 1
                                where branchID = ${branchId}`;
-        await this.sqlExecute(this.configs.get.dbConfig, query);
+        await this.sqlExecute(this.configs.get.dbStgConfig, query);
     }
 
     async calculationAfterDiscount(branchId: number): Promise<void> {
@@ -393,7 +393,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
                                set posTaxCalculationID     = 2,
                                    posOtherTaxCalculationID= 2
                                where branchID = ${branchId}`;
-        await this.sqlExecute(this.configs.get.dbConfig, query);
+        await this.sqlExecute(this.configs.get.dbStgConfig, query);
     }
 
     async expectVisibleCustomerName(name: string): Promise<void> {
