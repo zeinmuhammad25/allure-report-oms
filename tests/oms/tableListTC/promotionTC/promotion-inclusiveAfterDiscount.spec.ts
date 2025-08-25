@@ -424,5 +424,26 @@ test.describe.serial("Promotion Inclusive After Discount", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
+    test("[TC_0205457] Validate Logic When User Apply Promotion Head - Payment Pages - Discount % All Category",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,6,6,6)
+                await order.saveOrder();
+                await paymentV2.paymentType(PaymentObject.AddPromo);
+                await promotionList.searchPromotion("DISCOUNT % ALL CATEGORY");
+                await promotionList.selectPromotion("DISCOUNT % ALL CATEGORY");
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
+
 
 });
