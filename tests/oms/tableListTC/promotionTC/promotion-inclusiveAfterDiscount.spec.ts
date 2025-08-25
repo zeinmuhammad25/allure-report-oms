@@ -718,4 +718,25 @@ test.describe.serial("Promotion Inclusive After Discount", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
         });
 
+    test("[TC_0205471] Validate Logic When User Apply Promotion - Apply All Qty - FREE ITEM MENU CATEGORY",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,7,7,7)
+                await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+                await editOrderV2.addPromotionMenu();
+                await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM MENU CATEGORY");
+                await order.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
+        });
+
 });
