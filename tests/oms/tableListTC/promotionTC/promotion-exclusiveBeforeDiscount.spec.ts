@@ -2,7 +2,6 @@ import {test} from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
-import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
 import {ToolsTabs} from "../../../../src/modules/oms/tools/ToolsTabs";
 import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
@@ -368,7 +367,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
                 await makeOrder("AT EXCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
                 await orderMenuPaketMahal(order, addOrderV2,2);
@@ -384,10 +383,37 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
                 await promotionList.selectPromotion("MENU DISC RP MENU");
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentQrESB(paymentV2);
+            }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
+
+    test("[TC_0205504] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp Menu Category",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,3,2,1)
+                await order.addPromotion();
+                await promotionList.searchPromotion("MENU DISC RP MENU CATEGORY");
+                await promotionList.selectPromotion("MENU DISC RP MENU CATEGORY");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
             }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
