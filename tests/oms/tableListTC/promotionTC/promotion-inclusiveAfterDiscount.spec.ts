@@ -1064,4 +1064,26 @@ test.describe.serial("Promotion Inclusive After Discount", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
+    test("[TC_0205487] Validate Logic When User Apply Promotion Head Then Cancel Order - Order Pages - Open Bill Dicount %",
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,11,12,13)
+                await order.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await order.addPromotion();
+                await promotionList.searchPromotion("OPEN BILL DISCOUNT %");
+                await promotionList.selectPromotion("OPEN BILL DISCOUNT %", 70);
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
+
 });
