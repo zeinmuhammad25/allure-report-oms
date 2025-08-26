@@ -583,7 +583,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
                 await makeOrder("AT EXCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
                 await orderMenuPaketMahal(order, addOrderV2,2);
@@ -596,7 +596,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
                 await orderSingleMenu(order,4,5,6)
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTable(Table.acRoom.ac2.name);
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentV2.paymentType(PaymentObject.AddPromo);
@@ -610,7 +610,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
                 await makeOrder("AT EXCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
                 await orderMenuPaketMahal(order, addOrderV2,2);
@@ -623,7 +623,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
                 await orderSingleMenu(order,4,4,4)
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentV2.paymentType(PaymentObject.AddPromo);
@@ -637,7 +637,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
                 await makeOrder("AT EXCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
                 await orderMenuPaketMahal(order, addOrderV2,2);
@@ -650,7 +650,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
                 await orderSingleMenu(order,6,6,7)
                 await order.saveOrder();
                 await tableList.selectRoom(Table.acRoom.name);
-                await tableList.selectTable(Table.acRoom.ac1.name);
+                await tableList.selectTable(Table.acRoom.ac4.name);
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentV2.paymentType(PaymentObject.AddPromo);
@@ -660,5 +660,32 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
             }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
+
+    test("[TC_0205514] Validate Logic When User Apply Promotion Head - Payment Pages -  Discount Limit % Menu Category",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,6,6,7)
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentV2.paymentType(PaymentObject.AddPromo);
+                await promotionList.searchPromotion("DISC LIMIT % MENU CATEGORY");
+                await promotionList.selectPromotion("DISC LIMIT % MENU CATEGORY");
+                await paymentCashFull(paymentV2);
+            }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
 
 });
