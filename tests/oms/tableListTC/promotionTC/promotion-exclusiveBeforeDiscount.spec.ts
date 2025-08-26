@@ -9,6 +9,7 @@ import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/comp
 import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
 import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import {safeTest} from "../../../../src/base/utils/safeTest";
+import Table from "../../../../src/modules/oms/objects/table";
 
 test.setTimeout(200000);
 test.describe.serial("Promotion Exclusive Before Discount", () => {
@@ -77,7 +78,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
     let calculationActivated = false;
     test.beforeEach(async ({terminalID, signPin, tableList, sideNavBar, tools, synchronizeData, order}) => {
         const testWithAuthentication = [
-
+          "[TC_0205494] Validate Logic When User Apply Promotion Head - Order Pages - Discount Bill Rp"
         ];
         if (testWithAuthentication.includes(test.info().title)) {
             if (!calculationActivated) {
@@ -95,6 +96,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
             await synchronizeData.closePopUpAfterSync();
             await sideNavBar.selectStation("KASIR");
             if (!featuresActivated) {
+                await order.activatePosFilterAccess()
                 await order.activateOrderingV2();
                 await order.activatePaymentV2();
                 featuresActivated = true;
@@ -104,20 +106,47 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
     });
 
     test.afterEach(async ({tableList,sideNavBar,tools,synchronizeData}) => {
-        const testWithAuthentication = [
-
-        ];
-        if (testWithAuthentication.includes(test.info().title)) {
-            await sideNavBar.gotoPageTools();
-            await tools.selectTab(ToolsTabs.SynchronizeData);
-            await synchronizeData.synchronizeDataSales();
-            await synchronizeData.closePopUpAfterSync();
-        }
+        // const testWithAuthentication = [
+        //
+        // ];
+        // if (testWithAuthentication.includes(test.info().title)) {
+        //     await sideNavBar.gotoPageTools();
+        //     await tools.selectTab(ToolsTabs.SynchronizeData);
+        //     await synchronizeData.synchronizeDataSales();
+        //     await synchronizeData.closePopUpAfterSync();
+        // }
         await Promise.all([
             tableList.cancelAllQuickServices(),
             tableList.cancelAllTables()
         ]);
     });
+
+    test("[TC_0205494] Validate Logic When User Apply Promotion Head - Order Pages - Discount Bill Rp",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,8,8,8)
+                await order.addPromotion();
+                await promotionList.searchPromotion("BILL DISCOUNT RP");
+                await promotionList.selectPromotion("BILL DISCOUNT RP");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentQrESB(paymentV2);
+            }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
 
 
 });
