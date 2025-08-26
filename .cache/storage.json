@@ -1,4 +1,79 @@
 {
-  "cookies": [],
-  "origins": []
+  "cookies": [
+    {
+      "name": "ESBPOSWS%247a87asd9WUadLkDhjs3D9d8",
+      "value": "boiqtpcmkr1rjf6iqdddbagg58",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_csrf",
+      "value": "AoFGte0JkPD6h4zeVz7ZHTH30ykC8FV4",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:85",
+      "localStorage": [
+        {
+          "name": "trialMode",
+          "value": "0"
+        },
+        {
+          "name": "showESBLogo",
+          "value": "\"1\""
+        },
+        {
+          "name": "tabActive",
+          "value": "{\"timestamp\":1756174472074}"
+        },
+        {
+          "name": "showInclusiveOtherTax",
+          "value": "\"1\""
+        },
+        {
+          "name": "dXNlcm5hbWU=",
+          "value": "REVWMUZBRElM"
+        },
+        {
+          "name": "versionUpdate",
+          "value": "v.2.134.0"
+        },
+        {
+          "name": "lastRefresh",
+          "value": "1756174471487"
+        },
+        {
+          "name": "isOnboardingTutorVisible",
+          "value": "{\"userID\":[\"22\"],\"isOnboardingTutorVisible\":false,\"isFinished\":true}"
+        },
+        {
+          "name": "terminalID",
+          "value": "01"
+        },
+        {
+          "name": "showInclusiveTax",
+          "value": "\"1\""
+        },
+        {
+          "name": "terminalData",
+          "value": "{\"activatedDate\":\"1756093698\",\"terminalCode\":\"01\",\"caption\":\"Oms1\"}"
+        },
+        {
+          "name": "session",
+          "value": "_wALX-pL459v2RXswB_uZVtx7SmDN1xqz9oesB-4gLrJ024G0S"
+        }
+      ]
+    }
+  ]
 }
