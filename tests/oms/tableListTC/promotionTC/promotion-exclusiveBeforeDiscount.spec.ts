@@ -283,7 +283,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
             }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
-    test("[TC_020500] Validate Logic When User Apply Promotion Head - Order Pages - Discount Limit % Menu Category",
+    test("[TC_0205500] Validate Logic When User Apply Promotion Head - Order Pages - Discount Limit % Menu Category",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -310,7 +310,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
             }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
-    test("[TC_020501] Validate Logic When User Apply Promotion Head - Order Pages - Discount Limit % Menu Category Detail",
+    test("[TC_0205501] Validate Logic When User Apply Promotion Head - Order Pages - Discount Limit % Menu Category Detail",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -337,7 +337,7 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
             }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
-    test("[TC_020502] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp All Category",
+    test("[TC_0205502] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp All Category",
         {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
             await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
                 await tableList.selectRoom(Table.acRoom.name);
@@ -361,6 +361,33 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
+            }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
+
+    test("[TC_0205503] Validate Logic When User Apply Promotion Head - Order Pages - Menu Discount Rp Menu",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,5,5,5)
+                await order.addPromotion();
+                await promotionList.searchPromotion("MENU DISC RP MENU");
+                await promotionList.selectPromotion("MENU DISC RP MENU");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentQrESB(paymentV2);
             }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
