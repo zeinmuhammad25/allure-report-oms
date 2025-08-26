@@ -107,7 +107,16 @@ test.describe.serial("Promotion Inclusive Before Discount", () => {
         await tableList.goHere();
     });
 
-    test.afterEach(async ({tableList}) => {
+    test.afterEach(async ({tableList,sideNavBar,tools,synchronizeData}) => {
+        const testWithAuthentication = [
+            "[TC_0205441] Validate Logic When User Apply Promotion Head - Order Pages - BUY X GET FREE Y Category"
+        ];
+        if (testWithAuthentication.includes(test.info().title)) {
+            await sideNavBar.gotoPageTools();
+            await tools.selectTab(ToolsTabs.SynchronizeData);
+            await synchronizeData.synchronizeDataSales();
+            await synchronizeData.closePopUpAfterSync();
+        }
         await Promise.all([
             tableList.cancelAllQuickServices(),
             tableList.cancelAllTables()
