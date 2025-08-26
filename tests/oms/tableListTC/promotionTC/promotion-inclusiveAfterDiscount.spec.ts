@@ -976,4 +976,25 @@ test.describe.serial("Promotion Inclusive After Discount", () => {
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
+    test("[TC_0205483] Validate Logic When User Apply Promotion Head Then Cancel 1 Menu - Order Pages - Menu Discount Rp Menu",
+        {tag: tags + "@negative"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,8,8,8)
+                await order.deleteMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
+                await order.addPromotion();
+                await promotionList.searchPromotion("MENU DISC RP MENU");
+                await promotionList.selectPromotion("MENU DISC RP MENU");
+                await order.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
 });
