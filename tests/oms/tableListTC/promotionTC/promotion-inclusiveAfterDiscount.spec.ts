@@ -108,7 +108,17 @@ test.describe.serial("Promotion Inclusive After Discount", () => {
         await tableList.goHere();
     });
 
-    test.afterEach(async ({tableList}) => {
+    test.afterEach(async ({tableList,sideNavBar,tools,synchronizeData}) => {
+        const testWithAuthentication = [
+            "[TC_0205493] Validate Logic When User Apply Promotion Head - Order Pages - BUY X GET FREE Y Category"
+        ];
+        if (testWithAuthentication.includes(test.info().title)) {
+            await sideNavBar.gotoPageTools();
+            await tools.selectTab(ToolsTabs.SynchronizeData);
+            await synchronizeData.synchronizeDataSales();
+            await synchronizeData.closePopUpAfterSync();
+        }
+
         await Promise.all([
             tableList.cancelAllQuickServices(),
             tableList.cancelAllTables()
@@ -1203,6 +1213,25 @@ test.describe.serial("Promotion Inclusive After Discount", () => {
                 await promotionList.selectPromotionListCategory("CONDITIONAL");
                 await promotionList.searchPromotion("BUY X GET FREE Y ACS");
                 await promotionList.selectPromotion("BUY X GET FREE Y ACS");
+                await order.saveOrder();
+                await paymentQrESB(paymentV2);
+            }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
+
+    test("[TC_0205493] Validate Logic When User Apply Promotion Head - Order Pages - BUY X GET FREE Y Category",
+        {tag: tags + "@positive"}, async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrder, quickServiceList);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2);
+                await selectMenuExtra(addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,3,3,3)
+                await order.addPromotion();
+                await promotionList.selectPromotionListCategory("CONDITIONAL");
+                await promotionList.searchPromotion("BUY X GET FREE Y Category ACS");
+                await promotionList.selectPromotion("BUY X GET FREE Y Category ACS");
                 await order.saveOrder();
                 await paymentQrESB(paymentV2);
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
