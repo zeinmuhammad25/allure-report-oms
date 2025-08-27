@@ -958,4 +958,31 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
             }, {tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
         });
 
+    test("[TC_0205524] Validate Logic When User Apply Promotion - Apply All Qty - FREE ITEM MENU",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,11,10,15)
+                await order.clickMenuDetail(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+                await editOrderV2.addPromotionMenu();
+                await editOrderV2.applyViaSearchPromotionMenu("FREE ITEM MENU");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentQrESB(paymentV2);
+            }, {tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
+        });
+
 });
