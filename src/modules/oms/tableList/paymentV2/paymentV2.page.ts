@@ -29,7 +29,6 @@ export default class PaymentV2Page extends BaseOmsPage implements PaymentV2Scena
     }
 
     async paymentType(paymentType: PaymentList): Promise<void> {
-        await this.waitForResponse("setting/get-payment-method")
         await this.expectVisible(PaymentV2Locator.getLocatorPaymentType(paymentType));
         await this.click(PaymentV2Locator.getLocatorPaymentType(paymentType));
     }
