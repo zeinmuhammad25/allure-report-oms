@@ -105,15 +105,15 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
     });
 
     test.afterEach(async ({tableList,sideNavBar,tools,synchronizeData}) => {
-        // const testWithAuthentication = [
-        //
-        // ];
-        // if (testWithAuthentication.includes(test.info().title)) {
-        //     await sideNavBar.gotoPageTools();
-        //     await tools.selectTab(ToolsTabs.SynchronizeData);
-        //     await synchronizeData.synchronizeDataSales();
-        //     await synchronizeData.closePopUpAfterSync();
-        // }
+        const testWithAuthentication = [
+            "[TC_0205544] Validate Logic When User Apply Promotion Head - Order Pages - BUY X GET FREE Y Category"
+        ];
+        if (testWithAuthentication.includes(test.info().title)) {
+            await sideNavBar.gotoPageTools();
+            await tools.selectTab(ToolsTabs.SynchronizeData);
+            await synchronizeData.synchronizeDataSales();
+            await synchronizeData.closePopUpAfterSync();
+        }
         await Promise.all([
             tableList.cancelAllQuickServices(),
             tableList.cancelAllTables()
