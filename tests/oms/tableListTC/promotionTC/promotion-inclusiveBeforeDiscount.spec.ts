@@ -99,6 +99,7 @@ test.describe.serial("Promotion Inclusive Before Discount", () => {
             await synchronizeData.closePopUpAfterSync();
             await sideNavBar.selectStation("KASIR");
             if (!featuresActivated) {
+                await order.activatePosFilterAccess();
                 await order.activateOrderingV2();
                 await order.activatePaymentV2();
                 featuresActivated = true;
