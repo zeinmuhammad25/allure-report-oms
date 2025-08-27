@@ -1489,5 +1489,36 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
             }, {tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
         });
 
+    test("[TC_0205543] Validate Logic When User Apply Promotion Head - Order Pages - BUY X GET FREE Y",
+        {tag: tags + "@positive"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,10,10,10)
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuExtra.name);
+                await order.selectMenu(MenuList.atCategory.atMenuExtra.atMenuExtraAlpha.name, 1);
+                await order.addPromotion();
+                await promotionList.selectPromotionListCategory("CONDITIONAL");
+                await promotionList.searchPromotion("BUY X GET FREE Y ACS");
+                await promotionList.selectPromotion("BUY X GET FREE Y ACS");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac3.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
+
 
 });
