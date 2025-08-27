@@ -3,6 +3,7 @@ import BaseLocator from "../../../../../base/base-locator";
 export default class PromotionListLocator extends BaseLocator {
     static closeButton: string = "//app-promo-edit//button[normalize-space()='Close']";
     static removeButton: string = "//app-promo-edit//button[normalize-space()='Remove Promotion']";
+    static escapeKeyboardPromotion: string = "//app-promo-edit//h4[normalize-space()='Promotion List']";
     static openBillDiscountPanel: string = "//app-open-bill-discount";
     static openBillDiscountField: string = "//app-open-bill-discount//input";
     static openBillDiscountCancelButton: string = "(//app-open-bill-discount//button)[1]";
