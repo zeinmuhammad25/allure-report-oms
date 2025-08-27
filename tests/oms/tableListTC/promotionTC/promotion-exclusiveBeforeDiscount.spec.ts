@@ -985,4 +985,32 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
             }, {tableList, bookOrder, order, addOrderV2, paymentV2, editOrderV2}, testInfo);
         });
 
+    test("[TC_0205525] Validate Logic When User Apply Promotion Head Then Cancel 1 Menu - Order Pages - Discount Bill Rp",
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,11,10,15)
+                await order.deleteMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaBakar.name);
+                await order.addPromotion();
+                await promotionList.searchPromotion("BILL DISCOUNT RP");
+                await promotionList.selectPromotion("BILL DISCOUNT RP");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr4.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentQrESB(paymentV2);
+            }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
+
 });
