@@ -1209,6 +1209,32 @@ test.describe.serial("Promotion Exclusive Before Discount", () => {
             }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
-
+    test("[TC_0205533] Validate Logic When User Apply Promotion Head Then Cancel 1 Menu - Order Pages - Menu Discount Rp All Category",
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,5,5,6)
+                await order.deleteMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaRebus.name);
+                await order.addPromotion();
+                await promotionList.searchPromotion("MENU DISC RP ALL CATEGORY");
+                await promotionList.selectPromotion("MENU DISC RP ALL CATEGORY");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.acRoom.name);
+                await tableList.selectTable(Table.acRoom.ac1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
 
 });
