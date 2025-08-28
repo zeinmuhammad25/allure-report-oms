@@ -1087,4 +1087,32 @@ test.describe.serial("Promotion Exclusive After Discount", () => {
             }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
         });
 
+    test("[TC_0205580] Validate Logic When User Apply Promotion Head Then Cancel 1 Menu - Order Pages - Discount % Menu Category Detail",
+        {tag: tags + "@negative"}, async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo) => {
+            await safeTest(async ({tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}) => {
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await makeOrder("AT EXCLUSIVE", bookOrder);
+                await order.selectCategoryMenu(MenuList.atCategory.name);
+                await orderMenuPaketMahal(order, addOrderV2,2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderMenuPaketMurah(order, addOrderV2,2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
+                await orderSingleMenu(order,2,3,4)
+                await order.deleteMenu(MenuList.atCategory.atMenuBiasa.atMenuBiasaGoreng.name);
+                await order.addPromotion();
+                await promotionList.searchPromotion("DISCOUNT % MENU CATEGORY DETAIL");
+                await promotionList.selectPromotion("DISCOUNT % MENU CATEGORY DETAIL");
+                await order.saveOrder();
+                await tableList.selectRoom(Table.smokingRoom.name);
+                await tableList.selectTable(Table.smokingRoom.sr1.name);
+                await order.printNowPrintingSetting();
+                await order.gotoPayment();
+                await paymentCashFull(paymentV2);
+            }, {tableList, bookOrder, order, addOrderV2, paymentV2, promotionList}, testInfo);
+        });
+
 });
