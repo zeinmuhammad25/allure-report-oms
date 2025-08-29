@@ -85,4 +85,22 @@ export default class PromotionListComponent extends BaseOmsPage implements Promo
         await this.click(PromotionListLocator.promotionListCategory(category));
     }
 
+    async checkBinPromotion(binValue: string): Promise<void> {
+        await this.expectVisible(PromotionListLocator.binField);
+        await this.click(PromotionListLocator.binField);
+        await this.fill(PromotionListLocator.binField, binValue);
+        await this.expectVisible(PromotionListLocator.btnBinCheck);
+        await this.click(PromotionListLocator.btnBinCheck);
+    }
+
+    async cancelBinPromotion(binValue: string): Promise<void> {
+        await this.expectVisible(PromotionListLocator.binField);
+        await this.click(PromotionListLocator.binField);
+        await this.fill(PromotionListLocator.binField, binValue);
+        await this.expectVisible(PromotionListLocator.btnBinCheck);
+        await this.click(PromotionListLocator.btnBinCheck);
+        await this.expectVisible(PromotionListLocator.btnBinCancel);
+        await this.click(PromotionListLocator.btnBinCancel);
+    }
+
 }
