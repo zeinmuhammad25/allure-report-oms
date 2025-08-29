@@ -16,7 +16,7 @@ export default class PromotionListLocator extends BaseLocator {
     static searchPromoField: string = `//app-promo-table//input[@placeholder='Search....']`;
     static binField: string = `//app-promo-table//input[@placeholder='Enter a valid BIN']`;
     static btnBinCheck: string = `//app-promo-table//button[normalize-space()='Check']`;
-    static btnBinCancel: string = `//app-promo-table//button//img[@src='assets/images/close-bin.png']`;
+    static btnBinCancel: string = `//app-promo-table//button[img[@src='assets/images/close-bin.png']]`;
     static promotionByName = (promotionName: string) => `//tr//td[normalize-space()='${promotionName}']`;
     static promotionItemPopUp: string = "//app-promo-item-edit[@class='ng-star-inserted']//div//div[@class='modal-header bg-primary']";
     static promotionItemPlusButton: string = "//span[normalize-space()='+']";
