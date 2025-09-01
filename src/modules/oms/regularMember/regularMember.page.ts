@@ -102,4 +102,11 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.selectDate(date));
     }
 
+    async inputFormPhone(phoneNumber: string): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.phoneMemberField);
+        await this.click(RegularMemberLocator.phoneMemberField);
+        await this.fill(RegularMemberLocator.phoneMemberField,phoneNumber);
+        await this.click(RegularMemberLocator.escapeKeyboardForm);
+    }
+
 }
