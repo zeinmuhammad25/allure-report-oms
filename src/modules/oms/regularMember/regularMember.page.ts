@@ -57,5 +57,12 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.paginationButton(type));
     }
 
+    async inputFormMemberName(memberName:string):Promise<void>{
+        await this.expectVisible(RegularMemberLocator.regularMemberNameField)
+        await this.click(RegularMemberLocator.regularMemberNameField)
+        await this.fill(RegularMemberLocator.regularMemberNameField,memberName)
+        await this.expectVisible(RegularMemberLocator.escapeKeyboardForm)
+        await this.click(RegularMemberLocator.escapeKeyboardForm)
+    }
 
 }
