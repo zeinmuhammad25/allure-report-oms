@@ -82,4 +82,9 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.btnMonthAndYear);
     }
 
+    async paginationDatePicker(label: "Next month" | "Previous month" | "Next 20 years" | "Previous 20 years" | "Next year" | "Previous year"): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.paginationDatePicker(label));
+        await this.click(RegularMemberLocator.paginationDatePicker(label));
+    }
+
 }
