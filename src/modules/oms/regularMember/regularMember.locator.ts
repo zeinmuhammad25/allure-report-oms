@@ -28,7 +28,8 @@ export default class RegularMemberLocator extends BaseLocator {
     static escapeKeyboardForm: string = "//app-member-form//div//h5[normalize-space()='Regular Member Form']";
 
     //datepicker
-    static btnMonthAndYear: string = "//mat-datepicker-content//mat-calendar//button[@aria-label='Choose month and year']";
+    static btnMonthAndYear = (label: "Choose month and year" | "Choose date"):
+        string => `//mat-datepicker-content//mat-calendar//button[@aria-label='${label}']`;
     static paginationDatePicker = (label: "Next month" | "Previous month" | "Next 20 years" | "Previous 20 years" | "Next year" | "Previous year"):
         string => `//mat-calendar-header//button[@aria-label='${label}']`;
     static selectYear = (year: string): string => `//mat-multi-year-view//td//div[normalize-space()='${year}']`;
