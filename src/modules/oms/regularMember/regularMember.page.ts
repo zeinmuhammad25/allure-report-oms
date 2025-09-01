@@ -72,4 +72,14 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.selectGender(gender));
     }
 
+    async clickButtonDate(): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.selectBirthDate);
+        await this.click(RegularMemberLocator.selectBirthDate);
+    }
+
+    async selectMonthAndYear(): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.btnMonthAndYear);
+        await this.click(RegularMemberLocator.btnMonthAndYear);
+    }
+
 }
