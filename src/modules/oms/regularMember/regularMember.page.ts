@@ -15,5 +15,11 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.btnAddRegularMember);
     }
 
+    async searchRegularMember(valueMember: string): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.fieldSearchMember);
+        await this.click(RegularMemberLocator.fieldSearchMember);
+        await this.fill(RegularMemberLocator.fieldSearchMember, valueMember);
+    }
+
 
 }
