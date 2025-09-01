@@ -87,4 +87,19 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.paginationDatePicker(label));
     }
 
+    async datePickerYear(year: string): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.selectYear(year));
+        await this.click(RegularMemberLocator.selectYear(year));
+    }
+
+    async datePickerMonth(month: string): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.selectMonth(month));
+        await this.click(RegularMemberLocator.selectMonth(month));
+    }
+
+    async datePickerDate(date: string): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.selectDate(date));
+        await this.click(RegularMemberLocator.selectDate(date));
+    }
+
 }
