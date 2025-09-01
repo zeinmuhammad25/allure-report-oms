@@ -20,4 +20,8 @@ export default interface RegularMemberScenario extends BaseScenario {
     inputFormMemberName(memberName: string): Promise<void>;
 
     selectFormGander(gender: "Male" | "Female"): Promise<void>;
+
+    clickButtonDate(): Promise<void>;
+
+    selectMonthAndYear(): Promise<void>;
 }
