@@ -26,6 +26,7 @@ import MoveTableComponent from "../../src/modules/oms/tableList/order/components
 import AddOrderV2Component from "../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.component";
 import EditOrderV2Components from "../../src/modules/oms/tableList/order/components/editOrderV2/editOrderV2.components";
 import PaymentV2Page from "../../src/modules/oms/tableList/paymentV2/paymentV2.page";
+import RegularMemberPage from "../../src/modules/oms/regularMember/regularMember.page";
 
 export const test = base.extend<OmsPages>({
     synchronizeData: async ({page}, use) => await use(new SynchronizeDataPage(page)),
@@ -53,5 +54,6 @@ export const test = base.extend<OmsPages>({
     terminalID: async ({page}, use) => await use(new TerminalIDPage(page)),
     applicationSetting: async ({page}, use) => await use(new ApplicationSettingPage(page)),
     tools: async ({page}, use) => await use(new ToolsPage(page)),
-    troubleshoot: async ({page}, use) => await use(new TroubleshootComponent(page))
+    troubleshoot: async ({page}, use) => await use(new TroubleshootComponent(page)),
+    regularMember: async ({page}, use) => await use(new RegularMemberPage(page))
 });
