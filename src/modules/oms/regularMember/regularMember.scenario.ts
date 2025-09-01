@@ -9,6 +9,7 @@ export default interface RegularMemberScenario extends BaseScenario {
 
     cancelSearchRegularMember(valueMember: string): Promise<void>;
 
-    shortingAscRegularMember(headerName: "Code" | "Name" | "Address" | "Phone" | "Email"): Promise<void>
+    shortingAscRegularMember(headerName: "Code" | "Name" | "Address" | "Phone" | "Email"): Promise<void>;
 
+    shortingDescRegularMember(headerName: "Code" | "Name" | "Address" | "Phone" | "Email"): Promise<void>;
 }
