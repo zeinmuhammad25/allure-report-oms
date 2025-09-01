@@ -5,4 +5,6 @@ export default interface RegularMemberScenario extends BaseScenario {
 
     createdRegularMember(): Promise<void>;
 
+    searchRegularMember(valueMember: string): Promise<void>;
+
 }
