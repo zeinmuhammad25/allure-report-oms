@@ -26,4 +26,10 @@ export default interface RegularMemberScenario extends BaseScenario {
     selectMonthAndYear(): Promise<void>;
 
     paginationDatePicker(label: "Next month" | "Previous month" | "Next 20 years" | "Previous 20 years" | "Next year" | "Previous year"): Promise<void>;
+
+    datePickerYear(year: string): Promise<void>;
+
+    datePickerMonth(month: string): Promise<void>;
+
+    datePickerDate(date: string): Promise<void>;
 }
