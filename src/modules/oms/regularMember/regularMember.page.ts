@@ -105,7 +105,14 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
     async inputFormPhone(phoneNumber: string): Promise<void> {
         await this.expectVisible(RegularMemberLocator.phoneMemberField);
         await this.click(RegularMemberLocator.phoneMemberField);
-        await this.fill(RegularMemberLocator.phoneMemberField,phoneNumber);
+        await this.fill(RegularMemberLocator.phoneMemberField, phoneNumber);
+        await this.click(RegularMemberLocator.escapeKeyboardForm);
+    }
+
+    async inputFormEmail(email: string): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.emailMemberField);
+        await this.click(RegularMemberLocator.emailMemberField);
+        await this.fill(RegularMemberLocator.emailMemberField, email);
         await this.click(RegularMemberLocator.escapeKeyboardForm);
     }
 
