@@ -52,5 +52,10 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.expectVisible(RegularMemberLocator.btnDataAndEdit(value));
     }
 
+    async memberPagination(type: "first" | "previous" | "next" | "last"): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.paginationButton(type));
+        await this.click(RegularMemberLocator.paginationButton(type));
+    }
+
 
 }
