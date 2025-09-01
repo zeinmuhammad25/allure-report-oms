@@ -11,6 +11,9 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
     }
 
     async createdRegularMember(): Promise<void> {
-
+        await this.expectVisible(RegularMemberLocator.btnAddRegularMember);
+        await this.click(RegularMemberLocator.btnAddRegularMember);
     }
+
+
 }
