@@ -25,6 +25,7 @@ export default class RegularMemberLocator extends BaseLocator {
     static cancelMemberForm: string = "//app-member-form//span[normalize-space()='Cancel']";
     static saveMemberForm: string = "//app-member-form//span[normalize-space()='Save Reguler Member']";
     static updateMemberForm: string = "//app-member-form//span[normalize-space()='Update Reguler Member']";
+    static escapeKeyboardForm: string = "//app-member-form//div//h5[normalize-space()='Regular Member Form']";
 
     //datepicker
     static btnMonthAndYear: string = "//mat-datepicker-content//mat-calendar//button[@aria-label='Choose month and year']";
