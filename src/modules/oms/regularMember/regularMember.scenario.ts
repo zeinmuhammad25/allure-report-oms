@@ -7,4 +7,6 @@ export default interface RegularMemberScenario extends BaseScenario {
 
     searchRegularMember(valueMember: string): Promise<void>;
 
+    cancelSearchRegularMember(valueMember: string): Promise<void>;
+
 }
