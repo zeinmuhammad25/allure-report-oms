@@ -15,7 +15,7 @@ export default class RegularMemberLocator extends BaseLocator {
 
     //form
     regularMemberNameField: string = "//app-member-form//div//input[@formcontrolname='memberName']";
-    ganderField: string = "//app-member-form//mat-select//div[@class='mat-select-value']";
+    genderField: string = "//app-member-form//mat-select//div[@class='mat-select-value']";
     selectGender = (gender: "Male" | "Female"): string => `//div//mat-option//span[normalize-space()='${gender}']`;
     removeBirthDate: string = "//app-member-form//i[@class='glyphicon glyphicon-remove']";
     selectBirthDate: string = "//app-member-form//button[contains(@aria-label,'Open calendar')]//*[name()='svg']";
