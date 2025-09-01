@@ -13,5 +13,7 @@ export default interface RegularMemberScenario extends BaseScenario {
 
     shortingDescRegularMember(headerName: "Code" | "Name" | "Address" | "Phone" | "Email"): Promise<void>;
 
-    shortingAscAndDescRegularMember(headerName: "Code" | "Name" | "Address" | "Phone" | "Email", value: string): Promise<void>
+    shortingAscAndDescRegularMember(headerName: "Code" | "Name" | "Address" | "Phone" | "Email", value: string): Promise<void>;
+
+    memberPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
 }
