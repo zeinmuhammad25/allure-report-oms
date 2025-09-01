@@ -32,4 +32,9 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.expectVisible(RegularMemberLocator.btnClearSearchMember);
         await this.click(RegularMemberLocator.btnClearSearchMember);
     }
+
+    async shortingAscRegularMember(headerName: "Code" | "Name" | "Address" | "Phone" | "Email"): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.headerNameAndShorting(headerName))
+        await this.click(RegularMemberLocator.headerNameAndShorting(headerName))
+    }
 }
