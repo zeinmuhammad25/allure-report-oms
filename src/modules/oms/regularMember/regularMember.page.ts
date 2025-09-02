@@ -105,7 +105,11 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         }
     }
 
-    async selectFormGander(gender: "Male" | "Female"): Promise<void> {
+    async selectFormGander(gender: "Male" | "Female" | ""): Promise<void> {
+        if (!gender || gender.trim() === "") {
+            await this.expectTextVisible("Gender cannot be blank", true);
+            return;
+        }
         await this.expectVisible(RegularMemberLocator.genderField);
         await this.click(RegularMemberLocator.genderField);
         await this.expectVisible(RegularMemberLocator.selectGender(gender));
@@ -230,6 +234,5 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         // Klik untuk tutup keyboard / hilangkan fokus
         await this.click(RegularMemberLocator.escapeKeyboardForm);
     }
-
 
 }
