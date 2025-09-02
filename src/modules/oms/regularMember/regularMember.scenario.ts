@@ -33,7 +33,10 @@ export default interface RegularMemberScenario extends BaseScenario {
 
     datePickerDate(date: string): Promise<void>;
 
-    inputFormPhone(phoneNumber: string): Promise<void>;
+    inputFormPhone(
+        o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
+        phoneNumber?: string
+    ): Promise<void>;
 
     inputFormEmail(
         o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
