@@ -245,4 +245,14 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.cancelMemberForm);
     }
 
+    async saveRegularMember(): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.saveMemberForm);
+        await this.click(RegularMemberLocator.saveMemberForm);
+    }
+
+    async updateRegularMember(): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.updateMemberForm);
+        await this.click(RegularMemberLocator.updateMemberForm);
+    }
+
 }
