@@ -235,11 +235,14 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.escapeKeyboardForm);
     }
 
-    async selectAndEditMember(memberValue:string):Promise<void> {
+    async selectAndEditMember(memberValue: string): Promise<void> {
         await this.expectVisible(RegularMemberLocator.btnDataAndEdit(memberValue));
         await this.click(RegularMemberLocator.btnDataAndEdit(memberValue));
     }
 
-
+    async cancelCreateAndUpdateMember(): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.cancelMemberForm);
+        await this.click(RegularMemberLocator.cancelMemberForm);
+    }
 
 }
