@@ -116,4 +116,40 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.escapeKeyboardForm);
     }
 
+    async inputFormAddress(
+        o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
+        text?: string
+    ): Promise<void> {
+        const field = this.getLocator(RegularMemberLocator.addressMemberField);
+        // Pastikan field address terlihat & fokus
+        await this.expectVisible(RegularMemberLocator.addressMemberField);
+        await this.click(RegularMemberLocator.addressMemberField);
+        // Ambil value lama
+        const value = await field.inputValue();
+        let address = text ?? value;
+        // Jika append → tambahkan text ke belakang value lama
+        if (o?.append && text) {
+            address = value + text;
+        }
+        // Jika hapus substring tertentu
+        if (o?.delSub?.trim()) {
+            address = value.replace(o.delSub.trim(), "");
+        }
+        // Jika hapus sejumlah karakter (by count)
+        if ((o?.delCount ?? 0) > 0) {
+            const n = Math.max(0, o.delCount!);
+            address =
+                o?.delFrom === "start"
+                    ? value.slice(n) // hapus dari depan
+                    : value.slice(0, Math.max(0, value.length - n)); // hapus dari belakang
+        }
+        // Isi ulang field address dengan value terbaru
+        await this.fill(RegularMemberLocator.addressMemberField, address);
+        // Klik untuk tutup keyboard / hilangkan fokus
+        await this.click(RegularMemberLocator.escapeKeyboardForm);
+    }
+
+
+
+
 }
