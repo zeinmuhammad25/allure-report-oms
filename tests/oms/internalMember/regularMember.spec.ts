@@ -135,4 +135,13 @@ test.describe.serial("Internal Member", () => {
             }, {regularMember}, testInfo);
         });
 
+    test("[TC_0205603] Validate Regular Member List page can be navigated with last page button",
+        {tag: tags + "@positive"}, async ({regularMember}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMember.memberPagination("last");
+                await regularMember.memberPagination("first");
+                await regularMember.validationMember("AGDB00000001");
+            }, {regularMember}, testInfo);
+        });
+
 });
