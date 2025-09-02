@@ -53,4 +53,6 @@ export default interface RegularMemberScenario extends BaseScenario {
 
     selectAndEditMember(memberValue: string): Promise<void>;
 
+    cancelCreateAndUpdateMember(): Promise<void>;
+
 }
