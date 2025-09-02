@@ -108,5 +108,13 @@ test.describe.serial("Internal Member", () => {
             }, {regularMember}, testInfo);
         });
 
+    test("[TC_0205600] Validate Regular Member List page can be navigated with next page button",
+        {tag: tags + "@positive"}, async ({regularMember}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMember.memberPagination("next");
+                await regularMember.memberPagination("next");
+                await regularMember.validationMember("OTD0010");
+            }, {regularMember}, testInfo);
+        });
 
 });
