@@ -100,5 +100,13 @@ test.describe.serial("Internal Member", () => {
             }, {regularMember}, testInfo);
         });
 
+    test("[TC_0205599] Validate keyword can be cleared from Search field on Regular Member List",
+        {tag: tags + "@positive"}, async ({regularMember}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMember.searchRegularMember("Anwar");
+                await regularMember.cancelSearchRegularMember();
+            }, {regularMember}, testInfo);
+        });
+
 
 });
