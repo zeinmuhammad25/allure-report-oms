@@ -41,12 +41,7 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.escapeKeyboardMember);
     }
 
-    async cancelSearchRegularMember(valueMember: string): Promise<void> {
-        await this.expectVisible(RegularMemberLocator.fieldSearchMember);
-        await this.click(RegularMemberLocator.fieldSearchMember);
-        await this.fill(RegularMemberLocator.fieldSearchMember, valueMember);
-        await this.expectVisible(RegularMemberLocator.escapeKeyboardMember);
-        await this.click(RegularMemberLocator.escapeKeyboardMember);
+    async cancelSearchRegularMember(): Promise<void> {
         await this.expectVisible(RegularMemberLocator.btnClearSearchMember);
         await this.click(RegularMemberLocator.btnClearSearchMember);
     }
@@ -258,6 +253,10 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
     async removeBirthDate(): Promise<void> {
         await this.expectVisible(RegularMemberLocator.removeBirthDate);
         await this.click(RegularMemberLocator.removeBirthDate);
+    }
+
+    async validationMember(memberValue: string): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.btnDataAndEdit(memberValue));
     }
 
 }
