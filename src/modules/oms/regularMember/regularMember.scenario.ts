@@ -7,7 +7,7 @@ export default interface RegularMemberScenario extends BaseScenario {
 
     searchRegularMember(valueMember: string): Promise<void>;
 
-    cancelSearchRegularMember(valueMember: string): Promise<void>;
+    cancelSearchRegularMember(): Promise<void>;
 
     shortingAscRegularMember(headerName: "Code" | "Name" | "Address" | "Phone" | "Email"): Promise<void>;
 
@@ -60,4 +60,6 @@ export default interface RegularMemberScenario extends BaseScenario {
     updateRegularMember(): Promise<void>;
 
     removeBirthDate(): Promise<void>;
+
+    validationMember(memberValue: string): Promise<void>;
 }
