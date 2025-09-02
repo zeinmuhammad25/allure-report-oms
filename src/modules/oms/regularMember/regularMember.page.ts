@@ -109,12 +109,32 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.escapeKeyboardForm);
     }
 
-    async inputFormEmail(email: string): Promise<void> {
+    async inputFormEmail(
+        o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
+        email?: string
+    ): Promise<void> {
+        const field = this.getLocator(RegularMemberLocator.emailMemberField);
         await this.expectVisible(RegularMemberLocator.emailMemberField);
         await this.click(RegularMemberLocator.emailMemberField);
-        await this.fill(RegularMemberLocator.emailMemberField, email);
+        const value = await field.inputValue();
+        let data = email ?? value;
+        if (o?.append && email) {
+            data = value + email;
+        }
+        if (o?.delSub?.trim()) {
+            data = value.replace(o.delSub.trim(), "");
+        }
+        if ((o?.delCount ?? 0) > 0) {
+            const n = Math.max(0, o.delCount!);
+            data =
+                o?.delFrom === "start"
+                    ? value.slice(n) // hapus dari depan
+                    : value.slice(0, Math.max(0, value.length - n)); // hapus dari belakang
+        }
+        await this.fill(RegularMemberLocator.emailMemberField, data);
         await this.click(RegularMemberLocator.escapeKeyboardForm);
     }
+
 
     async inputFormAddress(
         o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
@@ -148,8 +168,6 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         // Klik untuk tutup keyboard / hilangkan fokus
         await this.click(RegularMemberLocator.escapeKeyboardForm);
     }
-
-
 
 
 }
