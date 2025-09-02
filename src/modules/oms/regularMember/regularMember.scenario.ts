@@ -59,4 +59,5 @@ export default interface RegularMemberScenario extends BaseScenario {
 
     updateRegularMember(): Promise<void>;
 
+    removeBirthDate(): Promise<void>;
 }
