@@ -17,7 +17,10 @@ export default interface RegularMemberScenario extends BaseScenario {
 
     memberPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
 
-    inputFormMemberName(memberName: string): Promise<void>;
+    inputFormMemberName(
+        o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
+        memberName?: string
+    ): Promise<void>;
 
     selectFormGander(gender: "Male" | "Female"): Promise<void>;
 
