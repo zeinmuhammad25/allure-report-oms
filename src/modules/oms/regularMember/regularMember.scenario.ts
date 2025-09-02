@@ -35,10 +35,13 @@ export default interface RegularMemberScenario extends BaseScenario {
 
     inputFormPhone(phoneNumber: string): Promise<void>;
 
-    inputFormEmail(email: string): Promise<void>;
+    inputFormEmail(
+        o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
+        email?: string
+    ): Promise<void>;
 
     inputFormAddress(
         o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
         text?: string
-    ): Promise<void>
+    ): Promise<void>;
 }
