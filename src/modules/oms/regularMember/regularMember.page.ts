@@ -255,4 +255,9 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.updateMemberForm);
     }
 
+    async removeBirthDate(): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.removeBirthDate);
+        await this.click(RegularMemberLocator.removeBirthDate);
+    }
+
 }
