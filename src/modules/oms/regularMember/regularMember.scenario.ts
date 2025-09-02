@@ -50,4 +50,7 @@ export default interface RegularMemberScenario extends BaseScenario {
         o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
         text?: string
     ): Promise<void>;
+
+    selectAndEditMember(memberValue: string): Promise<void>;
+
 }
