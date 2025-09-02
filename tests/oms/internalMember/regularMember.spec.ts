@@ -63,5 +63,26 @@ test.describe.serial("Internal Member", () => {
             }, {regularMember}, testInfo);
         });
 
+    test("[TC_0205596] Validate Search member on Regular Member List with Valid keywords",
+        {tag: tags + "@positive"}, async ({regularMember}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMember.searchRegularMember("WGG00000025");
+                await regularMember.validationMember("WGG00000025");
+                await regularMember.cancelSearchRegularMember();
+                await regularMember.searchRegularMember("aaaaaaaaaaaaa");
+                await regularMember.validationMember("aaaaaaaaaaaaa");
+                await regularMember.cancelSearchRegularMember();
+                await regularMember.searchRegularMember("Jalan jaya asri makmur");
+                await regularMember.validationMember("Jalan jaya asri makmur");
+                await regularMember.cancelSearchRegularMember();
+                await regularMember.searchRegularMember("89630653365");
+                await regularMember.validationMember("89630653365");
+                await regularMember.cancelSearchRegularMember();
+                await regularMember.searchRegularMember("Yohan@gmail.com");
+                await regularMember.validationMember("Yohan@gmail.com");
+                await regularMember.cancelSearchRegularMember();
+            }, {regularMember}, testInfo);
+        });
+
 
 });
