@@ -84,11 +84,18 @@ test.describe.serial("Internal Member", () => {
             }, {regularMember}, testInfo);
         });
 
+    test("[TC_0205597] Validate Search member on Regular Member List with Valid keywords",
+        {tag: tags + "@positive"}, async ({regularMember}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMember.searchRegularMember("ASDASDA242342356234SDFS3");
+                await regularMember.validationMember("ASDASDA242342356234SDFS3");
+            }, {regularMember}, testInfo);
+        });
+
     test("[TC_0205598] Validate detail member can be checked from Search field on Regular Member List",
         {tag: tags + "@positive"}, async ({regularMember}, testInfo) => {
             await safeTest(async ({}) => {
                 await regularMember.searchRegularMember("WGG00000025");
-                await regularMember.validationMember("WGG00000025");
                 await regularMember.selectAndEditMember("WGG00000025");
             }, {regularMember}, testInfo);
         });
