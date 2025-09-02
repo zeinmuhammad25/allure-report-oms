@@ -57,13 +57,36 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.paginationButton(type));
     }
 
-    async inputFormMemberName(memberName: string): Promise<void> {
+    async inputFormMemberName(
+        o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
+        memberName?: string
+    ): Promise<void> {
+        const field = this.getLocator(RegularMemberLocator.regularMemberNameField);
         await this.expectVisible(RegularMemberLocator.regularMemberNameField);
         await this.click(RegularMemberLocator.regularMemberNameField);
-        await this.fill(RegularMemberLocator.regularMemberNameField, memberName);
-        await this.expectVisible(RegularMemberLocator.escapeKeyboardForm);
+
+        const value = await field.inputValue();
+        let name = memberName ?? value;
+        if (o?.append && memberName) {
+            name = value + memberName;
+        }
+        if (o?.delSub?.trim()) {
+            name = value.replace(o.delSub.trim(), "");
+        }
+        if ((o?.delCount ?? 0) > 0) {
+            const n = Math.max(0, o.delCount!);
+            name =
+                o?.delFrom === "start"
+                    ? value.slice(n) // hapus dari depan
+                    : value.slice(0, Math.max(0, value.length - n)); // hapus dari belakang
+        }
+        await this.fill(RegularMemberLocator.regularMemberNameField, name);
         await this.click(RegularMemberLocator.escapeKeyboardForm);
+        if (!name || name.trim() === "") {
+            await this.expectTextVisible("Regular Member Name cannot be blank", true);
+        }
     }
+
 
     async selectFormGander(gender: "Male" | "Female"): Promise<void> {
         await this.expectVisible(RegularMemberLocator.genderField);
