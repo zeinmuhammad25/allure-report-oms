@@ -102,12 +102,32 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.selectDate(date));
     }
 
-    async inputFormPhone(phoneNumber: string): Promise<void> {
+    async inputFormPhone(
+        o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
+        phoneNumber?: string
+    ): Promise<void> {
+        const field = this.getLocator(RegularMemberLocator.phoneMemberField);
         await this.expectVisible(RegularMemberLocator.phoneMemberField);
         await this.click(RegularMemberLocator.phoneMemberField);
-        await this.fill(RegularMemberLocator.phoneMemberField, phoneNumber);
+        const value = await field.inputValue();
+        let phone = phoneNumber ?? value;
+        if (o?.append && phoneNumber) {
+            phone = value + phoneNumber;
+        }
+        if (o?.delSub?.trim()) {
+            phone = value.replace(o.delSub.trim(), "");
+        }
+        if ((o?.delCount ?? 0) > 0) {
+            const n = Math.max(0, o.delCount!);
+            phone =
+                o?.delFrom === "start"
+                    ? value.slice(n) // hapus dari depan
+                    : value.slice(0, Math.max(0, value.length - n)); // hapus dari belakang
+        }
+        await this.fill(RegularMemberLocator.phoneMemberField, phone);
         await this.click(RegularMemberLocator.escapeKeyboardForm);
     }
+
 
     async inputFormEmail(
         o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
