@@ -10,6 +10,24 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         return [];
     }
 
+    /**
+     * CARA MEMANGGIL DI SPECT:
+     * // 1) Replace / isi baru
+     * await this.inputFormX({}, "Teks Baru");
+     * // 2) Clear (kosongkan)
+     * await this.inputFormX({}, "");
+     * // 3) Append (tambah di belakang)
+     * await this.inputFormX({ append: true }, " Tambahan");
+     * // 4) Delete N karakter dari belakang
+     * await this.inputFormX({ delCount: 5 });
+     * // 5) Delete N karakter dari depan
+     * await this.inputFormX({ delCount: 3, delFrom: "start" });
+     * // 6) Delete berdasarkan substring tertentu
+     * await this.inputFormX({ delSub: "SubStringYangDihapus" });
+     * Catatan:
+     * - Semua contoh di atas berlaku untuk: inputFormAddress / inputFormEmail / inputFormPhone / inputFormMemberName
+     */
+
     async createdRegularMember(): Promise<void> {
         await this.expectVisible(RegularMemberLocator.btnAddRegularMember);
         await this.click(RegularMemberLocator.btnAddRegularMember);
@@ -87,7 +105,6 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         }
     }
 
-
     async selectFormGander(gender: "Male" | "Female"): Promise<void> {
         await this.expectVisible(RegularMemberLocator.genderField);
         await this.click(RegularMemberLocator.genderField);
@@ -151,7 +168,6 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.escapeKeyboardForm);
     }
 
-
     async inputFormEmail(
         o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
         email?: string
@@ -178,7 +194,6 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         await this.click(RegularMemberLocator.escapeKeyboardForm);
     }
 
-
     async inputFormAddress(
         o?: { append?: boolean; delCount?: number; delFrom?: "start" | "end"; delSub?: string },
         text?: string
@@ -190,21 +205,25 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
         // Ambil value lama
         const value = await field.inputValue();
         let address = text ?? value;
-        // Jika append → tambahkan text ke belakang value lama
+        // Append → tambahkan text baru di belakang
         if (o?.append && text) {
             address = value + text;
         }
-        // Jika hapus substring tertentu
+        // Hapus substring tertentu
         if (o?.delSub?.trim()) {
             address = value.replace(o.delSub.trim(), "");
         }
-        // Jika hapus sejumlah karakter (by count)
+        // Hapus sejumlah karakter
         if ((o?.delCount ?? 0) > 0) {
             const n = Math.max(0, o.delCount!);
             address =
                 o?.delFrom === "start"
                     ? value.slice(n) // hapus dari depan
                     : value.slice(0, Math.max(0, value.length - n)); // hapus dari belakang
+        }
+        // **Auto-trim maksimal 200 karakter**
+        if (address.length > 200) {
+            address = address.slice(0, 200);
         }
         // Isi ulang field address dengan value terbaru
         await this.fill(RegularMemberLocator.addressMemberField, address);
