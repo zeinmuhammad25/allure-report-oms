@@ -2,7 +2,6 @@ import BaseOmsPage from "../base-oms-page";
 import RegularMemberDepositScenario from "./regularMemberDeposit.scenario";
 import Element from "../../../base/objects/Element";
 import RegularMemberDepositLocator from "./regularMemberDeposit.locator";
-import RegularMemberLocator from "../regularMember/regularMember.locator";
 
 export default class RegularMemberDepositPage extends BaseOmsPage implements RegularMemberDepositScenario {
     pageUrl: () => string;
@@ -42,6 +41,11 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
     async datePickerFilterDate(day: string): Promise<void> {
         await this.expectVisible(RegularMemberDepositLocator.calendarDate(day));
         await this.click(RegularMemberDepositLocator.calendarDate(day));
+    }
+
+    async applyDateInFilterDate(): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.btnApplyDate);
+        await this.click(RegularMemberDepositLocator.btnApplyDate);
     }
 
 }
