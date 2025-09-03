@@ -26,6 +26,7 @@ export default class RegularMemberLocator extends BaseLocator {
     static saveMemberForm: string = "//app-member-form//span[normalize-space()='Save Reguler Member']";
     static updateMemberForm: string = "//app-member-form//span[normalize-space()='Update Reguler Member']";
     static escapeKeyboardForm: string = "//app-member-form//div//h5[normalize-space()='Regular Member Form']";
+    static backGroundForm: string = "//div[@class='cdk-overlay-backdrop cdk-overlay-transparent-backdrop cdk-overlay-backdrop-showing']";
 
     //datepicker
     static btnMonthAndYear = (label: "Choose month and year" | "Choose date"):

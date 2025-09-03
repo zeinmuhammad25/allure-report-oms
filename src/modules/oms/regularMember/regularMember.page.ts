@@ -101,11 +101,14 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
     }
 
     async selectFormGander(gender: "Male" | "Female" | ""): Promise<void> {
+        await this.expectVisible(RegularMemberLocator.genderField);
         if (!gender || gender.trim() === "") {
+            await this.click(RegularMemberLocator.genderField);
+            await this.expectVisible(RegularMemberLocator.backGroundForm);
+            await this.click(RegularMemberLocator.backGroundForm);
             await this.expectTextVisible("Gender cannot be blank", true);
             return;
         }
-        await this.expectVisible(RegularMemberLocator.genderField);
         await this.click(RegularMemberLocator.genderField);
         await this.expectVisible(RegularMemberLocator.selectGender(gender));
         await this.click(RegularMemberLocator.selectGender(gender));
@@ -256,7 +259,13 @@ export default class RegularMemberPage extends BaseOmsPage implements RegularMem
     }
 
     async validationMember(memberValue: string): Promise<void> {
-        await this.expectVisible(RegularMemberLocator.btnDataAndEdit(memberValue));
+        const memberLocator = RegularMemberLocator.btnDataAndEdit(memberValue);
+        const isExist = await this.isVisible(memberLocator);
+        if (!isExist) {
+            console.error(`❌ Data member "${memberValue}" Not Found Please input true Value`);
+            return;
+        }
+        await this.expectVisible(memberLocator);
     }
 
 }
