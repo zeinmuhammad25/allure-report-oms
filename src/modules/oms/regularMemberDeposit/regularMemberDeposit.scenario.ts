@@ -11,4 +11,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
     clickFilterDate(): Promise<void>;
 
     selectMonthAndYear(side: "left" | "right", nav: "prev" | "next"): Promise<void>;
+
+    datePickerFilterDate(day: string): Promise<void>;
 }
