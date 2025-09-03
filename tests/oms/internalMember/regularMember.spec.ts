@@ -181,4 +181,20 @@ test.describe.serial("Internal Member", () => {
             }, {regularMember}, testInfo);
         });
 
+
+    test("[TC_0205606] Validate Clear Birth Date on Regular Member Page",
+        {tag: tags + "@positive"}, async ({regularMember}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMember.createdRegularMember();
+                await regularMember.inputFormMemberName({}, "TEST CREATE MEMBER AT 2");
+                await regularMember.selectFormGander("Male");
+                await regularMember.clickButtonDate();
+                await regularMember.selectMonthAndYear("Choose month and year");
+                await regularMember.datePickerYear("2025");
+                await regularMember.datePickerMonth("JAN");
+                await regularMember.datePickerDate("1");
+                await regularMember.removeBirthDate();
+            }, {regularMember}, testInfo);
+        });
+
 });
