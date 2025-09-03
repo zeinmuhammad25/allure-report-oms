@@ -197,4 +197,22 @@ test.describe.serial("Internal Member", () => {
             }, {regularMember}, testInfo);
         });
 
+    test("[TC_0205607] Validate Cancel Create member on Regular Member page",
+        {tag: tags + "@positive"}, async ({regularMember}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMember.createdRegularMember();
+                await regularMember.inputFormMemberName({}, "TEST CREATE MEMBER AT 2");
+                await regularMember.selectFormGander("Male");
+                await regularMember.clickButtonDate();
+                await regularMember.selectMonthAndYear("Choose month and year");
+                await regularMember.datePickerYear("2025");
+                await regularMember.datePickerMonth("JAN");
+                await regularMember.datePickerDate("1");
+                await regularMember.inputFormPhone({}, "12345678964");
+                await regularMember.inputFormEmail({}, "test@esb.co.id");
+                await regularMember.inputFormAddress({}, "TEST ESB AT MEMBER");
+                await regularMember.cancelCreateAndUpdateMember();
+            }, {regularMember}, testInfo);
+        });
+
 });
