@@ -4,6 +4,7 @@ import Element from "../../../base/objects/Element";
 import RegularMemberDepositLocator from "./regularMemberDeposit.locator";
 import RegularMemberLocator from "../regularMember/regularMember.locator";
 
+
 export default class RegularMemberDepositPage extends BaseOmsPage implements RegularMemberDepositScenario {
     pageUrl: () => string;
 
@@ -22,6 +23,11 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
         await this.fill(RegularMemberDepositLocator.filedSearchDeposit, valueMember);
         await this.expectVisible(RegularMemberDepositLocator.escapeKeyboardDepositMember);
         await this.click(RegularMemberDepositLocator.escapeKeyboardDepositMember);
+    }
+
+    async cancelSearchMemberDeposit(): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.clearDataSearchDeposit);
+        await this.click(RegularMemberDepositLocator.clearDataSearchDeposit);
     }
 
 }
