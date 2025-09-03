@@ -26,4 +26,8 @@ export default class SignPinLocator extends BaseLocator {
     static popUpCheckCustomerPayment: string = "//div[@class='tooltip-content']";
     static buttonPopUpNotNow: string = "//span[normalize-space()='Not Now']";
     static buttonPopUpCheckNow: string = "//span[normalize-space()='Check Now']";
+
+    //Pop Up Alert
+    static popUpAlert: string = "//app-custom-alert//div[@class='modal-body']";
+    static closePopUpAlert: string = "//app-custom-alert//mat-icon[normalize-space()='close']";
 }
