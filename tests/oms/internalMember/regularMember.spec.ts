@@ -1,9 +1,10 @@
 import {test} from "../injection";
 import {safeTest} from "../../../src/base/utils/safeTest";
+import {ToolsTabs} from "../../../src/modules/oms/tools/ToolsTabs";
 
 test.setTimeout(100000);
 test.describe.serial("Internal Member", () => {
-    const tags = "@smokeTest @oms @Internal Member";
+    const tags = "@smokeTest @oms @InternalMember";
 
     test.beforeEach(async ({terminalID, signPin, sideNavBar, tableList}) => {
         const testWithAuthentication = [
