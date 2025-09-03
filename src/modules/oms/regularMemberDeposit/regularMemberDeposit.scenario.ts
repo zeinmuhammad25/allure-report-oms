@@ -7,4 +7,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
     searchMemberDeposit(valueMember: string): Promise<void>;
 
     cancelSearchMemberDeposit(): Promise<void>;
+
+    clickFilterDate(): Promise<void>;
 }
