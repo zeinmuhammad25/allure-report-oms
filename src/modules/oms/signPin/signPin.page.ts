@@ -80,6 +80,11 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
             await this.click(SignPinLocator.buttonPopUpNotNow);
         }
         await this.wait(800);
+        const isPopUpWaringVisible = await this.isVisible(SignPinLocator.popUpAlert);
+        if (isPopUpWaringVisible) {
+            await this.click(SignPinLocator.closePopUpAlert);
+        }
+        await this.wait(800);
         const isStartingCashVisible = await this.isVisible(StartDayLocator.startingCash);
         if (isStartingCashVisible) {
             await this.fill(StartDayLocator.startingCash, inputCash);
@@ -107,6 +112,18 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
         const isPopUpCheckCustomerPaymentsVisible = await this.isVisible(SignPinLocator.popUpCheckCustomerPayment);
         if (isPopUpCheckCustomerPaymentsVisible) {
             await this.click(SignPinLocator.buttonPopUpNotNow);
+        }
+    }
+
+    async closePopUpAlert(): Promise<void> {
+        const isPopupVisible = await this.isVisible(SignPinLocator.popUpAlert);
+
+        if (isPopupVisible) {
+            await this.expectVisible(SignPinLocator.closePopUpAlert);
+            await this.click(SignPinLocator.closePopUpAlert);
+            console.log("✅ Popup alert ditemukan dan berhasil ditutup");
+        } else {
+            console.log("ℹ️ Tidak ada popup alert, lanjut step berikutnya");
         }
     }
 
