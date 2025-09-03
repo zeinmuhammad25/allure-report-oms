@@ -18,6 +18,7 @@ test.describe.serial("Internal Member", () => {
             await signPin.storeAuthState();
         }
         await tableList.goHere();
+        await signPin.closePopUpAlert();
         await sideNavBar.gotoPageRegularMember();
     });
 
@@ -144,12 +145,30 @@ test.describe.serial("Internal Member", () => {
             }, {regularMember}, testInfo);
         });
 
-    test("[TC_0205604] Validate Edit from Detail member on Regular Member List",
+    test("[TC_0205604] Create member on Regular Member page",
         {tag: tags + "@positive"}, async ({regularMember}, testInfo) => {
             await safeTest(async ({}) => {
-                await regularMember.createdRegularMember()
+                await regularMember.createdRegularMember();
                 await regularMember.inputFormMemberName({}, "TEST CREATE MEMBER AT 2");
                 await regularMember.selectFormGander("Male");
+                await regularMember.clickButtonDate();
+                await regularMember.selectMonthAndYear("Choose month and year");
+                await regularMember.datePickerYear("2025");
+                await regularMember.datePickerMonth("JAN");
+                await regularMember.datePickerDate("1");
+                await regularMember.inputFormPhone({}, "12345678964");
+                await regularMember.inputFormEmail({}, "test@esb.co.id");
+                await regularMember.inputFormAddress({}, "TEST ESB AT MEMBER");
+                await regularMember.saveRegularMember();
+            }, {regularMember}, testInfo);
+        });
+
+    test("[TC_0205605] Validate Mandatory field when Create member on Regular Member Page",
+        {tag: tags + "@positive"}, async ({regularMember}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMember.createdRegularMember();
+                await regularMember.inputFormMemberName({}, "");
+                await regularMember.selectFormGander("");
                 await regularMember.clickButtonDate();
                 await regularMember.selectMonthAndYear("Choose month and year");
                 await regularMember.datePickerYear("2025");
