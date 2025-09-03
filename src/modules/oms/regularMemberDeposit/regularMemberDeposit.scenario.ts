@@ -9,4 +9,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
     cancelSearchMemberDeposit(): Promise<void>;
 
     clickFilterDate(): Promise<void>;
+
+    selectMonthAndYear(side: "left" | "right", nav: "prev" | "next"): Promise<void>;
 }
