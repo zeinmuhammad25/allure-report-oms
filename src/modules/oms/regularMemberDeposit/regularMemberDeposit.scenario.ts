@@ -53,4 +53,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
 
     paymentMemberCategoryType(paymentCategoryType: MemberObject): Promise<void>;
 
+    paginationPayment(arrow: "left" | "right"): Promise<void>;
+
 }
