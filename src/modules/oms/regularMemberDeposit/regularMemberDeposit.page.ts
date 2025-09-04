@@ -76,4 +76,15 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
         return count;
     }
 
+    async applyRegularMemberNameList(): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.btnSearchMember);
+        await this.click(RegularMemberDepositLocator.btnSearchMember);
+    }
+
+    async applyRegularMemberNameQa(): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.btnScanMember);
+        await this.click(RegularMemberDepositLocator.btnScanMember);
+    }
+
+
 }
