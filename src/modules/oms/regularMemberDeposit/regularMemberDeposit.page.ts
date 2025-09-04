@@ -137,5 +137,9 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
         await this.expectVisible(RegularMemberDepositLocator.btnSelectMember(value));
     }
 
+    async selectRegularMemberNameList(value: string): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.btnSelectMember(value));
+        await this.click(RegularMemberDepositLocator.btnSelectMember(value));
+    }
 
 }
