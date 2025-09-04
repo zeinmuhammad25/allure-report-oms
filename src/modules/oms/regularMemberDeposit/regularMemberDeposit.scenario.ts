@@ -1,4 +1,5 @@
 import BaseScenario from "../../../base/base-scenario";
+import {MemberObject} from "./MemberObject";
 
 
 export default interface RegularMemberDepositScenario extends BaseScenario {
@@ -47,4 +48,9 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
     inputMemberIdQr(memberId: string): Promise<void>;
 
     applyMemberIdQr(): Promise<void>;
+
+    paymentMethodMember(paymentMethod: MemberObject): Promise<void>;
+
+    paymentMemberCategoryType(paymentCategoryType: MemberObject): Promise<void>;
+
 }
