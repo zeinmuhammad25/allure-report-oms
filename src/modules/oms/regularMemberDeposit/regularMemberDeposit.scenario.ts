@@ -33,4 +33,10 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
     searchMemberList(memberName: string): Promise<void>;
 
     clearSearchMemberList(): Promise<void>;
+
+    shortingAscDepositMemberList(headerName: "Name" | "Phone" | "Address"): Promise<void>;
+
+    shortingDescDepositMemberList(headerName: "Name" | "Phone" | "Address"): Promise<void>;
+
+    shortingAscAndDescDepositMemberList(headerName: "Name" | "Phone" | "Address", value: string): Promise<void>;
 }
