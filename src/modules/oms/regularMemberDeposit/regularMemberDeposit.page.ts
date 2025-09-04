@@ -2,7 +2,6 @@ import BaseOmsPage from "../base-oms-page";
 import RegularMemberDepositScenario from "./regularMemberDeposit.scenario";
 import Element from "../../../base/objects/Element";
 import RegularMemberDepositLocator from "./regularMemberDeposit.locator";
-import RegularMemberLocator from "../regularMember/regularMember.locator";
 
 export default class RegularMemberDepositPage extends BaseOmsPage implements RegularMemberDepositScenario {
     pageUrl: () => string;
