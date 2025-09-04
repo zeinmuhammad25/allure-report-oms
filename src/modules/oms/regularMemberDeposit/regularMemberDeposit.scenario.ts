@@ -31,4 +31,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
     shortingAscAndDescDeposit(headerName: "Deposit Number" | "Date" | "Regular Member Name" | "Regular Member Phone" | "Regular Member Email" | "Deposit Total" | "Sync Date" | "Reprint", value: string): Promise<void>;
 
     searchMemberList(memberName: string): Promise<void>;
+
+    clearSearchMemberList(): Promise<void>;
 }
