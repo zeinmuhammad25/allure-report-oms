@@ -19,4 +19,8 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
     depositPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
 
     dataValidation(value: string, opts?: { maxProbe?: number }): Promise<number>;
+
+    applyRegularMemberNameList(): Promise<void>;
+
+    applyRegularMemberNameQa(): Promise<void>;
 }
