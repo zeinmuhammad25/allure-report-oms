@@ -57,4 +57,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
 
     inputTotalDeposit(value: string): Promise<void>;
 
+    clearTotalDeposit(): Promise<void>;
+
 }
