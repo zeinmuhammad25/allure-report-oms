@@ -17,4 +17,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
     applyDateInFilterDate(): Promise<void>;
 
     depositPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
+
+    dataValidation(value: string, opts?: { maxProbe?: number }): Promise<number>;
 }
