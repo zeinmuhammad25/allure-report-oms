@@ -3,8 +3,6 @@ import RegularMemberDepositScenario from "./regularMemberDeposit.scenario";
 import Element from "../../../base/objects/Element";
 import RegularMemberDepositLocator from "./regularMemberDeposit.locator";
 import {MemberObject} from "./MemberObject";
-import {PaymentObject} from "../tableList/payment/PaymentObject";
-import PaymentPOSLocator from "../tableList/payment/paymentPOS.locator";
 
 export default class RegularMemberDepositPage extends BaseOmsPage implements RegularMemberDepositScenario {
     pageUrl: () => string;
@@ -195,6 +193,12 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
         for (let i = 0; i < click; i++) {
             await this.click(RegularMemberDepositLocator.gridSelectSDepositBord(depositBoard));
         }
+    }
+
+    async inputAdditionalInformation(notes: string): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.fieldAdditionalInfo);
+        await this.click(RegularMemberDepositLocator.fieldAdditionalInfo);
+        await this.fill(RegularMemberDepositLocator.fieldAdditionalInfo, notes);
     }
 
 }
