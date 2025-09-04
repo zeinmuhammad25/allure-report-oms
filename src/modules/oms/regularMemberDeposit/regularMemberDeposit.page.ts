@@ -63,9 +63,9 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
     async shortingAscAndDescDeposit(headerName: "Deposit Number" | "Date" | "Regular Member Name" | "Regular Member Phone" | "Regular Member Email" | "Deposit Total" | "Sync Date" | "Reprint", value: string): Promise<void> {
         await this.expectVisible(RegularMemberDepositLocator.headerNameAndShorting(headerName));
         await this.click(RegularMemberDepositLocator.headerNameAndShorting(headerName));
-        await this.expectVisible(RegularMemberDepositLocator.dataValidation(value));
+        await this.dataValidation(value);
         await this.click(RegularMemberDepositLocator.headerNameAndShorting(headerName));
-        await this.expectVisible(RegularMemberDepositLocator.dataValidation(value));
+        await this.dataValidation(value);
     }
 
     async depositPagination(type: "first" | "previous" | "next" | "last"): Promise<void> {
@@ -116,6 +116,25 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
     async clearSearchMemberList(): Promise<void> {
         await this.expectVisible(RegularMemberDepositLocator.clearSearchMember);
         await this.click(RegularMemberDepositLocator.clearSearchMember);
+    }
+
+    async shortingAscDepositMemberList(headerName: "Name" | "Phone" | "Address"): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.headerNameAndShortingMemberList(headerName));
+        await this.click(RegularMemberDepositLocator.headerNameAndShortingMemberList(headerName));
+    }
+
+    async shortingDescDepositMemberList(headerName: "Name" | "Phone" | "Address"): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.headerNameAndShortingMemberList(headerName));
+        await this.click(RegularMemberDepositLocator.headerNameAndShortingMemberList(headerName));
+        await this.click(RegularMemberDepositLocator.headerNameAndShortingMemberList(headerName));
+    }
+
+    async shortingAscAndDescDepositMemberList(headerName: "Name" | "Phone" | "Address", value: string): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.headerNameAndShortingMemberList(headerName));
+        await this.click(RegularMemberDepositLocator.headerNameAndShortingMemberList(headerName));
+        await this.expectVisible(RegularMemberDepositLocator.btnSelectMember(value));
+        await this.click(RegularMemberDepositLocator.headerNameAndShortingMemberList(headerName));
+        await this.expectVisible(RegularMemberDepositLocator.btnSelectMember(value));
     }
 
 
