@@ -55,4 +55,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
 
     paginationPayment(arrow: "left" | "right"): Promise<void>;
 
+    inputTotalDeposit(value: string): Promise<void>;
+
 }
