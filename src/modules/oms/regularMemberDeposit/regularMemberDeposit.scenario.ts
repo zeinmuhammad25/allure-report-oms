@@ -43,4 +43,8 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
     selectRegularMemberNameList(value: string): Promise<void>;
 
     memberListFormPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
+
+    inputMemberIdQr(memberId: string): Promise<void>;
+
+    applyMemberIdQr(): Promise<void>;
 }
