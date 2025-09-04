@@ -41,4 +41,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
     shortingAscAndDescDepositMemberList(headerName: "Name" | "Phone" | "Address", value: string): Promise<void>;
 
     selectRegularMemberNameList(value: string): Promise<void>;
+
+    memberListFormPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
 }
