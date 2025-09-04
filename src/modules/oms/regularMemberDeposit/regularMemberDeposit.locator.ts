@@ -23,6 +23,7 @@ export default class RegularMemberDepositLocator extends BaseLocator {
         `//app-deposit-list//button[contains(normalize-space(), '${headerName}')]`;
     static paginationButton = (type: "first" | "previous" | "next" | "last"): string =>
         `//app-deposit-list//button[contains(@class, 'mat-paginator-navigation-${type}')]`;
+    static dataValidation = (value: string): string => `//app-deposit-list//td[contains(normalize-space(), '${value}')]`;
 
     //form
     static btnSearchMember: string = "//app-deposit-form//i[@class='glyphicon glyphicon-option-horizontal']";
