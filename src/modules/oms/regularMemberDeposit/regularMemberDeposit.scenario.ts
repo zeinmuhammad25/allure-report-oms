@@ -59,4 +59,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
 
     clearTotalDeposit(): Promise<void>;
 
+    selectDepositBoard(depositBoard: MemberObject, click: number): Promise<void>;
+
 }
