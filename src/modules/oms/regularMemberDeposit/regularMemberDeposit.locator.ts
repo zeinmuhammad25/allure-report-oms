@@ -55,6 +55,6 @@ export default class RegularMemberDepositLocator extends BaseLocator {
         string => `//div[@class='d-flex']//span//button//span[contains(text(),'${deposit}')]`;
     static fieldAdditionalInfo: string = "//app-deposit-form//textarea[@class='form-control ng-valid ng-touched ng-dirty']";
     static cancelDepositForm: string = "//app-deposit-form//span[normalize-space()='Cancel']";
-    static saveMemberForm: string = "//app-deposit-form//span[normalize-space()='Save Deposit']";
+    static saveDepositForm: string = "//app-deposit-form//span[normalize-space()='Save Deposit']";
 
 }
