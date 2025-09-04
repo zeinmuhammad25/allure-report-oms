@@ -48,4 +48,9 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
         await this.click(RegularMemberDepositLocator.btnApplyDate);
     }
 
+    async depositPagination(type: "first" | "previous" | "next" | "last"): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.paginationButton(type));
+        await this.click(RegularMemberDepositLocator.paginationButton(type));
+    }
+
 }
