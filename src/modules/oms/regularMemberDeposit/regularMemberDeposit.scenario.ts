@@ -15,4 +15,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
     datePickerFilterDate(day: string): Promise<void>;
 
     applyDateInFilterDate(): Promise<void>;
+
+    depositPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
 }
