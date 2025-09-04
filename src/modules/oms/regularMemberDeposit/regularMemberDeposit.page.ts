@@ -147,4 +147,16 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
         await this.click(RegularMemberDepositLocator.paginationMemberList(type));
     }
 
+    async inputMemberIdQr(memberId: string): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.fieldInputMemberId);
+        await this.click(RegularMemberDepositLocator.fieldInputMemberId);
+        await this.fill(RegularMemberDepositLocator.fieldInputMemberId, memberId);
+    }
+
+    async applyMemberIdQr():Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.applyInputMemberId)
+        await this.click(RegularMemberDepositLocator.applyInputMemberId)
+        await this.waitForResponse("/member/view-online");
+    }
+
 }
