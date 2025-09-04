@@ -47,6 +47,8 @@ export default class RegularMemberDepositLocator extends BaseLocator {
         string => `//app-deposit-form//span[contains(text(),'${paymentType}')]`;
     static getLocatorPayment = (paymentType: MemberObject):
         string => `//button[@class='mat-raised-button']//span[normalize-space()='${paymentType}']`;
+    static paginationPayment = (arrow: "left" | "right"):
+        string => `//app-deposit-form//i[@class='glyphicon glyphicon-arrow-${arrow}']`;
     static fieldTotalDeposit: string = "//app-deposit-form//input[@placeholder='e.g. 200.000']";
     static clearTotalDeposit: string = "//app-deposit-form//i[@class='glyphicon glyphicon-repeat']";
     static gridSelectSDepositBord = (deposit: MemberObject):
