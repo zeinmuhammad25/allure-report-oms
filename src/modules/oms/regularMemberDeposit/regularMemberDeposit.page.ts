@@ -201,4 +201,14 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
         await this.fill(RegularMemberDepositLocator.fieldAdditionalInfo, notes);
     }
 
+    async saveDeposit(): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.saveDepositForm);
+        await this.click(RegularMemberDepositLocator.saveDepositForm);
+    }
+
+    async cancelDeposit(): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.cancelDepositForm);
+        await this.click(RegularMemberDepositLocator.cancelDepositForm);
+    }
+
 }
