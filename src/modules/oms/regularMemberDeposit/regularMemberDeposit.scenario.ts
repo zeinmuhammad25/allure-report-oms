@@ -61,4 +61,6 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
 
     selectDepositBoard(depositBoard: MemberObject, click: number): Promise<void>;
 
+    inputAdditionalInformation(notes: string): Promise<void>;
+
 }
