@@ -2,6 +2,7 @@ import BaseOmsPage from "../base-oms-page";
 import RegularMemberDepositScenario from "./regularMemberDeposit.scenario";
 import Element from "../../../base/objects/Element";
 import RegularMemberDepositLocator from "./regularMemberDeposit.locator";
+import RegularMemberLocator from "../regularMember/regularMember.locator";
 
 export default class RegularMemberDepositPage extends BaseOmsPage implements RegularMemberDepositScenario {
     pageUrl: () => string;
@@ -46,6 +47,25 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
     async applyDateInFilterDate(): Promise<void> {
         await this.expectVisible(RegularMemberDepositLocator.btnApplyDate);
         await this.click(RegularMemberDepositLocator.btnApplyDate);
+    }
+
+    async shortingAscDeposit(headerName: "Deposit Number" | "Date" | "Regular Member Name" | "Regular Member Phone" | "Regular Member Email" | "Deposit Total" | "Sync Date" | "Reprint"): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.headerNameAndShorting(headerName));
+        await this.click(RegularMemberDepositLocator.headerNameAndShorting(headerName));
+    }
+
+    async shortingDescDeposit(headerName: "Deposit Number" | "Date" | "Regular Member Name" | "Regular Member Phone" | "Regular Member Email" | "Deposit Total" | "Sync Date" | "Reprint"): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.headerNameAndShorting(headerName));
+        await this.click(RegularMemberDepositLocator.headerNameAndShorting(headerName));
+        await this.click(RegularMemberDepositLocator.headerNameAndShorting(headerName));
+    }
+
+    async shortingAscAndDescDeposit(headerName: "Deposit Number" | "Date" | "Regular Member Name" | "Regular Member Phone" | "Regular Member Email" | "Deposit Total" | "Sync Date" | "Reprint", value: string): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.headerNameAndShorting(headerName));
+        await this.click(RegularMemberDepositLocator.headerNameAndShorting(headerName));
+        await this.expectVisible(RegularMemberDepositLocator.dataValidation(value));
+        await this.click(RegularMemberDepositLocator.headerNameAndShorting(headerName));
+        await this.expectVisible(RegularMemberDepositLocator.dataValidation(value));
     }
 
     async depositPagination(type: "first" | "previous" | "next" | "last"): Promise<void> {
