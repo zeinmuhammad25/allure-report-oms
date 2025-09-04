@@ -175,5 +175,12 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
         await this.click(RegularMemberDepositLocator.paginationPayment(arrow));
     }
 
+    async inputTotalDeposit(value: string): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.fieldTotalDeposit);
+        await this.click(RegularMemberDepositLocator.fieldTotalDeposit);
+        await this.fill(RegularMemberDepositLocator.fieldTotalDeposit, value);
+        await this.click(RegularMemberDepositLocator.escapeKeyboardMemberList);
+    }
+
 
 }
