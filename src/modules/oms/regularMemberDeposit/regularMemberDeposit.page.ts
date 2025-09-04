@@ -182,5 +182,9 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
         await this.click(RegularMemberDepositLocator.escapeKeyboardMemberList);
     }
 
+    async clearTotalDeposit(): Promise<void> {
+        await this.expectVisible(RegularMemberDepositLocator.clearTotalDeposit);
+        await this.click(RegularMemberDepositLocator.clearTotalDeposit);
+    }
 
 }
