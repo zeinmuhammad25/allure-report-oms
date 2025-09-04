@@ -9,8 +9,6 @@ export default class BookOrderClassicComponent extends BaseOmsPage implements Bo
 
     shouldHave(): Element[] {
         return [
-            //Element.ofSelector(BookOrderLocator.bookTableTab),
-            //Element.ofSelector(BookOrderLocator.bookingListTab),
             Element.ofSelector(BookOrderLocator.paxButton(1)),
             Element.ofSelector(BookOrderLocator.salesModeButton("AT EXCLUSIVE"))
         ];
@@ -35,13 +33,6 @@ export default class BookOrderClassicComponent extends BaseOmsPage implements Bo
         await this.expectVisible(BookOrderLocator.bookApplyButton);
         await this.click(BookOrderLocator.bookApplyButton);
     }
-
-    /* Note : In POS Classic, Scan/Input is not available in the Quick Service pop-up
-    async scanQuickService(): Promise<void> {
-        await this.expectVisible(BookOrderLocator.bookScanAndApplyButton("Scan / Input"));
-        await this.click(BookOrderLocator.bookScanAndApplyButton("Scan / Input"));
-    }
-    */
 
     async setCustomerPhoneNumber(phoneNumber: string): Promise<void> {
         await this.expectVisible(BookOrderLocator.customerDataPhoneField);
