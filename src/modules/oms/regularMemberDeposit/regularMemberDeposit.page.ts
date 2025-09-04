@@ -109,7 +109,6 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
     async searchMemberList(): Promise<void> {
         await this.expectVisible(RegularMemberDepositLocator.fieldSearchMember);
         await this.click(RegularMemberDepositLocator.fieldSearchMember);
-        await this.click(RegularMemberDepositLocator.escapeKeyboardMemberList);
     }
 
 
