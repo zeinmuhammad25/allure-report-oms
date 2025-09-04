@@ -63,4 +63,8 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
 
     inputAdditionalInformation(notes: string): Promise<void>;
 
+    saveDeposit(): Promise<void>;
+
+    cancelDeposit(): Promise<void>;
+
 }
