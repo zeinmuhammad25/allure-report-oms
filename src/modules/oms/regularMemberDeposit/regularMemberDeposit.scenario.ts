@@ -22,7 +22,7 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
 
     applyRegularMemberNameList(): Promise<void>;
 
-    applyRegularMemberNameQa(): Promise<void>;
+    applyRegularMemberNameQr(): Promise<void>;
 
     shortingAscDeposit(headerName: "Deposit Number" | "Date" | "Regular Member Name" | "Regular Member Phone" | "Regular Member Email" | "Deposit Total" | "Sync Date" | "Reprint"): Promise<void>;
 
