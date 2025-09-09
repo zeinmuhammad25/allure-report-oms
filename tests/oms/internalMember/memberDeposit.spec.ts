@@ -19,6 +19,7 @@ test.describe.serial("Internal Member", () => {
             await signPin.storeAuthState();
             await tableList.goHere();
         }
+        await tableList.goHere();
         await signPin.closePopUpAlert();
         await sideNavBar.gotoPageRegularMemberDeposit();
     });
@@ -39,6 +40,15 @@ test.describe.serial("Internal Member", () => {
                 await regularMemberDeposit.inputTotalDeposit("100.000");
                 await regularMemberDeposit.inputAdditionalInformation("TOPUP100K");
                 await regularMemberDeposit.saveDeposit();
+            }, {regularMemberDeposit}, testInfo);
+        });
+
+    test("[TC_0205609] Validate Mandatory field when Add Deposit for member on Regular Member Deposit",
+        {tag: tags + "@positive"}, async ({regularMemberDeposit}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberDeposit.createdMemberDeposit();
+                await regularMemberDeposit.inputAdditionalInformation("TOPUP100K");
+                await regularMemberDeposit.saveAndExpectValidation({member: true, paymentMethod: true, amount: true});
             }, {regularMemberDeposit}, testInfo);
         });
 
