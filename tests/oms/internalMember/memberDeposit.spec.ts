@@ -99,13 +99,28 @@ test.describe.serial("Internal Member", () => {
     test("[TC_0205613] Validate Filter Deposit history on Menu Regular Member Deposit",
         {tag: tags + "@positive"}, async ({regularMemberDeposit}, testInfo) => {
             await safeTest(async ({}) => {
-                await regularMemberDeposit.clickFilterDate()
-                await regularMemberDeposit.selectMonthAndYear("left", "prev")
-                await regularMemberDeposit.selectMonthAndYear("left", "prev")
-                await regularMemberDeposit.datePickerFilterDate("1","left")
-                await regularMemberDeposit.datePickerFilterDate("30","left")
-                await regularMemberDeposit.applyDateInFilterDate()
-                await regularMemberDeposit.dataValidation("MT202507070001")
+                await regularMemberDeposit.clickFilterDate();
+                await regularMemberDeposit.selectMonthAndYear("left", "prev");
+                await regularMemberDeposit.selectMonthAndYear("left", "prev");
+                await regularMemberDeposit.datePickerFilterDate("1", "left");
+                await regularMemberDeposit.datePickerFilterDate("30", "left");
+                await regularMemberDeposit.applyDateInFilterDate();
+                await regularMemberDeposit.dataValidation("MT202507070001");
+            }, {regularMemberDeposit}, testInfo);
+        });
+
+    test("[TC_0205614] Validate Deposit History with Search field on Regular Member Deposit List with Valid keywords",
+        {tag: tags + "@positive"}, async ({regularMemberDeposit}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberDeposit.clickFilterDate();
+                await regularMemberDeposit.selectMonthAndYear("left", "prev");
+                await regularMemberDeposit.selectMonthAndYear("left", "prev");
+                await regularMemberDeposit.datePickerFilterDate("1", "left");
+                await regularMemberDeposit.selectMonthAndYear("right", "prev");
+                await regularMemberDeposit.datePickerFilterDate("30", "right");
+                await regularMemberDeposit.applyDateInFilterDate();
+                await regularMemberDeposit.searchMemberDeposit("reza.khan@esb.co.id");
+                await regularMemberDeposit.dataValidation("reza.khan@esb.co.id");
             }, {regularMemberDeposit}, testInfo);
         });
 
