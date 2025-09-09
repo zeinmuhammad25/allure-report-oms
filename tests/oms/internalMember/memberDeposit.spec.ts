@@ -185,4 +185,19 @@ test.describe.serial("Internal Member", () => {
             }, {regularMemberDeposit}, testInfo);
         });
 
+    test("[TC_0205619] Validate Regular Member Deposit List page can be navigated with previous page button",
+        {tag: tags + "@positive"}, async ({regularMemberDeposit}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberDeposit.clickFilterDate();
+                await regularMemberDeposit.selectMonthAndYear("left", "prev");
+                await regularMemberDeposit.selectMonthAndYear("left", "prev");
+                await regularMemberDeposit.datePickerFilterDate("1", "left");
+                await regularMemberDeposit.selectMonthAndYear("right", "prev");
+                await regularMemberDeposit.datePickerFilterDate("30", "right");
+                await regularMemberDeposit.applyDateInFilterDate();
+                await regularMemberDeposit.depositPagination("last");
+                await regularMemberDeposit.depositPagination("previous");
+                await regularMemberDeposit.dataValidation("reza.khan@esb.co.id");
+            }, {regularMemberDeposit}, testInfo);
+        });
 });
