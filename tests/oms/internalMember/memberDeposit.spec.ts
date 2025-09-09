@@ -80,5 +80,20 @@ test.describe.serial("Internal Member", () => {
             }, {regularMemberDeposit}, testInfo);
         });
 
+    test("[TC_0205612] Validate Cancel Deposit on Regular Member Deposit",
+        {tag: tags + "@positive"}, async ({regularMemberDeposit}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberDeposit.createdMemberDeposit();
+                await regularMemberDeposit.applyRegularMemberNameList();
+                await regularMemberDeposit.searchMemberList("REZA_CUSTOMER");
+                await regularMemberDeposit.selectRegularMemberNameList("REZA_CUSTOMER");
+                await regularMemberDeposit.paymentMemberCategoryType(MemberObject.CashCatMember);
+                await regularMemberDeposit.paymentMethodMember(MemberObject.CashPaymentMember);
+                await regularMemberDeposit.inputTotalDeposit("100.000");
+                await regularMemberDeposit.inputAdditionalInformation("TOPUP100K");
+                await regularMemberDeposit.cancelDeposit();
+            }, {regularMemberDeposit}, testInfo);
+        });
+
 
 });
