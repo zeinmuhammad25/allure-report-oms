@@ -96,4 +96,17 @@ test.describe.serial("Internal Member", () => {
         });
 
 
+    test("[TC_0205613] Validate Filter Deposit history on Menu Regular Member Deposit",
+        {tag: tags + "@positive"}, async ({regularMemberDeposit}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberDeposit.clickFilterDate()
+                await regularMemberDeposit.selectMonthAndYear("left", "prev")
+                await regularMemberDeposit.selectMonthAndYear("left", "prev")
+                await regularMemberDeposit.datePickerFilterDate("1","left")
+                await regularMemberDeposit.datePickerFilterDate("30","left")
+                await regularMemberDeposit.applyDateInFilterDate()
+                await regularMemberDeposit.dataValidation("MT202507070001")
+            }, {regularMemberDeposit}, testInfo);
+        });
+
 });
