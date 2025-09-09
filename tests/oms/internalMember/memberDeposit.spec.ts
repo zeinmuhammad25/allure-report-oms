@@ -170,4 +170,19 @@ test.describe.serial("Internal Member", () => {
             }, {regularMemberDeposit}, testInfo);
         });
 
+    test("[TC_0205618] Validate Regular Member Deposit List page can be navigated with last page button",
+        {tag: tags + "@positive"}, async ({regularMemberDeposit}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberDeposit.clickFilterDate();
+                await regularMemberDeposit.selectMonthAndYear("left", "prev");
+                await regularMemberDeposit.selectMonthAndYear("left", "prev");
+                await regularMemberDeposit.datePickerFilterDate("1", "left");
+                await regularMemberDeposit.selectMonthAndYear("right", "prev");
+                await regularMemberDeposit.datePickerFilterDate("30", "right");
+                await regularMemberDeposit.applyDateInFilterDate();
+                await regularMemberDeposit.depositPagination("last");
+                await regularMemberDeposit.dataValidation("AGNWTA69");
+            }, {regularMemberDeposit}, testInfo);
+        });
+
 });
