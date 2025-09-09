@@ -11,8 +11,26 @@ export default class RegularMemberDepositLocator extends BaseLocator {
     static btnDate: string = "//app-deposit-list//mat-icon[normalize-space()='date_range']";
     static selectDateMonthAndYearcalendarNav = (side: "left" | "right", nav: "prev" | "next"): string =>
         `//ngx-daterangepicker-material//div[contains(@class,'calendar')][contains(@class,'${side}')]//th[contains(@class,'${nav}')]`;
-    static calendarDate = (day: string): string =>
-        `(//ngx-daterangepicker-material//td[contains(@class,'available')]//span[normalize-space(text())='${day}'])[1]`;
+// Kalender kiri
+    static leftCalendarCell = (day: string | number): string => {
+        const d = String(Number(day)).trim(); // "01" -> "1"
+        return `//ngx-daterangepicker-material//div[contains(@class,'calendar')][contains(@class,'left')]//td[
+    .//span[normalize-space(.)="${d}"]
+    and not(contains(@class,'off'))
+    and not(contains(@class,'disabled'))
+  ]`;
+    };
+
+// Kalender kanan
+    static rightCalendarCell = (day: string | number): string => {
+        const d = String(Number(day)).trim();
+        return `//ngx-daterangepicker-material//div[contains(@class,'calendar')][contains(@class,'right')]//td[
+    .//span[normalize-space(.)="${d}"]
+    and not(contains(@class,'off'))
+    and not(contains(@class,'disabled'))
+  ]`;
+    };
+
     static btnApplyDate: string = "//ngx-daterangepicker-material//button[normalize-space()='Apply']";
 
     static filedSearchDeposit: string = "//app-deposit-list//input[@placeholder='Search deposit']";
@@ -24,7 +42,6 @@ export default class RegularMemberDepositLocator extends BaseLocator {
     static paginationButton = (type: "first" | "previous" | "next" | "last"): string =>
         `//app-deposit-list//button[contains(@class, 'mat-paginator-navigation-${type}')]`;
     static dataValidation = (value: string): string => `//app-deposit-list//td[contains(normalize-space(), '${value}')]`;
-
     //form
     static btnSearchMember: string = "//app-deposit-form//i[@class='glyphicon glyphicon-option-horizontal']";
     static escapeKeyboardForm: string = "//app-deposit-form//h5[normalize-space()='Deposit Form']";
@@ -53,8 +70,7 @@ export default class RegularMemberDepositLocator extends BaseLocator {
     static clearTotalDeposit: string = "//app-deposit-form//i[@class='glyphicon glyphicon-repeat']";
     static gridSelectSDepositBord = (deposit: MemberObject):
         string => `//div[@class='d-flex']//span//button//span[contains(text(),'${deposit}')]`;
-    static fieldAdditionalInfo: string = "//app-deposit-form//textarea[@class='form-control ng-valid ng-touched ng-dirty']";
+    static fieldAdditionalInfo: string = "//app-deposit-form//textarea[contains(@class,'form-control')]";
     static cancelDepositForm: string = "//app-deposit-form//span[normalize-space()='Cancel']";
     static saveDepositForm: string = "//app-deposit-form//span[normalize-space()='Save Deposit']";
-
 }

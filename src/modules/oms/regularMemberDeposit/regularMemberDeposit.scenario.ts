@@ -13,7 +13,7 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
 
     selectMonthAndYear(side: "left" | "right", nav: "prev" | "next"): Promise<void>;
 
-    datePickerFilterDate(day: string): Promise<void>;
+    datePickerFilterDate(day: string | number, side?: "left" | "right"): Promise<void>;
 
     applyDateInFilterDate(): Promise<void>;
 
@@ -63,8 +63,7 @@ export default interface RegularMemberDepositScenario extends BaseScenario {
 
     inputAdditionalInformation(notes: string): Promise<void>;
 
-    saveDeposit(): Promise<void>;
+    saveDeposit(opts?: { member?: boolean; paymentMethod?: boolean; amount?: boolean; }): Promise<void>;
 
     cancelDeposit(): Promise<void>;
-
 }

@@ -39,9 +39,13 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
         await this.click(RegularMemberDepositLocator.selectDateMonthAndYearcalendarNav(side, nav));
     }
 
-    async datePickerFilterDate(day: string): Promise<void> {
-        await this.expectVisible(RegularMemberDepositLocator.calendarDate(day));
-        await this.click(RegularMemberDepositLocator.calendarDate(day));
+    async datePickerFilterDate(day: string | number, side?: "left" | "right"): Promise<void> {
+        const cell = side === "left"
+            ? RegularMemberDepositLocator.leftCalendarCell(day)
+            : RegularMemberDepositLocator.rightCalendarCell(day);
+
+        await this.expectVisible(cell);
+        await this.click(cell);
     }
 
     async applyDateInFilterDate(): Promise<void> {
@@ -199,11 +203,18 @@ export default class RegularMemberDepositPage extends BaseOmsPage implements Reg
         await this.expectVisible(RegularMemberDepositLocator.fieldAdditionalInfo);
         await this.click(RegularMemberDepositLocator.fieldAdditionalInfo);
         await this.fill(RegularMemberDepositLocator.fieldAdditionalInfo, notes);
+        await this.click(RegularMemberDepositLocator.escapeKeyboardForm);
     }
 
-    async saveDeposit(): Promise<void> {
+    async saveDeposit(opts?: { member?: boolean; paymentMethod?: boolean; amount?: boolean; }): Promise<void> {
         await this.expectVisible(RegularMemberDepositLocator.saveDepositForm);
         await this.click(RegularMemberDepositLocator.saveDepositForm);
+        const expectTrue = async (flag: boolean | undefined, text: string) => {
+            if (flag) await this.expectTextVisible(text, true);
+        };
+        await expectTrue(opts?.member, "Please select a member");
+        await expectTrue(opts?.paymentMethod, "Please select the payment method");
+        await expectTrue(opts?.amount, "Please input the deposit amount");
     }
 
     async cancelDeposit(): Promise<void> {
