@@ -124,4 +124,20 @@ test.describe.serial("Internal Member", () => {
             }, {regularMemberDeposit}, testInfo);
         });
 
+
+    test("[TC_0205615] Validate Deposit History with Search field on Regular Member Deposit List with Invalid keywords",
+        {tag: tags + "@positive"}, async ({regularMemberDeposit}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberDeposit.clickFilterDate();
+                await regularMemberDeposit.selectMonthAndYear("left", "prev");
+                await regularMemberDeposit.selectMonthAndYear("left", "prev");
+                await regularMemberDeposit.datePickerFilterDate("1", "left");
+                await regularMemberDeposit.selectMonthAndYear("right", "prev");
+                await regularMemberDeposit.datePickerFilterDate("30", "right");
+                await regularMemberDeposit.applyDateInFilterDate();
+                await regularMemberDeposit.searchMemberDeposit("asdasdasdasdasdasdasdasdasd");
+                await regularMemberDeposit.dataValidation("rasdasdasdasdasdasdasdasdasd");
+            }, {regularMemberDeposit}, testInfo);
+        });
+
 });
