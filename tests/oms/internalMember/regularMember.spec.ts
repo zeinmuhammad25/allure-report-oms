@@ -1,6 +1,5 @@
 import {test} from "../injection";
 import {safeTest} from "../../../src/base/utils/safeTest";
-import {ToolsTabs} from "../../../src/modules/oms/tools/ToolsTabs";
 
 test.setTimeout(100000);
 test.describe.serial("Internal Member", () => {

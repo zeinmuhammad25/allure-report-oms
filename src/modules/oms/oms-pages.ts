@@ -25,6 +25,7 @@ import AddOrderV2Scenario from "./tableList/order/components/addOrderV2/addOrder
 import EditOrderV2Scenario from "./tableList/order/components/editOrderV2/editOrderV2.scenario";
 import PaymentV2Scenario from "./tableList/paymentV2/paymentV2.scenario";
 import RegularMemberScenario from "./regularMember/regularMember.scenario";
+import RegularMemberDepositScenario from "./regularMemberDeposit/regularMemberDeposit.scenario";
 
 export type OmsPages = {
     synchronizeData: SynchronizeDataScenario
@@ -54,4 +55,5 @@ export type OmsPages = {
     tools: ToolsScenario
     troubleshoot: TroubleshootScenario
     regularMember: RegularMemberScenario
+    regularMemberDeposit: RegularMemberDepositScenario
 };
