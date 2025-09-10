@@ -54,5 +54,7 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
 
     paginationPayment(arrow: "left" | "right"): Promise<void>;
 
+    inputTotalWithdrawal(value: string): Promise<void>
+
     clearTotalWithdrawal(): Promise<void>;
 }
