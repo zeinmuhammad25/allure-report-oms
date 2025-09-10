@@ -187,4 +187,9 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.escapeKeyboardForm);
     }
 
+    async clearTotalWithdrawal(): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.clearTotalWithdrawal);
+        await this.click(RegularMemberWithdrawalLocator.clearTotalWithdrawal);
+    }
+
 }
