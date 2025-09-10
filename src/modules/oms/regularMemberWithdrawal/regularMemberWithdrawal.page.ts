@@ -15,6 +15,29 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.btnAddWithdrawalMember);
     }
 
+    async dataFilterValidation(value: string, opts?: { maxProbe?: number }): Promise<number> {
+        const baseLocator = RegularMemberWithdrawalLocator.dataValidation(value);
+        const maxProbe = opts?.maxProbe ?? 200; // batas aman
+        let count = 0;
+        for (let i = 1; i <= maxProbe; i++) {
+            const indexed = `(${baseLocator})[${i}]`;
+            try {
+                // Jangan kirim argumen kedua (angka). Banyak base util expectVisible cuma terima (locator: string) atau (locator: string, optional?: boolean)
+                await this.expectVisible(indexed);
+                count++;
+            } catch {
+                // ö Begitu gagal visible, anggap elemen habis.
+                break;
+            }
+        }
+        if (count === 0) {
+            console.warn(`⚠️ Data "${value}" tidak ditemukan di deposit list.`);
+            return 0;
+        }
+        console.log(`Data "${value}" ditemukan sebanyak: ${count} row(s).`);
+        return count;
+    }
+
     async searchMemberWithdrawal(valueMember: string): Promise<void> {
         await this.expectVisible(RegularMemberWithdrawalLocator.filedSearchWithdrawal);
         await this.click(RegularMemberWithdrawalLocator.filedSearchWithdrawal);
