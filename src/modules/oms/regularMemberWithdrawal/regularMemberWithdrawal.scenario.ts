@@ -14,4 +14,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     datePickerFilterDate(day: string | number, side?: "left" | "right"): Promise<void>;
 
     applyFilterDate(): Promise<void>;
+
+    shortingAscWithdrawal(headerName: "Withdrawal Number" | "Date" | "Regular Member Code" | "Regular Member Name" | "Withdrawal Total" | "Sync Date" | "Reprint"): Promise<void>;
 }
