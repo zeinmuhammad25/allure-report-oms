@@ -28,4 +28,9 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.clearDataSearchWithdrawal);
     }
 
+    async clickFilterDate(): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.btnFilterDate);
+        await this.click(RegularMemberWithdrawalLocator.btnFilterDate);
+    }
+
 }
