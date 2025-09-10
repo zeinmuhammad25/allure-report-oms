@@ -192,4 +192,12 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.clearTotalWithdrawal);
     }
 
+    async selectWithdrawalBoard(depositBoard: MemberObject, click: number): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.fieldTotalWithdrawal);
+        await this.click(RegularMemberWithdrawalLocator.escapeKeyboardForm);
+        for (let i = 0; i < click; i++) {
+            await this.click(RegularMemberWithdrawalLocator.gridSelectWithdrawalBoard(depositBoard));
+        }
+    }
+
 }
