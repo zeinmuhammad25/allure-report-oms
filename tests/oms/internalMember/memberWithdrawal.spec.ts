@@ -53,4 +53,19 @@ test.describe.serial("Internal Member", () => {
             }, {regularMemberWithdrawal}, testInfo);
         });
 
+    test("[TC_0205623] Validate Button Clear for Total Withdrawal with manual input on Regular Member Withdrawal",
+        {tag: tags + "@positive"}, async ({regularMemberWithdrawal}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberWithdrawal.createMemberWithdrawal();
+                await regularMemberWithdrawal.addRegularMemberNameList();
+                await regularMemberWithdrawal.searchMemberList("REZA_CUSTOMER");
+                await regularMemberWithdrawal.selectRegularMemberNameList("REZA_CUSTOMER");
+                await regularMemberWithdrawal.paymentMemberCategoryType(MemberObject.CardCatMember);
+                await regularMemberWithdrawal.paymentMethodMember(MemberObject.DebitBcaMember);
+                await regularMemberWithdrawal.clearTotalWithdrawal();
+                await regularMemberWithdrawal.inputTotalWithdrawal("100.000");
+                await regularMemberWithdrawal.clearTotalWithdrawal();
+            }, {regularMemberWithdrawal}, testInfo);
+        });
+
 });
