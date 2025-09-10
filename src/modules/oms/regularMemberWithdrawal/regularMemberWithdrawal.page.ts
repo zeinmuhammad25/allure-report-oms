@@ -94,4 +94,9 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.dataFilterValidation(value);
     }
 
+    async withdrawalPagination(type: "first" | "previous" | "next" | "last"): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.paginationButtonWithdrawalList(type));
+        await this.click(RegularMemberWithdrawalLocator.paginationButtonWithdrawalList(type));
+    }
+
 }
