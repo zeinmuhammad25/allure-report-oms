@@ -49,4 +49,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     applyMemberIdQR(): Promise<void>;
 
     paymentMemberCategoryType(paymentCategoryType: MemberObject): Promise<void>;
+
+    paymentMethodMember(paymentMethod: MemberObject): Promise<void>;
 }
