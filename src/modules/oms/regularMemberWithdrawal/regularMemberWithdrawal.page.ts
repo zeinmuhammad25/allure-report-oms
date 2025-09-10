@@ -38,4 +38,13 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.selectDateMonthAndYearCalendarNav(side, nav));
     }
 
+    async datePickerFilterDate(day: string | number, side?: "left" | "right"): Promise<void> {
+        const cell = side === "left"
+            ? RegularMemberWithdrawalLocator.leftCalendarCell(day)
+            : RegularMemberWithdrawalLocator.rightCalendarCell(day);
+
+        await this.expectVisible(cell);
+        await this.click(cell);
+    }
+
 }
