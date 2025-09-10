@@ -61,7 +61,7 @@ export default class RegularMemberWithdrawalLocator extends BaseLocator {
         string => `//app-withdrawal-form//i[@class='glyphicon glyphicon-arrow-${arrow}']`;
     static fieldTotalWithdrawal: string = "//app-withdrawal-form//input[@placeholder='e.g. 200.000']";
     static clearTotalWithdrawal: string = "//app-withdrawal-form//i[@class='glyphicon glyphicon-repeat']";
-    static gridSelectSWithdrawalBord = (withdrawal: MemberObject):
+    static gridSelectWithdrawalBoard = (withdrawal: MemberObject):
         string => `//div[@class='d-flex']//span//button//span[contains(text(),'${withdrawal}')]`;
     static fieldAdditionalInfoWithdrawal: string = "//app-withdrawal-form//textarea[contains(@class,'form-control')]";
     static cancelWithdrawalForm: string = "//app-withdrawal-form//span[normalize-space()='Cancel']";
