@@ -7,6 +7,8 @@ export default class RegularMemberWithdrawalLocator extends BaseLocator {
     static escapeKeyboardWithdrawalMember: string = "//div//h5[normalize-space()='Withdrawal List']";
     //datepicker
     static btnFilterDate: string = "//app-withdrawal-list//mat-icon[normalize-space()='date_range']";
+    static selectDateMonthAndYearCalendarNav = (side: "left" | "right", nav: "prev" | "next"): string =>
+        `//ngx-daterangepicker-material//div[contains(@class,'calendar')][contains(@class,'${side}')]//th[contains(@class,'${nav}')]`;
     // Kalender kiri
     static leftCalendarCell = (day: string | number): string => {
         const d = String(Number(day)).trim(); // "01" -> "1"
