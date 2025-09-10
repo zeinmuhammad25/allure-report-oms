@@ -133,5 +133,12 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.headerNameAndShortingMemberList(headerName));
     }
 
+    async shortingAscAndDescDepositMemberList(headerName: "Name" | "Phone" | "Address", value: string): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.headerNameAndShortingMemberList(headerName));
+        await this.click(RegularMemberWithdrawalLocator.headerNameAndShortingMemberList(headerName));
+        await this.expectVisible(RegularMemberWithdrawalLocator.btnSelectMember(value));
+        await this.click(RegularMemberWithdrawalLocator.headerNameAndShortingMemberList(headerName));
+        await this.expectVisible(RegularMemberWithdrawalLocator.btnSelectMember(value));
+    }
 
 }
