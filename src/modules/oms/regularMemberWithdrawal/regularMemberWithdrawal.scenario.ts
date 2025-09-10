@@ -28,4 +28,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     addRegularMemberNameList(): Promise<void>;
 
     addRegularMemberNameQR(): Promise<void>;
+
+    searchMemberList(memberName: string): Promise<void>;
 }
