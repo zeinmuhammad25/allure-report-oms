@@ -1,4 +1,5 @@
 import BaseScenario from "../../../base/base-scenario";
+import {MemberObject} from "../regularMemberDeposit/MemberObject";
 
 export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     createMemberWithdrawal(): Promise<void>;
@@ -46,4 +47,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     inputMemberIdQR(memberId: string): Promise<void>;
 
     applyMemberIdQR(): Promise<void>;
+
+    paymentMemberCategoryType(paymentCategoryType: MemberObject): Promise<void>;
 }
