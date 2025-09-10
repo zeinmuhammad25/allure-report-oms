@@ -10,7 +10,7 @@ export enum MemberObject {
     // Payment Method
     CashPaymentMember = "CASH PAYMENT",
     CashMember = "CASH",
-    DebitBcaMember = "BCA Debit",
+    DebitBcaMember = "BCA DEBIT",
 
     // Member Board
     GridMemberBoard100000 = "100.000",
