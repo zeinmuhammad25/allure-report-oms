@@ -5,5 +5,5 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
 
     searchMemberWithdrawal(valueMember: string): Promise<void>;
 
-    cancelMemberWithdrawal(): Promise<void>;
+    cancelSearchMemberWithdrawal(): Promise<void>;
 }
