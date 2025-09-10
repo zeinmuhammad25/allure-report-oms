@@ -122,5 +122,17 @@ test.describe.serial("Internal Member", () => {
             }, {regularMemberWithdrawal}, testInfo);
         });
 
+    test("[TC_0205628] Validate Withdrawal History with Search field on Regular Member Withdrawal List with Invalid keywords",
+        {tag: tags + "@negative"}, async ({regularMemberWithdrawal}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberWithdrawal.clickFilterDate();
+                await regularMemberWithdrawal.datePickerFilterDate("1", "left");
+                await regularMemberWithdrawal.datePickerFilterDate("30", "left");
+                await regularMemberWithdrawal.applyFilterDate();
+                await regularMemberWithdrawal.searchMemberWithdrawal("dfghgfdsfg");
+                await regularMemberWithdrawal.dataFilterValidation("dfghgfdsfg");
+            }, {regularMemberWithdrawal}, testInfo);
+        });
+
 
 });
