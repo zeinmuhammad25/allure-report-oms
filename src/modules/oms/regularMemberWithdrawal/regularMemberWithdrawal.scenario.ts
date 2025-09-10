@@ -61,4 +61,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     selectWithdrawalBoard(depositBoard: MemberObject, click: number): Promise<void>;
 
     inputAdditionalInformation(notes: string): Promise<void>;
+
+    saveWithdrawal(opts?: { member?: boolean; paymentMethod?: boolean; amount?: boolean; }): Promise<void>;
 }
