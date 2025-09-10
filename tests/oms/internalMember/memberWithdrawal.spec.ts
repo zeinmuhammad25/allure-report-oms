@@ -26,6 +26,7 @@ test.describe.serial("Internal Member", () => {
     test.afterEach(async ({}) => {
 
     });
+
     test("[TC_0205621] Add Withdrawal to member on Regular Member Withdrawal",
         {tag: tags + "@positive"}, async ({regularMemberWithdrawal}, testInfo) => {
             await safeTest(async ({}) => {
@@ -39,6 +40,16 @@ test.describe.serial("Internal Member", () => {
                 await regularMemberWithdrawal.inputTotalWithdrawal("50.000");
                 await regularMemberWithdrawal.inputAdditionalInformation("WITHDRAWAL 50K");
                 await regularMemberWithdrawal.saveWithdrawal();
+            }, {regularMemberWithdrawal}, testInfo);
+        });
+
+    test("[TC_0205622] Validate Mandatory field when Add Withdrawal to member on Regular Member Withdrawal",
+        {tag: tags + "@positive"}, async ({regularMemberWithdrawal}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberWithdrawal.createMemberWithdrawal();
+                await regularMemberWithdrawal.clearTotalWithdrawal();
+                await regularMemberWithdrawal.inputAdditionalInformation("WITHDRAWAL 50K");
+                await regularMemberWithdrawal.saveWithdrawal({member: true, paymentMethod: true, amount: true});
             }, {regularMemberWithdrawal}, testInfo);
         });
 
