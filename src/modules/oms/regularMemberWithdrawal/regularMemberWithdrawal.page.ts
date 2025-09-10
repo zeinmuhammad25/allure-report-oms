@@ -104,4 +104,10 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.btnSearchMemberName);
     }
 
+    async addRegularMemberNameQR(): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.btnScanMemberName);
+        await this.click(RegularMemberWithdrawalLocator.btnScanMemberName);
+    }
+
+
 }
