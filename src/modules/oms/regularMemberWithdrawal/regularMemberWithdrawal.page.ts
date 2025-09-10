@@ -3,6 +3,7 @@ import RegularMemberWithdrawalScenario from "./regularMemberWithdrawal.scenario"
 import Element from "../../../base/objects/Element";
 import RegularMemberWithdrawalLocator from "./regularMemberWithdrawal.locator";
 import {MemberObject} from "../regularMemberDeposit/MemberObject";
+import RegularMemberDepositLocator from "../regularMemberDeposit/regularMemberDeposit.locator";
 
 export default class RegularMemberWithdrawalPage extends BaseOmsPage implements RegularMemberWithdrawalScenario {
     pageUrl: () => string;
@@ -167,6 +168,11 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
     async paymentMemberCategoryType(paymentCategoryType: MemberObject): Promise<void> {
         await this.expectVisible(RegularMemberWithdrawalLocator.getLocatorPaymentCategory(paymentCategoryType));
         await this.click(RegularMemberWithdrawalLocator.getLocatorPaymentCategory(paymentCategoryType));
+    }
+
+    async paymentMethodMember(paymentMethod: MemberObject): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.getLocatorPayment(paymentMethod));
+        await this.click(RegularMemberWithdrawalLocator.getLocatorPayment(paymentMethod));
     }
 
 }
