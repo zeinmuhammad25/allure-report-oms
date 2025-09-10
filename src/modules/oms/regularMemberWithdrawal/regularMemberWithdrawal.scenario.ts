@@ -12,4 +12,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     selectMonthAndYear(side: "left" | "right", nav: "prev" | "next"): Promise<void>;
 
     datePickerFilterDate(day: string | number, side?: "left" | "right"): Promise<void>;
+
+    applyFilterDate(): Promise<void>;
 }
