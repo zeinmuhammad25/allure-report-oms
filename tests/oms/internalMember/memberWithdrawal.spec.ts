@@ -99,4 +99,16 @@ test.describe.serial("Internal Member", () => {
             }, {regularMemberWithdrawal}, testInfo);
         });
 
+    test("[TC_0205626] Validate Filter Withdrawal history on Menu Regular Member Withdrawal",
+        {tag: tags + "@positive"}, async ({regularMemberWithdrawal}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberWithdrawal.clickFilterDate();
+                await regularMemberWithdrawal.datePickerFilterDate("1", "left");
+                await regularMemberWithdrawal.datePickerFilterDate("30", "left");
+                await regularMemberWithdrawal.applyFilterDate();
+                await regularMemberWithdrawal.dataFilterValidation("DWaacs175749564565");
+            }, {regularMemberWithdrawal}, testInfo);
+        });
+
+
 });
