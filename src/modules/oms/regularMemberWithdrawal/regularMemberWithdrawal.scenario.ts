@@ -24,4 +24,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     shortingAscAndDescDeposit(headerName: "Withdrawal Number" | "Date" | "Regular Member Code" | "Regular Member Name" | "Withdrawal Total" | "Sync Date" | "Reprint", value: string): Promise<void>;
 
     withdrawalPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
+
+    addRegularMemberNameList(): Promise<void>;
 }
