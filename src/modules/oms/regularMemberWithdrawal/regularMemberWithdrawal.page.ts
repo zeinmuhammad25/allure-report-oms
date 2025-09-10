@@ -3,7 +3,6 @@ import RegularMemberWithdrawalScenario from "./regularMemberWithdrawal.scenario"
 import Element from "../../../base/objects/Element";
 import RegularMemberWithdrawalLocator from "./regularMemberWithdrawal.locator";
 import {MemberObject} from "../regularMemberDeposit/MemberObject";
-import RegularMemberDepositLocator from "../regularMemberDeposit/regularMemberDeposit.locator";
 
 export default class RegularMemberWithdrawalPage extends BaseOmsPage implements RegularMemberWithdrawalScenario {
     pageUrl: () => string;
@@ -198,6 +197,13 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         for (let i = 0; i < click; i++) {
             await this.click(RegularMemberWithdrawalLocator.gridSelectWithdrawalBoard(depositBoard));
         }
+    }
+
+    async inputAdditionalInformation(notes: string): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.fieldAdditionalInfoWithdrawal);
+        await this.click(RegularMemberWithdrawalLocator.fieldAdditionalInfoWithdrawal);
+        await this.fill(RegularMemberWithdrawalLocator.fieldAdditionalInfoWithdrawal, notes);
+        await this.click(RegularMemberWithdrawalLocator.escapeKeyboardForm);
     }
 
 }
