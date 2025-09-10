@@ -60,6 +60,7 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
     async shortingDescWithdrawal(headerName: "Withdrawal Number" | "Date" | "Regular Member Code" | "Regular Member Name" | "Withdrawal Total" | "Sync Date" | "Reprint"): Promise<void> {
         await this.expectVisible(RegularMemberWithdrawalLocator.headerNameAndShortingWithdrawal(headerName));
         await this.click(RegularMemberWithdrawalLocator.headerNameAndShortingWithdrawal(headerName));
+        await this.click(RegularMemberWithdrawalLocator.headerNameAndShortingWithdrawal(headerName));
     }
 
 }
