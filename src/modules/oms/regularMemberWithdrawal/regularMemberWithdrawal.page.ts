@@ -2,7 +2,6 @@ import BaseOmsPage from "../base-oms-page";
 import RegularMemberWithdrawalScenario from "./regularMemberWithdrawal.scenario";
 import Element from "../../../base/objects/Element";
 import RegularMemberWithdrawalLocator from "./regularMemberWithdrawal.locator";
-import RegularMemberDepositLocator from "../regularMemberDeposit/regularMemberDeposit.locator";
 
 export default class RegularMemberWithdrawalPage extends BaseOmsPage implements RegularMemberWithdrawalScenario {
     pageUrl: () => string;
@@ -112,11 +111,6 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.escapeKeyboardMemberList);
     }
 
-    async addRegularMemberNameQR(): Promise<void> {
-        await this.expectVisible(RegularMemberWithdrawalLocator.btnScanMemberName);
-        await this.click(RegularMemberWithdrawalLocator.btnScanMemberName);
-    }
-
     async clearSearchMemberList(): Promise<void> {
         await this.expectVisible(RegularMemberWithdrawalLocator.clearSearchMember);
         await this.click(RegularMemberWithdrawalLocator.clearSearchMember);
@@ -140,5 +134,17 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.headerNameAndShortingMemberList(headerName));
         await this.expectVisible(RegularMemberWithdrawalLocator.btnSelectMember(value));
     }
+
+    async selectRegularMemberNameList(value: string): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.btnSelectMember(value));
+        await this.click(RegularMemberWithdrawalLocator.btnSelectMember(value));
+        await this.waitForResponse("/member/view-online");
+    }
+
+    async addRegularMemberNameQR(): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.btnScanMemberName);
+        await this.click(RegularMemberWithdrawalLocator.btnScanMemberName);
+    }
+
 
 }
