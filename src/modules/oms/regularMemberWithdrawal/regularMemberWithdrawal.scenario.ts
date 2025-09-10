@@ -59,4 +59,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     clearTotalWithdrawal(): Promise<void>;
 
     selectWithdrawalBoard(depositBoard: MemberObject, click: number): Promise<void>;
+
+    inputAdditionalInformation(notes: string): Promise<void>;
 }
