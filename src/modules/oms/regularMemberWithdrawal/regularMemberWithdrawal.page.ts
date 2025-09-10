@@ -99,4 +99,9 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.paginationButtonWithdrawalList(type));
     }
 
+    async addRegularMemberNameList(): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.btnSearchMemberName);
+        await this.click(RegularMemberWithdrawalLocator.btnSearchMemberName);
+    }
+
 }
