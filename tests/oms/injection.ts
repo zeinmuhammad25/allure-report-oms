@@ -28,6 +28,7 @@ import EditOrderV2Components from "../../src/modules/oms/tableList/order/compone
 import PaymentV2Page from "../../src/modules/oms/tableList/paymentV2/paymentV2.page";
 import RegularMemberPage from "../../src/modules/oms/regularMember/regularMember.page";
 import RegularMemberDepositPage from "../../src/modules/oms/regularMemberDeposit/regularMemberDeposit.page";
+import RegularMemberWithdrawalPage from "../../src/modules/oms/regularMemberWithdrawal/regularMemberWithdrawal.page";
 
 export const test = base.extend<OmsPages>({
     synchronizeData: async ({page}, use) => await use(new SynchronizeDataPage(page)),
@@ -57,5 +58,6 @@ export const test = base.extend<OmsPages>({
     tools: async ({page}, use) => await use(new ToolsPage(page)),
     troubleshoot: async ({page}, use) => await use(new TroubleshootComponent(page)),
     regularMember: async ({page}, use) => await use(new RegularMemberPage(page)),
-    regularMemberDeposit: async ({page}, use) => await use(new RegularMemberDepositPage(page))
+    regularMemberDeposit: async ({page}, use) => await use(new RegularMemberDepositPage(page)),
+    regularMemberWithdrawal: async ({page}, use) => await use(new RegularMemberWithdrawalPage(page))
 });
