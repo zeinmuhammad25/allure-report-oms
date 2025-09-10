@@ -3,6 +3,7 @@ import RegularMemberWithdrawalScenario from "./regularMemberWithdrawal.scenario"
 import Element from "../../../base/objects/Element";
 import RegularMemberWithdrawalLocator from "./regularMemberWithdrawal.locator";
 import {MemberObject} from "../regularMemberDeposit/MemberObject";
+import RegularMemberDepositLocator from "../regularMemberDeposit/regularMemberDeposit.locator";
 
 export default class RegularMemberWithdrawalPage extends BaseOmsPage implements RegularMemberWithdrawalScenario {
     pageUrl: () => string;
@@ -177,6 +178,13 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
     async paginationPayment(arrow: "left" | "right"): Promise<void> {
         await this.expectVisible(RegularMemberWithdrawalLocator.paginationPayment(arrow));
         await this.click(RegularMemberWithdrawalLocator.paginationPayment(arrow));
+    }
+
+    async inputTotalWithdrawal(value: string): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.fieldTotalWithdrawal);
+        await this.click(RegularMemberWithdrawalLocator.fieldTotalWithdrawal);
+        await this.fill(RegularMemberWithdrawalLocator.fieldTotalWithdrawal, value);
+        await this.click(RegularMemberWithdrawalLocator.escapeKeyboardForm);
     }
 
 }
