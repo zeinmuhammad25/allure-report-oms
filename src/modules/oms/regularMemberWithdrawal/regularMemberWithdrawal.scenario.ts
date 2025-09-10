@@ -32,4 +32,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     searchMemberList(memberName: string): Promise<void>;
 
     clearSearchMemberList(): Promise<void>;
+
+    shortingAscDepositMemberList(headerName: "Name" | "Phone" | "Address"): Promise<void>;
 }
