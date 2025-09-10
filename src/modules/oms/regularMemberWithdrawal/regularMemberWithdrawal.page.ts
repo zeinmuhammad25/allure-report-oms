@@ -2,6 +2,7 @@ import BaseOmsPage from "../base-oms-page";
 import RegularMemberWithdrawalScenario from "./regularMemberWithdrawal.scenario";
 import Element from "../../../base/objects/Element";
 import RegularMemberWithdrawalLocator from "./regularMemberWithdrawal.locator";
+import RegularMemberDepositLocator from "../regularMemberDeposit/regularMemberDeposit.locator";
 
 export default class RegularMemberWithdrawalPage extends BaseOmsPage implements RegularMemberWithdrawalScenario {
     pageUrl: () => string;
@@ -123,6 +124,12 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
 
     async shortingAscDepositMemberList(headerName: "Name" | "Phone" | "Address"): Promise<void> {
         await this.expectVisible(RegularMemberWithdrawalLocator.headerNameAndShortingMemberList(headerName));
+        await this.click(RegularMemberWithdrawalLocator.headerNameAndShortingMemberList(headerName));
+    }
+
+    async shortingDescDepositMemberList(headerName: "Name" | "Phone" | "Address"): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.headerNameAndShortingMemberList(headerName));
+        await this.click(RegularMemberWithdrawalLocator.headerNameAndShortingMemberList(headerName));
         await this.click(RegularMemberWithdrawalLocator.headerNameAndShortingMemberList(headerName));
     }
 
