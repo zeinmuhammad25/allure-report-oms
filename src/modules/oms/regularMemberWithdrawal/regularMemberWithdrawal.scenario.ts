@@ -8,4 +8,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     cancelSearchMemberWithdrawal(): Promise<void>;
 
     clickFilterDate(): Promise<void>;
+
+    selectMonthAndYear(side: "left" | "right", nav: "prev" | "next"): Promise<void>;
 }
