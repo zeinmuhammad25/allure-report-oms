@@ -3,7 +3,6 @@ import RegularMemberWithdrawalScenario from "./regularMemberWithdrawal.scenario"
 import Element from "../../../base/objects/Element";
 import RegularMemberWithdrawalLocator from "./regularMemberWithdrawal.locator";
 import {MemberObject} from "../regularMemberDeposit/MemberObject";
-import RegularMemberDepositLocator from "../regularMemberDeposit/regularMemberDeposit.locator";
 
 export default class RegularMemberWithdrawalPage extends BaseOmsPage implements RegularMemberWithdrawalScenario {
     pageUrl: () => string;
@@ -216,6 +215,11 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await expectTrue(opts?.member, "Please select a member");
         await expectTrue(opts?.paymentMethod, "Please select the payment method");
         await expectTrue(opts?.amount, "Please input the deposit amount");
+    }
+
+    async cancelWithdrawal(): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.cancelWithdrawalForm);
+        await this.click(RegularMemberWithdrawalLocator.cancelWithdrawalForm);
     }
 
 }
