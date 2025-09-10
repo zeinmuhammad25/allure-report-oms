@@ -2,6 +2,7 @@ import BaseOmsPage from "../base-oms-page";
 import RegularMemberWithdrawalScenario from "./regularMemberWithdrawal.scenario";
 import Element from "../../../base/objects/Element";
 import RegularMemberWithdrawalLocator from "./regularMemberWithdrawal.locator";
+import {MemberObject} from "../regularMemberDeposit/MemberObject";
 
 export default class RegularMemberWithdrawalPage extends BaseOmsPage implements RegularMemberWithdrawalScenario {
     pageUrl: () => string;
@@ -161,6 +162,11 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.expectVisible(RegularMemberWithdrawalLocator.applyInputMemberId);
         await this.click(RegularMemberWithdrawalLocator.applyInputMemberId);
         await this.waitForResponse("/member/view-online");
+    }
+
+    async paymentMemberCategoryType(paymentCategoryType: MemberObject): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.getLocatorPaymentCategory(paymentCategoryType));
+        await this.click(RegularMemberWithdrawalLocator.getLocatorPaymentCategory(paymentCategoryType));
     }
 
 }
