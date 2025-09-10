@@ -63,4 +63,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     inputAdditionalInformation(notes: string): Promise<void>;
 
     saveWithdrawal(opts?: { member?: boolean; paymentMethod?: boolean; amount?: boolean; }): Promise<void>;
+
+    cancelWithdrawal(): Promise<void>;
 }
