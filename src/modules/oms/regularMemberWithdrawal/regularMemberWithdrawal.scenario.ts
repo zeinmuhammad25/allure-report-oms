@@ -26,4 +26,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     withdrawalPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
 
     addRegularMemberNameList(): Promise<void>;
+
+    addRegularMemberNameQR(): Promise<void>;
 }
