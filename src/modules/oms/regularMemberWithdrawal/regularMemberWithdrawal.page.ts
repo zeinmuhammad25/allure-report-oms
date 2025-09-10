@@ -15,4 +15,12 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.btnAddWithdrawalMember);
     }
 
+    async searchMemberWithdrawal(valueMember: string): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.filedSearchWithdrawal);
+        await this.click(RegularMemberWithdrawalLocator.filedSearchWithdrawal);
+        await this.fill(RegularMemberWithdrawalLocator.filedSearchWithdrawal, valueMember);
+        await this.expectVisible(RegularMemberWithdrawalLocator.escapeKeyboardWithdrawalMember);
+        await this.click(RegularMemberWithdrawalLocator.escapeKeyboardWithdrawalMember);
+    }
+
 }
