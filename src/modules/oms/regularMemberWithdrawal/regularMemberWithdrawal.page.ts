@@ -141,6 +141,11 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.waitForResponse("/member/view-online");
     }
 
+    async memberListFormPagination(type: "first" | "previous" | "next" | "last"): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.paginationMemberList(type));
+        await this.click(RegularMemberWithdrawalLocator.paginationMemberList(type));
+    }
+
     async addRegularMemberNameQR(): Promise<void> {
         await this.expectVisible(RegularMemberWithdrawalLocator.btnScanMemberName);
         await this.click(RegularMemberWithdrawalLocator.btnScanMemberName);
