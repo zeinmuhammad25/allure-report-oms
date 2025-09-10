@@ -8,7 +8,7 @@ test.describe.serial("Internal Member", () => {
 
     test.beforeEach(async ({terminalID, signPin, sideNavBar, tableList}) => {
         const testWithAuthentication = [
-           "[TC_0205621] Add Withdrawal to member on Regular Member Withdrawal"
+            "[TC_0205621] Add Withdrawal to member on Regular Member Withdrawal"
         ];
 
         if (testWithAuthentication.includes(test.info().title)) {
@@ -78,8 +78,24 @@ test.describe.serial("Internal Member", () => {
                 await regularMemberWithdrawal.paymentMemberCategoryType(MemberObject.CashCatMember);
                 await regularMemberWithdrawal.paymentMethodMember(MemberObject.CashPaymentMember);
                 await regularMemberWithdrawal.clearTotalWithdrawal();
-                await regularMemberWithdrawal.selectWithdrawalBoard(MemberObject.GridMemberBoard100000,1);
+                await regularMemberWithdrawal.selectWithdrawalBoard(MemberObject.GridMemberBoard100000, 1);
                 await regularMemberWithdrawal.clearTotalWithdrawal();
+            }, {regularMemberWithdrawal}, testInfo);
+        });
+
+    test("[TC_0205625] Validate Cancel Withdrawal on Regular Member Withdrawal",
+        {tag: tags + "@positive"}, async ({regularMemberWithdrawal}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberWithdrawal.createMemberWithdrawal();
+                await regularMemberWithdrawal.addRegularMemberNameList();
+                await regularMemberWithdrawal.searchMemberList("REZA_CUSTOMER");
+                await regularMemberWithdrawal.selectRegularMemberNameList("REZA_CUSTOMER");
+                await regularMemberWithdrawal.paymentMemberCategoryType(MemberObject.CardCatMember);
+                await regularMemberWithdrawal.paymentMethodMember(MemberObject.DebitBcaMember);
+                await regularMemberWithdrawal.clearTotalWithdrawal();
+                await regularMemberWithdrawal.inputTotalWithdrawal("50.000");
+                await regularMemberWithdrawal.inputAdditionalInformation("WITHDRAWAL 50K");
+                await regularMemberWithdrawal.cancelWithdrawal();
             }, {regularMemberWithdrawal}, testInfo);
         });
 
