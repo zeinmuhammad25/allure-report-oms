@@ -43,5 +43,7 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
 
     memberListFormPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
 
-    inputMemberIdQR(memberId: string): Promise<void>
+    inputMemberIdQR(memberId: string): Promise<void>;
+
+    applyMemberIdQR(): Promise<void>;
 }
