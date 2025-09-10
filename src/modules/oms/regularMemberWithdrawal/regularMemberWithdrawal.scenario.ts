@@ -51,4 +51,6 @@ export default interface RegularMemberWithdrawalScenario extends BaseScenario {
     paymentMemberCategoryType(paymentCategoryType: MemberObject): Promise<void>;
 
     paymentMethodMember(paymentMethod: MemberObject): Promise<void>;
+
+    paginationPayment(arrow: "left" | "right"): Promise<void>;
 }
