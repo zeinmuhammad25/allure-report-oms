@@ -33,4 +33,9 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
         await this.click(RegularMemberWithdrawalLocator.btnFilterDate);
     }
 
+    async selectMonthAndYear(side: "left" | "right", nav: "prev" | "next"): Promise<void> {
+        await this.expectVisible(RegularMemberWithdrawalLocator.selectDateMonthAndYearCalendarNav(side, nav));
+        await this.click(RegularMemberWithdrawalLocator.selectDateMonthAndYearCalendarNav(side, nav));
+    }
+
 }
