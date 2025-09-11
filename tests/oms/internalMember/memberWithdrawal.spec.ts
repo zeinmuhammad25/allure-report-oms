@@ -134,5 +134,17 @@ test.describe.serial("Internal Member", () => {
             }, {regularMemberWithdrawal}, testInfo);
         });
 
+    test("[TC_0205629] Validate keyword can be cleared from Search field on Regular Member Withdrawal List",
+        {tag: tags + "@negative"}, async ({regularMemberWithdrawal}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberWithdrawal.clickFilterDate();
+                await regularMemberWithdrawal.datePickerFilterDate("1", "left");
+                await regularMemberWithdrawal.datePickerFilterDate("30", "left");
+                await regularMemberWithdrawal.applyFilterDate();
+                await regularMemberWithdrawal.searchMemberWithdrawal("REZA_CUSTOMER");
+                await regularMemberWithdrawal.cancelSearchMemberWithdrawal();
+            }, {regularMemberWithdrawal}, testInfo);
+        });
+
 
 });
