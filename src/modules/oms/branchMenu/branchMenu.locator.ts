@@ -13,9 +13,9 @@ export default class BranchMenuLocator extends BaseLocator {
     static paginationMenuCategory = (arrow: string): string =>
         `//app-branch-menu-list//i[@class='glyphicon glyphicon-arrow-${arrow}']`;
     static selectChecker = (checker: string, index: number): string =>
-        `(//td[contains(@class,'mat-column-checkerStationID')][normalize-space()='${checker}'])[${index}]']`;
+        `(//td[contains(@class,'mat-column-checkerStationID')][normalize-space()='${checker}'])[${index}]`;
     static selectStation = (station: string, index: number): string =>
-        `(//td[contains(@class,'mat-column-stationID')][normalize-space()='${station}'])[${index}]']`;
+        `(//td[contains(@class,'mat-column-stationID')][normalize-space()='${station}'])[${index}]`;
     static dropDownCheckerStation = (index: number): string =>
         `(//mat-select//div[@class='mat-select-arrow-wrapper'])[${index}]`;
     static selectCheckerStation = (value: string): string =>
