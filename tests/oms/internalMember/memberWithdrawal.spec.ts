@@ -183,4 +183,18 @@ test.describe.serial("Internal Member", () => {
             }, {regularMemberWithdrawal}, testInfo);
         });
 
+    test("[TC_0205633] Validate Regular Member Withdrawal List page can be navigated with first page button",
+        {tag: tags + "@negative"}, async ({regularMemberWithdrawal}, testInfo) => {
+            await safeTest(async ({}) => {
+                await regularMemberWithdrawal.clickFilterDate();
+                await regularMemberWithdrawal.datePickerFilterDate("1", "left");
+                await regularMemberWithdrawal.datePickerFilterDate("30", "left");
+                await regularMemberWithdrawal.applyFilterDate();
+                await regularMemberWithdrawal.withdrawalPagination("last");
+                await regularMemberWithdrawal.withdrawalPagination("first");
+                await regularMemberWithdrawal.dataFilterValidation("REZA_STAFF");
+            }, {regularMemberWithdrawal}, testInfo);
+        });
+
+
 });
