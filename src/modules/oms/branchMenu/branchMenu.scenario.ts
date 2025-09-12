@@ -24,6 +24,8 @@ export default interface BranchMenuScenario extends BaseScenario {
 
     closeAfterSelectOrInput(): Promise<void>;
 
+    saveBranchMenu(): Promise<void>;
+
     inputQty(qtyValue: string, mode?: "replace" | "append"): Promise<void>;
 
     clickFlagSoldOut(index: number, times?: number): Promise<void>;
