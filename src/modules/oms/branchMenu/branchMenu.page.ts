@@ -115,5 +115,13 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         await this.click(BranchMenuLocator.paginationBranchMenu(type));
     }
 
+    async saveBranchMenu(): Promise<void> {
+        await this.expectVisible(BranchMenuLocator.saveBranchMenu);
+        await this.click(BranchMenuLocator.saveBranchMenu);
+        await this.waitForResponse("/branch-menu/save");
+        await this.waitForResponse("/branch-menu");
+        await this.click(BranchMenuLocator.closePopUpAfterSave);
+    }
+
 
 }
