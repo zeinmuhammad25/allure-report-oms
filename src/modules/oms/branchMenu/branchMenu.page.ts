@@ -23,4 +23,9 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         await this.click(BranchMenuLocator.escapeKeyboardBranchMenu);
     }
 
+    async clearSearchMenuInCategory(): Promise<void> {
+        await this.expectVisible(BranchMenuLocator.clearSearchBranchMenu);
+        await this.click(BranchMenuLocator.clearSearchBranchMenu);
+    }
+
 }
