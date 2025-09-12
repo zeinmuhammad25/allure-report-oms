@@ -103,5 +103,13 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         this.qtyCache = next;
     }
 
+    async clickFlagSoldOut(index: number, times?: number): Promise<void> {
+        const repeat = times ?? 1;
+        await this.expectVisible(BranchMenuLocator.flagSoldOut(index));
+        for (let i = 0; i < repeat; i++) {
+            await this.click(BranchMenuLocator.flagSoldOut(index));
+        }
+    }
+
 
 }
