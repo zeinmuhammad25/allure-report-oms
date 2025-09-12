@@ -60,6 +60,17 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         }
     }
 
+    async butonShowQty(station: string, index: number, closeButton?: boolean): Promise<void> {
+        const close = closeButton ?? false;
+        await this.expectVisible(BranchMenuLocator.showFieldQty(station, index));
+        await this.click(BranchMenuLocator.showFieldQty(station, index));
+        if (close) {
+            if (await this.isVisible?.(BranchMenuLocator.backGroundPage)) {
+                await this.click(BranchMenuLocator.backGroundPage);
+            }
+        }
+    }
+
     async showDropdown(index: number): Promise<void> {
         await this.expectVisible(BranchMenuLocator.dropDownCheckerStation(index));
         await this.click(BranchMenuLocator.dropDownCheckerStation(index));
