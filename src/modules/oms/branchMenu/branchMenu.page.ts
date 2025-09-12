@@ -3,7 +3,6 @@ import BranchMenuScenario from "./branchMenu.scenario";
 import Element from "../../../base/objects/Element";
 import BranchMenuLocator from "./branchMenu.locator";
 
-
 export default class BranchMenuPage extends BaseOmsPage implements BranchMenuScenario {
     pageUrl: () => string;
 
@@ -109,6 +108,11 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         for (let i = 0; i < repeat; i++) {
             await this.click(BranchMenuLocator.flagSoldOut(index));
         }
+    }
+
+    async branchMenuPagination(type: "first" | "previous" | "next" | "last"): Promise<void> {
+        await this.expectVisible(BranchMenuLocator.paginationBranchMenu(type));
+        await this.click(BranchMenuLocator.paginationBranchMenu(type));
     }
 
 
