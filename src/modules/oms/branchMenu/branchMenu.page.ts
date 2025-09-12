@@ -49,5 +49,16 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         }
     }
 
+    async butonStation(station: string, index: number, closeButton?: boolean): Promise<void> {
+        const close = closeButton ?? false;
+        await this.expectVisible(BranchMenuLocator.selectStation(station, index));
+        await this.click(BranchMenuLocator.selectStation(station, index));
+        if (close) {
+            if (await this.isVisible?.(BranchMenuLocator.backGroundPage)) {
+                await this.click(BranchMenuLocator.backGroundPage);
+            }
+        }
+    }
+
 
 }
