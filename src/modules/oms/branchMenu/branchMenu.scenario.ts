@@ -9,4 +9,6 @@ export default interface BranchMenuScenario extends BaseScenario {
     clearSearchMenuInCategory(): Promise<void>;
 
     selectMenuCategory(categoryName: string): Promise<void>;
+
+    paginationMenuCategory(categoryName: string): Promise<void>;
 }
