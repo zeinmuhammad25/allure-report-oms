@@ -29,6 +29,7 @@ import PaymentV2Page from "../../src/modules/oms/tableList/paymentV2/paymentV2.p
 import RegularMemberPage from "../../src/modules/oms/regularMember/regularMember.page";
 import RegularMemberDepositPage from "../../src/modules/oms/regularMemberDeposit/regularMemberDeposit.page";
 import RegularMemberWithdrawalPage from "../../src/modules/oms/regularMemberWithdrawal/regularMemberWithdrawal.page";
+import BranchMenuPage from "../../src/modules/oms/branchMenu/branchMenu.page";
 
 export const test = base.extend<OmsPages>({
     synchronizeData: async ({page}, use) => await use(new SynchronizeDataPage(page)),
@@ -59,5 +60,6 @@ export const test = base.extend<OmsPages>({
     troubleshoot: async ({page}, use) => await use(new TroubleshootComponent(page)),
     regularMember: async ({page}, use) => await use(new RegularMemberPage(page)),
     regularMemberDeposit: async ({page}, use) => await use(new RegularMemberDepositPage(page)),
-    regularMemberWithdrawal: async ({page}, use) => await use(new RegularMemberWithdrawalPage(page))
+    regularMemberWithdrawal: async ({page}, use) => await use(new RegularMemberWithdrawalPage(page)),
+    branchMenu: async ({page}, use) => await use(new BranchMenuPage(page))
 });
