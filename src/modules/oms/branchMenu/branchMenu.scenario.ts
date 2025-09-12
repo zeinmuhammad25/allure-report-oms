@@ -27,4 +27,6 @@ export default interface BranchMenuScenario extends BaseScenario {
     inputQty(qtyValue: string, mode?: "replace" | "append"): Promise<void>;
 
     clickFlagSoldOut(index: number, times?: number): Promise<void>;
+
+    branchMenuPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
 }
