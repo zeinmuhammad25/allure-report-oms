@@ -38,13 +38,14 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         await this.click(BranchMenuLocator.paginationMenuCategory(categoryName));
     }
 
-    async butonCheckerStation(checker: string, index: number, closeButton = false): Promise<void> {
+    async butonCheckerStation(checker: string, index: number, closeButton?: boolean): Promise<void> {
+        const close = closeButton ?? false;
         await this.expectVisible(BranchMenuLocator.selectChecker(checker, index));
         await this.click(BranchMenuLocator.selectChecker(checker, index));
-
-        if (closeButton) {
-            await this.expectVisible(BranchMenuLocator.backGroundPage);
-            await this.click(BranchMenuLocator.backGroundPage);
+        if (close) {
+            if (await this.isVisible?.(BranchMenuLocator.backGroundPage)) {
+                await this.click(BranchMenuLocator.backGroundPage);
+            }
         }
     }
 
