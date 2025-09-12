@@ -81,4 +81,9 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         await this.click(BranchMenuLocator.selectCheckerStation(stationName));
     }
 
+    async closeAfterSelectOrInput(): Promise<void> {
+        await this.expectVisible(BranchMenuLocator.backGroundPage);
+        await this.click(BranchMenuLocator.backGroundPage);
+    }
+
 }
