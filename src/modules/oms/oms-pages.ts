@@ -27,6 +27,7 @@ import PaymentV2Scenario from "./tableList/paymentV2/paymentV2.scenario";
 import RegularMemberScenario from "./regularMember/regularMember.scenario";
 import RegularMemberDepositScenario from "./regularMemberDeposit/regularMemberDeposit.scenario";
 import RegularMemberWithdrawalScenario from "./regularMemberWithdrawal/regularMemberWithdrawal.scenario";
+import BranchMenuScenario from "./branchMenu/branchMenu.scenario";
 
 export type OmsPages = {
     synchronizeData: SynchronizeDataScenario
@@ -58,4 +59,5 @@ export type OmsPages = {
     regularMember: RegularMemberScenario
     regularMemberDeposit: RegularMemberDepositScenario
     regularMemberWithdrawal: RegularMemberWithdrawalScenario
+    branchMenu: BranchMenuScenario
 };
