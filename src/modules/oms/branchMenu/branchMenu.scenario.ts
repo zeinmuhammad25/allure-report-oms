@@ -5,4 +5,6 @@ export default interface BranchMenuScenario extends BaseScenario {
     filterCategoryBranchMenu(filterName: string): Promise<void>;
 
     searchMenuInCategory(value: string): Promise<void>;
+
+    clearSearchMenuInCategory(): Promise<void>;
 }
