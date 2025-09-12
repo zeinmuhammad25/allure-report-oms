@@ -65,5 +65,9 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         await this.click(BranchMenuLocator.dropDownCheckerStation(index));
     }
 
+    async selectStationInDropDown(stationName: string): Promise<void> {
+        await this.expectVisible(BranchMenuLocator.selectCheckerStation(stationName));
+        await this.click(BranchMenuLocator.selectCheckerStation(stationName));
+    }
 
 }
