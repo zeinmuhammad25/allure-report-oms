@@ -21,4 +21,6 @@ export default interface BranchMenuScenario extends BaseScenario {
     showDropdown(index: number): Promise<void>;
 
     selectStationInDropDown(stationName: string): Promise<void>;
+
+    closeAfterSelectOrInput(): Promise<void>;
 }
