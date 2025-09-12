@@ -86,6 +86,22 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         await this.click(BranchMenuLocator.backGroundPage);
     }
 
+    private qtyCache: string = ""; // untuk save value sebelumnya
+
+    async inputQty(qtyValue: string, mode?: "replace" | "append"): Promise<void> {
+        const m: "replace" | "append" = mode ?? "replace"; // default = replace
+        await this.expectVisible(BranchMenuLocator.fieldQty);
+        await this.click(BranchMenuLocator.fieldQty);
+        let next: string;
+
+        if (m === "append") {
+            next = this.qtyCache === "0" ? qtyValue : this.qtyCache + qtyValue;
+        } else {
+            next = qtyValue;
+        }
+        await this.fill(BranchMenuLocator.fieldQty, next);
+        this.qtyCache = next;
+    }
 
 
 }
