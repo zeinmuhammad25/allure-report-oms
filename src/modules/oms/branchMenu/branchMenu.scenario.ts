@@ -11,4 +11,6 @@ export default interface BranchMenuScenario extends BaseScenario {
     selectMenuCategory(categoryName: string): Promise<void>;
 
     paginationMenuCategory(categoryName: string): Promise<void>;
+
+    butonCheckerStation(checker: string, index: number): Promise<void>;
 }
