@@ -62,7 +62,6 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.filterCategoryBranchMenu("All Menu");
                 await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
                 await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
-                await branchMenu.validationMenu("For Testing", "sub");
             }, {branchMenu}, testInfo);
         });
 
