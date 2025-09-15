@@ -56,5 +56,15 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205636] Validate filtering button pada halaman branch menu memiliki tiga opsi dengan 3 button yang berbeda",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("All Menu");
+                await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.validationMenu("For Testing", "sub");
+            }, {branchMenu}, testInfo);
+        });
+
 
 });
