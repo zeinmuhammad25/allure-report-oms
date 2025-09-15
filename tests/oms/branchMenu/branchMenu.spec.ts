@@ -41,5 +41,20 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205635] Validate tampilan halaman branch menu pada setiap tab category menu memiliki filtering button",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("All Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml", "name");
+                await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
+                await branchMenu.selectMenuCategory("A1 Ready To Sell");
+                await branchMenu.validationMenu("New York Cheese Cake Dus", "short");
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("For Testing", "sub");
+            }, {branchMenu}, testInfo);
+        });
+
 
 });
