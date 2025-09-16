@@ -420,6 +420,16 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205661] Validate perubahan status menu dari Sold Out menjadi tidak Sold Out setelah melakukan 'Save' ketika filtering sedang berjalan",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.clickFlagSoldOut(1);
+                await branchMenu.saveBranchMenu();
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar", "short");
+            }, {branchMenu}, testInfo);
+        });
+
 
 
 
