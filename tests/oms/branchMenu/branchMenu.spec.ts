@@ -487,6 +487,15 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
-
+    test("[TC_0205667] Validate fungsi search button pada halaman branch menu ketika filtering denga Opsi All diaktifkan  dan search menu Sold Out",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.searchMenuInCategory("Anggur Merah");
+                await branchMenu.validationMenu("[21+] Anggur Merah Kawa Kawa","short");
+                await branchMenu.validationMenu("[21+] Anggur Merah OT 620ml","short");
+                await branchMenu.validationMenu("[21+] Anggur Merah OT Gold 620","short");
+            }, {branchMenu}, testInfo);
+        });
 
 });
