@@ -66,13 +66,13 @@ test.describe.serial("Branch Menu", () => {
         });
 
     test("[TC_0205637] Validate default state filtering pada halaman branch menu adalah opsi All",
-        {tag: tags + "@positive"}, async ({branchMenu,sideNavBar}, testInfo) => {
+        {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
             await safeTest(async ({}) => {
                 await sideNavBar.gotoPageTools();
                 await sideNavBar.gotoPageBranchMenu();
                 await branchMenu.selectMenuCategory("Anggur");
                 await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml", "name");
-            }, {branchMenu,sideNavBar}, testInfo);
+            }, {branchMenu, sideNavBar}, testInfo);
         });
 
     test("[TC_0205638] Validate fungsi filtering button 'All' akan menunjukkan semua item yang ada pada branch menu",
@@ -133,10 +133,10 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.saveBranchMenu();
                 await branchMenu.filterCategoryBranchMenu("All Menu");
                 await branchMenu.selectMenuCategory("ESO Automation Menu");
-                await branchMenu.validationMenu("Anggur AT ESO","short");
+                await branchMenu.validationMenu("Anggur AT ESO", "short");
                 await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
                 await branchMenu.selectMenuCategory("ESO Automation Menu");
-                await branchMenu.validationMenu("Anggur AT ESO","short");
+                await branchMenu.validationMenu("Anggur AT ESO", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -149,10 +149,10 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.saveBranchMenu();
                 await branchMenu.filterCategoryBranchMenu("All Menu");
                 await branchMenu.selectMenuCategory("Makanan Apri");
-                await branchMenu.validationMenu("Bebek Madu Pedas Bakar","short");
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar", "short");
                 await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
                 await branchMenu.selectMenuCategory("Makanan Apri");
-                await branchMenu.validationMenu("Bebek Madu Pedas Bakar","short");
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -168,7 +168,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 62", "short");
                 await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
                 await branchMenu.selectMenuCategory("Anggur");
-                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 62","short");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 62", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -184,7 +184,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.validationMenu("[21+] Anggur Merah Kawa Kawa", "short");
                 await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
                 await branchMenu.selectMenuCategory("Anggur");
-                await branchMenu.validationMenu("[21+] Anggur Merah Kawa Kawa","short");
+                await branchMenu.validationMenu("[21+] Anggur Merah Kawa Kawa", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -200,7 +200,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.validationMenu("[21+] Anggur Merah OT 620ml", "short");
                 await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
                 await branchMenu.selectMenuCategory("Anggur");
-                await branchMenu.validationMenu("[21+] Anggur Merah OT 620ml","short");
+                await branchMenu.validationMenu("[21+] Anggur Merah OT 620ml", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -216,7 +216,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.validationMenu("[21+] Anggur Merah OT Gold 620", "short");
                 await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
                 await branchMenu.selectMenuCategory("Anggur");
-                await branchMenu.validationMenu("[21+] Anggur Merah OT Gold 620","short");
+                await branchMenu.validationMenu("[21+] Anggur Merah OT Gold 620", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -232,24 +232,24 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.validationMenu("[21+] Anggur Putih OT 620ml", "short");
                 await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
                 await branchMenu.selectMenuCategory("Anggur");
-                await branchMenu.validationMenu("[21+] Anggur Putih OT 620ml","short");
+                await branchMenu.validationMenu("[21+] Anggur Putih OT 620ml", "short");
             }, {branchMenu}, testInfo);
         });
 
     test("[TC_0205649] Validate fungsi halaman branch Menu dapat melakukan update status terhadap setiap menu",
-        {tag: tags + "@positive"}, async ({branchMenu,sideNavBar}, testInfo) => {
+        {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Makanan Apri");
                 await branchMenu.clickFlagSoldOut(1);
                 await sideNavBar.gotoPageTools();
                 await sideNavBar.gotoPageBranchMenu();
                 await branchMenu.selectMenuCategory("Makanan Apri");
-                await branchMenu.validationMenu("Bebek Madu Pedas Bakar","short");
-            }, {branchMenu,sideNavBar}, testInfo);
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar", "short");
+            }, {branchMenu, sideNavBar}, testInfo);
         });
 
     test("[TC_0205650] Validate fungsi halaman branch Menu dapat melakukan update status terhadap setiap menu",
-        {tag: tags + "@positive"}, async ({branchMenu,sideNavBar}, testInfo) => {
+        {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Makanan Apri");
                 await branchMenu.butonCheckerStation("None selected", 3);
@@ -260,11 +260,11 @@ test.describe.serial("Branch Menu", () => {
                 await sideNavBar.gotoPageBranchMenu();
                 await branchMenu.selectMenuCategory("Makanan Apri");
                 await branchMenu.validationMenu("Nasi Ayam Paha", "short");
-            }, {branchMenu,sideNavBar}, testInfo);
+            }, {branchMenu, sideNavBar}, testInfo);
         });
 
     test("[TC_0205651] Validate perubahan station menu tidak Sold Out tanpa melakukan 'Save' ketika filtering sedang berjalan",
-        {tag: tags + "@positive"}, async ({branchMenu,sideNavBar}, testInfo) => {
+        {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Makanan Apri");
                 await branchMenu.butonCheckerStation("None selected", 3);
@@ -278,7 +278,25 @@ test.describe.serial("Branch Menu", () => {
                 await sideNavBar.gotoPageBranchMenu();
                 await branchMenu.selectMenuCategory("Makanan Apri");
                 await branchMenu.validationMenu("Nasi Ayam Paha", "short");
-            }, {branchMenu,sideNavBar}, testInfo);
+            }, {branchMenu, sideNavBar}, testInfo);
         });
+
+    test("[TC_0205652] Validate perubahan station menu Limited Qty tanpa melakukan 'Save' ketika filtering sedang berjalan",
+        {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.butonStation("None selected", 2);
+                await branchMenu.showDropdown(2);
+                await branchMenu.selectStationInDropDown("KASIR");
+                await branchMenu.closeAfterSelectOrInput();
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.gotoPageBranchMenu();
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("Nasi Ayam Dada", "short");
+            }, {branchMenu, sideNavBar}, testInfo);
+        });
+
 
 });
