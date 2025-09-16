@@ -298,5 +298,19 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu, sideNavBar}, testInfo);
         });
 
+    test("[TC_0205653] Validate perubahan station menu tidak Sold Out tanpa melakukan 'Save' ketika filtering sedang berjalan",
+        {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.clickFlagSoldOut(1);
+                await branchMenu.clickFlagSoldOut(2);
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.gotoPageBranchMenu();
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar", "short");
+                await branchMenu.validationMenu("Nasi Ayam Dada", "short");
+            }, {branchMenu, sideNavBar}, testInfo);
+        });
+
 
 });
