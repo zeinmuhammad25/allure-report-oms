@@ -263,4 +263,22 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu,sideNavBar}, testInfo);
         });
 
+    test("[TC_0205651] Validate fungsi halaman branch Menu dapat melakukan update status terhadap setiap menu",
+        {tag: tags + "@positive"}, async ({branchMenu,sideNavBar}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.butonCheckerStation("None selected", 3);
+                await branchMenu.showDropdown(1);
+                await branchMenu.selectStationInDropDown("KASIR");
+                await branchMenu.closeAfterSelectOrInput();
+                await branchMenu.showDropdown(2);
+                await branchMenu.selectStationInDropDown("KASIR");
+                await branchMenu.closeAfterSelectOrInput();
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.gotoPageBranchMenu();
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("Nasi Ayam Paha", "short");
+            }, {branchMenu,sideNavBar}, testInfo);
+        });
+
 });
