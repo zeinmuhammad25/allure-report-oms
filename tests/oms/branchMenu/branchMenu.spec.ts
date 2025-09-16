@@ -386,12 +386,24 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.clickFlagSoldOut(1);
                 await branchMenu.butonShowQty("2",1,);
                 await branchMenu.inputQty("10");
-                await branchMenu.clickFlagSoldOut(3);
                 await sideNavBar.gotoPageTools();
                 await sideNavBar.gotoPageBranchMenu();
                 await branchMenu.selectMenuCategory("Makanan Apri");
                 await branchMenu.validationMenu("Bebek Madu Pedas Bakar", "short");
             }, {branchMenu, sideNavBar}, testInfo);
+        });
+
+    test("[TC_0205659] Validate perubahan station menu tidak Sold Out setelah melakukan 'Save' ketika filtering sedang berjalan",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.butonStation("None selected", 3);
+                await branchMenu.showDropdown(2);
+                await branchMenu.selectStationInDropDown("KASIR");
+                await branchMenu.closeAfterSelectOrInput();
+                await branchMenu.saveBranchMenu();
+                await branchMenu.validationMenu("Nasi Ayam Paha", "short");
+            }, {branchMenu}, testInfo);
         });
 
 });
