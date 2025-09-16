@@ -263,7 +263,7 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu,sideNavBar}, testInfo);
         });
 
-    test("[TC_0205651] Validate fungsi halaman branch Menu dapat melakukan update status terhadap setiap menu",
+    test("[TC_0205651] Validate perubahan station menu tidak Sold Out tanpa melakukan 'Save' ketika filtering sedang berjalan",
         {tag: tags + "@positive"}, async ({branchMenu,sideNavBar}, testInfo) => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Makanan Apri");
