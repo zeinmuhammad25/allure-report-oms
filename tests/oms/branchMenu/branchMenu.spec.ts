@@ -312,5 +312,19 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu, sideNavBar}, testInfo);
         });
 
+    test("[TC_0205654] Validate perubahan status menu dari Tidak Sold Out menjadi Sold Out tanpa melakukan 'Save' ketika filtering sedang berjalan",
+        {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.clickFlagSoldOut(3);
+                await branchMenu.clickFlagSoldOut(4);
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.gotoPageBranchMenu();
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("Nasi Ayam Paha", "short");
+                await branchMenu.validationMenu("Paket Happy Hour 1", "short");
+            }, {branchMenu, sideNavBar}, testInfo);
+        });
+
 
 });
