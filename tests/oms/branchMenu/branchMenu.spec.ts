@@ -123,4 +123,20 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.validationMenu("[21+] Anggur Hijau Kawa Kawa", "short");
             }, {branchMenu}, testInfo);
         });
+
+    test("[TC_0205642] Validate fungsi filtering button 'Sold Out' dapat dipilih ketika state filtering berada pada opsi 'Limited Qty'",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("ESO Automation Menu");
+                await branchMenu.clickFlagSoldOut(1);
+                await branchMenu.saveBranchMenu();
+                await branchMenu.filterCategoryBranchMenu("All Menu");
+                await branchMenu.selectMenuCategory("ESO Automation Menu");
+                await branchMenu.validationMenu("Anggur AT ESO","short");
+                await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
+                await branchMenu.selectMenuCategory("ESO Automation Menu");
+                await branchMenu.validationMenu("Anggur AT ESO","short");
+            }, {branchMenu}, testInfo);
+        });
 });
