@@ -204,4 +204,36 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205647] Validate hasil filter 'Limited Qty' akan menampilkan menu category dengan menu Limited Qty",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.clickFlagSoldOut(5);
+                await branchMenu.saveBranchMenu();
+                await branchMenu.filterCategoryBranchMenu("All Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.validationMenu("[21+] Anggur Merah OT Gold 620", "short");
+                await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.validationMenu("[21+] Anggur Merah OT Gold 620","short");
+            }, {branchMenu}, testInfo);
+        });
+
+    test("[TC_0205648] Validate hasil filter 'Limited Qty' akan menghilangkan menu dengan status Sold Out",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.clickFlagSoldOut(5);
+                await branchMenu.saveBranchMenu();
+                await branchMenu.filterCategoryBranchMenu("All Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.validationMenu("[21+] Anggur Putih OT 620ml", "short");
+                await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.validationMenu("[21+] Anggur Putih OT 620ml","short");
+            }, {branchMenu}, testInfo);
+        });
+
 });
