@@ -76,7 +76,7 @@ test.describe.serial("Branch Menu", () => {
         });
 
     test("[TC_0205638] Validate fungsi filtering button 'All' akan menunjukkan semua item yang ada pada branch menu",
-        {tag: tags + "@positive"}, async ({branchMenu,sideNavBar}, testInfo) => {
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
             await safeTest(async ({}) => {
                 await branchMenu.filterCategoryBranchMenu("All Menu");
                 await branchMenu.validationMenu("TES - Air Mineral 330ml", "name");
@@ -85,7 +85,15 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.validationMenu("Almondmilk Hazelnut Latte", "name");
                 await branchMenu.validationMenu("BETAWI LATTE", "name");
                 await branchMenu.validationMenu("BUTTERSCOTCH LATTE", "name");
-            }, {branchMenu,sideNavBar}, testInfo);
+            }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205639] Validate fungsi filtering button 'All' dapat dipilih ketika state filtering berada pada opsi 'Sold Out'",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("All Menu");
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("Nasi Ayam Dada", "short");
+            }, {branchMenu}, testInfo);
+        });
 });
