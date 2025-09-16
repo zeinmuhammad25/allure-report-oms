@@ -379,4 +379,19 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu, sideNavBar}, testInfo);
         });
 
+    test("[TC_0205658] Validate perubahan status menu dari Sold Out menjadi Limited Qty tanpa melakukan 'Save' ketika filtering sedang berjalan",
+        {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.clickFlagSoldOut(1);
+                await branchMenu.butonShowQty("2",1,);
+                await branchMenu.inputQty("10");
+                await branchMenu.clickFlagSoldOut(3);
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.gotoPageBranchMenu();
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar", "short");
+            }, {branchMenu, sideNavBar}, testInfo);
+        });
+
 });
