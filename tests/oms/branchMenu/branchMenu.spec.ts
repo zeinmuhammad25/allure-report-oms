@@ -225,7 +225,7 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
                 await branchMenu.selectMenuCategory("Anggur");
-                await branchMenu.clickFlagSoldOut(5);
+                await branchMenu.clickFlagSoldOut(6);
                 await branchMenu.saveBranchMenu();
                 await branchMenu.filterCategoryBranchMenu("All Menu");
                 await branchMenu.selectMenuCategory("Anggur");
