@@ -75,4 +75,17 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu,sideNavBar}, testInfo);
         });
 
+    test("[TC_0205638] Validate fungsi filtering button 'All' akan menunjukkan semua item yang ada pada branch menu",
+        {tag: tags + "@positive"}, async ({branchMenu,sideNavBar}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("All Menu");
+                await branchMenu.validationMenu("TES - Air Mineral 330ml", "name");
+                await branchMenu.validationMenu("ASIAN DOLCE LATTE", "name");
+                await branchMenu.validationMenu("Almond Hazelnut Latte", "name");
+                await branchMenu.validationMenu("Almondmilk Hazelnut Latte", "name");
+                await branchMenu.validationMenu("BETAWI LATTE", "name");
+                await branchMenu.validationMenu("BUTTERSCOTCH LATTE", "name");
+            }, {branchMenu,sideNavBar}, testInfo);
+        });
+
 });
