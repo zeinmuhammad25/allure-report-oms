@@ -450,7 +450,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.inputQty("0");
                 await branchMenu.saveBranchMenu();
                 await branchMenu.selectMenuCategory("Makanan Apri");
-                await branchMenu.validationMenu("Nasi Ayam Paha", "short");
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -463,6 +463,16 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.saveBranchMenu();
                 await branchMenu.selectMenuCategory("Makanan Apri");
                 await branchMenu.validationMenu("Nasi Ayam Paha", "short");
+            }, {branchMenu}, testInfo);
+        });
+
+    test("[TC_0205665] Validate perubahan status menu dari Limited Qty menjadi Sold Out setelah melakukan 'Save' ketika filtering sedang berjalan",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.clickFlagSoldOut(7);
+                await branchMenu.saveBranchMenu();
+                await branchMenu.selectMenuCategory("Anggur");
             }, {branchMenu}, testInfo);
         });
 
