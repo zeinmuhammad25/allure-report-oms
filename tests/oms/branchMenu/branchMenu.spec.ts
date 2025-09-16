@@ -442,6 +442,18 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205663] Validate perubahan status menu dari Limited Qty menjadi tidak Limited Qty setelah melakukan 'Save' ketika filtering sedang berjalan",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.butonShowQty("0", 1);
+                await branchMenu.inputQty("10");
+                await branchMenu.saveBranchMenu();
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("Nasi Ayam Paha", "short");
+            }, {branchMenu}, testInfo);
+        });
+
 
 
 
