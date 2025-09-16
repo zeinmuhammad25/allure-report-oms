@@ -498,4 +498,15 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205668] Validate fungsi search button pada halaman branch menu ketika filtering denga Opsi All diaktifkan  dan search menu Limited Qty",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.searchMenuInCategory("Sababay");
+                await branchMenu.validationMenu("[21+] Sababay Black Velvet 750","short");
+                await branchMenu.validationMenu("[21+] Sababay Ludisia 750ml","short");
+                await branchMenu.validationMenu("[21+] Sababay Mistelle 750ml","short");
+            }, {branchMenu}, testInfo);
+        });
+
 });
