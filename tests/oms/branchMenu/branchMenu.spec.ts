@@ -236,4 +236,16 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205649] Validate fungsi halaman branch Menu dapat melakukan update status terhadap setiap menu",
+        {tag: tags + "@positive"}, async ({branchMenu,sideNavBar}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.clickFlagSoldOut(1);
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.gotoPageBranchMenu();
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar","short");
+            }, {branchMenu,sideNavBar}, testInfo);
+        });
+
 });
