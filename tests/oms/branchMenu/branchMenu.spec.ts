@@ -65,5 +65,14 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205637] Validate default state filtering pada halaman branch menu adalah opsi All",
+        {tag: tags + "@positive"}, async ({branchMenu,sideNavBar}, testInfo) => {
+            await safeTest(async ({}) => {
+                await sideNavBar.gotoPageTools();
+                await sideNavBar.gotoPageBranchMenu();
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml", "name");
+            }, {branchMenu,sideNavBar}, testInfo);
+        });
 
 });
