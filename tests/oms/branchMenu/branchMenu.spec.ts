@@ -139,4 +139,21 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.validationMenu("Anggur AT ESO","short");
             }, {branchMenu}, testInfo);
         });
+
+    test("[TC_0205643] Validate hasil filter 'Sold Out' akan menampilkan menu category dengan menu sold out",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.clickFlagSoldOut(1);
+                await branchMenu.saveBranchMenu();
+                await branchMenu.filterCategoryBranchMenu("All Menu");
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar","short");
+                await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar","short");
+            }, {branchMenu}, testInfo);
+        });
+
 });
