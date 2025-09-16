@@ -110,4 +110,17 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.validationMenu("Nasi Ayam Dada", "short");
             }, {branchMenu}, testInfo);
         });
+
+    test("[TC_0205641] Validate fungsi filtering button 'Sold Out' dapat dipilih ketika state filtering berada pada opsi 'All'",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.clickFlagSoldOut(1);
+                await branchMenu.saveBranchMenu();
+                await branchMenu.filterCategoryBranchMenu("All Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.validationMenu("[21+] Anggur Hijau Kawa Kawa", "short");
+            }, {branchMenu}, testInfo);
+        });
 });
