@@ -96,4 +96,18 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.validationMenu("Nasi Ayam Dada", "short");
             }, {branchMenu}, testInfo);
         });
+
+    test("[TC_0205640] Validate fungsi filtering button 'Allt' dapat dipilih ketika state filtering berada pada opsi 'Limited Qty'",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.searchMenuInCategory("Nasi Ayam Dada");
+                await branchMenu.validationMenu("Nasi Ayam Dada", "short");
+                await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
+                await branchMenu.validationMenu("Nasi Ayam Dada", "short");
+                await branchMenu.filterCategoryBranchMenu("All Menu");
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.validationMenu("Nasi Ayam Dada", "short");
+            }, {branchMenu}, testInfo);
+        });
 });
