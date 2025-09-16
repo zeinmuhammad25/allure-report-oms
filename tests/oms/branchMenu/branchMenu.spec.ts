@@ -156,4 +156,20 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205644] Validate hasil filter 'Sold Out' akan menghilangkan menu dengan Limited Qty",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.clickFlagSoldOut(2);
+                await branchMenu.saveBranchMenu();
+                await branchMenu.filterCategoryBranchMenu("All Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 62", "short");
+                await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 62","short");
+            }, {branchMenu}, testInfo);
+        });
+
 });
