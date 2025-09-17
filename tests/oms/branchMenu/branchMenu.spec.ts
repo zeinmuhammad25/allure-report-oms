@@ -524,7 +524,18 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
                 await branchMenu.selectMenuCategory("Makanan Apri");
                 await branchMenu.searchMenuInCategory("Paket Happy Hour 1");
-                await branchMenu.validationMenu("Paket Happy Hour 1");
+                await branchMenu.validationMenu("Paket Happy Hour 1","short");
+            }, {branchMenu}, testInfo);
+        });
+
+    test("[TC_0205671] Validate fungsi search button pada halaman branch menu ketika filtering dengan Opsi Sold Out diaktifkan dan search menu tidak sold out",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.clickFlagSoldOut(1);
+                await branchMenu.saveBranchMenu();
+                await branchMenu.searchMenuInCategory("Bebek Madu Pedas Bakar");
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar","short");
             }, {branchMenu}, testInfo);
         });
 
