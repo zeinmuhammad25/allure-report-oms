@@ -588,5 +588,15 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205677] Verify that User can search in selected Menu Category with valid input",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("AT MENU CATEGORY");
+                await branchMenu.searchMenuInCategory("AT MENU BIASA");
+                await branchMenu.validationMenu("AT MENU BIASA","sub");
+            }, {branchMenu}, testInfo);
+        });
+
+
 
 });
