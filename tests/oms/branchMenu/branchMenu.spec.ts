@@ -549,5 +549,15 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205673] Validate fungsi search button pada halaman branch menu ketika filtering dengan Opsi Limited Qty diaktifkan dan search menu sold out",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.searchMenuInCategory("[21+] Anggur Ketan Hitam OT 620ml");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml","short");
+            }, {branchMenu}, testInfo);
+        });
+
 
 });
