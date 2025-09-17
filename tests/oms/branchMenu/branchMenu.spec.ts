@@ -662,4 +662,15 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205685] Verify that User can navigate to the previous page on Menu Category List",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.paginationMenuCategory("right");
+                await branchMenu.paginationMenuCategory("right");
+                await branchMenu.paginationMenuCategory("right");
+                await branchMenu.paginationMenuCategory("left");
+                await branchMenu.paginationMenuCategory("left");
+            }, {branchMenu}, testInfo);
+        });
+
 });
