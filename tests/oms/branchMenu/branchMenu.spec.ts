@@ -673,4 +673,31 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205686] Verify that User can select > 1 Checker Station",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("AT MENU CATEGORY");
+                await branchMenu.butonCheckerStation("None selected", 3);
+                await branchMenu.showDropdown(1);
+                await branchMenu.selectStationInDropDown("KASIR");
+                await branchMenu.selectStationInDropDown("CHECKER");
+                await branchMenu.closeAfterSelectOrInput();
+                await branchMenu.saveBranchMenu();
+            }, {branchMenu}, testInfo);
+        });
+
+    test("[TC_0205687] Verify that User can select > 1 Station",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.butonStation("None selected", 2);
+                await branchMenu.showDropdown(2);
+                await branchMenu.selectStationInDropDown("KASIR");
+                await branchMenu.selectStationInDropDown("CHECKER");
+                await branchMenu.closeAfterSelectOrInput();
+                await branchMenu.saveBranchMenu();
+            }, {branchMenu}, testInfo);
+        });
+
+
 });
