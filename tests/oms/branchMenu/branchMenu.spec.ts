@@ -509,4 +509,13 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205669] Validate fungsi search button pada halaman branch menu ketika filtering denga Opsi All diaktifkan  dan search menu tanpa Sold Out dan Limited Qty",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("AT MENU CATEGORY");
+                await branchMenu.searchMenuInCategory("AT MENU BIASA BAKAR");
+                await branchMenu.validationMenu("AT MENU BIASA BAKAR","short");
+            }, {branchMenu}, testInfo);
+        });
+
 });
