@@ -615,6 +615,13 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
-
+    test("[TC_0205680] Verify that User cannot search in selected Menu Category with invalid input",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.searchMenuInCategory("asdasdas");
+                await branchMenu.validationMenu("asdasdas","name");
+            }, {branchMenu}, testInfo);
+        });
 
 });
