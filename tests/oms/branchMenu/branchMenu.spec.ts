@@ -569,5 +569,15 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205675] Validate fungsi refresh button pada field search dapat digunakan",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.searchMenuInCategory("[21+] Anggur Ketan Hitam OT 620ml");
+                await branchMenu.clearSearchMenuInCategory()
+            }, {branchMenu}, testInfo);
+        });
+
 
 });
