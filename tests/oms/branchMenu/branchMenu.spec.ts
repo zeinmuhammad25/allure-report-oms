@@ -555,7 +555,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
                 await branchMenu.selectMenuCategory("Anggur");
                 await branchMenu.searchMenuInCategory("[21+] Anggur Ketan Hitam OT 620ml");
-                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml","short");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml","name");
             }, {branchMenu}, testInfo);
         });
 
@@ -565,7 +565,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
                 await branchMenu.selectMenuCategory("Anggur");
                 await branchMenu.searchMenuInCategory("[21+] Anggur Ketan Hitam OT 620ml");
-                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml","short");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml","name");
             }, {branchMenu}, testInfo);
         });
 
@@ -576,6 +576,15 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.selectMenuCategory("Anggur");
                 await branchMenu.searchMenuInCategory("[21+] Anggur Ketan Hitam OT 620ml");
                 await branchMenu.clearSearchMenuInCategory()
+            }, {branchMenu}, testInfo);
+        });
+
+    test("[TC_0205676] Verify that User can search in selected Menu Category with valid input",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("Anggur");
+                await branchMenu.searchMenuInCategory("[21+] Anggur Ketan Hitam OT 620ml");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml","name");
             }, {branchMenu}, testInfo);
         });
 
