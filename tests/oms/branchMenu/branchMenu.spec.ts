@@ -539,4 +539,15 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205672] Validate fungsi search button pada halaman branch menu ketika filtering dengan Opsi Limited Qty diaktifkan dan search menu Limited Qty",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
+                await branchMenu.selectMenuCategory("ESO Automation Menu");
+                await branchMenu.searchMenuInCategory("Anggur AT ESO");
+                await branchMenu.validationMenu("Anggur AT ESO","short");
+            }, {branchMenu}, testInfo);
+        });
+
+
 });
