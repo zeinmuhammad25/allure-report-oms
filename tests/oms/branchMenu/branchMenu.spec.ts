@@ -606,5 +606,15 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205679] Verify that User can search by Menu Short Name with valid input",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("AT MENU CATEGORY");
+                await branchMenu.searchMenuInCategory("AT MENU PAKET MAHAL");
+                await branchMenu.validationMenu("AT MENU PAKET MAHAL","short");
+            }, {branchMenu}, testInfo);
+        });
+
+
 
 });
