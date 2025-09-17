@@ -2,7 +2,7 @@ import BaseLocator from "../../../base/base-locator";
 
 export default class BranchMenuLocator extends BaseLocator {
 
-    static backGroundPage: string = "//app-branch-menu-list//tbody[@role='rowgroup']";
+    static backGroundPage: string = "//div[@class='cdk-overlay-backdrop cdk-overlay-transparent-backdrop cdk-overlay-backdrop-showing']";
     static escapeKeyboardBranchMenu: string = "//h5[normalize-space()='Branch Menu Management']";
     static btnFilterCategory = (filterCategory: string): string =>
         `//button[contains(@class,'active-filter-type-button')]//span[normalize-space()='${filterCategory}']`;
@@ -10,7 +10,7 @@ export default class BranchMenuLocator extends BaseLocator {
     static clearSearchBranchMenu: string = "//app-branch-menu-list//i[@class='glyphicon glyphicon-repeat']";
     static menuCategory = (menuCategory: string): string =>
         `//button//span[contains(normalize-space(),'${menuCategory}')]`;
-    static paginationMenuCategory = (arrow: string): string =>
+    static paginationMenuCategory = (arrow: "left" | "right"): string =>
         `//app-branch-menu-list//i[@class='glyphicon glyphicon-arrow-${arrow}']`;
     static selectChecker = (checker: string, index: number): string =>
         `(//td[contains(@class,'mat-column-checkerStationID')][normalize-space()='${checker}'])[${index}]`;
@@ -29,5 +29,10 @@ export default class BranchMenuLocator extends BaseLocator {
         `//app-branch-menu-list//button[contains(@class, 'mat-paginator-navigation-${type}')]`;
     static saveBranchMenu: string = "//app-branch-menu-list//span[normalize-space()='Save']";
     static closePopUpAfterSave: string = "//app-confirm-dialog//span[normalize-space()='Ok']";
-
+    static menuName = (text: string): string =>
+        `//td[contains(@class,'mat-column-menuName')][normalize-space()='${text}']`;
+    static menuShortName = (text: string): string =>
+        `//td[contains(@class,'mat-column-menuShortName')][normalize-space()='${text}']`;
+    static subCategory = (text: string): string =>
+        `//td[normalize-space()='${text}']`;
 }
