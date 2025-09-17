@@ -330,7 +330,7 @@ test.describe.serial("Branch Menu", () => {
         {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Makanan Apri");
-                await branchMenu.butonShowQty("2",1,);
+                await branchMenu.butonShowQty("2", 1);
                 await branchMenu.inputQty("0");
                 await sideNavBar.gotoPageTools();
                 await sideNavBar.gotoPageBranchMenu();
@@ -343,7 +343,7 @@ test.describe.serial("Branch Menu", () => {
         {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Makanan Apri");
-                await branchMenu.butonShowQty("2",1,);
+                await branchMenu.butonShowQty("2", 1);
                 await branchMenu.inputQty("0");
                 await sideNavBar.gotoPageTools();
                 await sideNavBar.gotoPageBranchMenu();
@@ -356,7 +356,7 @@ test.describe.serial("Branch Menu", () => {
         {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Makanan Apri");
-                await branchMenu.butonShowQty("0",1,);
+                await branchMenu.butonShowQty("0", 1);
                 await branchMenu.inputQty("10");
                 await sideNavBar.gotoPageTools();
                 await sideNavBar.gotoPageBranchMenu();
@@ -369,7 +369,7 @@ test.describe.serial("Branch Menu", () => {
         {tag: tags + "@positive"}, async ({branchMenu, sideNavBar}, testInfo) => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Makanan Apri");
-                await branchMenu.butonShowQty("0",1,);
+                await branchMenu.butonShowQty("0", 1);
                 await branchMenu.inputQty("10");
                 await branchMenu.clickFlagSoldOut(3);
                 await sideNavBar.gotoPageTools();
@@ -384,7 +384,7 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Makanan Apri");
                 await branchMenu.clickFlagSoldOut(1);
-                await branchMenu.butonShowQty("2",1,);
+                await branchMenu.butonShowQty("2", 1);
                 await branchMenu.inputQty("10");
                 await sideNavBar.gotoPageTools();
                 await sideNavBar.gotoPageBranchMenu();
@@ -492,9 +492,9 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Anggur");
                 await branchMenu.searchMenuInCategory("Anggur Merah");
-                await branchMenu.validationMenu("[21+] Anggur Merah Kawa Kawa","short");
-                await branchMenu.validationMenu("[21+] Anggur Merah OT 620ml","short");
-                await branchMenu.validationMenu("[21+] Anggur Merah OT Gold 620","short");
+                await branchMenu.validationMenu("[21+] Anggur Merah Kawa Kawa", "short");
+                await branchMenu.validationMenu("[21+] Anggur Merah OT 620ml", "short");
+                await branchMenu.validationMenu("[21+] Anggur Merah OT Gold 620", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -503,9 +503,9 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Anggur");
                 await branchMenu.searchMenuInCategory("Sababay");
-                await branchMenu.validationMenu("[21+] Sababay Black Velvet 750","short");
-                await branchMenu.validationMenu("[21+] Sababay Ludisia 750ml","short");
-                await branchMenu.validationMenu("[21+] Sababay Mistelle 750ml","short");
+                await branchMenu.validationMenu("[21+] Sababay Black Velvet 750", "short");
+                await branchMenu.validationMenu("[21+] Sababay Ludisia 750ml", "short");
+                await branchMenu.validationMenu("[21+] Sababay Mistelle 750ml", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -514,7 +514,7 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("AT MENU CATEGORY");
                 await branchMenu.searchMenuInCategory("AT MENU BIASA BAKAR");
-                await branchMenu.validationMenu("AT MENU BIASA BAKAR","short");
+                await branchMenu.validationMenu("AT MENU BIASA BAKAR", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -524,7 +524,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
                 await branchMenu.selectMenuCategory("Makanan Apri");
                 await branchMenu.searchMenuInCategory("Paket Happy Hour 1");
-                await branchMenu.validationMenu("Paket Happy Hour 1","short");
+                await branchMenu.validationMenu("Paket Happy Hour 1", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -535,7 +535,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.clickFlagSoldOut(1);
                 await branchMenu.saveBranchMenu();
                 await branchMenu.searchMenuInCategory("Bebek Madu Pedas Bakar");
-                await branchMenu.validationMenu("Bebek Madu Pedas Bakar","short");
+                await branchMenu.validationMenu("Bebek Madu Pedas Bakar", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -545,7 +545,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
                 await branchMenu.selectMenuCategory("ESO Automation Menu");
                 await branchMenu.searchMenuInCategory("Anggur AT ESO");
-                await branchMenu.validationMenu("Anggur AT ESO","short");
+                await branchMenu.validationMenu("Anggur AT ESO", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -555,7 +555,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
                 await branchMenu.selectMenuCategory("Anggur");
                 await branchMenu.searchMenuInCategory("[21+] Anggur Ketan Hitam OT 620ml");
-                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml","name");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml", "name");
             }, {branchMenu}, testInfo);
         });
 
@@ -565,7 +565,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
                 await branchMenu.selectMenuCategory("Anggur");
                 await branchMenu.searchMenuInCategory("[21+] Anggur Ketan Hitam OT 620ml");
-                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml","name");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml", "name");
             }, {branchMenu}, testInfo);
         });
 
@@ -575,7 +575,7 @@ test.describe.serial("Branch Menu", () => {
                 await branchMenu.filterCategoryBranchMenu("Limit Quantity Menu");
                 await branchMenu.selectMenuCategory("Anggur");
                 await branchMenu.searchMenuInCategory("[21+] Anggur Ketan Hitam OT 620ml");
-                await branchMenu.clearSearchMenuInCategory()
+                await branchMenu.clearSearchMenuInCategory();
             }, {branchMenu}, testInfo);
         });
 
@@ -584,7 +584,7 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Anggur");
                 await branchMenu.searchMenuInCategory("[21+] Anggur Ketan Hitam OT 620ml");
-                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml","name");
+                await branchMenu.validationMenu("[21+] Anggur Ketan Hitam OT 620ml", "name");
             }, {branchMenu}, testInfo);
         });
 
@@ -593,7 +593,7 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("AT MENU CATEGORY");
                 await branchMenu.searchMenuInCategory("AT MENU BIASA");
-                await branchMenu.validationMenu("AT MENU BIASA","sub");
+                await branchMenu.validationMenu("AT MENU BIASA", "sub");
             }, {branchMenu}, testInfo);
         });
 
@@ -602,7 +602,7 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("AT MENU CATEGORY");
                 await branchMenu.searchMenuInCategory("AT MENU PAKET MAHAL");
-                await branchMenu.validationMenu("AT MENU PAKET MAHAL","name");
+                await branchMenu.validationMenu("AT MENU PAKET MAHAL", "name");
             }, {branchMenu}, testInfo);
         });
 
@@ -611,7 +611,7 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("AT MENU CATEGORY");
                 await branchMenu.searchMenuInCategory("AT MENU PAKET MAHAL");
-                await branchMenu.validationMenu("AT MENU PAKET MAHAL","short");
+                await branchMenu.validationMenu("AT MENU PAKET MAHAL", "short");
             }, {branchMenu}, testInfo);
         });
 
@@ -620,7 +620,7 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("Anggur");
                 await branchMenu.searchMenuInCategory("asdasdas");
-                await branchMenu.validationMenu("asdasdas","name");
+                await branchMenu.validationMenu("asdasdas", "name");
             }, {branchMenu}, testInfo);
         });
 
@@ -629,7 +629,7 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("AT MENU CATEGORY");
                 await branchMenu.searchMenuInCategory("123456");
-                await branchMenu.validationMenu("123456","sub");
+                await branchMenu.validationMenu("123456", "sub");
             }, {branchMenu}, testInfo);
         });
 
@@ -638,7 +638,7 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("AT MENU CATEGORY");
                 await branchMenu.searchMenuInCategory("kajsjend");
-                await branchMenu.validationMenu("kajsjend","name");
+                await branchMenu.validationMenu("kajsjend", "name");
             }, {branchMenu}, testInfo);
         });
 
@@ -647,7 +647,7 @@ test.describe.serial("Branch Menu", () => {
             await safeTest(async ({}) => {
                 await branchMenu.selectMenuCategory("AT MENU CATEGORY");
                 await branchMenu.searchMenuInCategory("1234543wdfgfd");
-                await branchMenu.validationMenu("1234543wdfgfd","short");
+                await branchMenu.validationMenu("1234543wdfgfd", "short");
             }, {branchMenu}, testInfo);
         });
 
