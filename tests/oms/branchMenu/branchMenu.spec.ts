@@ -518,4 +518,14 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205670] Validate fungsi search button pada halaman branch menu ketika filtering dengan Opsi Sold Out diaktifkan dan search menu sold out",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.filterCategoryBranchMenu("Sold Out Menu");
+                await branchMenu.selectMenuCategory("Makanan Apri");
+                await branchMenu.searchMenuInCategory("Paket Happy Hour 1");
+                await branchMenu.validationMenu("Paket Happy Hour 1");
+            }, {branchMenu}, testInfo);
+        });
+
 });
