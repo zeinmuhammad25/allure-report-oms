@@ -624,4 +624,12 @@ test.describe.serial("Branch Menu", () => {
             }, {branchMenu}, testInfo);
         });
 
+    test("[TC_0205681] Verify that User cannot search by Sub Category with invalid input",
+        {tag: tags + "@positive"}, async ({branchMenu}, testInfo) => {
+            await safeTest(async ({}) => {
+                await branchMenu.selectMenuCategory("AT MENU CATEGORY");
+                await branchMenu.searchMenuInCategory("123456");
+                await branchMenu.validationMenu("123456","sub");
+            }, {branchMenu}, testInfo);
+        });
 });
