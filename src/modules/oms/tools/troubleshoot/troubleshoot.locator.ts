@@ -13,7 +13,7 @@ export default class TroubleshootLocator extends BaseLocator {
         `//span[@class='mat-option-text'][normalize-space()='${value}']`;
     static selectStationInForm = (stationName: string): string =>
         `//app-printer-test-menu-bill//div[contains(text(),'${stationName}')]`;
-    static btnFormTestPrintBill = (stationName: "Test Print Bill"|"Test Print Menu"|"Cancel"): string =>
+    static btnFormTestPrintBill = (stationName: "Test Print Bill" | "Test Print Menu" | "Cancel"): string =>
         `//app-printer-test-menu-bill//div[contains(text(),'${stationName}')]`;
 
 }
