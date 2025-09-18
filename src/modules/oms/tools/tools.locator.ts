@@ -29,6 +29,7 @@ export default class ToolsLocator extends BaseLocator {
     };
     static btnApplyDate: string = "//ngx-daterangepicker-material//button[normalize-space()='Apply']";
     static printReport: string = "//button[.//span[contains(normalize-space(.),'Print')]]";
+    static closerPopUp: string = "//span[normalize-space()='Ok']";
 
     //softwareUpdate
     static checkForUpdate: string = "//span[normalize-space()='Check for Update']";
