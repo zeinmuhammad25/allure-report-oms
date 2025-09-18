@@ -32,9 +32,9 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         await this.click(BranchMenuLocator.menuCategory(categoryName));
     }
 
-    async paginationMenuCategory(categoryName: string): Promise<void> {
-        await this.expectVisible(BranchMenuLocator.paginationMenuCategory(categoryName));
-        await this.click(BranchMenuLocator.paginationMenuCategory(categoryName));
+    async paginationMenuCategory(arrow: "left"|"right"): Promise<void> {
+        await this.expectVisible(BranchMenuLocator.paginationMenuCategory(arrow));
+        await this.click(BranchMenuLocator.paginationMenuCategory(arrow));
     }
 
     async butonCheckerStation(checker: string, index: number, closeButton?: boolean): Promise<void> {
@@ -99,6 +99,7 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
             next = qtyValue;
         }
         await this.fill(BranchMenuLocator.fieldQty, next);
+        await this.click(BranchMenuLocator.escapeKeyboardBranchMenu);
         this.qtyCache = next;
     }
 
@@ -123,5 +124,44 @@ export default class BranchMenuPage extends BaseOmsPage implements BranchMenuSce
         await this.click(BranchMenuLocator.closePopUpAfterSave);
     }
 
+    async validationMenu(value: string, field: "name" | "short" | "sub", opts?: { maxProbe?: number }): Promise<number> {
+        let baseLocator: string;
+
+        switch (field) {
+            case "name":
+                baseLocator = BranchMenuLocator.menuName(value);
+                break;
+            case "short":
+                baseLocator = BranchMenuLocator.menuShortName(value);
+                break;
+            case "sub":
+                baseLocator = BranchMenuLocator.subCategory(value);
+                break;
+            default:
+                throw new Error(`❌ Field "${field}" tidak dikenali. Gunakan "name" | "short" | "sub".`);
+        }
+
+        const maxProbe = opts?.maxProbe ?? 200; // batas aman
+        let count = 0;
+
+        for (let i = 1; i <= maxProbe; i++) {
+            const indexed = `(${baseLocator})[${i}]`;
+            try {
+                await this.expectVisible(indexed);
+                count++;
+            } catch {
+                // Begitu gagal visible, anggap elemen habis
+                break;
+            }
+        }
+
+        if (count === 0) {
+            console.warn(`⚠️ Data "${value}" tidak ditemukan pada kolom ${field}.`);
+            return 0;
+        }
+
+        console.log(`✅ Data "${value}" ditemukan sebanyak: ${count} row(s) pada kolom ${field}.`);
+        return count;
+    }
 
 }

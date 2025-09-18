@@ -10,7 +10,7 @@ export default interface BranchMenuScenario extends BaseScenario {
 
     selectMenuCategory(categoryName: string): Promise<void>;
 
-    paginationMenuCategory(categoryName: string): Promise<void>;
+    paginationMenuCategory(arrow: "left" | "right"): Promise<void>;
 
     butonCheckerStation(checker: string, index: number, closeButton?: boolean): Promise<void>;
 
@@ -31,4 +31,6 @@ export default interface BranchMenuScenario extends BaseScenario {
     clickFlagSoldOut(index: number, times?: number): Promise<void>;
 
     branchMenuPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
+
+    validationMenu(value: string, field: "name" | "short" | "sub", opts?: { maxProbe?: number }): Promise<number>;
 }
