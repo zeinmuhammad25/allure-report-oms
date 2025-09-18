@@ -12,7 +12,7 @@ export default class PromotionListLocator extends BaseLocator {
     static clearFilter: string = "//i[@class='glyphicon glyphicon-repeat']";
     //datepicker
     static btnDate: string = "//app-promotion-list//mat-icon[normalize-space()='date_range']";
-    static selectDateMonthAndYearcalendarNav = (side: "left" | "right", nav: "prev" | "next"): string =>
+    static selectDateMonthAndYearCalendarNav = (side: "left" | "right", nav: "prev" | "next"): string =>
         `//ngx-daterangepicker-material//div[contains(@class,'calendar')][contains(@class,'${side}')]//th[contains(@class,'${nav}')]`;
 // Kalender kiri
     static leftCalendarCell = (day: string | number): string => {
