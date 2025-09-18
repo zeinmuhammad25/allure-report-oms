@@ -5,7 +5,7 @@ import AddOrderScenario from "./addOrderClassic.scenario";
 import AddMenuModel from "../../addMenu.model";
 
 
-export default class AddOrderComponent extends BaseOmsPage implements AddOrderScenario {
+export default class AddOrderClassicComponent extends BaseOmsPage implements AddOrderScenario {
     pageUrl: () => string;
 
     shouldHave(): Element[] {

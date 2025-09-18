@@ -30,6 +30,15 @@ import RegularMemberPage from "../../src/modules/oms/regularMember/regularMember
 import RegularMemberDepositPage from "../../src/modules/oms/regularMemberDeposit/regularMemberDeposit.page";
 import RegularMemberWithdrawalPage from "../../src/modules/oms/regularMemberWithdrawal/regularMemberWithdrawal.page";
 import BranchMenuPage from "../../src/modules/oms/branchMenu/branchMenu.page";
+import OrderClassicPage from "../../src/modules/oms/tableList/order/orderClassic.page";
+import AddOrderClassicComponent
+    from "../../src/modules/oms/tableList/order/components/addOrderClassic/addOrderClassic.component";
+import BookOrderClassicComponent
+    from "../../src/modules/oms/tableList/components/bookOrderClassic/bookOrderClassic.component";
+import EditOrderClassicComponents
+    from "../../src/modules/oms/tableList/order/components/editOrderClassic/editOrderClassic.components";
+import PromotionListClassicComponent
+    from "../../src/modules/oms/tableList/components/promotionListClassic/promotionListClassic.component";
 
 export const test = base.extend<OmsPages>({
     synchronizeData: async ({page}, use) => await use(new SynchronizeDataPage(page)),
@@ -61,5 +70,11 @@ export const test = base.extend<OmsPages>({
     regularMember: async ({page}, use) => await use(new RegularMemberPage(page)),
     regularMemberDeposit: async ({page}, use) => await use(new RegularMemberDepositPage(page)),
     regularMemberWithdrawal: async ({page}, use) => await use(new RegularMemberWithdrawalPage(page)),
-    branchMenu: async ({page}, use) => await use(new BranchMenuPage(page))
+    branchMenu: async ({page}, use) => await use(new BranchMenuPage(page)),
+    orderClassic: async ({page}, use) => await use(new OrderClassicPage(page)),
+    addOrderClassic: async ({page}, use) => await use(new AddOrderClassicComponent(page)),
+    bookOrderClassic: async ({page}, use) => await use(new BookOrderClassicComponent(page)),
+    editOrderClassic: async ({page}, use) => await use(new EditOrderClassicComponents(page)),
+    promotionListClassic: async ({page}, use) => await use(new PromotionListClassicComponent(page))
+
 });

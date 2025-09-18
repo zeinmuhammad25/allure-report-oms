@@ -1,6 +1,6 @@
 import BaseScenario from "../../../../../../base/base-scenario";
 
-export default interface EditOrderScenario extends BaseScenario {
+export default interface EditOrderClassicScenario extends BaseScenario {
     editQtyInput(qtyMenu: string): Promise<void>;
 
     editQtySelector(qtySelect: number): Promise<void>;
@@ -23,7 +23,7 @@ export default interface EditOrderScenario extends BaseScenario {
 
     selectMenuExtraCategory(menuName: string): Promise<void>;
 
-    selectMenuExtra(menuName: string,qty?: number): Promise<void>;
+    selectMenuExtra(menuName: string, qty?: number): Promise<void>;
 
     inputNotesMenuInvisible(): Promise<void>;
 
