@@ -1,6 +1,6 @@
 import BaseScenario from "../../../../../base/base-scenario";
 
-export default interface PromotionListScenario extends BaseScenario {
+export default interface PromotionListClassicScenario extends BaseScenario {
     searchPromotion(keyword: string): Promise<void>;
 
     selectPromotion(promotionName: string, value?: number): Promise<void>;
