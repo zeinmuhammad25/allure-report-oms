@@ -1,13 +1,19 @@
 import BaseLocator from "../../../../base/base-locator";
 
-export default class PromotionListLocator extends BaseLocator {
+export default class PromotionListTollsLocator extends BaseLocator {
     static categoryPromotionList = (category: "ALL PROMOTIONS" | "TODAY'S PROMOTIONS"): string =>
         `//button[.//span[normalize-space()="${category}"]]`;
+    static escapeKeyboard: string = "//h5[normalize-space()='Tools']";
     static headerPromotionList =
         (headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status"): string =>
             `//app-promotion-list//button[contains(normalize-space(), '${headerName}')]`;
     static searchPromotionList: string = "//input[@placeholder='Search by name, date, or discount amount']";
+    static dataValidation = (value: string): string =>
+        `//app-promotion-list//td[normalize-space()='${value}']`;
     static showDropDownStatus: string = "//div[@class='mat-select-arrow-wrapper']";
+    static selectAllStatus: string = "//span[@class='mat-checkbox-label']";
+    static selectStatus = (label: string): string =>
+        `//mat-option//span[normalize-space()='${label}']`;
     static closeAfterSet: string = "//div[@class='cdk-overlay-backdrop cdk-overlay-transparent-backdrop cdk-overlay-backdrop-showing']";
     static clearFilter: string = "//i[@class='glyphicon glyphicon-repeat']";
     //datepicker
