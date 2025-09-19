@@ -1,6 +1,6 @@
 import BaseScenario from "../../../../base/base-scenario";
 
-export default interface PromotionListTollsScenario extends BaseScenario {
+export default interface PromotionListToolsScenario extends BaseScenario {
 
     selectPromoCategoryFilter(category: "ALL PROMOTIONS" | "TODAY'S PROMOTIONS"): Promise<void>;
 
