@@ -78,6 +78,6 @@ export const test = base.extend<OmsPages>({
     bookOrderClassic: async ({page}, use) => await use(new BookOrderClassicComponent(page)),
     editOrderClassic: async ({page}, use) => await use(new EditOrderClassicComponents(page)),
     promotionListClassic: async ({page}, use) => await use(new PromotionListClassicComponent(page)),
-    promotionListTolls: async ({page}, use) => await use(new PromotionListToolsPage(page)),
+    promotionListTools: async ({page}, use) => await use(new PromotionListToolsPage(page)),
     branchEventList: async ({page}, use) => await use(new BranchEventListPage(page))
 });
