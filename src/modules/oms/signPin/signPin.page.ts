@@ -4,6 +4,7 @@ import Element from "../../../base/objects/Element";
 import SignPinLocator from "./signPin.locator";
 import StartDayLocator from "../startDay/startDay.locator";
 
+
 export default class SignPinPage extends BaseOmsPage implements SignPinScenario {
 
     pageUrl = (): string => this.urls.get.generalPos.loginPage;
@@ -129,5 +130,43 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
 
     async storeAuthState(): Promise<void> {
         await this._page.context().storageState({path: this.configs.get.storageState});
+    }
+
+    async validateShowStarCashClassic(inputCash: string): Promise<void> {
+        await this.click(SignPinLocator.buttonSignIn);
+        await this.wait(800);
+        const isYesButtonVisible = await this.isVisible(SignPinLocator.validationSignInUserYes);
+        if (isYesButtonVisible) {
+            await this.click(SignPinLocator.validationSignInUserYes);
+        }
+        await this.wait(800);
+        const isPopUpCheckCustomerPaymentsVisible = await this.isVisible(SignPinLocator.popUpCheckCustomerPayment);
+        if (isPopUpCheckCustomerPaymentsVisible) {
+            await this.click(SignPinLocator.buttonPopUpNotNow);
+        }
+        await this.wait(800);
+
+        const isStartingCashVisible = await this.isVisible(StartDayLocator.startingCash);
+        if (isStartingCashVisible) {
+            await this.fill(StartDayLocator.startingCash, inputCash);
+            await this.click(StartDayLocator.escapeKeyboard);
+            await this.expectVisible(StartDayLocator.getLocatorStartDay("Start Shift"));
+            await this.click(StartDayLocator.getLocatorStartDay("Start Shift"));
+            await this.expectVisible(StartDayLocator.getLocatorStartDay("Yes"));
+            await this.click(StartDayLocator.getLocatorStartDay("Yes"));
+
+            const onVisible = async () => {
+                const buttonOk = await this.isVisible(StartDayLocator.getLocatorStartDay("Close"));
+                if (buttonOk) {
+                    await this.click(StartDayLocator.getLocatorStartDay("Close"));
+                }
+            };
+            await this.waitForVisible(StartDayLocator.notificationSuccess, onVisible, 10000, 10);
+            await this.waitForResponse("/table");
+        } else {
+            await this.expectVisible(SignPinLocator.quickServicePopup);
+            await this.click(SignPinLocator.quickServicePopup);
+        }
+
     }
 }

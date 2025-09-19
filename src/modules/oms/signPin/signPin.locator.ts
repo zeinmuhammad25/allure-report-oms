@@ -15,6 +15,7 @@ export default class SignPinLocator extends BaseLocator {
     static tableListSingIn1: string = "//span[contains(text(),'AC ROOM')]";
     static tableListSingIn2: string = "//span[contains(text(),'SMOKING ROOM')]";
     static esbOrderReport: string = "//*[name()='path' and contains(@class,'ng-tns-c7-')]";
+    static quickServicePopup = "//h4[normalize-space()='Quick Service']";
 
     //log Section
     static errorReport: string = "//span[normalize-space()='ERROR REPORT']";
