@@ -69,5 +69,14 @@ test.describe.serial("Tools", () => {
             }, {tools, troubleshoot}, testInfo);
         });
 
-
+    test("[TC_0205692] Validate Logic when User can Test Print Checker only in Troubleshoot sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, troubleshoot}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.Troubleshoot);
+                await troubleshoot.setStation(["KASIR", "CHECKER"], true);
+                await troubleshoot.setStation(["CHECKER"]);
+                await troubleshoot.testPrint();
+                await troubleshoot.closePopUpTroubleShoot();
+            }, {tools, troubleshoot}, testInfo);
+        });
 });
