@@ -17,6 +17,11 @@ export default class TroubleshootComponent extends BaseOmsPage implements Troubl
         await this.click(TroubleshootLocator.testPrintButton);
     }
 
+    async closePopUpTroubleShoot(): Promise<void> {
+        await this.expectVisible(TroubleshootLocator.closePopUp);
+        await this.click(TroubleshootLocator.closePopUp);
+    }
+
     async openDrawerTest(): Promise<void> {
         await this.expectVisible(TroubleshootLocator.openDrawer);
         await this.click(TroubleshootLocator.openDrawer);
