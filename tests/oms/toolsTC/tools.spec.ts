@@ -3,7 +3,7 @@ import {safeTest} from "../../../src/base/utils/safeTest";
 import {ToolsTabs} from "../../../src/modules/oms/tools/ToolsTabs";
 
 test.setTimeout(100000);
-test.describe.serial("Branch Menu", () => {
+test.describe.serial("Tools", () => {
     const tags = "@smokeTest @oms @Tools";
 
     test.beforeEach(async ({terminalID, signPin, sideNavBar, tableList}) => {
@@ -35,5 +35,17 @@ test.describe.serial("Branch Menu", () => {
                 await troubleshoot.closePopUpTroubleShoot();
             }, {tools, troubleshoot}, testInfo);
         });
+
+    test("[TC_0205689] Validate Logic when User can Test Print All Station by check - Select All - in Troubleshoot sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, troubleshoot}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.Troubleshoot);
+                await troubleshoot.setStation(["KASIR", "CHECKER"], true);
+                await troubleshoot.setStation("all");
+                await troubleshoot.testPrint();
+                await troubleshoot.closePopUpTroubleShoot();
+            }, {tools, troubleshoot}, testInfo);
+        });
+
 
 });
