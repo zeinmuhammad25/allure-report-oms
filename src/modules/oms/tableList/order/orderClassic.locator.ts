@@ -20,7 +20,7 @@ export default class OrderClassicLocator extends BaseLocator {
 
     static menuCategoryButton = (menuCategory: string): string => '//app-grid-menu-classic//button//div[normalize-space()=\'${menuCategory}\']'; //New
         static categoryButton = (category: string): string => `//app-grid-menu-classic//button//div[normalize-space()='${category}']`; //New
-    static menuButton = (menu: string): string => `//app-grid-menu-classic//button//div[normalize-space()='${menu}']`; //New
+    static menuButton = (menu: string): string => `//app-grid-menu-classic//button//div[contains(text(),'${menu}')]`; //New
     static deleteMenuButton = (menu: string): string => `//app-order-list//div[span[normalize-space()='${menu}']]` +
         "/following-sibling::div//button[@color='danger']//i[@class='glyphicon glyphicon-remove']";
 
