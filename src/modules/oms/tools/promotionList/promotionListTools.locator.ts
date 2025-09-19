@@ -1,6 +1,6 @@
 import BaseLocator from "../../../../base/base-locator";
 
-export default class PromotionListTollsLocator extends BaseLocator {
+export default class PromotionListToolsLocator extends BaseLocator {
     static categoryPromotionList = (category: "ALL PROMOTIONS" | "TODAY'S PROMOTIONS"): string =>
         `//button[.//span[normalize-space()="${category}"]]`;
     static escapeKeyboard: string = "//h5[normalize-space()='Tools']";
