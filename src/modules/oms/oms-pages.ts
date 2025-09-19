@@ -72,6 +72,6 @@ export type OmsPages = {
     addOrderClassic: AddOrderClassicScenario
     editOrderClassic: EditOrderClassicScenario
     promotionListClassic: PromotionListClassicScenario
-    promotionListTolls: PromotionListToolsScenario
+    promotionListTools: PromotionListToolsScenario
     branchEventList: BranchEventListScenario
 };
