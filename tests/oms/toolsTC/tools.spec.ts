@@ -85,7 +85,17 @@ test.describe.serial("Tools", () => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.Troubleshoot);
                 await troubleshoot.setStation(["KASIR", "CHECKER"], true);
-                await troubleshoot.testPrintDisabled()
+                await troubleshoot.testPrintDisabled();
             }, {tools, troubleshoot}, testInfo);
         });
+
+    test("[TC_0205694] Validate Logic when User can Select Default Station in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.userSetStation("KASIR");
+                await applicationSetting.saveSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
 });
