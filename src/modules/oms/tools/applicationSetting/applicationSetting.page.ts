@@ -2,7 +2,6 @@ import Element from "../../../../base/objects/Element";
 import BaseOmsPage from "../../base-oms-page";
 import ApplicationSettingScenario from "./applicationSetting.scenario";
 import ApplicationSettingLocator from "./applicationSetting.locator";
-import {promises} from "node:dns";
 
 export default class ApplicationSettingPage extends BaseOmsPage implements ApplicationSettingScenario {
     pageUrl = (): string => this.urls.get.toolsSettingPos.toolIndex;
@@ -142,7 +141,7 @@ export default class ApplicationSettingPage extends BaseOmsPage implements Appli
         await this.click(ApplicationSettingLocator.selectESBOrderPrinterStation(station));
     }
 
-    async UserShowOnScreenKeyboard() {
+    async UserShowOnScreenKeyboard(): Promise<void> {
         await this.expectVisible(ApplicationSettingLocator.checkboxShowOnScreenKeyboard);
         await this.click(ApplicationSettingLocator.checkboxShowOnScreenKeyboard);
     }
