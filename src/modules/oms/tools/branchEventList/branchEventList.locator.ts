@@ -2,6 +2,7 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class BranchEventListLocator extends BaseLocator {
 
+    static escapeKeyboard: string = "//h5[normalize-space()='Tools']";
     static btnDateBranchEvent: string = "//button[@aria-label='Open calendar']";
     //datepicker
     static btnMonthAndYear = (label: "Choose month and year" | "Choose date"):
@@ -17,7 +18,8 @@ export default class BranchEventListLocator extends BaseLocator {
     static clearFilter: string = "//i[@class='glyphicon glyphicon-repeat']";
     static headerNameAndShorting = (headerName: "Ref Number" | "Event Subject" | "Create By"): string =>
         `//app-branch-event-list//button[contains(normalize-space(), '${headerName}')]`;
-    static btnViewDetail = (value: string): string => `//app-branch-event-list//td[normalize-space()='${value}']`;
+    static btnViewDetail = (value: string,index: number): string => `(//app-branch-event-list//td[normalize-space()='${value}'])[${index}`;
+    static dataValidation = (value: string): string => `//app-branch-event-list//td[normalize-space()='${value}']`;
     static closeDetail: string = "//app-branch-event//span[normalize-space()='Close']";
     static paginationButton = (type: "first" | "previous" | "next" | "last"): string =>
         `//app-branch-event-list//button[contains(@class, 'mat-paginator-navigation-${type}')]`;
