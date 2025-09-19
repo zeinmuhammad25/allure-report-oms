@@ -58,5 +58,16 @@ test.describe.serial("Tools", () => {
             }, {tools, troubleshoot}, testInfo);
         });
 
+    test("[TC_0205691] Validate Logic when User can Test Print KASIR only in Troubleshoot sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, troubleshoot}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.Troubleshoot);
+                await troubleshoot.setStation(["KASIR", "CHECKER"], true);
+                await troubleshoot.setStation(["KASIR"]);
+                await troubleshoot.testPrint();
+                await troubleshoot.closePopUpTroubleShoot();
+            }, {tools, troubleshoot}, testInfo);
+        });
+
 
 });
