@@ -16,4 +16,6 @@ export default interface TroubleshootScenario extends BaseScenario {
     stationInForm(value: string): Promise<void>;
 
     actionButtonForm(stationName: "Test Print Bill" | "Test Print Menu" | "Cancel");
+
+    closePopUpTroubleShoot(): Promise<void>;
 }
