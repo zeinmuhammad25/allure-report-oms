@@ -33,6 +33,8 @@ import BookOrderClassicScenario from "./tableList/components/bookOrderClassic/bo
 import AddOrderClassicScenario from "./tableList/order/components/addOrderClassic/addOrderClassic.scenario";
 import EditOrderClassicScenario from "./tableList/order/components/editOrderClassic/editOrderClassic.scenario";
 import PromotionListClassicScenario from "./tableList/components/promotionListClassic/promotionListClassic.scenario";
+import PromotionListTollsScenario from "./tools/promotionList/promotionListTolls.scenario";
+import BranchEventListScenario from "./tools/branchEventList/branchEventList.scenario";
 
 export type OmsPages = {
     synchronizeData: SynchronizeDataScenario
@@ -70,4 +72,6 @@ export type OmsPages = {
     addOrderClassic: AddOrderClassicScenario
     editOrderClassic: EditOrderClassicScenario
     promotionListClassic: PromotionListClassicScenario
+    promotionListTolls: PromotionListTollsScenario
+    branchEventList: BranchEventListScenario
 };
