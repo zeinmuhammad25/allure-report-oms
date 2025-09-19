@@ -79,4 +79,13 @@ test.describe.serial("Tools", () => {
                 await troubleshoot.closePopUpTroubleShoot();
             }, {tools, troubleshoot}, testInfo);
         });
+
+    test("[TC_0205693] Validate Logic when User cannot Test Print while not selecting any Stations in Toubleshoot sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, troubleshoot}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.Troubleshoot);
+                await troubleshoot.setStation(["KASIR", "CHECKER"], true);
+                await troubleshoot.testPrintDisabled()
+            }, {tools, troubleshoot}, testInfo);
+        });
 });
