@@ -47,5 +47,16 @@ test.describe.serial("Tools", () => {
             }, {tools, troubleshoot}, testInfo);
         });
 
+    test("[TC_0205690] Validate Logic when User can Test Print All Station manually in Troubleshoot sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, troubleshoot}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.Troubleshoot);
+                await troubleshoot.setStation(["KASIR", "CHECKER"], true);
+                await troubleshoot.setStation(["KASIR", "CHECKER"]);
+                await troubleshoot.testPrint();
+                await troubleshoot.closePopUpTroubleShoot();
+            }, {tools, troubleshoot}, testInfo);
+        });
+
 
 });
