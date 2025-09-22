@@ -107,4 +107,14 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
+    test("[TC_0205696] Validate Logic when User can Input Valid Timer First Warning in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.userFirstWaringTime({}, 1);
+                await applicationSetting.saveSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
+
 });
