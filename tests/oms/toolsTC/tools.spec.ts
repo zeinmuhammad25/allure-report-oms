@@ -259,4 +259,16 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
+    test("[TC_0205711] Validate Logic when User can Deactivate ESO Server in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.userSetSelfOrderServer();
+                await applicationSetting.saveSetting();
+                await applicationSetting.userOffSelfOrderServerStation();
+                await applicationSetting.closePopUpApplicationSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
+
 });
