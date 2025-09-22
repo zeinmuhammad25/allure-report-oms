@@ -161,7 +161,18 @@ test.describe.serial("Tools", () => {
         {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.ApplicationSetting);
-                await applicationSetting.userDineInSalesMode(["AT INCLUSIVE","AT EXCLUSIVE"]);
+                await applicationSetting.showDropDownDineISalesMode();
+                await applicationSetting.userDineInSalesMode(["AT INCLUSIVE", "AT EXCLUSIVE"]);
+                await applicationSetting.saveSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
+    test("[TC_0205703] Validate Logic when User can Deselect all Sales Mode for Dine-In in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.showDropDownDineISalesMode();
+                await applicationSetting.userDineInSalesMode(["AT INCLUSIVE", "AT EXCLUSIVE"]);
                 await applicationSetting.saveSetting();
             }, {tools, applicationSetting}, testInfo);
         });
