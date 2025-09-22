@@ -491,4 +491,15 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
+    test("[TC_0205735] Validate Logic when User can Sort Descending Discount Today's Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("TODAY'S PROMOTIONS");
+                await promotionListTools.shortingDescPromotionList("Discount");
+                await promotionListTools.dataValidation("100.000");
+            }, {tools, promotionListTools}, testInfo);
+        });
+
+
 });
