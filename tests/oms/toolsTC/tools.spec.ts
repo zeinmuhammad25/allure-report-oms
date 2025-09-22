@@ -413,4 +413,12 @@ test.describe.serial("Tools", () => {
             }, {tools, synchronizeData}, testInfo);
         });
 
+    test("[TC_0205727] Validate Logic when User can navigate to Today's Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("ALL PROMOTIONS");
+            }, {tools, promotionListTools}, testInfo);
+        });
+
 });
