@@ -116,5 +116,13 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
+    test("[TC_0205697] Validate Logic when User cannot Input alphabeth Timer First Warning in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.userFirstWaringTime({}, "asdasda");
+            }, {tools, applicationSetting}, testInfo);
+        });
+
 
 });
