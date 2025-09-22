@@ -481,4 +481,14 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
+    test("[TC_0205734] Validate Logic when User can Sort Ascending Discount Today's Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("TODAY'S PROMOTIONS");
+                await promotionListTools.shortingAscPromotionList("Discount");
+                await promotionListTools.dataValidation("BUY X GET FREE Y Category ACS");
+            }, {tools, promotionListTools}, testInfo);
+        });
+
 });
