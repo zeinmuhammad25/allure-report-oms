@@ -197,4 +197,14 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
+    test("[TC_0205706] Validate Logic when User can Activate Direct Serving in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.userSetDirectServing();
+                await applicationSetting.userHideNotesSetDirectServing();
+                await applicationSetting.saveSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
 });
