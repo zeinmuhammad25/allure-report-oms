@@ -149,7 +149,7 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
-    test("[TC_0205701] Validate Logic when User cannot Input alphabeth Timer Second Warning in Application Setting sub-tab menu on Tools",
+    test("[TC_0205701] Validate Logic when User cannot Input symbol Timer Second Warning in Application Setting sub-tab menu on Tools",
         {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.ApplicationSetting);
