@@ -322,5 +322,13 @@ test.describe.serial("Tools", () => {
             }, {tools, synchronizeData}, testInfo);
         });
 
-
+    test("[TC_0205717] Validate Logic when User can Deactivate Auto Sync POS in Synchronize Data sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, synchronizeData}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.SynchronizeData);
+                await synchronizeData.synchronizeDataAutoSync();
+                await synchronizeData.validationUnAutoSyncPOS();
+                await synchronizeData.closePopUpAfterSync();
+            }, {tools, synchronizeData}, testInfo);
+        });
 });
