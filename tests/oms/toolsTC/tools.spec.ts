@@ -95,6 +95,7 @@ test.describe.serial("Tools", () => {
                 await tools.selectTab(ToolsTabs.ApplicationSetting);
                 await applicationSetting.userSetStation("KASIR");
                 await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
             }, {tools, applicationSetting}, testInfo);
         });
 
@@ -104,6 +105,7 @@ test.describe.serial("Tools", () => {
                 await tools.selectTab(ToolsTabs.ApplicationSetting);
                 await applicationSetting.userSetQrCodeScanner("Device Camera");
                 await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
             }, {tools, applicationSetting}, testInfo);
         });
 
@@ -113,6 +115,7 @@ test.describe.serial("Tools", () => {
                 await tools.selectTab(ToolsTabs.ApplicationSetting);
                 await applicationSetting.userFirstWaringTime({}, 1);
                 await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
             }, {tools, applicationSetting}, testInfo);
         });
 
@@ -164,6 +167,7 @@ test.describe.serial("Tools", () => {
                 await applicationSetting.showDropDownDineISalesMode();
                 await applicationSetting.userDineInSalesMode(["AT INCLUSIVE", "AT EXCLUSIVE"]);
                 await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
             }, {tools, applicationSetting}, testInfo);
         });
 
@@ -174,6 +178,7 @@ test.describe.serial("Tools", () => {
                 await applicationSetting.showDropDownDineISalesMode();
                 await applicationSetting.userDineInSalesMode(["AT INCLUSIVE", "AT EXCLUSIVE"]);
                 await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
             }, {tools, applicationSetting}, testInfo);
         });
 
@@ -184,6 +189,7 @@ test.describe.serial("Tools", () => {
                 await applicationSetting.showDropDownQuickServiceSalesMode();
                 await applicationSetting.userQuickServiceSalesMode(["AT INCLUSIVE", "AT EXCLUSIVE"]);
                 await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
             }, {tools, applicationSetting}, testInfo);
         });
 
@@ -194,6 +200,7 @@ test.describe.serial("Tools", () => {
                 await applicationSetting.showDropDownQuickServiceSalesMode();
                 await applicationSetting.userQuickServiceSalesMode(["AT INCLUSIVE", "AT EXCLUSIVE"]);
                 await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
             }, {tools, applicationSetting}, testInfo);
         });
 
@@ -204,6 +211,17 @@ test.describe.serial("Tools", () => {
                 await applicationSetting.userSetDirectServing();
                 await applicationSetting.userHideNotesSetDirectServing();
                 await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
+    test("[TC_0205707] Validate Logic when User can Deactivate Direct Serving in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.userSetDirectServing();
+                await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
             }, {tools, applicationSetting}, testInfo);
         });
 
