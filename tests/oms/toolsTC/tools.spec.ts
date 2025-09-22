@@ -368,4 +368,13 @@ test.describe.serial("Tools", () => {
             }, {tools, synchronizeData}, testInfo);
         });
 
+    test("[TC_0205722] Validate Logic when User can Select Menu only in Synchronize Data sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, synchronizeData}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.SynchronizeData);
+                await synchronizeData.synchronizeDataMenu();
+                await synchronizeData.closePopUpAfterSync();
+            }, {tools, synchronizeData}, testInfo);
+        });
+
 });
