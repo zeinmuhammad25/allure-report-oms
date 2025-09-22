@@ -247,4 +247,16 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
+    test("[TC_0205710] Validate Logic when User can Activate ESO Server in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.userSetSelfOrderServer();
+                await applicationSetting.dropDownSelfOrderServer();
+                await applicationSetting.userSetSelfOrderServerStation("CHECKER");
+                await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
 });
