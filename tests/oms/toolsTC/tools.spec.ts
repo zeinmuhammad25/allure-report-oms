@@ -318,7 +318,7 @@ test.describe.serial("Tools", () => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.SynchronizeData);
                 await synchronizeData.synchronizeDataAutoSync();
-                await synchronizeData.closePopUpAfterSync();
+                await synchronizeData.closePopUpAfterUpdate();
             }, {tools, synchronizeData}, testInfo);
         });
 
@@ -328,6 +328,15 @@ test.describe.serial("Tools", () => {
                 await tools.selectTab(ToolsTabs.SynchronizeData);
                 await synchronizeData.synchronizeDataAutoSync();
                 await synchronizeData.validationUnAutoSyncPOS();
+                await synchronizeData.closePopUpAfterUpdate();
+            }, {tools, synchronizeData}, testInfo);
+        });
+
+    test("[TC_0205718] Validate Logic when User can Select All Data in Synchronize Data sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, synchronizeData}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.SynchronizeData);
+                await synchronizeData.synchronizeDataAll();
                 await synchronizeData.closePopUpAfterSync();
             }, {tools, synchronizeData}, testInfo);
         });
