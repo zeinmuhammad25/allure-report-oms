@@ -157,4 +157,13 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
+    test("[TC_0205702] Validate Logic when User can Select Sales Mode for Dine-In in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.userDineInSalesMode(["AT INCLUSIVE","AT EXCLUSIVE"]);
+                await applicationSetting.saveSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
 });
