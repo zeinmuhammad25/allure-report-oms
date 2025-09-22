@@ -230,8 +230,8 @@ test.describe.serial("Tools", () => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.ApplicationSetting);
                 await applicationSetting.setCustomerDisplay("Pole Display");
-                await applicationSetting.inputLengthPoleDisplay({},3);
-                await applicationSetting.inputPortPoleDisplay({},3);
+                await applicationSetting.inputLengthPoleDisplay({}, 3);
+                await applicationSetting.inputPortPoleDisplay({}, 3);
                 await applicationSetting.saveSetting();
                 await applicationSetting.closePopUpApplicationSetting();
             }, {tools, applicationSetting}, testInfo);
@@ -288,6 +288,16 @@ test.describe.serial("Tools", () => {
                 await tools.selectTab(ToolsTabs.ApplicationSetting);
                 await applicationSetting.dropDownSelfOrderServer();
                 await applicationSetting.userSetSelfOrderServerStation("No Print");
+                await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
+    test("[TC_0205714] Validate Logic when User can Activate On-Screen Keyboard in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.UserShowOnScreenKeyboard();
                 await applicationSetting.saveSetting();
                 await applicationSetting.closePopUpApplicationSetting();
             }, {tools, applicationSetting}, testInfo);
