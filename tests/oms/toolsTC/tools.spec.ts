@@ -441,4 +441,14 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
+    test("[TC_0205730] Validate Logic when User can Sort Ascending End Date Today's Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("TODAY'S PROMOTIONS");
+                await promotionListTools.shortingAscDeposit("End Date");
+                await promotionListTools.dataValidation("31-12-2025 23:55");
+            }, {tools, promotionListTools}, testInfo);
+        });
+
 });
