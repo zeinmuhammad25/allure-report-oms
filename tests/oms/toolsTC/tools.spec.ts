@@ -187,5 +187,14 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
+    test("[TC_0205705] Validate Logic when User can Deselect all Sales Mode for Quick Service in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.showDropDownQuickServiceSalesMode();
+                await applicationSetting.userQuickServiceSalesMode(["AT INCLUSIVE", "AT EXCLUSIVE"]);
+                await applicationSetting.saveSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
 
 });
