@@ -303,5 +303,15 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
+    test("[TC_0205715] Validate Logic when User can Deactivate On-Screen Keyboard in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.UserShowOnScreenKeyboard();
+                await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
 
 });
