@@ -340,4 +340,13 @@ test.describe.serial("Tools", () => {
                 await synchronizeData.closePopUpAfterSync();
             }, {tools, synchronizeData}, testInfo);
         });
+
+    test("[TC_0205719] Validate Logic when User can Select Branch Settings only in Synchronize Data sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, synchronizeData}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.SynchronizeData);
+                await synchronizeData.synchronizeDataBranchSetting();
+                await synchronizeData.closePopUpAfterSync();
+            }, {tools, synchronizeData}, testInfo);
+        });
 });
