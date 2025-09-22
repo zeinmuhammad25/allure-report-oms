@@ -225,4 +225,16 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
+    test("[TC_0205708] Validate Logic when User can Activate Customer Display in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.setCustomerDisplay("Pole Display");
+                await applicationSetting.inputLengthPoleDisplay({},3);
+                await applicationSetting.inputPortPoleDisplay({},3);
+                await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
 });
