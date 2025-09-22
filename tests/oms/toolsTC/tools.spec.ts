@@ -313,5 +313,14 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
+    test("[TC_0205716] Validate Logic when User can Activate Auto Sync POS in Synchronize Data sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, synchronizeData}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.SynchronizeData);
+                await synchronizeData.synchronizeDataAutoSync();
+                await synchronizeData.closePopUpAfterSync();
+            }, {tools, synchronizeData}, testInfo);
+        });
+
 
 });
