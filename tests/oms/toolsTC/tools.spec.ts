@@ -270,5 +270,17 @@ test.describe.serial("Tools", () => {
             }, {tools, applicationSetting}, testInfo);
         });
 
+    test("[TC_0205712] Validate Logic when User can Select ESO Printer Station in Application Setting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, applicationSetting}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.ApplicationSetting);
+                await applicationSetting.userSetSelfOrderServer();
+                await applicationSetting.dropDownSelfOrderServer();
+                await applicationSetting.userSetSelfOrderServerStation("KASIR");
+                await applicationSetting.saveSetting();
+                await applicationSetting.closePopUpApplicationSetting();
+            }, {tools, applicationSetting}, testInfo);
+        });
+
 
 });
