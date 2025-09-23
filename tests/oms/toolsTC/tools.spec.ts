@@ -511,13 +511,23 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
-    test("[TC_0205737] Validate Logic when User can Sort Descending Discount Today's Promotions list in Promotion List sub-tab menu on Tools",
+    test("[TC_0205737] Validate Logic when User can Sort Descending Type Today's Promotions list in Promotion List sub-tab menu on Tools",
         {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.PromotionList);
                 await promotionListTools.selectPromoCategoryFilter("TODAY'S PROMOTIONS");
                 await promotionListTools.shortingDescPromotionList("Type");
                 await promotionListTools.dataValidation("SEPTEMBER SPECIAL DISCOUNT 50%");
+            }, {tools, promotionListTools}, testInfo);
+        });
+
+    test("[TC_0205738] Validate Logic when User can Sort Ascending Status Today's Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("TODAY'S PROMOTIONS");
+                await promotionListTools.shortingAscPromotionList("Status");
+                await promotionListTools.dataValidation("FREE BUKAN SF");
             }, {tools, promotionListTools}, testInfo);
         });
 
