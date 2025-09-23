@@ -1040,7 +1040,7 @@ test.describe.serial("Tools", () => {
             }, {tools, branchEventList}, testInfo);
         });
 
-    test("[TC_0205781] Validate Logic when User can sort Ascending Event Subject in Branch Event List sub-tab menu on Tools",
+    test("[TC_0205781] Validate Logic when User can sort Descending Event Subject in Branch Event List sub-tab menu on Tools",
         {tag: tags + "@positive"}, async ({tools, branchEventList}, testInfo) => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.BranchEventList);
@@ -1051,6 +1051,20 @@ test.describe.serial("Tools", () => {
                 await branchEventList.datePickerDate("1");
                 await branchEventList.shortingDescBranchEventList("Event Subject");
                 await branchEventList.dataValidation("Push Data");
+            }, {tools, branchEventList}, testInfo);
+        });
+
+    test("[TC_0205782] Validate Logic when User can sort Ascending Created By in Branch Event List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, branchEventList}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.BranchEventList);
+                await branchEventList.clickButtonFilterDate();
+                await branchEventList.selectMonthAndYear("Choose month and year");
+                await branchEventList.datePickerYear("2025");
+                await branchEventList.datePickerMonth("SEP");
+                await branchEventList.datePickerDate("1");
+                await branchEventList.shortingAscBranchEventList("Created By");
+                await branchEventList.dataValidation("-");
             }, {tools, branchEventList}, testInfo);
         });
 
