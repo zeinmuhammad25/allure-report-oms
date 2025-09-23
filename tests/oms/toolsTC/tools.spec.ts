@@ -1174,5 +1174,31 @@ test.describe.serial("Tools", () => {
             }, {tools, branchEventList}, testInfo);
         });
 
+    test("[TC_0205790] Validate Logic when User can Activate Trial Mode in Trial Mode sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, terminalID, signPin, sideNavBar, tableList}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.TrialMode);
+                await tools.activateTrialMode();
+                await tools.setActivateTrialMode();
+                await terminalID.closeAfterTrialModeSync();
+                await terminalID.performTerminalID();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+                await sideNavBar.gotoPageTools();
+                await tools.selectTab(ToolsTabs.TrialMode);
+                await tools.deActivateTrialMode();
+                await tools.setDeActivateTrialMode();
+                await terminalID.closeAfterTrialModeSync();
+                await terminalID.performTerminalID();
+                await signPin.inputPinByTouch("22");
+                await signPin.validateShowStarCash("20.000");
+                await signPin.storeAuthState();
+                await tableList.goHere();
+                await signPin.closePopUpAlert();
+                await sideNavBar.gotoPageTools();
+            }, {tools, terminalID, signPin, sideNavBar, tableList}, testInfo);
+        });
+
 
 });
