@@ -573,5 +573,16 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
+    test("[TC_0205742] Validate Logic when User can input Valid Search All Promotions in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("ALL PROMOTIONS");
+                await promotionListTools.searchPromotionList("BUY X GET FREE Y");
+                await promotionListTools.dataValidation("BUY X GET FREE Y Category ACS");
+                await promotionListTools.dataValidation("BUY X GET FREE Y ACS");
+            }, {tools, promotionListTools}, testInfo);
+        });
+
 
 });
