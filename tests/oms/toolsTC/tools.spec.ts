@@ -1012,4 +1012,19 @@ test.describe.serial("Tools", () => {
             }, {tools, branchEventList}, testInfo);
         });
 
+    test("[TC_0205779] Validate Logic when User can sort Descending Ref Number in Branch Event List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, branchEventList}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.BranchEventList);
+                await branchEventList.clickButtonFilterDate();
+                await branchEventList.selectMonthAndYear("Choose month and year");
+                await branchEventList.datePickerYear("2025");
+                await branchEventList.datePickerMonth("SEP");
+                await branchEventList.datePickerDate("1");
+                await branchEventList.shortingDescBranchEventList("Ref Number");
+                await branchEventList.dataValidation("Saacs175669152772");
+            }, {tools, branchEventList}, testInfo);
+        });
+
+
 });
