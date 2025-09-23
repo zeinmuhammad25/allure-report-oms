@@ -49,15 +49,40 @@ export default class ToolsPage extends BaseOmsPage implements ToolsScenario {
         await this.click(cell);
     }
 
+    async showDropDownReportType(): Promise<void> {
+        await this.expectVisible(ToolsLocator.showDropDownReportType);
+        await this.click(ToolsLocator.showDropDownReportType);
+    }
+
+    async setType(values: string | string[], opts?: { close?: boolean }): Promise<void> {
+        const shouldClose = opts?.close ?? true;
+        const items = (Array.isArray(values) ? values : [values])
+            .filter(v => v != null)
+            .map(v => String(v).trim())
+            .filter(v => v.length > 0);
+        for (const v of items) {
+            const option = ToolsLocator.selectType(v);
+            await this.expectVisible(option);
+            await this.click(option);
+        }
+        if (shouldClose && (await this.isVisible?.(ToolsLocator.closeAfterSet))) {
+            await this.click(ToolsLocator.closeAfterSet);
+        }
+        await this.wait(500);
+    }
+
     async applyDateInFilterDate(): Promise<void> {
         await this.expectVisible(ToolsLocator.btnApplyDate);
         await this.click(ToolsLocator.btnApplyDate);
     }
 
-    async printReport(): Promise<void> {
+    async printReport(opts?: { printReport?: boolean; }): Promise<void> {
         await this.expectVisible(ToolsLocator.printReport);
         await this.click(ToolsLocator.printReport);
-        await this.click(ToolsLocator.closerPopUp);
+        const expectTrue = async (flag: boolean | undefined, text: string) => {
+            if (flag) await this.expectTextVisible(text, true);
+        };
+        await expectTrue(opts?.printReport, "Please select the report");
     }
 
     //softwareUpdate
@@ -95,6 +120,11 @@ export default class ToolsPage extends BaseOmsPage implements ToolsScenario {
     async cancelActiveAndDeActive(): Promise<void> {
         await this.expectVisible(ToolsLocator.cancelBtn);
         await this.click(ToolsLocator.cancelBtn);
+    }
+
+    async closePopUp(): Promise<void> {
+        await this.expectVisible(ToolsLocator.closePopUp);
+        await this.click(ToolsLocator.closePopUp);
     }
 
 
