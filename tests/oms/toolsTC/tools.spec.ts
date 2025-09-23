@@ -789,5 +789,16 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
+    test("[TC_0205763] Validate Logic when User can Sort Descending Status All Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("ALL PROMOTIONS");
+                await promotionListTools.shortingDescPromotionList("Status");
+                await promotionListTools.dataValidation("SEPTEMBER SPECIAL DISCOUNT 50%");
+            }, {tools, promotionListTools}, testInfo);
+        });
+
+
 
 });
