@@ -1200,5 +1200,14 @@ test.describe.serial("Tools", () => {
             }, {tools, terminalID, signPin, sideNavBar, tableList}, testInfo);
         });
 
+    test("[TC_0205791] Validate Logic when User can Expand Mobile Device Section in Installation Guide sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.InstallationGuide);
+                await tools.showAndCloseGuide("Mobile Device");
+                await tools.showAndCloseGuide("Mobile Device");
+            }, {tools}, testInfo);
+        });
+
 
 });
