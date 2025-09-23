@@ -16,9 +16,9 @@ export default class BranchEventListLocator extends BaseLocator {
     static refNumberField: string = "//input[@placeholder='Search by Ref number']";
     static eventSubjectField: string = "//input[@placeholder='Search by Event Subject']";
     static clearFilter: string = "//i[@class='glyphicon glyphicon-repeat']";
-    static headerNameAndShorting = (headerName: "Ref Number" | "Event Subject" | "Create By"): string =>
+    static headerNameAndShorting = (headerName: "Ref Number" | "Event Subject" | "Created By"): string =>
         `//app-branch-event-list//button[contains(normalize-space(), '${headerName}')]`;
-    static btnViewDetail = (value: string,index: number): string => `(//app-branch-event-list//td[normalize-space()='${value}'])[${index}`;
+    static btnViewDetail = (value: string, index: number): string => `(//app-branch-event-list//td[normalize-space()='${value}'])[${index}]`;
     static dataValidation = (value: string): string => `//app-branch-event-list//td[normalize-space()='${value}']`;
     static closeDetail: string = "//app-branch-event//span[normalize-space()='Close']";
     static paginationButton = (type: "first" | "previous" | "next" | "last"): string =>
