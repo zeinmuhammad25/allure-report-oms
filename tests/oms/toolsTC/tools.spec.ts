@@ -600,8 +600,8 @@ test.describe.serial("Tools", () => {
                 await tools.selectTab(ToolsTabs.PromotionList);
                 await promotionListTools.selectPromoCategoryFilter("ALL PROMOTIONS");
                 await promotionListTools.clickFilterDate();
-                await promotionListTools.datePickerFilterDate("1","left");
-                await promotionListTools.datePickerFilterDate("30","left");
+                await promotionListTools.datePickerFilterDate("1", "left");
+                await promotionListTools.datePickerFilterDate("30", "left");
                 await promotionListTools.applyDateInFilterDate();
                 await promotionListTools.dataValidation("SEPTEMBER SPECIAL DISCOUNT 50%");
             }, {tools, promotionListTools}, testInfo);
@@ -629,6 +629,16 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
+    test("[TC_0205748] Validate Logic when User can select Ongoing Status All Promotions in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("ALL PROMOTIONS");
+                await promotionListTools.showDropDown();
+                await promotionListTools.setStatus("Ongoing");
+                await promotionListTools.dataValidation("SEPTEMBER SPECIAL DISCOUNT 50%");
+            }, {tools, promotionListTools}, testInfo);
+        });
 
 
 });
