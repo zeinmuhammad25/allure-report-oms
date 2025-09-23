@@ -899,7 +899,7 @@ test.describe.serial("Tools", () => {
                 await branchEventList.dataValidation("Open Printer");
                 await branchEventList.clickDetailBranchEvent("Open Printer", 1);
                 await branchEventList.closeDetailBranchEvent();
-            }, {tools}, testInfo);
+            }, {tools,branchEventList}, testInfo);
         });
 
     test("[TC_0205772] Validate Logic when User can input Valid Ref Number in Branch Event List sub-tab menu on Tools",
@@ -915,7 +915,7 @@ test.describe.serial("Tools", () => {
                 await branchEventList.dataValidation("Saacs175645036369");
                 await branchEventList.clickDetailBranchEvent("Saacs175645036369", 1);
                 await branchEventList.closeDetailBranchEvent();
-            }, {tools}, testInfo);
+            }, {tools,branchEventList}, testInfo);
         });
 
     test("[TC_0205773] Validate Logic when User can input Valid Ref Number in Branch Event List sub-tab menu on Tools",
@@ -931,7 +931,7 @@ test.describe.serial("Tools", () => {
                 await branchEventList.dataValidation("Saacs175645036369");
                 await branchEventList.clickDetailBranchEvent("Saacs175645036369", 1);
                 await branchEventList.closeDetailBranchEvent();
-            }, {tools}, testInfo);
+            }, {tools, branchEventList}, testInfo);
         });
 
 
