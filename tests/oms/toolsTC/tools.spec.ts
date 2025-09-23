@@ -718,4 +718,14 @@ test.describe.serial("Tools", () => {
                 await promotionListTools.dataValidation("22-06-2026 16:10");
             }, {tools, promotionListTools}, testInfo);
         });
+
+    test("[TC_0205756] Validate Logic when User can Sort Ascending Min. Subtotal All Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("ALL PROMOTIONS");
+                await promotionListTools.shortingAscPromotionList("Min. Subtotal");
+                await promotionListTools.dataValidation("Free Item Silver 2 - N");
+            }, {tools, promotionListTools}, testInfo);
+        });
 });
