@@ -799,6 +799,15 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
-
+    test("[TC_0205764] Validate Logic when User can navigate to the Next Page All Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("ALL PROMOTIONS");
+                await promotionListTools.promotionListFormPagination("next");
+                await promotionListTools.promotionListFormPagination("next");
+                await promotionListTools.dataValidation("DISCOUNT % MENU CATEGORY DETAIL");
+            }, {tools, promotionListTools}, testInfo);
+        });
 
 });
