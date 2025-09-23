@@ -451,7 +451,7 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
-    test("[TC_0205731] Validate Logic when User can Sort Ascending End Date Today's Promotions list in Promotion List sub-tab menu on Tools",
+    test("[TC_0205731] Validate Logic when User can Sort Descending End Date Today's Promotions list in Promotion List sub-tab menu on Tools",
         {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.PromotionList);
@@ -709,5 +709,13 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
-
+    test("[TC_0205755] Validate Logic when User can Sort Descending End Date All Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("ALL PROMOTIONS");
+                await promotionListTools.shortingDescPromotionList("End Date");
+                await promotionListTools.dataValidation("22-06-2026 16:10");
+            }, {tools, promotionListTools}, testInfo);
+        });
 });
