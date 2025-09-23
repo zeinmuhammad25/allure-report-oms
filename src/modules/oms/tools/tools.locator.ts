@@ -7,6 +7,10 @@ export default class ToolsLocator extends BaseLocator {
 
     //report
     static btnDateReport: string = "//mat-icon[normalize-space()='date_range']";
+    static showDropDownReportType: string = "(//div[@class='mat-select-arrow-wrapper'])[1]";
+    static selectType = (label: string): string =>
+        `//mat-option//span[normalize-space()='${label}']`;
+    static closeAfterSet: string = "//div[@class='cdk-overlay-backdrop cdk-overlay-transparent-backdrop cdk-overlay-backdrop-showing']";
     static selectDateMonthAndYearCalendarNav = (side: "left" | "right", nav: "prev" | "next"): string =>
         `//ngx-daterangepicker-material//div[contains(@class,'calendar')][contains(@class,'${side}')]//th[contains(@class,'${nav}')]`;
     // Kalender kiri
@@ -29,7 +33,7 @@ export default class ToolsLocator extends BaseLocator {
     };
     static btnApplyDate: string = "//ngx-daterangepicker-material//button[normalize-space()='Apply']";
     static printReport: string = "//button[.//span[contains(normalize-space(.),'Print')]]";
-    static closerPopUp: string = "//span[normalize-space()='Ok']";
+    static closePopUp: string = "//span[normalize-space()='Ok']";
 
     //softwareUpdate
     static checkForUpdate: string = "//span[normalize-space()='Check for Update']";
