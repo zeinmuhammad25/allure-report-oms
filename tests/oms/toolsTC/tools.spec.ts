@@ -822,12 +822,27 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
-    test("[TC_0205766] Validate Logic when User can select Single Date Report Date in Reporting sub-tab menu on Tools",
+    test("[TC_0205766] Validate Logic when User can select Date Range Report Date in Reporting sub-tab menu on Tools",
         {tag: tags + "@positive"}, async ({tools}, testInfo) => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.Reporting);
                 await tools.clickFilterDate();
                 await tools.datePickerFilterDate("1","left");
+                await tools.applyDateInFilterDate();
+                await tools.showDropDownReportType();
+                await tools.setType("Print Sales By Menu Group");
+                await tools.printReport();
+                await tools.closePopUp();
+            }, {tools}, testInfo);
+        });
+
+    test("[TC_0205767] Validate Logic when User can select Single Date Report Date in Reporting sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.Reporting);
+                await tools.clickFilterDate();
+                await tools.datePickerFilterDate("1","left");
+                await tools.datePickerFilterDate("30","left");
                 await tools.applyDateInFilterDate();
                 await tools.showDropDownReportType();
                 await tools.setType("Print Sales By Menu Group");
