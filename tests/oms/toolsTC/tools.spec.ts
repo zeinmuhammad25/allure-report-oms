@@ -501,5 +501,15 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
+    test("[TC_0205736] Validate Logic when User can Sort Ascending Type Today's Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("TODAY'S PROMOTIONS");
+                await promotionListTools.shortingAscPromotionList("Type");
+                await promotionListTools.dataValidation("FREE BUKAN SF");
+            }, {tools, promotionListTools}, testInfo);
+        });
+
 
 });
