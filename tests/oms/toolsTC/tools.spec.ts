@@ -552,6 +552,17 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
+    test("[TC_0205741] Validate Logic when User can navigate to the Previous Page Today's Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("TODAY'S PROMOTIONS");
+                await promotionListTools.promotionListFormPagination("next");
+                await promotionListTools.promotionListFormPagination("next");
+                await promotionListTools.promotionListFormPagination("previous");
+                await promotionListTools.dataValidation("FREE ITEM MENU CATEGORY DETAIL");
+            }, {tools, promotionListTools}, testInfo);
+        });
 
 
 });
