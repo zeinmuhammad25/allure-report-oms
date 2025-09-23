@@ -45,4 +45,7 @@ export default class ToolsLocator extends BaseLocator {
     static activateBtn: string = "//app-custom-confirm-dialog//span[normalize-space()='Activate']";
     static deActivateBtn: string = "//app-custom-confirm-dialog//span[normalize-space()='Deactivate']";
     static cancelBtn: string = "//app-custom-confirm-dialog//span[normalize-space()='Cancel']";
+
+    //guide
+    static showGuide = (guide: string): string => `//div//h4[normalize-space()='${guide}']`;
 }
