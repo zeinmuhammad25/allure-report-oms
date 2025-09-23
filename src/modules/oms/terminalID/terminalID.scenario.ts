@@ -17,5 +17,6 @@ export default interface TerminalIDScenario extends BaseScenario {
 
     disableButtonSave(): Promise<void>;
 
+    closeAfterTrialModeSync(): Promise<void>;
 
 }
