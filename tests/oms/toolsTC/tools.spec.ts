@@ -959,14 +959,14 @@ test.describe.serial("Tools", () => {
                 await branchEventList.datePickerDate("1");
                 await branchEventList.searchEventSubject("Push Data");
                 await branchEventList.dataValidation("Push Data");
-                await branchEventList.clickDetailBranchEvent("Push Data",1);
+                await branchEventList.clickDetailBranchEvent("Push Data", 1);
                 await branchEventList.closeDetailBranchEvent();
-                await branchEventList.clickDetailBranchEvent("Push Data",6);
+                await branchEventList.clickDetailBranchEvent("Push Data", 6);
                 await branchEventList.closeDetailBranchEvent();
             }, {tools, branchEventList}, testInfo);
         });
 
-    test("[TC_0205776] Validate Logic when User cannot input Invalid Event Subject in Branch Event List sub-tab menu on Tools",
+    test("[TC_0205776] Validate Logic when User can > 1 Filter in Branch Event List sub-tab menu on Tools",
         {tag: tags + "@positive"}, async ({tools, branchEventList}, testInfo) => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.BranchEventList);
@@ -974,13 +974,14 @@ test.describe.serial("Tools", () => {
                 await branchEventList.selectMonthAndYear("Choose month and year");
                 await branchEventList.datePickerYear("2025");
                 await branchEventList.datePickerMonth("SEP");
-                await branchEventList.datePickerDate("1");
-                await branchEventList.searchEventSubject("Push Data123");
-                await branchEventList.dataValidation("Push Data123");
+                await branchEventList.datePickerDate("23");
+                await branchEventList.searchRefNumber("16146");
+                await branchEventList.searchEventSubject("Shift Out");
+                await branchEventList.dataValidation("16146");
+                await branchEventList.clickDetailBranchEvent("16146", 1);
+                await branchEventList.closeDetailBranchEvent();
             }, {tools, branchEventList}, testInfo);
         });
-
-
 
 
 });
