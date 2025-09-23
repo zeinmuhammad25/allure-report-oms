@@ -887,4 +887,19 @@ test.describe.serial("Tools", () => {
             }, {tools}, testInfo);
         });
 
+    test("[TC_0205771] Validate Logic when User can select Single Date in Branch Event List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools,branchEventList}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.BranchEventList);
+                await branchEventList.clickButtonFilterDate();
+                await branchEventList.selectMonthAndYear("Choose month and year");
+                await branchEventList.datePickerYear("2025");
+                await branchEventList.datePickerMonth("SEP");
+                await branchEventList.datePickerDate("1");
+                await branchEventList.dataValidation("Open Printer");
+                await branchEventList.clickDetailBranchEvent("Open Printer",1);
+                await branchEventList.closeDetailBranchEvent();
+            }, {tools}, testInfo);
+        });
+
 });
