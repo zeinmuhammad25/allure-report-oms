@@ -33,4 +33,6 @@ export default interface ToolsScenario extends BaseScenario {
     setType(values: string | string[], opts?: { close?: boolean }): Promise<void>;
 
     closePopUp(): Promise<void>;
+
+    showAndCloseGuide(guide: string): Promise<void>;
 }
