@@ -127,5 +127,10 @@ export default class ToolsPage extends BaseOmsPage implements ToolsScenario {
         await this.click(ToolsLocator.closePopUp);
     }
 
+    async showAndCloseGuide(guide:string): Promise<void> {
+        await this.expectVisible(ToolsLocator.showGuide(guide));
+        await this.click(ToolsLocator.showGuide(guide));
+    }
+
 
 }
