@@ -827,7 +827,7 @@ test.describe.serial("Tools", () => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.Reporting);
                 await tools.clickFilterDate();
-                await tools.datePickerFilterDate("1","left");
+                await tools.datePickerFilterDate("1", "left");
                 await tools.applyDateInFilterDate();
                 await tools.showDropDownReportType();
                 await tools.setType("Print Sales By Menu Group");
@@ -841,8 +841,8 @@ test.describe.serial("Tools", () => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.Reporting);
                 await tools.clickFilterDate();
-                await tools.datePickerFilterDate("1","left");
-                await tools.datePickerFilterDate("30","left");
+                await tools.datePickerFilterDate("1", "left");
+                await tools.datePickerFilterDate("30", "left");
                 await tools.applyDateInFilterDate();
                 await tools.showDropDownReportType();
                 await tools.setType("Print Sales By Menu Group");
@@ -856,8 +856,8 @@ test.describe.serial("Tools", () => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.Reporting);
                 await tools.clickFilterDate();
-                await tools.datePickerFilterDate("1","left");
-                await tools.datePickerFilterDate("30","left");
+                await tools.datePickerFilterDate("1", "left");
+                await tools.datePickerFilterDate("30", "left");
                 await tools.applyDateInFilterDate();
                 await tools.showDropDownReportType();
                 await tools.setType("Print Sales By Menu Group");
@@ -871,10 +871,10 @@ test.describe.serial("Tools", () => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.Reporting);
                 await tools.clickFilterDate();
-                await tools.datePickerFilterDate("1","left");
-                await tools.datePickerFilterDate("30","left");
+                await tools.datePickerFilterDate("1", "left");
+                await tools.datePickerFilterDate("30", "left");
                 await tools.applyDateInFilterDate();
-                await tools.printReport({ printReport: true });
+                await tools.printReport({printReport: true});
             }, {tools}, testInfo);
         });
 
@@ -888,7 +888,7 @@ test.describe.serial("Tools", () => {
         });
 
     test("[TC_0205771] Validate Logic when User can select Single Date in Branch Event List sub-tab menu on Tools",
-        {tag: tags + "@positive"}, async ({tools,branchEventList}, testInfo) => {
+        {tag: tags + "@positive"}, async ({tools, branchEventList}, testInfo) => {
             await safeTest(async ({}) => {
                 await tools.selectTab(ToolsTabs.BranchEventList);
                 await branchEventList.clickButtonFilterDate();
@@ -897,9 +897,26 @@ test.describe.serial("Tools", () => {
                 await branchEventList.datePickerMonth("SEP");
                 await branchEventList.datePickerDate("1");
                 await branchEventList.dataValidation("Open Printer");
-                await branchEventList.clickDetailBranchEvent("Open Printer",1);
+                await branchEventList.clickDetailBranchEvent("Open Printer", 1);
                 await branchEventList.closeDetailBranchEvent();
             }, {tools}, testInfo);
         });
+
+    test("[TC_0205772] Validate Logic when User can input Valid Ref Number in Branch Event List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, branchEventList}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.BranchEventList);
+                await branchEventList.clickButtonFilterDate();
+                await branchEventList.selectMonthAndYear("Choose month and year");
+                await branchEventList.datePickerYear("2025");
+                await branchEventList.datePickerMonth("SEP");
+                await branchEventList.datePickerDate("1");
+                await branchEventList.searchRefNumber("Saacs175645036369");
+                await branchEventList.dataValidation("Saacs175645036369");
+                await branchEventList.clickDetailBranchEvent("Saacs175645036369", 1);
+                await branchEventList.closeDetailBranchEvent();
+            }, {tools}, testInfo);
+        });
+
 
 });
