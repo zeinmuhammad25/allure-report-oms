@@ -866,5 +866,18 @@ test.describe.serial("Tools", () => {
             }, {tools}, testInfo);
         });
 
+    test("[TC_0205769] Validate Logic when User cannot blank the Report Type",
+        {tag: tags + "@positive"}, async ({tools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.Reporting);
+                await tools.clickFilterDate();
+                await tools.datePickerFilterDate("1","left");
+                await tools.datePickerFilterDate("30","left");
+                await tools.applyDateInFilterDate();
+                await tools.printReport({ printReport: true });
+            }, {tools}, testInfo);
+        });
+
+
 
 });
