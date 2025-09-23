@@ -983,5 +983,19 @@ test.describe.serial("Tools", () => {
             }, {tools, branchEventList}, testInfo);
         });
 
+    test("[TC_0205777] Validate Logic when User can clear all Filter in Branch Event List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, branchEventList}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.BranchEventList);
+                await branchEventList.clickButtonFilterDate();
+                await branchEventList.selectMonthAndYear("Choose month and year");
+                await branchEventList.datePickerYear("2025");
+                await branchEventList.datePickerMonth("SEP");
+                await branchEventList.datePickerDate("23");
+                await branchEventList.searchRefNumber("16146");
+                await branchEventList.searchEventSubject("Shift Out");
+                await branchEventList.clearFilter();
+            }, {tools, branchEventList}, testInfo);
+        });
 
 });
