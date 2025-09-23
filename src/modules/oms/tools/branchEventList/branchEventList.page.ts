@@ -54,7 +54,7 @@ export default class BranchEventListPage extends BaseOmsPage implements BranchEv
         await this.click(BranchEventListLocator.escapeKeyboard);
     }
 
-    async clearFilter(refNumber: string): Promise<void> {
+    async clearFilter(): Promise<void> {
         await this.expectVisible(BranchEventListLocator.clearFilter);
         await this.click(BranchEventListLocator.clearFilter);
     }
@@ -62,6 +62,7 @@ export default class BranchEventListPage extends BaseOmsPage implements BranchEv
     async clickDetailBranchEvent(value: string, index: number): Promise<void> {
         await this.expectVisible(BranchEventListLocator.btnViewDetail(value, index));
         await this.click(BranchEventListLocator.btnViewDetail(value, index));
+        await this.wait(300);
     }
 
     async closeDetailBranchEvent(): Promise<void> {
@@ -92,18 +93,18 @@ export default class BranchEventListPage extends BaseOmsPage implements BranchEv
         return count;
     }
 
-    async shortingAscDeposit(headerName: "Ref Number" | "Event Subject" | "Create By"): Promise<void> {
+    async shortingAscBranchEventList(headerName: "Ref Number" | "Event Subject" | "Created By"): Promise<void> {
         await this.expectVisible(BranchEventListLocator.headerNameAndShorting(headerName));
         await this.click(BranchEventListLocator.headerNameAndShorting(headerName));
     }
 
-    async shortingDescDeposit(headerName: "Ref Number" | "Event Subject" | "Create By"): Promise<void> {
+    async shortingDescBranchEventList(headerName: "Ref Number" | "Event Subject" | "Created By"): Promise<void> {
         await this.expectVisible(BranchEventListLocator.headerNameAndShorting(headerName));
         await this.click(BranchEventListLocator.headerNameAndShorting(headerName));
         await this.click(BranchEventListLocator.headerNameAndShorting(headerName));
     }
 
-    async shortingAscAndDescDeposit(headerName: "Ref Number" | "Event Subject" | "Create By", value: string): Promise<void> {
+    async shortingAscAndDescBranchEventList(headerName: "Ref Number" | "Event Subject" | "Created By", value: string): Promise<void> {
         await this.expectVisible(BranchEventListLocator.headerNameAndShorting(headerName));
         await this.click(BranchEventListLocator.headerNameAndShorting(headerName));
         await this.dataValidation(value);
