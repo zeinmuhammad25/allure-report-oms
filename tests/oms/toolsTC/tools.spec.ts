@@ -878,6 +878,13 @@ test.describe.serial("Tools", () => {
             }, {tools}, testInfo);
         });
 
-
+    test("[TC_0205770] Validate Logic when User can Check for Update in Software Update sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.SoftwareUpdate);
+                await tools.cekUpdate();
+                await tools.closeUpdate();
+            }, {tools}, testInfo);
+        });
 
 });
