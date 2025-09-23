@@ -1209,5 +1209,12 @@ test.describe.serial("Tools", () => {
             }, {tools}, testInfo);
         });
 
-
+    test("[TC_0205792] Validate Logic when User can Expand Desktop Section in Installation Guide sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.InstallationGuide);
+                await tools.showAndCloseGuide("Desktop");
+                await tools.showAndCloseGuide("Desktop");
+            }, {tools}, testInfo);
+        });
 });
