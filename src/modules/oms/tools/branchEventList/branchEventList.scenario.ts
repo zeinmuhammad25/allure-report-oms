@@ -17,7 +17,7 @@ export default interface BranchEventListScenario extends BaseScenario {
 
     searchEventSubject(subject: string): Promise<void>;
 
-    clearFilter(refNumber: string): Promise<void>;
+    clearFilter(): Promise<void>;
 
     clickDetailBranchEvent(value: string, index: number): Promise<void>;
 
@@ -25,11 +25,11 @@ export default interface BranchEventListScenario extends BaseScenario {
 
     dataValidation(value: string, opts?: { maxProbe?: number }): Promise<number>;
 
-    shortingAscDeposit(headerName: "Ref Number" | "Event Subject" | "Create By"): Promise<void>;
+    shortingAscBranchEventList(headerName: "Ref Number" | "Event Subject" | "Created By"): Promise<void>;
 
-    shortingDescDeposit(headerName: "Ref Number" | "Event Subject" | "Create By"): Promise<void>;
+    shortingDescBranchEventList(headerName: "Ref Number" | "Event Subject" | "Created By"): Promise<void>;
 
-    shortingAscAndDescDeposit(headerName: "Ref Number" | "Event Subject" | "Create By", value: string): Promise<void>;
+    shortingAscAndDescBranchEventList(headerName: "Ref Number" | "Event Subject" | "Created By", value: string): Promise<void>;
 
     depositPagination(type: "first" | "previous" | "next" | "last"): Promise<void>;
 }
