@@ -689,4 +689,14 @@ test.describe.serial("Tools", () => {
             }, {tools, promotionListTools}, testInfo);
         });
 
+    test("[TC_0205753] Validate Logic when User can Sort Descending Start Date All Promotions list in Promotion List sub-tab menu on Tools",
+        {tag: tags + "@positive"}, async ({tools, promotionListTools}, testInfo) => {
+            await safeTest(async ({}) => {
+                await tools.selectTab(ToolsTabs.PromotionList);
+                await promotionListTools.selectPromoCategoryFilter("ALL PROMOTIONS");
+                await promotionListTools.shortingDescPromotionList("Start Date");
+                await promotionListTools.dataValidation("FREE BUKAN SF");
+            }, {tools, promotionListTools}, testInfo);
+        });
+
 });
