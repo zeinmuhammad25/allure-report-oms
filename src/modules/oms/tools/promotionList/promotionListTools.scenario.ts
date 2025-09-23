@@ -16,11 +16,11 @@ export default interface PromotionListToolsScenario extends BaseScenario {
 
     dataValidation(value: string, opts?: { maxProbe?: number }): Promise<number>;
 
-    shortingAscDeposit(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status"): Promise<void>;
+    shortingAscPromotionList(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status"): Promise<void>;
 
-    shortingDescDeposit(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status"): Promise<void>;
+    shortingDescPromotionList(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status"): Promise<void>;
 
-    shortingAscAndDescDeposit(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status", value: string): Promise<void>;
+    shortingAscAndDescPromotionList(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status", value: string): Promise<void>;
 
     setStatus(values: "all" | string | string[], opts?: { close?: boolean }): Promise<void>;
 
