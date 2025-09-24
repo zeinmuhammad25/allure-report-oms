@@ -71,4 +71,9 @@ export default class TerminalIDPage extends BaseOmsPage implements TerminalIDSce
         await this.expectDisabled(TerminalIDLocator.btnSaveTerminalID)
     }
 
+    async closeAfterTrialModeSync():Promise<void>{
+        await this.expectVisible(TerminalIDLocator.btnAfterSyncTrialMode)
+        await this.click(TerminalIDLocator.btnAfterSyncTrialMode)
+    }
+
 }

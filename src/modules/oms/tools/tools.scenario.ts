@@ -12,7 +12,7 @@ export default interface ToolsScenario extends BaseScenario {
 
     applyDateInFilterDate(): Promise<void>;
 
-    printReport(): Promise<void>;
+    printReport(opts?: { printReport?: boolean; }): Promise<void>;
 
     cekUpdate(): Promise<void>;
 
@@ -28,4 +28,11 @@ export default interface ToolsScenario extends BaseScenario {
 
     cancelActiveAndDeActive(): Promise<void>;
 
+    showDropDownReportType(): Promise<void>;
+
+    setType(values: string | string[], opts?: { close?: boolean }): Promise<void>;
+
+    closePopUp(): Promise<void>;
+
+    showAndCloseGuide(guide: string): Promise<void>;
 }

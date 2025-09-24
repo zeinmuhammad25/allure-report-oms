@@ -23,18 +23,27 @@ export default class SynchronizeDataPage extends BaseOmsPage implements Synchron
         await this.click(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncAutoSyncPOS));
         await this.expectVisible(SynchronizeDataLocator.buttonUpdateSetting);
         await this.click(SynchronizeDataLocator.buttonUpdateSetting);
-        await this.expectTextVisible("Settings have been saved", true);
+    }
+
+    async validationUnAutoSyncPOS(): Promise<void> {
+        await this.expectVisible(SynchronizeDataLocator.buttonIUnderstandCancelAuto);
+        await this.click(SynchronizeDataLocator.buttonIUnderstandCancelAuto);
+    }
+
+    async cancelValidationUnAutoSyncPOS(): Promise<void> {
+        await this.expectVisible(SynchronizeDataLocator.buttonCancelAutoCancel);
+        await this.click(SynchronizeDataLocator.buttonCancelAutoCancel);
     }
 
     async synchronizeDataAll(): Promise<void> {
         await this.expectVisible(SynchronizeDataLocator.buttonSelectAll);
         await this.click(SynchronizeDataLocator.buttonSelectAll);
         await this.click(SynchronizeDataLocator.buttonSynchronize);
-        await this.expectTextVisibleTimout("", true, 80000);
+        await this.expectTextVisibleTimout("Data sync finished", true, 80000);
     }
 
     async synchronizeDataBranchSetting(): Promise<void> {
-        await this.wait(300)
+        await this.wait(300);
         await this.expectVisible(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncBranchSettings));
         await this.click(SynchronizeDataLocator.getLocatorSynchronize(SynchronizeDataObject.SyncBranchSettings));
         await this.click(SynchronizeDataLocator.buttonSynchronize);
@@ -95,6 +104,17 @@ export default class SynchronizeDataPage extends BaseOmsPage implements Synchron
             SynchronizeDataLocator.buttonCloseSyncPopup,
             async () => {
                 await this.click(SynchronizeDataLocator.buttonCloseSyncPopup);
+            },
+            500,
+            20
+        );
+    }
+
+    async closePopUpAfterUpdate(): Promise<void> {
+        await this.waitForVisible(
+            SynchronizeDataLocator.buttonCloseAfterUpdate,
+            async () => {
+                await this.click(SynchronizeDataLocator.buttonCloseAfterUpdate);
             },
             500,
             20

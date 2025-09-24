@@ -5,6 +5,7 @@ export default class TerminalIDLocator extends BaseLocator {
     static btnSyncTerminalID: string = "//label[normalize-space()='Sync']";
     static btnApplyTerminalID: string = "//span[@class='mat-button-wrapper' and text()='Apply']";
     static btnCancelTerminalID: string = "//span[normalize-space()='Cancel']";
+    static btnAfterSyncTrialMode: string = "//span[normalize-space()='Ok']";
     static btnClaimTerminalID: string = "//span[normalize-space()='Claim']";
     static btnSaveTerminalID: string = "//span[normalize-space()='Save']";
     static btnInputNotesTerminalID: string = "//input[@placeholder='Input notes']";

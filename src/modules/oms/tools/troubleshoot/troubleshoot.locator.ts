@@ -2,7 +2,9 @@ import BaseLocator from "../../../../base/base-locator";
 
 export default class TroubleshootLocator extends BaseLocator {
     static testPrintButton: string = "//mat-tab-body//button//span[normalize-space()='Test Print']";
-    static selectAllStation: string = "//label[@for='mat-checkbox-36-input']//span[@class='mat-checkbox-label']";
+    static testPrintDisabled: string = "//mat-tab-body//button//span[normalize-space()='Test Print']";
+    static closePopUp: string = "//span[normalize-space()='Ok']";
+    static selectAllStation: string = "(//span[@class='mat-checkbox-label'])[1]";
     static selectStation = (stationName: string): string =>
         `//span//div[contains(text(),'${stationName}')]`;
     static openDrawer: string = "//mat-tab-body//button//span[normalize-space()='Open Drawer']";

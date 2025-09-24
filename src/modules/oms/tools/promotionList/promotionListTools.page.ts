@@ -67,18 +67,18 @@ export default class PromotionListToolsPage extends BaseOmsPage implements Promo
         return count;
     }
 
-    async shortingAscDeposit(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status"): Promise<void> {
+    async shortingAscPromotionList(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status"): Promise<void> {
         await this.expectVisible(PromotionListToolsLocator.headerPromotionList(headerName));
         await this.click(PromotionListToolsLocator.headerPromotionList(headerName));
     }
 
-    async shortingDescDeposit(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status"): Promise<void> {
+    async shortingDescPromotionList(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status"): Promise<void> {
         await this.expectVisible(PromotionListToolsLocator.headerPromotionList(headerName));
         await this.click(PromotionListToolsLocator.headerPromotionList(headerName));
         await this.click(PromotionListToolsLocator.headerPromotionList(headerName));
     }
 
-    async shortingAscAndDescDeposit(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status", value: string): Promise<void> {
+    async shortingAscAndDescPromotionList(headerName: "Start Date" | "End Date" | "Min. Subtotal" | "Discount" | "Type" | "Status", value: string): Promise<void> {
         await this.expectVisible(PromotionListToolsLocator.headerPromotionList(headerName));
         await this.click(PromotionListToolsLocator.headerPromotionList(headerName));
         await this.dataValidation(value);
@@ -115,6 +115,7 @@ export default class PromotionListToolsPage extends BaseOmsPage implements Promo
         if (shouldClose && (await this.isVisible?.(PromotionListToolsLocator.closeAfterSet))) {
             await this.click(PromotionListToolsLocator.closeAfterSet);
         }
+        await this.wait(500);
     }
 
     async promotionListFormPagination(type: "previous" | "next"): Promise<void> {
