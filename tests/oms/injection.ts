@@ -41,6 +41,7 @@ import PromotionListClassicComponent
     from "../../src/modules/oms/tableList/components/promotionListClassic/promotionListClassic.component";
 import PromotionListToolsPage from "../../src/modules/oms/tools/promotionList/promotionListTools.page";
 import BranchEventListPage from "../../src/modules/oms/tools/branchEventList/branchEventList.page";
+import SalesRecapPage from "../../src/modules/oms/salesRecap/salesRecap.page";
 
 export const test = base.extend<OmsPages>({
     synchronizeData: async ({page}, use) => await use(new SynchronizeDataPage(page)),
@@ -79,5 +80,6 @@ export const test = base.extend<OmsPages>({
     editOrderClassic: async ({page}, use) => await use(new EditOrderClassicComponents(page)),
     promotionListClassic: async ({page}, use) => await use(new PromotionListClassicComponent(page)),
     promotionListTools: async ({page}, use) => await use(new PromotionListToolsPage(page)),
-    branchEventList: async ({page}, use) => await use(new BranchEventListPage(page))
+    branchEventList: async ({page}, use) => await use(new BranchEventListPage(page)),
+    salesRecap: async ({page}, use) => await use(new SalesRecapPage(page))
 });
