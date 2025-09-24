@@ -35,6 +35,7 @@ import EditOrderClassicScenario from "./tableList/order/components/editOrderClas
 import PromotionListClassicScenario from "./tableList/components/promotionListClassic/promotionListClassic.scenario";
 import PromotionListToolsScenario from "./tools/promotionList/promotionListTools.scenario";
 import BranchEventListScenario from "./tools/branchEventList/branchEventList.scenario";
+import SalesRecapScenario from "./salesRecap/salesRecap.scenario";
 
 export type OmsPages = {
     synchronizeData: SynchronizeDataScenario
@@ -74,4 +75,5 @@ export type OmsPages = {
     promotionListClassic: PromotionListClassicScenario
     promotionListTools: PromotionListToolsScenario
     branchEventList: BranchEventListScenario
+    salesRecap: SalesRecapScenario
 };
