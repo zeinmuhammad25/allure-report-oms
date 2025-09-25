@@ -296,4 +296,13 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.closeReprintReceipt);
     }
 
+    //Online Payment
+
+    async searchTransactionReference(fieldTransactionReference: string): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.fieldTransactionReference);
+        await this.click(SalesRecapLocator.fieldTransactionReference);
+        await this.fill(SalesRecapLocator.fieldTransactionReference, fieldTransactionReference);
+        await this.click(SalesRecapLocator.escapeKeyboardOnlinePayment);
+    }
+
 }
