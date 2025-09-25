@@ -78,4 +78,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     cancelReprintReceiptAction(): Promise<void>;
 
     searchTransactionReference(fieldTransactionReference: string): Promise<void>;
+
+    showDropDownPaymentMethodOnline(): Promise<void>;
 }
