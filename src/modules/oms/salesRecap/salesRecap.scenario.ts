@@ -24,4 +24,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     setVisitPurpose(values: "all" | string | string[], opts?: { close?: boolean }): Promise<void>;
 
     showDropDownPaymentMethod(): Promise<void>;
+
+    setPaymentMethod(values: "all" | string | string[], opts?: { close?: boolean }): Promise<void>;
 }
