@@ -9,6 +9,8 @@ export default interface SalesRecapScenario extends BaseScenario {
 
     datePickerFilterDate(day: string | number, side?: "left" | "right"): Promise<void>;
 
+    applyDateInFilterDate(): Promise<void>;
+
     searchTransactionBillNumberSalesOverView(value: string): Promise<void>;
 
     searchMemberCustomerSalesOverView(value: string): Promise<void>;
