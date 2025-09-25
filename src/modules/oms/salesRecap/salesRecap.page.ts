@@ -2,7 +2,6 @@ import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SalesRecapScenario from "./salesRecap.scenario";
 import SalesRecapLocator from "./salesRecap.locator";
-import PromotionListToolsLocator from "../tools/promotionList/promotionListTools.locator";
 
 export default class SalesRecapPage extends BaseOmsPage implements SalesRecapScenario {
     pageUrl: () => string;
@@ -94,6 +93,11 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
             await this.click(SalesRecapLocator.closeAfterSet);
         }
         await this.wait(500);
+    }
+
+    async showDropDownPaymentMethod(): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.showDropDownPaymentMethod);
+        await this.click(SalesRecapLocator.showDropDownPaymentMethod);
     }
 
 }
