@@ -54,4 +54,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     actionVoidMenu(action: "Cancel" | "Apply"): Promise<void>;
 
     salesOverViewPagination(type: "First page" | "previous" | "next" | "Last page"): Promise<void>;
+
+    inputVoidNotes(notes: string): Promise<void>;
 }
