@@ -68,4 +68,9 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.escapeKeyboardSalesOverView);
     }
 
+    async showDropDownVisitPurpose(): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.showDropDownVisitPurpose);
+        await this.click(SalesRecapLocator.showDropDownVisitPurpose);
+    }
+
 }
