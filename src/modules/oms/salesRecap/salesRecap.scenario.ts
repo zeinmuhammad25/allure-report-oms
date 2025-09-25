@@ -28,4 +28,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     setPaymentMethod(values: "all" | string | string[], opts?: { close?: boolean }): Promise<void>;
 
     searchInformation(value: string): Promise<void>;
+
+    dataValidationSalesOverView(value: string, opts?: { maxProbe?: number }): Promise<number>;
 }
