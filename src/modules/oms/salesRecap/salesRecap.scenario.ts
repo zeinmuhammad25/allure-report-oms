@@ -46,4 +46,6 @@ export default interface SalesRecapScenario extends BaseScenario {
         action: "Close" | "Void Sales" | "Edit Remarks" | "Reprint Receipt",
         shouldBeDisabled: boolean
     ): Promise<void>;
+
+    btnVoidMenu(index: number, shouldBeDisabled: boolean): Promise<void>;
 }
