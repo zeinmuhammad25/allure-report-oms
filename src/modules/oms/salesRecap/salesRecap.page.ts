@@ -2,6 +2,7 @@ import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SalesRecapScenario from "./salesRecap.scenario";
 import SalesRecapLocator from "./salesRecap.locator";
+import PromotionListToolsLocator from "../tools/promotionList/promotionListTools.locator";
 
 export default class SalesRecapPage extends BaseOmsPage implements SalesRecapScenario {
     pageUrl: () => string;
@@ -25,6 +26,15 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
     async selectMonthAndYear(side: "left" | "right", nav: "prev" | "next"): Promise<void> {
         await this.expectVisible(SalesRecapLocator.selectDateMonthAndYearCalendarNav(side, nav));
         await this.click(SalesRecapLocator.selectDateMonthAndYearCalendarNav(side, nav));
+    }
+
+    async datePickerFilterDate(day: string | number, side?: "left" | "right"): Promise<void> {
+        const cell = side === "left"
+            ? SalesRecapLocator.leftCalendarCell(day)
+            : SalesRecapLocator.rightCalendarCell(day);
+
+        await this.expectVisible(cell);
+        await this.click(cell);
     }
 
     async searchTransactionBillNumberSalesOverView(value: string): Promise<void> {
