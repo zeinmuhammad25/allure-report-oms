@@ -37,6 +37,12 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(cell);
     }
 
+    async applyDateInFilterDate(): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.btnApplyDate);
+        await this.click(SalesRecapLocator.btnApplyDate);
+    }
+
+
     async searchTransactionBillNumberSalesOverView(value: string): Promise<void> {
         await this.expectVisible(SalesRecapLocator.filedTransactionBillNumber);
         await this.click(SalesRecapLocator.filedTransactionBillNumber);
