@@ -41,4 +41,9 @@ export default interface SalesRecapScenario extends BaseScenario {
         "Table" | "Visit Purpose" | "Grand Total" | "Status" | "Payment Method" | "Payment Time" | "Payment By", value: string): Promise<void>;
 
     viewDetailSalesOverView(value: string, index: number): Promise<void>;
+
+    actionDetailOverView(
+        action: "Close" | "Void Sales" | "Edit Remarks" | "Reprint Receipt",
+        shouldBeDisabled: boolean
+    ): Promise<void>;
 }
