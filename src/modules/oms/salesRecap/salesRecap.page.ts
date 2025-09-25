@@ -2,7 +2,6 @@ import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SalesRecapScenario from "./salesRecap.scenario";
 import SalesRecapLocator from "./salesRecap.locator";
-import PromotionListToolsLocator from "../tools/promotionList/promotionListTools.locator";
 
 export default class SalesRecapPage extends BaseOmsPage implements SalesRecapScenario {
     pageUrl: () => string;
@@ -59,6 +58,13 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.expectVisible(SalesRecapLocator.filedMemberCustomer);
         await this.click(SalesRecapLocator.filedMemberCustomer);
         await this.fill(SalesRecapLocator.filedMemberCustomer, value);
+        await this.click(SalesRecapLocator.escapeKeyboardSalesOverView);
+    }
+
+    async searchTableSalesOverView(value: string): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.filedTable);
+        await this.click(SalesRecapLocator.filedTable);
+        await this.fill(SalesRecapLocator.filedTable, value);
         await this.click(SalesRecapLocator.escapeKeyboardSalesOverView);
     }
 
