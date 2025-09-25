@@ -209,4 +209,9 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.escapeKeyboardVoidMenuQty);
     }
 
+    async actionVoidMenu(action: "Cancel" | "Apply"): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.actionVoidMenuSales(action));
+        await this.click(SalesRecapLocator.actionVoidMenuSales(action));
+    }
+
 }
