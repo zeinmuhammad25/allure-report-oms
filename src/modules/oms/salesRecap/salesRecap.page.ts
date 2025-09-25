@@ -202,4 +202,11 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         }
     }
 
+    async inputQtyMenu(qty: string): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.fieldQtyVoidMenuSales);
+        await this.click(SalesRecapLocator.fieldQtyVoidMenuSales);
+        await this.fill(SalesRecapLocator.fieldQtyVoidMenuSales, qty);
+        await this.click(SalesRecapLocator.escapeKeyboardVoidMenuQty);
+    }
+
 }
