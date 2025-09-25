@@ -305,4 +305,9 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.escapeKeyboardOnlinePayment);
     }
 
+    async showDropDownPaymentMethodOnline(): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.dropdownOnlinePaymentMethod);
+        await this.click(SalesRecapLocator.dropdownOnlinePaymentMethod);
+    }
+
 }
