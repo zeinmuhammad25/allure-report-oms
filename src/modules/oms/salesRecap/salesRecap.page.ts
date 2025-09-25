@@ -2,6 +2,7 @@ import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SalesRecapScenario from "./salesRecap.scenario";
 import SalesRecapLocator from "./salesRecap.locator";
+import PromotionListToolsLocator from "../tools/promotionList/promotionListTools.locator";
 
 export default class SalesRecapPage extends BaseOmsPage implements SalesRecapScenario {
     pageUrl: () => string;
@@ -127,6 +128,27 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.filedAdditionalInfo);
         await this.fill(SalesRecapLocator.filedAdditionalInfo, value);
         await this.click(SalesRecapLocator.escapeKeyboardSalesOverView);
+    }
+
+    async dataValidationSalesOverView(value: string, opts?: { maxProbe?: number }): Promise<number> {
+        const baseLocator = SalesRecapLocator.dataValidationSalesOverView(value);
+        const maxProbe = opts?.maxProbe ?? 200; // batas aman
+        let count = 0;
+        for (let i = 1; i <= maxProbe; i++) {
+            const indexed = `(${baseLocator})[${i}]`;
+            try {
+                await this.expectVisible(indexed);
+                count++;
+            } catch {
+                break;
+            }
+        }
+        if (count === 0) {
+            console.warn(`⚠️ Data "${value}" tidak ditemukan di SalesOverView list.`);
+            return 0;
+        }
+        console.log(`Data "${value}" ditemukan sebanyak: ${count} row(s).`);
+        return count;
     }
 
 }
