@@ -98,4 +98,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     dataValidationOnlinePayment(value: string, opts?: { maxProbe?: number }): Promise<number>;
 
     paginationOnlinePaymentBackNext(arrow: "left" | "right"): Promise<void>;
+
+    paginationOnlinePaymentFirstLast(type: "left" | "right"): Promise<void>;
 }
