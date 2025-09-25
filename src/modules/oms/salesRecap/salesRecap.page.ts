@@ -279,4 +279,11 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.receiptTab(tab));
     }
 
+    async inputEmailOrWhatsappNumber(emailOrWhatsappNumber: string): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.fieldEmailOrWaNumber);
+        await this.click(SalesRecapLocator.fieldEmailOrWaNumber);
+        await this.fill(SalesRecapLocator.fieldEmailOrWaNumber, emailOrWhatsappNumber);
+        await this.click(SalesRecapLocator.escapeKeyboardResendEmail);
+    }
+
 }
