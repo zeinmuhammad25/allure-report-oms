@@ -376,4 +376,27 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.headersOnlinePayment(headerName));
         await this.click(SalesRecapLocator.headersOnlinePayment(headerName));
     }
+
+    async dataValidationOnlinePayment(value: string, opts?: { maxProbe?: number }): Promise<number> {
+        const baseLocator = SalesRecapLocator.dataValidationOnlinePayment(value);
+        const maxProbe = opts?.maxProbe ?? 200; // batas aman
+        let count = 0;
+        for (let i = 1; i <= maxProbe; i++) {
+            const indexed = `(${baseLocator})[${i}]`;
+            try {
+                await this.expectVisible(indexed);
+                count++;
+            } catch {
+                break;
+            }
+        }
+        if (count === 0) {
+            console.warn(`⚠️ Data "${value}" tidak ditemukan di OnlinePayment list.`);
+            return 0;
+        }
+        console.log(`Data "${value}" ditemukan sebanyak: ${count} row(s).`);
+        return count;
+    }
+
+
 }
