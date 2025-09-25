@@ -237,4 +237,9 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.voidTablePanel(notes));
     }
 
+    async paginationVoidSales(arrow: "left" | "right"): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.paginationVoidSales(arrow));
+        await this.click(SalesRecapLocator.paginationVoidSales(arrow));
+    }
+
 }
