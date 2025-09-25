@@ -64,4 +64,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     cancelVoidSales(): Promise<void>;
 
     applyVoidSales(shouldBeDisabled: boolean): Promise<void>;
+
+    inputRemarks(remarks: string): Promise<void>;
 }
