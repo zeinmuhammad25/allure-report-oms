@@ -94,4 +94,7 @@ export default interface SalesRecapScenario extends BaseScenario {
 
     shortingDescOnlinePayment(headerName: "Transaction Time" | "Order ID" | "Sales Number"
         | "Payment Method" | "Payment Status" | "Transaction Amount"): Promise<void>;
+
+    dataValidationOnlinePayment(value: string, opts?: { maxProbe?: number }): Promise<number>;
+
 }
