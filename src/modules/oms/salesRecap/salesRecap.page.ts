@@ -310,4 +310,26 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.dropdownOnlinePaymentMethod);
     }
 
+    async setPaymentMethodOnline(values: "all" | string | string[], opts?: { close?: boolean }): Promise<void> {
+        const shouldClose = opts?.close ?? true;
+        if (values === "all") {
+            await this.expectVisible(SalesRecapLocator.selectAllOnlinePaymentMethod);
+            await this.click(SalesRecapLocator.selectAllOnlinePaymentMethod);
+        } else if (Array.isArray(values)) {
+            for (const v of values) {
+                const option = SalesRecapLocator.selectOnlinePaymentMethod(v);
+                await this.expectVisible(option);
+                await this.click(option);
+            }
+        } else {
+            const option = SalesRecapLocator.selectOnlinePaymentMethod(values);
+            await this.expectVisible(option);
+            await this.click(option);
+        }
+        if (shouldClose && (await this.isVisible?.(SalesRecapLocator.closeAfterSelect))) {
+            await this.click(SalesRecapLocator.closeAfterSelect);
+        }
+        await this.wait(500);
+    }
+
 }
