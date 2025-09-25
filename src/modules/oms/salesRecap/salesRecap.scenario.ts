@@ -16,4 +16,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     searchMemberCustomerSalesOverView(value: string): Promise<void>;
 
     cancelDateInFilterDate(): Promise<void>;
+
+    searchTableSalesOverView(value: string): Promise<void>
 }
