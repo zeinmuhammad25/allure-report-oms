@@ -48,4 +48,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     ): Promise<void>;
 
     btnVoidMenu(index: number, shouldBeDisabled: boolean): Promise<void>;
+
+    inputQtyMenu(qty: string): Promise<void>;
 }
