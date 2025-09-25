@@ -74,4 +74,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     inputEmailOrWhatsappNumber(emailOrWhatsappNumber: string): Promise<void>;
 
     reprintReceiptAction(action: "Reprint Receipt" | "Send Receipt"): Promise<void>;
+
+    cancelReprintReceiptAction(): Promise<void>;
 }
