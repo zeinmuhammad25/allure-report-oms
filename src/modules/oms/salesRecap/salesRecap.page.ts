@@ -359,4 +359,9 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.wait(500);
     }
 
+    async searchFilterOnlinePayment(): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.btnSearchOnlinePayment);
+        await this.click(SalesRecapLocator.btnSearchOnlinePayment);
+    }
+
 }
