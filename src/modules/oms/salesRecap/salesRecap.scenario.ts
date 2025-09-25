@@ -68,4 +68,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     inputRemarks(remarks: string): Promise<void>;
 
     actionRemarks(action: "Cancel" | "Apply"): Promise<void>;
+
+    reprintReceiptTab(tab: "Reprint Receipt" | "Resend Receipt"): Promise<void>;
 }
