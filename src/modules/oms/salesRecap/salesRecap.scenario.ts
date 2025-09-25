@@ -20,4 +20,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     searchTableSalesOverView(value: string): Promise<void>;
 
     showDropDownVisitPurpose(): Promise<void>;
+
+    setVisitPurpose(values: "all" | string | string[], opts?: { close?: boolean }): Promise<void>;
 }
