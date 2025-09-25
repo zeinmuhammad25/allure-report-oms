@@ -1,5 +1,5 @@
 import BaseScenario from "../../../base/base-scenario";
 
-export default interface SalesRecapScenario extends BaseScenario{
-
+export default interface SalesRecapScenario extends BaseScenario {
+    salesRecapTab(tabSection: string): Promise<void>;
 }
