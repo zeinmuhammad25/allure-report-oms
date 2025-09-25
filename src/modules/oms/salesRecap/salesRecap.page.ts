@@ -364,4 +364,10 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.btnSearchOnlinePayment);
     }
 
+    async shortingAscOnlinePayment(headerName: "Transaction Time" | "Order ID" | "Sales Number"
+        | "Payment Method" | "Payment Status" | "Transaction Amount"): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.headersOnlinePayment(headerName));
+        await this.click(SalesRecapLocator.headersOnlinePayment(headerName));
+    }
+
 }
