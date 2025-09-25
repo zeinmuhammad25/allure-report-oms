@@ -2,6 +2,7 @@ import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SalesRecapScenario from "./salesRecap.scenario";
 import SalesRecapLocator from "./salesRecap.locator";
+import PromotionListToolsLocator from "../tools/promotionList/promotionListTools.locator";
 
 export default class SalesRecapPage extends BaseOmsPage implements SalesRecapScenario {
     pageUrl: () => string;
@@ -71,6 +72,28 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
     async showDropDownVisitPurpose(): Promise<void> {
         await this.expectVisible(SalesRecapLocator.showDropDownVisitPurpose);
         await this.click(SalesRecapLocator.showDropDownVisitPurpose);
+    }
+
+    async setVisitPurpose(values: "all" | string | string[], opts?: { close?: boolean }): Promise<void> {
+        const shouldClose = opts?.close ?? true;
+        if (values === "all") {
+            await this.expectVisible(SalesRecapLocator.selectAllVisitPurpose);
+            await this.click(SalesRecapLocator.selectAllVisitPurpose);
+        } else if (Array.isArray(values)) {
+            for (const v of values) {
+                const option = SalesRecapLocator.selectVisitPurpose(v);
+                await this.expectVisible(option);
+                await this.click(option);
+            }
+        } else {
+            const option = SalesRecapLocator.selectVisitPurpose(values);
+            await this.expectVisible(option);
+            await this.click(option);
+        }
+        if (shouldClose && (await this.isVisible?.(SalesRecapLocator.closeAfterSet))) {
+            await this.click(SalesRecapLocator.closeAfterSet);
+        }
+        await this.wait(500);
     }
 
 }
