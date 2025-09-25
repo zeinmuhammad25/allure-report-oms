@@ -177,4 +177,18 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.viewDetailSalesOverView(value, index));
     }
 
+    async actionDetailOverView(
+        action: "Close" | "Void Sales" | "Edit Remarks" | "Reprint Receipt",
+        shouldBeDisabled: boolean
+    ): Promise<void> {
+        const locator = SalesRecapLocator.actionDetailSalesOverView(action);
+        await this.expectVisible(locator);
+        if (shouldBeDisabled) {
+            await this.expectDisabled(locator);
+            console.log(`[CHECK] ${action} -> disabled`);
+        } else {
+            await this.click(locator);
+        }
+    }
+
 }
