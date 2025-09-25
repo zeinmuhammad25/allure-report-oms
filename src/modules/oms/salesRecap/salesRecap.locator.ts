@@ -76,7 +76,7 @@ export default class SalesRecapLocator extends BaseLocator {
     //EditRemarks
     static fieldRemarks: string = "//textarea[@class='form-control input-text-notes ng-pristine ng-valid ng-touched']";
     static escapeKeyboardRemarks: string = "//body/div[@class='cdk-overlay-container']/div[1]";
-    static actionVoidRemarks = (action: "Cancel" | "Apply"): string =>
+    static actionRemarks = (action: "Cancel" | "Apply"): string =>
         `//span[normalize-space()='${action}']`;
 
     //ReprintReceipt
