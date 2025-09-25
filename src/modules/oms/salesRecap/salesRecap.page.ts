@@ -2,7 +2,6 @@ import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SalesRecapScenario from "./salesRecap.scenario";
 import SalesRecapLocator from "./salesRecap.locator";
-import PromotionListToolsLocator from "../tools/promotionList/promotionListTools.locator";
 
 export default class SalesRecapPage extends BaseOmsPage implements SalesRecapScenario {
     pageUrl: () => string;
@@ -197,6 +196,8 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         }
     }
 
+    //Void Menu
+
     async btnVoidMenu(index: number, shouldBeDisabled: boolean): Promise<void> {
         const locator = SalesRecapLocator.deleteButtonMenuDetailSalesOverView(index);
         await this.expectVisible(locator);
@@ -220,4 +221,13 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.actionVoidMenuSales(action));
     }
 
+    //Void Sales
+
+    async inputVoidNotes(notes: string): Promise<void> {
+        const finalNotes = notes.length > 200 ? notes.slice(0, 200) : notes;
+        await this.expectVisible(SalesRecapLocator.voidSalesNotes);
+        await this.click(SalesRecapLocator.voidSalesNotes);
+        await this.fill(SalesRecapLocator.voidSalesNotes, finalNotes);
+        await this.click(SalesRecapLocator.escapeKeyboardVoidSales);
+    }
 }
