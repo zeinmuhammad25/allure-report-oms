@@ -30,4 +30,7 @@ export default interface SalesRecapScenario extends BaseScenario {
     searchInformation(value: string): Promise<void>;
 
     dataValidationSalesOverView(value: string, opts?: { maxProbe?: number }): Promise<number>;
+
+    shortingAscSalesOverView(headerName: "Transaction Number" | "Bill Number" | "Date" | "Regular Member" | "Loyalty Member" | "Customer" |
+        "Table" | "Visit Purpose" | "Grand Total" | "Status" | "Payment Method" | "Payment Time" | "Payment By"): Promise<void>
 }
