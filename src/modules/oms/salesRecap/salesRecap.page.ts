@@ -163,4 +163,13 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.headersSalesOverView(headerName));
     }
 
+    async shortingAscAndDescSalesOverView(headerName: "Transaction Number" | "Bill Number" | "Date" | "Regular Member" | "Loyalty Member" | "Customer" |
+        "Table" | "Visit Purpose" | "Grand Total" | "Status" | "Payment Method" | "Payment Time" | "Payment By", value: string): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.headersSalesOverView(headerName));
+        await this.click(SalesRecapLocator.headersSalesOverView(headerName));
+        await this.dataValidationSalesOverView(value);
+        await this.click(SalesRecapLocator.headersSalesOverView(headerName));
+        await this.dataValidationSalesOverView(value);
+    }
+
 }
