@@ -68,7 +68,7 @@ export default class SalesRecapLocator extends BaseLocator {
     //voidSalesPopup
     static voidSalesNotes: string = "//textarea[@class='form-control input-notes ng-pristine ng-valid ng-touched']";
     static voidTablePanel = (notes: string): string => `//app-grid-pagination//button//span[normalize-space()='${notes}']`;
-    static paginationVoidSales = (arrow: string): string => `//i[@class='glyphicon glyphicon-arrow-${arrow}']`;
+    static paginationVoidSales = (arrow: "left" | "right"): string => `//i[@class='glyphicon glyphicon-arrow-${arrow}']`;
     static escapeKeyboardVoidSales: string = "//body/div[@class='cdk-overlay-container']/div[1]";
     static cancelVoidSales: string = "(//button[.//span[contains(normalize-space(.),'Cancel')]])[4]";
     static ApplyVoidSales: string = "//span[normalize-space()='Apply']";
