@@ -257,4 +257,12 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         }
     }
 
+    async inputRemarks(remarks: string): Promise<void> {
+        const finalRemarks = remarks.length > 200 ? remarks.slice(0, 200) : remarks;
+        await this.expectVisible(SalesRecapLocator.fieldRemarks);
+        await this.click(SalesRecapLocator.fieldRemarks);
+        await this.fill(SalesRecapLocator.fieldRemarks, finalRemarks);
+        await this.click(SalesRecapLocator.escapeKeyboardRemarks);
+    }
+
 }
