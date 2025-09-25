@@ -2,6 +2,7 @@ import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SalesRecapScenario from "./salesRecap.scenario";
 import SalesRecapLocator from "./salesRecap.locator";
+import PromotionListToolsLocator from "../tools/promotionList/promotionListTools.locator";
 
 export default class SalesRecapPage extends BaseOmsPage implements SalesRecapScenario {
     pageUrl: () => string;
@@ -170,6 +171,11 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.dataValidationSalesOverView(value);
         await this.click(SalesRecapLocator.headersSalesOverView(headerName));
         await this.dataValidationSalesOverView(value);
+    }
+
+    async salesOverViewPagination(type: "First page" | "previous" | "next" | "Last page"): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.paginationButtonSalesOverView(type));
+        await this.click(SalesRecapLocator.paginationButtonSalesOverView(type));
     }
 
     async viewDetailSalesOverView(value: string, index: number): Promise<void> {
