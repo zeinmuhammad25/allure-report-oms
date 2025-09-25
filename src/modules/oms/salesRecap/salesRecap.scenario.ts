@@ -76,4 +76,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     reprintReceiptAction(action: "Reprint Receipt" | "Send Receipt"): Promise<void>;
 
     cancelReprintReceiptAction(): Promise<void>;
+
+    searchTransactionReference(fieldTransactionReference: string): Promise<void>;
 }
