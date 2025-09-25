@@ -100,4 +100,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     paginationOnlinePaymentBackNext(arrow: "left" | "right"): Promise<void>;
 
     paginationOnlinePaymentFirstLast(type: "left" | "right"): Promise<void>;
+
+    clearAllFilter(): Promise<void>;
 }
