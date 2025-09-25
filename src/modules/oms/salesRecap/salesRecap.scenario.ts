@@ -62,4 +62,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     paginationVoidSales(arrow: "left" | "right"): Promise<void>;
 
     cancelVoidSales(): Promise<void>;
+
+    applyVoidSales(shouldBeDisabled: boolean): Promise<void>;
 }
