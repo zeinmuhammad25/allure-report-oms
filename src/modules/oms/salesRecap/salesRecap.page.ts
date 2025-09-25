@@ -191,4 +191,15 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         }
     }
 
+    async btnVoidMenu(index: number, shouldBeDisabled: boolean): Promise<void> {
+        const locator = SalesRecapLocator.deleteButtonMenuDetailSalesOverView(index);
+        await this.expectVisible(locator);
+        if (shouldBeDisabled) {
+            await this.expectDisabled(locator);
+            console.log(`[CHECK] ${index} -> disabled`);
+        } else {
+            await this.click(locator);
+        }
+    }
+
 }
