@@ -122,4 +122,11 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.wait(500);
     }
 
+    async searchInformation(value: string): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.filedAdditionalInfo);
+        await this.click(SalesRecapLocator.filedAdditionalInfo);
+        await this.fill(SalesRecapLocator.filedAdditionalInfo, value);
+        await this.click(SalesRecapLocator.escapeKeyboardSalesOverView);
+    }
+
 }
