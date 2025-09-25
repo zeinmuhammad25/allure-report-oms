@@ -31,7 +31,7 @@ export default class SalesRecapLocator extends BaseLocator {
     };
     static btnApplyDate: string = "//ngx-daterangepicker-material//button[normalize-space()='Apply']";
     static btnCancelDate: string = "//ngx-daterangepicker-material//button[normalize-space()='Cancel']";
-
+    static escapeKeyboardSalesOverView: string = "//h5[normalize-space()='Sales Recapitulation']";
     static filedTransactionBillNumber: string = "//input[@placeholder='Search by transaction / bill number']";
     static filedMemberCustomer: string = "//input[@placeholder='Search by member / customer name']";
     static filedTable: string = "//input[@placeholder='Search by table name']";
