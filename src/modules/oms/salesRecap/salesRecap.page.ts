@@ -398,5 +398,9 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         return count;
     }
 
+    async paginationOnlinePaymentBackNext(arrow: "left" | "right"): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.paginationOnlinePaymentNextBack(arrow));
+        await this.click(SalesRecapLocator.paginationOnlinePaymentNextBack(arrow));
+    }
 
 }
