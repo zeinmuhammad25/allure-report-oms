@@ -97,8 +97,8 @@ export default class SalesRecapLocator extends BaseLocator {
         `//mat-option//span[normalize-space()='${onlinePaymentMethod}']`;
     static dropdownPaymentStatus: string = "(//div[@class='mat-select-arrow-wrapper'])[2]";
     static selectAllPaymentStatus: string = "//span[@class='mat-checkbox-label']";
-    static selectPaymentStatus = (onlinePaymentMethod: string): string =>
-        `//mat-option//span[normalize-space()='${onlinePaymentMethod}']`;
+    static selectPaymentStatus = (onlinePaymentStatus: string): string =>
+        `//mat-option//span[normalize-space()='${onlinePaymentStatus}']`;
     static closeAfterSelect: string = "//div[@class='cdk-overlay-backdrop cdk-overlay-transparent-backdrop cdk-overlay-backdrop-showing']";
     static btnSearchOnlinePayment: string = "//button//span[normalize-space()='Search']";
     static headersOnlinePayment =
