@@ -88,4 +88,7 @@ export default interface SalesRecapScenario extends BaseScenario {
     setStatusOnline(values: "all" | string | string[], opts?: { close?: boolean }): Promise<void>;
 
     searchFilterOnlinePayment(): Promise<void>;
+
+    shortingAscOnlinePayment(headerName: "Transaction Time" | "Order ID" | "Sales Number"
+        | "Payment Method" | "Payment Status" | "Transaction Amount"): Promise<void>;
 }
