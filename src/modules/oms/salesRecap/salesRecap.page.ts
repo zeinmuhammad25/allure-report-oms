@@ -2,7 +2,6 @@ import BaseOmsPage from "../base-oms-page";
 import Element from "../../../base/objects/Element";
 import SalesRecapScenario from "./salesRecap.scenario";
 import SalesRecapLocator from "./salesRecap.locator";
-import PromotionListToolsLocator from "../tools/promotionList/promotionListTools.locator";
 
 export default class SalesRecapPage extends BaseOmsPage implements SalesRecapScenario {
     pageUrl: () => string;
@@ -150,5 +149,12 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         console.log(`Data "${value}" ditemukan sebanyak: ${count} row(s).`);
         return count;
     }
+
+    async shortingAscSalesOverView(headerName: "Transaction Number" | "Bill Number" | "Date" | "Regular Member" | "Loyalty Member" | "Customer" |
+        "Table" | "Visit Purpose" | "Grand Total" | "Status" | "Payment Method" | "Payment Time" | "Payment By"): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.headersSalesOverView(headerName));
+        await this.click(SalesRecapLocator.headersSalesOverView(headerName));
+    }
+
 
 }
