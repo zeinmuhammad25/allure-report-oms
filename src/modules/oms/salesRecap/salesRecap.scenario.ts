@@ -86,4 +86,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     showDropDownStatusOnline(): Promise<void>;
 
     setStatusOnline(values: "all" | string | string[], opts?: { close?: boolean }): Promise<void>;
+
+    searchFilterOnlinePayment(): Promise<void>;
 }
