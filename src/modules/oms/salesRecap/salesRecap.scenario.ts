@@ -7,6 +7,8 @@ export default interface SalesRecapScenario extends BaseScenario {
 
     selectMonthAndYear(side: "left" | "right", nav: "prev" | "next"): Promise<void>;
 
+    datePickerFilterDate(day: string | number, side?: "left" | "right"): Promise<void>;
+
     searchTransactionBillNumberSalesOverView(value: string): Promise<void>;
 
     searchMemberCustomerSalesOverView(value: string): Promise<void>;
