@@ -271,4 +271,12 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.expectVisible(SalesRecapLocator.actionRemarks(action));
         await this.click(SalesRecapLocator.actionRemarks(action));
     }
+
+    //ReprintReceipt
+
+    async reprintReceiptTab(tab: "Reprint Receipt" | "Resend Receipt"): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.receiptTab(tab));
+        await this.click(SalesRecapLocator.receiptTab(tab));
+    }
+
 }
