@@ -257,6 +257,8 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         }
     }
 
+    //EditRemarks
+
     async inputRemarks(remarks: string): Promise<void> {
         const finalRemarks = remarks.length > 200 ? remarks.slice(0, 200) : remarks;
         await this.expectVisible(SalesRecapLocator.fieldRemarks);
@@ -265,4 +267,8 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.escapeKeyboardRemarks);
     }
 
+    async actionRemarks(action: "Cancel" | "Apply"): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.actionRemarks(action));
+        await this.click(SalesRecapLocator.actionRemarks(action));
+    }
 }
