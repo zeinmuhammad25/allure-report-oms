@@ -91,4 +91,7 @@ export default interface SalesRecapScenario extends BaseScenario {
 
     shortingAscOnlinePayment(headerName: "Transaction Time" | "Order ID" | "Sales Number"
         | "Payment Method" | "Payment Status" | "Transaction Amount"): Promise<void>;
+
+    shortingDescOnlinePayment(headerName: "Transaction Time" | "Order ID" | "Sales Number"
+        | "Payment Method" | "Payment Status" | "Transaction Amount"): Promise<void>;
 }
