@@ -172,4 +172,9 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.dataValidationSalesOverView(value);
     }
 
+    async viewDetailSalesOverView(value: string, index: number): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.viewDetailSalesOverView(value, index));
+        await this.click(SalesRecapLocator.viewDetailSalesOverView(value, index));
+    }
+
 }
