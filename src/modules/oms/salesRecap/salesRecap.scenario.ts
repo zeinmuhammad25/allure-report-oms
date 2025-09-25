@@ -58,4 +58,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     inputVoidNotes(notes: string): Promise<void>;
 
     selectVoidNotes(notes: string): Promise<void>;
+
+    paginationVoidSales(arrow: "left" | "right"): Promise<void>;
 }
