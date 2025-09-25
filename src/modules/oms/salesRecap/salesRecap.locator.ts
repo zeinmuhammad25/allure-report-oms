@@ -68,7 +68,7 @@ export default class SalesRecapLocator extends BaseLocator {
     //voidSalesPopup
     static voidSalesNotes: string = "//textarea[@class='form-control input-notes ng-pristine ng-valid ng-touched']";
     static voidTablePanel = (notes: string): string => `//app-grid-pagination//button//span[normalize-space()='${notes}']`;
-    static paginationVoidSales = (arrow: string): string => `//i[@class='glyphicon glyphicon-arrow-${arrow}']`;
+    static paginationVoidSales = (arrow: "left" | "right"): string => `//i[@class='glyphicon glyphicon-arrow-${arrow}']`;
     static escapeKeyboardVoidSales: string = "//body/div[@class='cdk-overlay-container']/div[1]";
     static cancelVoidSales: string = "(//button[.//span[contains(normalize-space(.),'Cancel')]])[4]";
     static ApplyVoidSales: string = "//span[normalize-space()='Apply']";
@@ -76,7 +76,7 @@ export default class SalesRecapLocator extends BaseLocator {
     //EditRemarks
     static fieldRemarks: string = "//textarea[@class='form-control input-text-notes ng-pristine ng-valid ng-touched']";
     static escapeKeyboardRemarks: string = "//body/div[@class='cdk-overlay-container']/div[1]";
-    static actionVoidRemarks = (action: "Cancel" | "Apply"): string =>
+    static actionRemarks = (action: "Cancel" | "Apply"): string =>
         `//span[normalize-space()='${action}']`;
 
     //ReprintReceipt
@@ -97,8 +97,8 @@ export default class SalesRecapLocator extends BaseLocator {
         `//mat-option//span[normalize-space()='${onlinePaymentMethod}']`;
     static dropdownPaymentStatus: string = "(//div[@class='mat-select-arrow-wrapper'])[2]";
     static selectAllPaymentStatus: string = "//span[@class='mat-checkbox-label']";
-    static selectPaymentStatus = (onlinePaymentMethod: string): string =>
-        `//mat-option//span[normalize-space()='${onlinePaymentMethod}']`;
+    static selectPaymentStatus = (onlinePaymentStatus: string): string =>
+        `//mat-option//span[normalize-space()='${onlinePaymentStatus}']`;
     static closeAfterSelect: string = "//div[@class='cdk-overlay-backdrop cdk-overlay-transparent-backdrop cdk-overlay-backdrop-showing']";
     static btnSearchOnlinePayment: string = "//button//span[normalize-space()='Search']";
     static headersOnlinePayment =
