@@ -80,4 +80,6 @@ export default interface SalesRecapScenario extends BaseScenario {
     searchTransactionReference(fieldTransactionReference: string): Promise<void>;
 
     showDropDownPaymentMethodOnline(): Promise<void>;
+
+    setPaymentMethodOnline(values: "all" | string | string[], opts?: { close?: boolean }): Promise<void>;
 }
