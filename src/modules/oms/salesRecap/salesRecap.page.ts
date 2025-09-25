@@ -247,4 +247,14 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.cancelVoidSales);
     }
 
+    async applyVoidSales(shouldBeDisabled: boolean): Promise<void> {
+        const locator = SalesRecapLocator.ApplyVoidSales;
+        await this.expectVisible(locator);
+        if (shouldBeDisabled) {
+            await this.expectDisabled(locator);
+        } else {
+            await this.click(locator);
+        }
+    }
+
 }
