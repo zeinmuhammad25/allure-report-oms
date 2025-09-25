@@ -230,4 +230,11 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.fill(SalesRecapLocator.voidSalesNotes, finalNotes);
         await this.click(SalesRecapLocator.escapeKeyboardVoidSales);
     }
+
+    async selectVoidNotes(notes: string): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.voidSalesNotes);
+        await this.expectVisible(SalesRecapLocator.voidTablePanel(notes));
+        await this.click(SalesRecapLocator.voidTablePanel(notes));
+    }
+
 }
