@@ -408,4 +408,9 @@ export default class SalesRecapPage extends BaseOmsPage implements SalesRecapSce
         await this.click(SalesRecapLocator.paginationOnlinePaymentFirstLast(type));
     }
 
+    async clearAllFilter(): Promise<void> {
+        await this.expectVisible(SalesRecapLocator.clearFilter);
+        await this.click(SalesRecapLocator.clearFilter);
+    }
+
 }
