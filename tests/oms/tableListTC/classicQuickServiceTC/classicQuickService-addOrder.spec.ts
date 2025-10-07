@@ -311,4 +311,17 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2, editOrderV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0006] Validate Logic When User Able To Edit Qty Menu Extra",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuPaketMahal(orderClassic, addOrderV2);
+                await selectMenuExtraAlpa(addOrderV2,2)
+                await addOrderV2.addToCartMenuDetailPackage();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2}, testInfo);
+        });
+
 });
