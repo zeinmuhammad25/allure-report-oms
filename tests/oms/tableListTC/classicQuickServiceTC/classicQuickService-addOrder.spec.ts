@@ -756,4 +756,29 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2, editOrderV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0034] Validate Logic When User Able To Edit Qty Menu Paket Special Price After Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2, editOrderV2, sideNavBar, tableList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2, editOrderV2, sideNavBar, tableList}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuPaketSpecialPrice(orderClassic, addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await orderClassic.clickMenuDetail(MenuList.menus.menuPaketSpecialSelections.shortName);
+                await editOrderV2.modifyEditHeadPackage([5]);
+                await editOrderV2.actionUpdate();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await orderClassic.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await quickServiceList.clickLastSalesNum();
+                await orderClassic.clickMenuDetail(MenuList.menus.menuPaketSpecialSelections.shortName);
+                await editOrderV2.modifyEditHeadPackage([-3]);
+                await editOrderV2.actionUpdate();
+                await orderClassic.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2, editOrderV2, sideNavBar, tableList}, testInfo);
+        });
+
 });
