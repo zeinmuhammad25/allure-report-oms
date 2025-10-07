@@ -912,4 +912,31 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, editOrderV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0043] Validate Logic When User Able To Delete Menu Open Price After Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, editOrderV2, sideNavBar, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, editOrderV2, sideNavBar, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuOpenPriceChoices(orderClassic); //Menu 1
+                await editOrderV2.inputPriceMenuOpenPrice("100.000");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.applyOpenPrice();
+                await selectMenuOpenPriceExclusive(orderClassic); //Menu 2
+                await editOrderV2.inputPriceMenuOpenPrice("100.000");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.applyOpenPrice();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                await orderClassic.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await quickServiceList.clickLastSalesNum();
+                await orderClassic.deleteMenu(MenuList.menus.menuOpenPriceChoices.shortName); //Delete Menu 1
+                await orderClassic.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrderClassic, orderClassic, editOrderV2, sideNavBar, paymentV2}, testInfo);
+        });
+
 });
