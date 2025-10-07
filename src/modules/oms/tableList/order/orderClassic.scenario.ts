@@ -84,4 +84,6 @@ export default interface OrderClassicScenario extends BaseScenario {
 
     calculationAfterDiscount(branchId: number): Promise<void>;
 
+    categoryNext(categoryName: string): Promise<void>;
+
 }
