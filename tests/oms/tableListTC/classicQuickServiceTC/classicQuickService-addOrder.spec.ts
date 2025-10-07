@@ -1023,4 +1023,16 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, editOrderV2, addOrderV2, sideNavBar, tableList, paymentV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0049] Validate Logic When User Able To Delete Menu Extra Special Price Before Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, addOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, addOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuPaketSpecialPrice(orderClassic, addOrderV2, 2);
+                await selectMenuExtra(addOrderV2, 5);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await orderClassic.deleteMenu(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+                await orderClassic.validateMenuNotVisible(MenuList.atSpecialPrice.atMenuPaketSpecialPrice.menuPaketSpecialSelections.shortName);
+            }, {quickServiceList, bookOrderClassic, orderClassic, addOrderV2}, testInfo);
+        });
+
 });
