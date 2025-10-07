@@ -56,6 +56,6 @@ export default class OrderClassicLocator extends BaseLocator {
     /span[contains(text(), 'Total:')]`;
     static valueSubtotal: string = "//div[contains(@class, 'flex-grow-1 text-right') and .//strong[text()='Subtotal']]/div[@class='ng-star-inserted']";
 
-    static menuNextButton: string = "//div[contains(@class, 'd-flex align-items-end')]//app-grid-pager[@display='horizontal']//button[2]";
+    static categoryNextButton: string = "//div[contains(@class, 'd-flex align-items-end')]//app-grid-pager[@display='horizontal']//button[2]";
 
 }
