@@ -826,4 +826,25 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0038] Validate Logic When User Able To Add Menu Paket Special Price With Notes After Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrder, orderClassic, addOrderV2, paymentV2, sideNavBar, editOrderClassic, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrder, orderClassic, addOrderV2, paymentV2, sideNavBar, editOrderClassic, editOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
+                await selectMenuPaketSpecialPriceNotes(orderClassic, addOrderV2, 2, "COBA COBA NOTES BEFORE SAFE");
+                await addOrderV2.inputMenuNotesPackageHead("COBA NOTES BEFORE SAFE");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await orderClassic.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await quickServiceList.clickLastSalesNum();
+                await orderClassic.clickMenuDetail(MenuList.menus.menuPaketSpecialSelections.shortName);
+                await editOrderV2.escapeKeyboardV2();
+                await editOrderV2.disableInputMenuNotesAddedPackageHead();
+                await editOrderClassic.actionCancelV2();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrder, orderClassic, addOrderV2, paymentV2, sideNavBar, editOrderClassic, editOrderV2}, testInfo);
+        });
+
 });
