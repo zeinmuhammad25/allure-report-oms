@@ -357,4 +357,21 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, addOrderV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0010] Validate Logic When User Able To Delete Menu Biasa after Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, sideNavBar, orderClassic, editOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, sideNavBar, orderClassic, editOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuBiasaMultiple(orderClassic);
+                await orderClassic.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await quickServiceList.clickLastSalesNum();
+                await orderClassic.deleteMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await orderClassic.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrderClassic, sideNavBar, orderClassic, editOrderV2, paymentV2}, testInfo);
+        });
+
 });
