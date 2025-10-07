@@ -395,4 +395,27 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, sideNavBar, orderClassic, editOrderV2, paymentV2, addOrderV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0012] Validate Logic When User Able To Delete Menu Extra after Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, sideNavBar, orderClassic, editOrderV2, paymentV2, addOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, sideNavBar, orderClassic, editOrderV2, paymentV2, addOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuPaketMahal(orderClassic, addOrderV2);
+                await selectMenuExtraAlpa(addOrderV2,2)
+                await addOrderV2.addToCartMenuDetailPackage();
+                await selectMenuPaketMurah(orderClassic, addOrderV2);
+                await selectMenuExtraBeta(addOrderV2,2)
+                await addOrderV2.addToCartMenuDetailPackage();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await orderClassic.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await quickServiceList.clickLastSalesNum();
+                await orderClassic.deleteMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
+                await orderClassic.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrderClassic, sideNavBar, orderClassic, editOrderV2, paymentV2, addOrderV2}, testInfo);
+        });
+
 });
