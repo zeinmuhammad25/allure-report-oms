@@ -473,4 +473,23 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, editOrderV2, sideNavBar, addOrderV2, paymentV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0016] Validate Logic When User Able To Edit Qty Menu Biasa After Save Order > Decrease Qty",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, sideNavBar, orderClassic, editOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, sideNavBar, orderClassic, editOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuBiasa(orderClassic, 5);
+                await orderClassic.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await quickServiceList.clickLastSalesNum();
+                await orderClassic.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+                await editOrderV2.modifyEditHeadPackage([-3]);
+                await editOrderV2.actionUpdate();
+                await orderClassic.cancelMenuAfterSave("CANCEL MENU");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.actionButtonFooter("Apply");
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrderClassic, sideNavBar, orderClassic, editOrderV2, paymentV2}, testInfo);
+        });
+
 });
