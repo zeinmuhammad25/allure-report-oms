@@ -589,4 +589,23 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, editOrderClassic, editOrderV2, paymentV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0023] Validate Logic When User Able To Edit Menu Paket With Notes After Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, editOrderClassic, editOrderV2, paymentV2, addOrderV2},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, editOrderClassic, editOrderV2, paymentV2, addOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuPaketWithNotes(orderClassic, addOrderV2, 2, "COBA COBA NOTES BEFORE SAFE");
+                await addOrderV2.addToCartMenuDetailPackage();
+                await orderClassic.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                await quickServiceList.clickLastSalesNum();
+                await orderClassic.clickMenuDetail(MenuList.menus.atMenuPaketMahal.name);
+                await editOrderV2.disableInputMenuNotesPackageHead();
+                await editOrderV2.escapeKeyboardV2();
+                await editOrderClassic.actionCancelV2();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, editOrderClassic, editOrderV2, paymentV2, addOrderV2}, testInfo);
+        });
+
 });
