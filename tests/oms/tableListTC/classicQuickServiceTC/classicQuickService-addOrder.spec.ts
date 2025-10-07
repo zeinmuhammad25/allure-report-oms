@@ -741,4 +741,19 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0033] Validate Logic When User Able To Edit Qty Menu Paket Special Price",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2, editOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuPaketSpecialPrice(orderClassic, addOrderV2, 2);
+                await addOrderV2.addToCartMenuDetailPackage();
+                await orderClassic.clickMenuDetail(MenuList.menus.menuPaketSpecialSelections.shortName);
+                await editOrderV2.modifyEditHeadPackage([5]);
+                await editOrderV2.actionUpdate();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2, editOrderV2}, testInfo);
+        });
+
 });
