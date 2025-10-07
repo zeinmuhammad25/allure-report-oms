@@ -87,7 +87,7 @@ export default class OrderClassicPage extends BaseOmsPage implements OrderScenar
     async saveOrder(): Promise<void> {
         await this.expectVisible(OrderLocator.saveOrderButton);
         await this.click(OrderLocator.saveOrderButton);
-        await this.waitForResponse("/get-payment-method"); //in QS after clicking save will be directed to payment
+        //await this.waitForResponse("/get-payment-method"); //in QS after clicking save will be directed to payment
     }
 
 
@@ -320,5 +320,11 @@ export default class OrderClassicPage extends BaseOmsPage implements OrderScenar
         }
     }
 
+    async categoryNext(categoryName: string): Promise<void> {
+        if (!(await this.isVisible(OrderLocator.categoryButton(categoryName)))) {
+            await this.expectVisible(OrderLocator.categoryNextButton);
+            await this.click(OrderLocator.categoryNextButton);
+        }
+    }
 
 }
