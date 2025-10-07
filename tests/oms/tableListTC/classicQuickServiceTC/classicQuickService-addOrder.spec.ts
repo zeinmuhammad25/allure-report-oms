@@ -324,4 +324,14 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, addOrderV2, paymentV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0007] Validate Logic When User Able To Delete Menu Biasa before Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, orderClassic}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuBiasa(orderClassic);
+                await orderClassic.deleteMenu(MenuList.menus.atMenuBiasaGoreng.name);
+                await orderClassic.validateMenuNotVisible(MenuList.menus.atMenuBiasaGoreng.name);
+            }, {quickServiceList, bookOrderClassic, orderClassic}, testInfo);
+        });
+
 });
