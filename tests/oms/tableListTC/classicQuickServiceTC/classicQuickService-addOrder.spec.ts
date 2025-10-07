@@ -533,4 +533,17 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, editOrderV2, sideNavBar, addOrderV2, paymentV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0019] Validate Logic When User Able To Add Menu Biasa With Notes Before Save Order",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, editOrderV2, paymentV2},testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, editOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuBiasa(orderClassic);
+                await orderClassic.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
+                await editOrderV2.inputMenuNotesSingelMenu("COBA AT");
+                await editOrderV2.actionUpdate();
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrderClassic, orderClassic, editOrderV2, paymentV2}, testInfo);
+        });
+
 });
