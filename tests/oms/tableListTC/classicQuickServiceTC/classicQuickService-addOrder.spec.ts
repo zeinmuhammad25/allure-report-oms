@@ -899,4 +899,17 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, editOrderV2, paymentV2, sideNavBar, tableList}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0042] Validate Logic When User Able To Delete Menu Open Price Before Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, editOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuOpenPrice(orderClassic);
+                await editOrderV2.inputPriceMenuOpenPrice("100.000");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.applyOpenPrice();
+                await orderClassic.deleteMenu(MenuList.menus.menuOpenPriceChoices.shortName);
+                await orderClassic.validateMenuNotVisible(MenuList.menus.menuOpenPriceChoices.shortName);
+            }, {quickServiceList, bookOrderClassic, orderClassic, editOrderV2}, testInfo);
+        });
+
 });
