@@ -638,4 +638,17 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, paymentV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0026] Validate Logic When User Able To Edit Qty Menu Biasa Special Price",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, paymentV2, editOrderV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, paymentV2, editOrderV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuBiasaSpecialPrice(orderClassic);
+                await orderClassic.clickMenuDetail(MenuList.menus.menuSpecialPriceDelights.name);
+                await editOrderV2.modifyEditHeadPackage([15]);
+                await editOrderV2.actionUpdate();
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrderClassic, orderClassic, paymentV2, editOrderV2}, testInfo);
+        });
+
 });
