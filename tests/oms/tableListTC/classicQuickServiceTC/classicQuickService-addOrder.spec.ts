@@ -939,4 +939,20 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, editOrderV2, sideNavBar, paymentV2}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSBO_0044] Validate Logic When User Able To Add Menu Open Price With Notes Before Save",
+        {tag: tag + "@positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, editOrderV2, paymentV2}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, editOrderV2, paymentV2}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMenuOpenPrice(orderClassic);
+                await editOrderV2.inputPriceMenuOpenPrice("100.000");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.inputNoteMenuOpenPrice("TEST NOTES OPEN PRICE");
+                await editOrderV2.escapeKeyboard();
+                await editOrderV2.applyOpenPrice();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                await orderClassic.saveOrder();
+                await paymentCashFull(paymentV2);
+            }, {quickServiceList, bookOrderClassic, orderClassic, editOrderV2, paymentV2}, testInfo);
+        });
+
 });
