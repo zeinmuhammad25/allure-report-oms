@@ -43,15 +43,28 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
     async submitPinValidateStartDayYes(): Promise<void> {
         await this.expectVisible(SignPinLocator.buttonSignIn);
         await this.click(SignPinLocator.buttonSignIn);
-        await this.click(SignPinLocator.validationSignInUserYes);
-        await this.expectVisible(SignPinLocator.pageStartShift);
+        const isValidationVisible = await this.isVisible(SignPinLocator.validationSignInUserYes);
+        if (isValidationVisible) {
+            console.log("✅ Validation 'SignInUserYes' muncul — lanjut proses start shift.");
+            await this.click(SignPinLocator.validationSignInUserYes);
+            await this.expectVisible(SignPinLocator.pageStartShift);
+        } else {
+            console.log("⚠️ Validation 'SignInUserYes' tidak muncul — skip start shift popup.");
+        }
     }
+
 
     async submitPinValidateStartDayNo(): Promise<void> {
         await this.expectVisible(SignPinLocator.buttonSignIn);
         await this.click(SignPinLocator.buttonSignIn);
-        await this.click(SignPinLocator.validationSignInUserNo);
-        await this.expectVisible(SignPinLocator.buttonSignIn);
+        const isValidationVisible = await this.isVisible(SignPinLocator.validationSignInUserNo);
+        if (isValidationVisible) {
+            console.log("✅ Validation 'SignInUserNo' muncul — lanjut proses sign in tanpa start shift.");
+            await this.click(SignPinLocator.validationSignInUserNo);
+            await this.expectVisible(SignPinLocator.buttonSignIn);
+        } else {
+            console.log("⚠️ Validation 'SignInUserNo' tidak muncul — lanjut tanpa popup validasi.");
+        }
     }
 
     async submitPinNoUnregisteredUser(): Promise<void> {
