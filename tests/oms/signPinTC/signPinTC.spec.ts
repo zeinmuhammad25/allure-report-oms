@@ -12,6 +12,7 @@ test.describe.serial("Sign PIN", () => {
         {tag: tags + "@positive"}, async ({signPin}) => {
             await signPin.inputPinByTouch("22");
             await signPin.submitPinValidateStartDayYes();
+            await signPin.closePopUpAlert();
         });
 
     test("[TC_020200?] Validate Logic when User input valid/registered pin login validate start no",
