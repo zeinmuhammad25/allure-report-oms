@@ -140,5 +140,15 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSTM_0012] Validate Logic when User can undo Cancel Order before Save Order with button Cancel",
+        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await selectMultipleMenuBiasa(orderClassic, 2, 2, 2);
+                await sideNavBar.moveTableList();
+                await orderClassic.confirmationCloseOrder("Yes");
+            }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
+        });
+
 
 });
