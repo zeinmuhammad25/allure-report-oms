@@ -172,61 +172,10 @@ test.describe.serial("Quick Service Classic Add Order", () => {
         await paymentV2.payPayment();
         await paymentV2.closePopUpPaymentSuccessFul();
     };
-
-    test.beforeEach(async ({terminalID, signPin}) => {
+    let featuresActivated = false;
+    test.beforeEach(async ({terminalID, signPin,orderClassic}) => {
         const testWithAuthentication = [
-            "[TCAT_OMS_CQSBO_0001] Validate Logic When User Able To Add Menu Biasa",
-            "[TCAT_OMS_CQSBO_0002] Validate Logic When User Able To Add Menu Paket",
-            "[TCAT_OMS_CQSBO_0003] Validate Logic When User Able To Add Menu Extra",
-            "[TCAT_OMS_CQSBO_0004] Validate Logic When User Able To Edit Qty Menu Biasa",
-            "[TCAT_OMS_CQSBO_0005] Validate Logic When User Able To Edit Qty Menu Paket",
-            "[TCAT_OMS_CQSBO_0006] Validate Logic When User Able To Edit Qty Menu Extra",
-            "[TCAT_OMS_CQSBO_0007] Validate Logic When User Able To Delete Menu Biasa before Save Order",
-            "[TCAT_OMS_CQSBO_0008] Validate Logic When User Able To Delete Menu Paket before Save Order",
-            "[TCAT_OMS_CQSBO_0009] Validate Logic When User Able To Delete Menu Extra before Save Order",
-            "[TCAT_OMS_CQSBO_0010] Validate Logic When User Able To Delete Menu Biasa after Save Order",
-            "[TCAT_OMS_CQSBO_0011] Validate Logic When User Able To Delete Menu Paket after Save Order",
-            "[TCAT_OMS_CQSBO_0012] Validate Logic When User Able To Delete Menu Extra after Save Order",
-            "[TCAT_OMS_CQSBO_0013] Validate Logic When User Able To Edit Qty Menu Biasa After Save Order > Increase Qty",
-            "[TCAT_OMS_CQSBO_0014] Validate Logic When User Able To Edit Qty Menu Paket After Save Order > Increase Qty",
-            "[TCAT_OMS_CQSBO_0015] Validate Logic When User Able To Edit Qty Menu Extra After Save Order > Increase Qty",
-            "[TCAT_OMS_CQSBO_0016] Validate Logic When User Able To Edit Qty Menu Biasa After Save Order > Decrease Qty",
-            "[TCAT_OMS_CQSBO_0017] Validate Logic When User Able To Edit Qty Menu Paket After Save Order > Decrease Qty",
-            "[TCAT_OMS_CQSBO_0018] Validate Logic When User Able To Edit Qty Menu Extra After Save Order > Decrease Qty",
-            "[TCAT_OMS_CQSBO_0019] Validate Logic When User Able To Add Menu Biasa With Notes Before Save Order",
-            "[TCAT_OMS_CQSBO_0020] Validate Logic When User Able To Add Menu Paket With Notes Before Save Order",
-            "[TCAT_OMS_CQSBO_0021] Validate Logic When User Able To Add Menu Extra With Notes Before Save Order",
-            "[TCAT_OMS_CQSBO_0022] Validate Logic When User Able To Edit Menu Biasa With Notes After Save Order",
-            "[TCAT_OMS_CQSBO_0023] Validate Logic When User Able To Edit Menu Paket With Notes After Save Order",
-            "[TCAT_OMS_CQSBO_0024] Validate Logic When User Able To Edit Menu Extra With Notes After Save Order",
-            "[TCAT_OMS_CQSBO_0025] Validate Logic When User Able To Add Menu Biasa Special Price",
-            "[TCAT_OMS_CQSBO_0026] Validate Logic When User Able To Edit Qty Menu Biasa Special Price",
-            "[TCAT_OMS_CQSBO_0027] Validate Logic When User Able To Edit Qty Menu Biasa Special Price After Save",
-            "[TCAT_OMS_CQSBO_0028] Validate Logic When User Able To Delete Menu Biasa Special Price Before Save",
-            "[TCAT_OMS_CQSBO_0029] Validate Logic When User Able To Delete Menu Biasa Special Price After Save",
-            "[TCAT_OMS_CQSBO_0030] Validate Logic When User Able To Add Menu Biasa Special Price With Notes Before Save",
-            "[TCAT_OMS_CQSBO_0031] Validate Logic When User Able To Add Menu Biasa Special Price With Notes After Save",
-            "[TCAT_OMS_CQSBO_0032] Validate Logic When User Able To Add Menu Paket Special Price",
-            "[TCAT_OMS_CQSBO_0033] Validate Logic When User Able To Edit Qty Menu Paket Special Price",
-            "[TCAT_OMS_CQSBO_0034] Validate Logic When User Able To Edit Qty Menu Paket Special Price After Save",
-            "[TCAT_OMS_CQSBO_0035] Validate Logic When User Able To Delete Menu Paket Special Price Before Save",
-            "[TCAT_OMS_CQSBO_0036] Validate Logic When User Able To Delete Menu Paket Special Price After Save",
-            "[TCAT_OMS_CQSBO_0037] Validate Logic When User Able To Add Menu Paket Special Price With Notes Before Save",
-            "[TCAT_OMS_CQSBO_0038] Validate Logic When User Able To Add Menu Paket Special Price With Notes After Save",
-            "[TCAT_OMS_CQSBO_0039] Validate Logic When User Able To Add Menu Open Price",
-            "[TCAT_OMS_CQSBO_0040] Validate Logic When User Able To Edit Qty Menu Open Price",
-            "[TCAT_OMS_CQSBO_0041] Validate Logic When User Able To Edit Qty Menu Open Price After Save",
-            "[TCAT_OMS_CQSBO_0042] Validate Logic When User Able To Delete Menu Open Price Before Save",
-            "[TCAT_OMS_CQSBO_0043] Validate Logic When User Able To Delete Menu Open Price After Save",
-            "[TCAT_OMS_CQSBO_0044] Validate Logic When User Able To Add Menu Open Price With Notes Before Save",
-            "[TCAT_OMS_CQSBO_0045] Validate Logic When User Able To Add Menu Open Price With Notes After Save",
-            "[TCAT_OMS_CQSBO_0046] Validate Logic When User Able To Add Menu Extra Special Price",
-            "[TCAT_OMS_CQSBO_0047] Validate Logic When User Able To Edit Qty Menu Extra Special Price",
-            "[TCAT_OMS_CQSBO_0048] Validate Logic When User Able To Edit Qty Menu Extra Special Price After Save",
-            "[TCAT_OMS_CQSBO_0049] Validate Logic When User Able To Delete Menu Extra Special Price Before Save",
-            "[TCAT_OMS_CQSBO_0050] Validate Logic When User Able To Delete Menu Extra Special Price After Save",
-            "[TCAT_OMS_CQSBO_0051] Validate Logic When User Able To Add Menu Extra Special Price With Notes Before Save",
-            "[TCAT_OMS_CQSBO_0052] Validate Logic When User Able To Add Menu Extra Special Price With Notes After Save"
+            "[TCAT_OMS_CQSBO_0001] Validate Logic When User Able To Add Menu Biasa"
         ];
 
         if (testWithAuthentication.includes(test.info().title)) {
@@ -235,8 +184,14 @@ test.describe.serial("Quick Service Classic Add Order", () => {
             await signPin.inputPinByTouch("22");
             await signPin.validateShowStarCashClassic("20.000");
             await signPin.storeAuthState();
+            if (!featuresActivated) {
+                await orderClassic.activatePosFilterAccess()
+                await orderClassic.activateOrderingV2();
+                await orderClassic.activatePaymentV2();
+                featuresActivated = true;
+            }
         }
-        //await tableList.goHere();
+        await orderClassic.goHere();
 
     });
 
