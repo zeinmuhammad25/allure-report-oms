@@ -5,10 +5,15 @@ import OrderLocator from "./orderClassic.locator";
 
 export default class OrderClassicPage extends BaseOmsPage implements OrderScenario {
 
-    pageUrl: () => string;
+    pageUrl = (): string => this.urls.get.tableList.orderDineIn;
 
     shouldHave(): Element[] {
         return [];
+    }
+
+    async goHere(): Promise<void> {
+        await this.navigateHere();
+        await this.wait(300);
     }
 
     async inputPhoneNumber(phoneNumber: string): Promise<void> {
@@ -236,6 +241,11 @@ export default class OrderClassicPage extends BaseOmsPage implements OrderScenar
 
     async activateOrderingV2(): Promise<void> {
         const query: string = "INSERT INTO ms_setting (key1, key2, value1, value2)  VALUES ('POS', 'Show New Ordering Layout Version', \"true\", '');";
+        await this.sqlExecute(this.configs.get.dbConfig, query);
+    }
+
+    async activatePaymentV2(): Promise<void> {
+        const query: string = "INSERT INTO ms_setting (key1, key2, value1, value2) VALUES ('POS', 'Show New Payment Version', \"true\", '');";
         await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
