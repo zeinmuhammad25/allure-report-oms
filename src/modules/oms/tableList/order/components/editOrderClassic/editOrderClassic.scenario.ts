@@ -35,6 +35,8 @@ export default interface EditOrderClassicScenario extends BaseScenario {
 
     actionCancel(): Promise<void>;
 
+    actionCancelV2(): Promise<void>;
+
     applyOpenPrice(): Promise<void>;
 
     cancelOpenPrice(): Promise<void>;

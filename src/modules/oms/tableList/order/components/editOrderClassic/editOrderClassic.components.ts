@@ -2,6 +2,7 @@ import Element from "../../../../../../base/objects/Element";
 import BaseOmsPage from "../../../../base-oms-page";
 import EditOrderScenario from "./editOrderClassic.scenario";
 import EditOrderLocator from "./editOrderClassic.locator";
+import EditOrderV2Locator from "../editOrderV2/editOrderV2.locator";
 
 export default class EditOrderClassicComponents extends BaseOmsPage implements EditOrderScenario {
     pageUrl: () => string;
@@ -111,6 +112,11 @@ export default class EditOrderClassicComponents extends BaseOmsPage implements E
     async actionCancel(): Promise<void> {
         await this.expectVisible(EditOrderLocator.buttonCancel);
         await this.click(EditOrderLocator.buttonCancel);
+    }
+
+    async actionCancelV2(): Promise<void> {
+        await this.expectVisible(EditOrderLocator.buttonCancelV2);
+        await this.click(EditOrderLocator.buttonCancelV2);
     }
 
     async applyOpenPrice(): Promise<void> {

@@ -20,7 +20,7 @@ export default class SignPinPage extends BaseOmsPage implements SignPinScenario 
     }
 
     async inputPinByTouch(pin: string): Promise<void> {
-
+        await this.wait(800);
         const pinArray = pin.split("");
 
         for (let i = 0; i < pinArray.length; i++) {

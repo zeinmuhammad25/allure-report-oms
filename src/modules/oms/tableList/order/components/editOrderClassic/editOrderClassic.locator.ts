@@ -12,6 +12,7 @@ export default class EditOrderClassicLocator extends BaseLocator {
     static buttonArrowUp = "//div[@class='d-flex']//i[@class='glyphicon glyphicon-arrow-up']";
     static buttonArrowDown = "//div[@class='d-flex']//i[@class='glyphicon glyphicon-arrow-down']";
     static buttonCancel = "//button[contains(@class, 'btn-action') and contains(@class, 'mat-danger')]";
+    static buttonCancelV2 = "//app-menu-edit-v2//button[.//span[normalize-space()='Cancel']]";
     static buttonNext: string = `//span[normalize-space()='Next']`;
     static buttonBack: string = `//span[normalize-space()='Back']`;
     static buttonApply: string = "//span[normalize-space()='Apply']";

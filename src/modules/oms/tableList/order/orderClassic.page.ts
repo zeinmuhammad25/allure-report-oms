@@ -5,10 +5,15 @@ import OrderLocator from "./orderClassic.locator";
 
 export default class OrderClassicPage extends BaseOmsPage implements OrderScenario {
 
-    pageUrl: () => string;
+    pageUrl = (): string => this.urls.get.tableList.orderDineIn;
 
     shouldHave(): Element[] {
         return [];
+    }
+
+    async goHere(): Promise<void> {
+        await this.navigateHere();
+        await this.wait(300);
     }
 
     async inputPhoneNumber(phoneNumber: string): Promise<void> {
@@ -87,7 +92,7 @@ export default class OrderClassicPage extends BaseOmsPage implements OrderScenar
     async saveOrder(): Promise<void> {
         await this.expectVisible(OrderLocator.saveOrderButton);
         await this.click(OrderLocator.saveOrderButton);
-        await this.waitForResponse("/get-payment-method"); //in QS after clicking save will be directed to payment
+        //await this.waitForResponse("/get-payment-method"); //in QS after clicking save will be directed to payment
     }
 
 
@@ -239,6 +244,11 @@ export default class OrderClassicPage extends BaseOmsPage implements OrderScenar
         await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
+    async activatePaymentV2(): Promise<void> {
+        const query: string = "INSERT INTO ms_setting (key1, key2, value1, value2) VALUES ('POS', 'Show New Payment Version', \"true\", '');";
+        await this.sqlExecute(this.configs.get.dbConfig, query);
+    }
+
     async calculationBeforeDiscount(branchId: number): Promise<void> {
         const query: string = `update fnb_dev1.ms_branch
                                set posTaxCalculationID     = 1,
@@ -320,5 +330,11 @@ export default class OrderClassicPage extends BaseOmsPage implements OrderScenar
         }
     }
 
+    async categoryNext(categoryName: string): Promise<void> {
+        if (!(await this.isVisible(OrderLocator.categoryButton(categoryName)))) {
+            await this.expectVisible(OrderLocator.categoryNextButton);
+            await this.click(OrderLocator.categoryNextButton);
+        }
+    }
 
 }

@@ -55,4 +55,7 @@ export default class OrderClassicLocator extends BaseLocator {
     static priceMenuExtraAndPackage = (menuName: string): string => `//div[contains(@class, 'd-flex flex-column flex-grow-1') and contains(text(), '${menuName}')]
     /span[contains(text(), 'Total:')]`;
     static valueSubtotal: string = "//div[contains(@class, 'flex-grow-1 text-right') and .//strong[text()='Subtotal']]/div[@class='ng-star-inserted']";
+
+    static categoryNextButton: string = "//div[contains(@class, 'd-flex align-items-end')]//app-grid-pager[@display='horizontal']//button[2]";
+
 }

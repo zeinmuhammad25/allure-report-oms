@@ -15,53 +15,54 @@ export default class PosOmsUrls extends BaseUrl {
 
     public get = {
 
-        terminalId:{
-            terminalList: "/en/terminal-list",
+        terminalId: {
+            terminalList: "/en/terminal-list"
         },
         // general pos fungsi untuk form general pada pos seperti login,startday dan endday
-        generalPos:{
-            loginPage:"/en/login",
-            startShift:"/en/shift",
-            endOfDay:"/en/shift",
+        generalPos: {
+            loginPage: "/en/login",
+            startShift: "/en/shift",
+            endOfDay: "/en/shift"
         },
 
-        tableList:{
-            orderDineIn:"/en/table",
-            dineInPayment:"/en/table/payment",
-            quickService:"/en/table/take-away",
-            qsPayment:"/en/table/take-away/payment",
+        tableList: {
+            orderDineIn: "/en/table",
+            dineInPayment: "/en/table/payment",
+            quickService: "/en/table/take-away",
+            qsPayment: "/en/table/take-away/payment",
+            classicQS: "/en/table/take-away-classic"
         },
 
-        salesRecapitulation:{
-            recapitulationPage:"/en/sales",
+        salesRecapitulation: {
+            recapitulationPage: "/en/sales"
         },
 
-        regularMember:{
-            indexMember:"/en/member",
-            addMember:"/en/member/add",
-            editMember:"/en/member/edit",
+        regularMember: {
+            indexMember: "/en/member",
+            addMember: "/en/member/add",
+            editMember: "/en/member/edit"
         },
 
-        regularMemberDeposit:{
-            indexDeposit:"/en/member-deposit",
-            addDeposit:"/en/member-deposit/add",
+        regularMemberDeposit: {
+            indexDeposit: "/en/member-deposit",
+            addDeposit: "/en/member-deposit/add"
         },
 
-        regularMemberWithdrawal:{
-            indexWithdrawal:"/en/member-withdrawal",
-            addWithdrawal:"/en/member-withdrawal/add",
+        regularMemberWithdrawal: {
+            indexWithdrawal: "/en/member-withdrawal",
+            addWithdrawal: "/en/member-withdrawal/add"
         },
 
-        toolsSettingPos:{
-            toolIndex:"/en/tools",
+        toolsSettingPos: {
+            toolIndex: "/en/tools"
         },
 
-        othersMenuPos:{
-            shiftLogList:"/en/shift-log",
-            branchMenuList:"/en/branch-menu",
-            soldOutLimitInfo:"/en/branch-menu/sold-out-limit-info",
-            station:"/en/station",
-        },
+        othersMenuPos: {
+            shiftLogList: "/en/shift-log",
+            branchMenuList: "/en/branch-menu",
+            soldOutLimitInfo: "/en/branch-menu/sold-out-limit-info",
+            station: "/en/station"
+        }
 
         // account: {
         //     forgotPassword: "forgotPassword urlnya apa",
