@@ -87,5 +87,17 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSTM_0007] Validate Logic when User can Cancel Order empty order",
+        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await orderClassic.saveOrder();
+                await sideNavBar.gotoPageTableList();
+                //await tableList.gotoQuickService();
+                await quickServiceList.clickLastSalesNum();
+                await cancelTableSelectNotes(orderClassic, "Cancel");
+            }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
+        });
+
 
 });
