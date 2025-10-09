@@ -93,7 +93,6 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await orderClassic.saveOrder();
                 await sideNavBar.gotoPageTableList();
-                //await tableList.gotoQuickService();
                 await quickServiceList.clickLastSalesNum();
                 await cancelTableSelectNotes(orderClassic, "Cancel");
             }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
