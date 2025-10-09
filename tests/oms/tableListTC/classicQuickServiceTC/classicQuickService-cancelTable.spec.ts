@@ -162,5 +162,12 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
             }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSTM_0014] Validate Logic when User cannot Cancel Order while having no ordered items and not saving order first",
+        {tag: tag + "@Negative"}, async ({quickServiceList, bookOrderClassic, orderClassic}, testInfo) => {
+            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic}) => {
+                await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
+                await orderClassic.disabledCancelOrder();
+            }, {quickServiceList, bookOrderClassic, orderClassic}, testInfo);
+        });
 
 });
