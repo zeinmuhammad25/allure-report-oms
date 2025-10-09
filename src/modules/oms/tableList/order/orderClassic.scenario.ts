@@ -63,7 +63,6 @@ export default interface OrderClassicScenario extends BaseScenario {
     expectVisibleCustomerName(name: string): Promise<void>;
 
 
-
     validateQtyOrderWithMenu(menuNames: string | string[]): Promise<void>;
 
     validatePriceExclusiveWithSubtotal(menuNames: string[], extraPackageNames: string[]): Promise<void>;
@@ -78,6 +77,7 @@ export default interface OrderClassicScenario extends BaseScenario {
 
     activateOrderingV2(): Promise<void>;
 
+    activatePaymentV2(): Promise<void>
 
 
     calculationBeforeDiscount(branchId: number): Promise<void>;
@@ -85,5 +85,7 @@ export default interface OrderClassicScenario extends BaseScenario {
     calculationAfterDiscount(branchId: number): Promise<void>;
 
     categoryNext(categoryName: string): Promise<void>;
+
+    goHere(): Promise<void>;
 
 }
