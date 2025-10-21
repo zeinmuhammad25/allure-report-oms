@@ -342,4 +342,13 @@ export default class OrderClassicPage extends BaseOmsPage implements OrderScenar
         }
     }
 
+    async paginationOrder(arrow: "up" | "down", clickCount: number = 1): Promise<void> {
+        await this.expectVisible(OrderLocator.paginationOrder(arrow));
+
+        for (let i = 0; i < clickCount; i++) {
+            await this.click(OrderLocator.paginationOrder(arrow));
+        }
+    }
+
+
 }
