@@ -113,6 +113,18 @@ test.describe.serial("Quick Service Classic Edit Order", () => {
             }, {bookOrderClassic, orderClassic, quickServiceList}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSTM_0019] Validate logic POS when user edit Sales Mode within the Order Page before order menu when popup new menu open",
+        {tag: tag + "@positive"}, async ({bookOrderClassic, orderClassic, quickServiceList}, testInfo) => {
+            await safeTest(async ({bookOrderClassic, orderClassic, quickServiceList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrderClassic, quickServiceList);
+                await orderClassic.selectCategoryMenu(MenuList.atCategory.name);
+                await orderClassic.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+                await orderClassic.editSalesMode("AT INCLUSIVE", orderClassic);
+                await bookOrderClassic.selectSalesMode("AT EXCLUSIVE", bookOrderClassic);
+                await orderClassic.applySalesMode(orderClassic);
+                await selectMenuBiasa(orderClassic, 2);
+            }, {bookOrderClassic, orderClassic, quickServiceList}, testInfo);
+        });
 
 
 
