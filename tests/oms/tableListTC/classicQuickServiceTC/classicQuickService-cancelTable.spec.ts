@@ -5,6 +5,7 @@ import {safeTest} from "../../../../src/base/utils/safeTest";
 import BookOrderClassicScenario
     from "../../../../src/modules/oms/tableList/components/bookOrderClassic/bookOrderClassic.scenario";
 import OrderClassicScenario from "../../../../src/modules/oms/tableList/order/orderClassic.scenario";
+import Table from "../../../../src/modules/oms/objects/table";
 
 test.setTimeout(600000);
 test.describe.serial("Quick Service Classic Cancel Order", () => {
@@ -12,8 +13,7 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
 
 
     const makeOrder = async (
-        salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrderClassic: BookOrderClassicScenario, quickServiceList: QuickServiceListScenario
-    ) => {
+        salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrderClassic: BookOrderClassicScenario, quickServiceList: QuickServiceListScenario) => {
         await bookOrderClassic.setPax(2);
         await bookOrderClassic.selectSalesMode(salesMode);
         await bookOrderClassic.applyQuickService();
@@ -66,6 +66,7 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
             tableList.cancelAllQuickServices()
         ]);
     });
+
     test("[TCAT_OMS_CQSTM_0004] Validate Logic when User can't Cancel Order before saving order",
         {tag: tag + "@Negative"}, async ({quickServiceList, bookOrderClassic, orderClassic}, testInfo) => {
             await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic}) => {
