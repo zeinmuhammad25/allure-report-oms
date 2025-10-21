@@ -72,6 +72,27 @@ test.describe.serial("Quick Service Classic Pagination Order", () => {
             }, {bookOrderClassic, orderClassic, quickServiceList, sideNavBar}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSTM_0025] User can click arrow down and menu direct to hide menu",
+        {tag: tag + "@positive"}, async ({bookOrderClassic, orderClassic, quickServiceList, addOrderV2, sideNavBar}, testInfo) => {
+            await safeTest(async ({bookOrderClassic, orderClassic, quickServiceList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrderClassic, quickServiceList);
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                await orderClassic.selectCategoryMenu(MenuList.atCategory.name);
+                await orderClassic.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+                await orderClassic.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, 1);
+                await orderClassic.selectMenu(MenuList.menus.atMenuBiasaRebus.name, 1);
+                await orderClassic.selectMenu(MenuList.menus.atMenuBiasaBakar.name, 1);
+
+                await orderClassic.selectCategoryMenu(MenuList.whisky.name);
+                await orderClassic.selectCategoryDetailMenu(MenuList.whisky.minumanWhisky.name);
+                await orderClassic.selectMenu(MenuList.menus.bataviaBlended700ml.name, 1);
+                await orderClassic.selectMenu(MenuList.menus.gilbeysWhisky350ml.name, 1);
+                await orderClassic.selectMenu(MenuList.menus.teacherWhisky700ml.name, 1);
+
+                await orderClassic.paginationOrder("down", 2);
+
+            }, {bookOrderClassic, orderClassic, quickServiceList, addOrderV2, sideNavBar}, testInfo);
+        });
 
 
 });
