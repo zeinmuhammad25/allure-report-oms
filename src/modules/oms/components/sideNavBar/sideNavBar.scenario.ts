@@ -20,6 +20,8 @@ export default interface SideNavBarScenario extends BaseScenario {
 
     gotoPageTools(): Promise<void>;
 
+    gotoPageToolsClassic(): Promise<void>;
+
     gotoPageRegularMemberWithdrawal(): Promise<void>;
 
     gotoPageDayStartEnd(): Promise<void>;
