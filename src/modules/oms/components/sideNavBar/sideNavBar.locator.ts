@@ -13,4 +13,8 @@ export default class SideNavBarLocator extends BaseLocator {
     static dropDownStation: string = "//tr[td//label[text()='Default Station']]//mat-select";
     static textButton = (buttonName: string): string => `//span[normalize-space()='${buttonName}']`;
     static stationName = (stationName: string): string => `//mat-option[normalize-space()='${stationName}']`;
+
+    static dropDownSalesMode: string = "//tr[td//label[text()='Default Quick Service Sales Mode']]//mat-select";
+    static salesMode = (salesMode: string): string => `//mat-option[normalize-space()='${salesMode}']`;
+
 }
