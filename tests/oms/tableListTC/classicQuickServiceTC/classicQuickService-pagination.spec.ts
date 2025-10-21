@@ -57,6 +57,20 @@ test.describe.serial("Quick Service Classic Pagination Order", () => {
             }, {bookOrderClassic, orderClassic, quickServiceList, sideNavBar}, testInfo);
         });
 
+    test("[TCAT_OMS_CQSTM_0024] Validate user can click arrow up and down on menu list item <=4",
+        {tag: tag + "@positive"}, async ({bookOrderClassic, orderClassic, quickServiceList, sideNavBar}, testInfo) => {
+            await safeTest(async ({bookOrderClassic, orderClassic, quickServiceList}) => {
+                await makeOrder("AT INCLUSIVE", bookOrderClassic, quickServiceList);
+                await orderClassic.selectCategoryMenu(MenuList.atCategory.name);
+                await orderClassic.selectCategoryDetailMenu(MenuList.atCategory.atMenuBiasa.name);
+                await orderClassic.selectMenu(MenuList.menus.atMenuBiasaGoreng.name, 1);
+                await orderClassic.selectMenu(MenuList.menus.atMenuBiasaRebus.name, 1);
+                await orderClassic.selectMenu(MenuList.menus.atMenuBiasaBakar.name, 1);
+                await orderClassic.paginationOrder("down");
+                await orderClassic.paginationOrder("up");
+
+            }, {bookOrderClassic, orderClassic, quickServiceList, sideNavBar}, testInfo);
+        });
 
 
 
