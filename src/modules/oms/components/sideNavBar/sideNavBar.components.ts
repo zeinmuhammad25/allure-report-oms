@@ -128,4 +128,17 @@ export default class SideNavBarComponents extends BaseOmsPage implements SideNav
         await this.click(SideNavBarLocator.textButton("Ok"));
     }
 
+    async selectSalesMode(salesMode: string): Promise<void> {
+        await this.expectVisible(SideNavBarLocator.toolsMenu("Application Setting"));
+        await this.click(SideNavBarLocator.toolsMenu("Application Setting"));
+        await this.expectVisible(SideNavBarLocator.dropDownSalesMode);
+        await this.click(SideNavBarLocator.dropDownSalesMode);
+        await this.expectVisible(SideNavBarLocator.salesMode(salesMode));
+        await this.click(SideNavBarLocator.salesMode(salesMode));
+        await this.expectVisible(SideNavBarLocator.textButton("Save"));
+        await this.click(SideNavBarLocator.textButton("Save"));
+        await this.expectVisible(SideNavBarLocator.textButton("Ok"));
+        await this.click(SideNavBarLocator.textButton("Ok"));
+    }
+
 }
