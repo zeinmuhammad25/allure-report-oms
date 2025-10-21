@@ -12,11 +12,13 @@ export default class OrderClassicLocator extends BaseLocator {
     static editTablePaxField: string = "(//app-number-input//input)[1]";
     static editTableTimeOutField: string = "(//app-number-input//input)[2]";
     static addPromotionButton: string = "//button[span[normalize-space()='Add Promotion']]";
-    static salesModeButton = (salesMode:string): string => `//button[@class='flex-grow-1 mb-2 mat-flat-button mat-primary' and contains(., '${salesMode}')]`;
+    static salesModeButton = (salesMode:string): string => `//span[normalize-space()='${salesMode}']`;
     static buttonApplySalesMode: string = "//button[normalize-space()='Apply']";
 
     static clickMenu = (menu: string): string => `//div[contains(@class, 'd-flex table-cell hover')]//span[contains(text(), '${menu}')]`;
     static buttonConfirmCloseOrder = (action: string): string => `//span[normalize-space()='${action}']`;
+    static buttonConfirmClose = (action: string): string => `//span[normalize-space()='${action}']`;
+
 
     static menuCategoryButton = (menuCategory: string): string => '//app-grid-menu-classic//button//div[normalize-space()=\'${menuCategory}\']'; //New
         static categoryButton = (category: string): string => `//app-grid-menu-classic//button//div[normalize-space()='${category}']`; //New
@@ -57,5 +59,9 @@ export default class OrderClassicLocator extends BaseLocator {
     static valueSubtotal: string = "//div[contains(@class, 'flex-grow-1 text-right') and .//strong[text()='Subtotal']]/div[@class='ng-star-inserted']";
 
     static categoryNextButton: string = "//div[contains(@class, 'd-flex align-items-end')]//app-grid-pager[@display='horizontal']//button[2]";
+
+    static paginationOrder = (arrow: "up" | "down"):
+        string => `//i[@class='glyphicon glyphicon-arrow-${arrow}']`;
+
 
 }
