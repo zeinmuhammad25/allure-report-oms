@@ -70,6 +70,11 @@ export default class SideNavBarComponents extends BaseOmsPage implements SideNav
         await this.expectTextVisible("Synchronize Data", true);
     }
 
+    async gotoPageToolsClassic(): Promise<void> {
+        await this.expectVisible(SideNavBarLocator.getSideNavBarButtons("/tools"));
+        await this.click(SideNavBarLocator.getSideNavBarButtons("/tools"));
+    }
+
     async gotoPageRegularMemberWithdrawal(): Promise<void> {
         await this.expectVisible(SideNavBarLocator.sideNavBarOthersButton);
         await this.click(SideNavBarLocator.sideNavBarOthersButton);
