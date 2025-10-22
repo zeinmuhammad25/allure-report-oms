@@ -39,6 +39,7 @@ export default interface OrderClassicScenario extends BaseScenario {
 
     confirmationCloseOrder(action: "Yes" | "No"): Promise<void>;
 
+    confirmationClose(action: "Yes" | "No"): Promise<void>;
 
     validateMenuNotVisible(menu: string): Promise<void>;
 
@@ -87,5 +88,7 @@ export default interface OrderClassicScenario extends BaseScenario {
     categoryNext(categoryName: string): Promise<void>;
 
     goHere(): Promise<void>;
+
+    paginationOrder(arrow: "up" | "down"): Promise<void>;
 
 }

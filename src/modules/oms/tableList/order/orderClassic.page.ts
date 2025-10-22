@@ -205,7 +205,12 @@ export default class OrderClassicPage extends BaseOmsPage implements OrderScenar
     async confirmationCloseOrder(action: "Yes" | "No"): Promise<void> {
         await this.expectVisible(OrderLocator.buttonConfirmCloseOrder(action));
         await this.click(OrderLocator.buttonConfirmCloseOrder(action));
-        //await this.waitForResponse("/table");
+        await this.wait(800);
+    }
+
+    async confirmationClose(action: "Yes" | "No"): Promise<void> {
+        await this.expectVisible(OrderLocator.buttonConfirmClose(action));
+        await this.click(OrderLocator.buttonConfirmClose(action));
         await this.wait(800);
     }
 
@@ -336,5 +341,14 @@ export default class OrderClassicPage extends BaseOmsPage implements OrderScenar
             await this.click(OrderLocator.categoryNextButton);
         }
     }
+
+    async paginationOrder(arrow: "up" | "down", clickCount: number = 1): Promise<void> {
+        await this.expectVisible(OrderLocator.paginationOrder(arrow));
+
+        for (let i = 0; i < clickCount; i++) {
+            await this.click(OrderLocator.paginationOrder(arrow));
+        }
+    }
+
 
 }
