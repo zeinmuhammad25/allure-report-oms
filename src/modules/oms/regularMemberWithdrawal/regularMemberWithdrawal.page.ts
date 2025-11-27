@@ -74,6 +74,7 @@ export default class RegularMemberWithdrawalPage extends BaseOmsPage implements 
     async applyFilterDate(): Promise<void> {
         await this.expectVisible(RegularMemberWithdrawalLocator.btnApplyFilterDate);
         await this.click(RegularMemberWithdrawalLocator.btnApplyFilterDate);
+        await this.wait(600);
     }
 
     async shortingAscWithdrawal(headerName: "Withdrawal Number" | "Date" | "Regular Member Code" | "Regular Member Name" | "Withdrawal Total" | "Sync Date" | "Reprint"): Promise<void> {
