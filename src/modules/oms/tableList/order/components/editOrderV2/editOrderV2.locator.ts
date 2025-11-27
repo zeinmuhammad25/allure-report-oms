@@ -47,7 +47,7 @@ export default class EditOrderV2Locator extends BaseLocator {
     static buttonApplyNotes: string = "//span[@class='mat-button-wrapper'][normalize-space()='Confirm']";
     static buttonBackNotes: string = "//span[@class='mat-button-wrapper'][normalize-space()='Back']";
 
-    static buttonPromotion: string = this.editButtonFunction("Apply Promo");
+    static buttonPromotion: string = this.editButtonFunction("Promo");
     static editOrderSearchPromotion: string = "//input[@placeholder='Search Promo']";
     static editOrderPromotionType: string = "//div[@class='mat-select-arrow-wrapper']";
     static editOrderPromotionTypeList = (typeName: string) => `//span[@class='mat-option-text'][normalize-space()='${typeName}']`;
