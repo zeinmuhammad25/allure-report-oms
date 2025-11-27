@@ -219,6 +219,7 @@ test.describe.serial("Quick Service Add Order", () => {
                 await order.clickMenuDetail(MenuList.menus.atMenuBiasaGoreng.name);
                 await editOrderV2.addPromotionMenu();
                 await editOrderV2.applyViaSearchPromotionMenu("MENU DISC RP ALL CATEGORY");
+                await editOrderV2.actionUpdate();
                 await order.saveOrder();
                 await paymentQrESB(paymentV2);
             }, {quickServiceList, bookOrder, order, addOrderV2, paymentV2, sideNavBar, tableList, editOrderV2}, testInfo);
