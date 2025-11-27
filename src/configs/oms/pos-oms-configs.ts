@@ -21,6 +21,7 @@ export default class PosOmsConfigs extends BaseConfigs {
         },
         dbStgConfig: {
             host: process.env.OMS_DBENV_HOST,
+            port: Number(process.env.OMS_DBENV_PORT),
             user: process.env.OMS_DBENV_USER,
             password: process.env.OMS_DBENV_PASS,
             database: process.env.OMS_DBENV_NAME
