@@ -150,6 +150,8 @@ test.describe.serial("Internal Member", () => {
         {tag: tags + "@negative"}, async ({regularMemberWithdrawal}, testInfo) => {
             await safeTest(async ({}) => {
                 await regularMemberWithdrawal.clickFilterDate();
+                await regularMemberWithdrawal.selectMonthAndYear("left", "prev");
+                await regularMemberWithdrawal.selectMonthAndYear("left", "prev");
                 await regularMemberWithdrawal.datePickerFilterDate("1", "left");
                 await regularMemberWithdrawal.datePickerFilterDate("30", "left");
                 await regularMemberWithdrawal.applyFilterDate();
@@ -162,6 +164,8 @@ test.describe.serial("Internal Member", () => {
         {tag: tags + "@negative"}, async ({regularMemberWithdrawal}, testInfo) => {
             await safeTest(async ({}) => {
                 await regularMemberWithdrawal.clickFilterDate();
+                await regularMemberWithdrawal.selectMonthAndYear("left", "prev");
+                await regularMemberWithdrawal.selectMonthAndYear("left", "prev");
                 await regularMemberWithdrawal.datePickerFilterDate("1", "left");
                 await regularMemberWithdrawal.datePickerFilterDate("30", "left");
                 await regularMemberWithdrawal.applyFilterDate();
@@ -174,6 +178,8 @@ test.describe.serial("Internal Member", () => {
         {tag: tags + "@negative"}, async ({regularMemberWithdrawal}, testInfo) => {
             await safeTest(async ({}) => {
                 await regularMemberWithdrawal.clickFilterDate();
+                await regularMemberWithdrawal.selectMonthAndYear("left", "prev");
+                await regularMemberWithdrawal.selectMonthAndYear("left", "prev");
                 await regularMemberWithdrawal.datePickerFilterDate("1", "left");
                 await regularMemberWithdrawal.datePickerFilterDate("30", "left");
                 await regularMemberWithdrawal.applyFilterDate();
@@ -187,6 +193,8 @@ test.describe.serial("Internal Member", () => {
         {tag: tags + "@negative"}, async ({regularMemberWithdrawal}, testInfo) => {
             await safeTest(async ({}) => {
                 await regularMemberWithdrawal.clickFilterDate();
+                await regularMemberWithdrawal.selectMonthAndYear("left", "prev");
+                await regularMemberWithdrawal.selectMonthAndYear("left", "prev");
                 await regularMemberWithdrawal.datePickerFilterDate("1", "left");
                 await regularMemberWithdrawal.datePickerFilterDate("30", "left");
                 await regularMemberWithdrawal.applyFilterDate();
