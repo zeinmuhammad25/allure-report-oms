@@ -93,7 +93,7 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     async gotoPayment(): Promise<void> {
         await this.expectVisible(OrderLocator.paymentButton);
         await this.click(OrderLocator.paymentButton);
-        await this.waitForResponse("/get-payment-method");
+        //await this.waitForResponse("/get-payment-method");
     }
 
     async printBill(): Promise<void> {
@@ -370,12 +370,12 @@ export default class OrderPage extends BaseOmsPage implements OrderScenario {
     }
 
     async activateOrderingV2(): Promise<void> {
-        const query: string = "INSERT INTO ms_setting (key1, key2, value1, value2)  VALUES ('POS', 'Show New Ordering Layout Version', \"true\", '');";
+        const query: string = "UPDATE ms_setting SET value1 = '1' WHERE key1 = 'POS' AND key2 = 'Show New Ordering Layout Version';";
         await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
     async activatePaymentV2(): Promise<void> {
-        const query: string = "INSERT INTO ms_setting (key1, key2, value1, value2) VALUES ('POS', 'Show New Payment Version', \"true\", '');";
+        const query: string = "UPDATE ms_setting SET value1 = '1' WHERE key1 = 'POS' AND key2 = 'Show New Payment Version';";
         await this.sqlExecute(this.configs.get.dbConfig, query);
     }
 
