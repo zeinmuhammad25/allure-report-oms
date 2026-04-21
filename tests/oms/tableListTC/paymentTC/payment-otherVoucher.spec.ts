@@ -8,7 +8,7 @@ import TerminalIDScenario from "../../../../src/modules/oms/terminalID/terminalI
 import SignPinScenario from "../../../../src/modules/oms/signPin/signPin.scenario";
 
 test.setTimeout(100000);
-test.describe.serial("Quick Service Move Item", () => {
+test.describe("Quick Service Move Item", () => {
     const tags = "@smokeTest @oms @payment @paymentOtherVoucher ";
 
     const selectMenuBiasa = async (order: OrderScenario, quantity = 1) => {

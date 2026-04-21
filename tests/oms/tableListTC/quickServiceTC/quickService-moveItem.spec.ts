@@ -10,7 +10,7 @@ import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quic
 import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
-test.describe.serial("Quick Service Move Item", () => {
+test.describe("Quick Service Move Item", () => {
     const tags = "@smokeTest @oms @quickService @moveItem ";
 
     const makeOrder = async (

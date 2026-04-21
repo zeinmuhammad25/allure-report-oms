@@ -11,7 +11,7 @@ import {safeTest} from "../../../../src/base/utils/safeTest";
 import {PaymentObject} from "../../../../src/modules/oms/tableList/payment/PaymentObject";
 
 test.setTimeout(200000);
-test.describe.serial("Promotion Inclusive After Discount", () => {
+test.describe("Promotion Inclusive After Discount", () => {
 
     const tags = "@smokeTest @oms @applyPromotion ";
 

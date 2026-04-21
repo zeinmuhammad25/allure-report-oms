@@ -8,7 +8,7 @@ import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
-test.describe.serial("Ordering Dine In Move Table", () => {
+test.describe("Ordering Dine In Move Table", () => {
     const tags = "@smokeTest @oms @orderingDineIn @moveTable ";
 
     const orderSingleMenu = async (order: OrderScenario, qty1: number, qty2: number, qty3: number) => {

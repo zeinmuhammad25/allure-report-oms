@@ -1,4 +1,123 @@
 {
-  "cookies": [],
-  "origins": []
+  "cookies": [
+    {
+      "name": "ESBPOSWS%247a87asd9WUadLkDhjs3D9d8",
+      "value": "k5n135c6qslcf8gsk4ps405hq6",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_csrf",
+      "value": "1UnvZtEs_CfWw-OpdpYVAYBrQpaPJD4j",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost",
+      "localStorage": [
+        {
+          "name": "flagInclusive",
+          "value": "1"
+        },
+        {
+          "name": "trialMode",
+          "value": "0"
+        },
+        {
+          "name": "weighingProcess",
+          "value": "false"
+        },
+        {
+          "name": "showInclusiveOtherTax",
+          "value": "\"1\""
+        },
+        {
+          "name": "dXNlcm5hbWU=",
+          "value": "REVWMUZBRElM"
+        },
+        {
+          "name": "deliveryCost",
+          "value": "0"
+        },
+        {
+          "name": "isOnboardingTutorVisible",
+          "value": "{\"userID\":[\"22\",\"6\",\"0000\"],\"isOnboardingTutorVisible\":false,\"isFinished\":true}"
+        },
+        {
+          "name": "lastRefresh",
+          "value": "1776766844168"
+        },
+        {
+          "name": "showInclusiveTax",
+          "value": "\"1\""
+        },
+        {
+          "name": "terminalID",
+          "value": "01"
+        },
+        {
+          "name": "versionUpdate",
+          "value": "v.2.138.1"
+        },
+        {
+          "name": "terminalData",
+          "value": "{\"activatedDate\":\"1754983980\",\"terminalCode\":\"01\",\"caption\":\"Oms1\"}"
+        },
+        {
+          "name": "session",
+          "value": "CeWc63ZJnL-0clO6bZubOiJ6Nx4CEQZX7pbOA4HwlpDFpHLLws"
+        },
+        {
+          "name": "orderFee",
+          "value": "0"
+        },
+        {
+          "name": "otherVatTotal",
+          "value": "0"
+        },
+        {
+          "name": "weighingPrice",
+          "value": ""
+        },
+        {
+          "name": "vatName",
+          "value": "\"PPN\""
+        },
+        {
+          "name": "showESBLogo",
+          "value": "\"1\""
+        },
+        {
+          "name": "tabActive",
+          "value": "{\"timestamp\":1776766844479}"
+        },
+        {
+          "name": "weighingItem",
+          "value": ""
+        },
+        {
+          "name": "taxText",
+          "value": "\"PB1\""
+        },
+        {
+          "name": "platformFees",
+          "value": "[]"
+        },
+        {
+          "name": "additionalTaxName",
+          "value": "\"SC\""
+        }
+      ]
+    }
+  ]
 }

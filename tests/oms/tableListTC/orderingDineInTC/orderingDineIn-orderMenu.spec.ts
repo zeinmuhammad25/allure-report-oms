@@ -9,7 +9,7 @@ import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/p
 import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
 
 test.setTimeout(100000);
-test.describe.serial("Ordering Dine In Order Menu", () => {
+test.describe("Ordering Dine In Order Menu", () => {
     const tags = "@smokeTest @oms @orderingDineIn @orderMenu ";
 
     const selectMenuBiasa = async (order: OrderScenario, quantity = 1) => {

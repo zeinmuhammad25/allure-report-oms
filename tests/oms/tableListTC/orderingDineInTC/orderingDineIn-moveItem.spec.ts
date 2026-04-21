@@ -8,7 +8,7 @@ import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/p
 import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
-test.describe.serial("Ordering Dine In Move Item", () => {
+test.describe("Ordering Dine In Move Item", () => {
     const tags = "@smokeTest @oms @orderingDineIn @moveItem ";
 
     const selectMenuBiasa = async (order: OrderScenario, qty1: number) => {

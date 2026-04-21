@@ -9,7 +9,7 @@ import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 import {safeTest} from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
-test.describe.serial("Ordering Dine In Split Bill", () => {
+test.describe("Ordering Dine In Split Bill", () => {
     const tags = "@smokeTest @oms @dineIn @splitBill ";
 
     const makeOrder = async (salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario) => {

@@ -8,7 +8,7 @@ import BookOrderClassicScenario
 import OrderClassicScenario from "../../../../src/modules/oms/tableList/order/orderClassic.scenario";
 
 test.setTimeout(600000);
-test.describe.serial("Quick Service Classic Edit Order", () => {
+test.describe("Quick Service Classic Edit Order", () => {
     const tag = "@smokeTest @oms @quickService @addOrder ";
 
     const makeOrder = async (

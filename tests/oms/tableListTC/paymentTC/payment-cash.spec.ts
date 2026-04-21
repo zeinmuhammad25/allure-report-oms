@@ -8,7 +8,7 @@ import EditOrderScenario from "../../../../src/modules/oms/tableList/order/compo
 import AddOrderScenario from "../../../../src/modules/oms/tableList/order/components/addOrder/addOrder.scenario";
 
 test.setTimeout(100000);
-test.describe.serial("Payment Cash POS", () => {
+test.describe("Payment Cash POS", () => {
     const tags = "@smokeTest @oms @payment @paymentCash ";
 
     const makeOrder = async (salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario) => {

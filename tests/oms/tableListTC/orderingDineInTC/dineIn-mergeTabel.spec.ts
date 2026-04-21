@@ -9,7 +9,7 @@ import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/p
 import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 
 test.setTimeout(100000);
-test.describe.serial("Dine in Merge Table", () => {
+test.describe("Dine in Merge Table", () => {
     const tags = "@smokeTest @oms @Merge_Table";
 
     const makeOrder = async (salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario) => {

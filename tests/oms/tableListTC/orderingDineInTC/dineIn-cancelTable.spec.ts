@@ -1,13 +1,13 @@
-import {test} from "../../injection";
+import { test } from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import Table from "../../../../src/modules/oms/objects/table";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
 import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
-import {safeTest} from "../../../../src/base/utils/safeTest";
+import { safeTest } from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
-test.describe.serial("Dine in Cancel Table", () => {
+test.describe("Dine in Cancel Table", () => {
     const tags = "@smokeTest @oms @Cancel_Table";
 
     const makeOrder = async (salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario) => {
@@ -27,7 +27,7 @@ test.describe.serial("Dine in Cancel Table", () => {
         await addOrderV2.selectPackageGroup("Menu Extra");
         await addOrderV2.extraCategory(MenuList.atCategory.name);
         await addOrderV2.modifyExtraPackage([
-            {menuName: MenuList.menus.atMenuExtraAlpha.shortName, qty: quantity, notes: null}
+            { menuName: MenuList.menus.atMenuExtraAlpha.shortName, qty: quantity, notes: null }
         ]);
     };
 
@@ -36,10 +36,10 @@ test.describe.serial("Dine in Cancel Table", () => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
         await addOrderV2.modifyDetailPackage([
-            {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: quantity, notes: null}
+            { menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: quantity, notes: null }
         ]);
     };
 
@@ -48,10 +48,10 @@ test.describe.serial("Dine in Cancel Table", () => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
         await addOrderV2.modifyDetailPackage([
-            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: null}
+            { menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: null }
         ]);
     };
 
@@ -69,7 +69,7 @@ test.describe.serial("Dine in Cancel Table", () => {
         await order.UndoCancelTable(reason);
     };
 
-    test.beforeEach(async ({terminalID, signPin, tableList, order}) => {
+    test.beforeEach(async ({ terminalID, signPin, tableList, order }) => {
         const testWithAuthentication = [
             "[TC_0205131] Validate Logic when User can Cancel the order in Link Table with Cancel Table to the main table",
             "[TC_0205144] Validate Logic when User already Hold menu, user can Cancel Table",
@@ -104,7 +104,7 @@ test.describe.serial("Dine in Cancel Table", () => {
         }
     });
 
-    test.afterEach(async ({tableList}) => {
+    test.afterEach(async ({ tableList }) => {
         await Promise.all([
             tableList.cancelAllQuickServices(),
             tableList.cancelAllTables()
@@ -112,8 +112,8 @@ test.describe.serial("Dine in Cancel Table", () => {
     });
 
     test("[TC_0205131] Validate Logic when User can Cancel the order in Link Table with Cancel Table to the main table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -133,12 +133,12 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await cancelTable(order);
-            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205132] Validate Logic when User can Cancel Table after Link Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -158,22 +158,22 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await cancelTableSelectNotes(order, "Testing B");
-            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205133] Validate Logic when User can Cancel Table before saving order",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
                 await cancelTableSelectNotes(order, "Testing A");
-            }, {tableList, bookOrder, order}, testInfo);
+            }, { tableList, bookOrder, order }, testInfo);
         });
 
     test("[TC_0205134] Validate Logic when User can Cancel Table after saving order",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, addOrderV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, addOrderV2 }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -187,12 +187,12 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await cancelTableSelectNotes(order, "Cancel");
-            }, {tableList, bookOrder, order, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205135] Validate Logic when User still can Cancel Table after Move Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, moveTable, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, addOrderV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, moveTable, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, addOrderV2 }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -209,22 +209,22 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await moveTable.selectRoom(Table.smokingRoom.name);
                 await moveTable.selectTable(Table.smokingRoom.sr2.name);
                 await cancelTableSelectNotes(order, "Cancel");
-            }, {tableList, bookOrder, order, moveTable, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, moveTable, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205137] Validate Logic when User can Cancel Table empty order",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
                 await cancelTable(order);
-            }, {tableList, bookOrder, order}, testInfo);
+            }, { tableList, bookOrder, order }, testInfo);
         });
 
     test("[TC_0205138] Validate Logic when User cannot Cancel Table before Save Order without input Cancel Notes",
-        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, addOrderV2}) => {
+        { tag: tags + "@Negative" }, async ({ tableList, bookOrder, order, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, addOrderV2 }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -235,12 +235,12 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await orderMenuPaketMahal(order, addOrderV2);
                 await addOrderV2.addToCartMenuDetailPackage();
                 await order.disabledCancelTable();
-            }, {tableList, bookOrder, order, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205139] Validate Logic when User cannot Cancel Table after Save Order without input Cancel Notes",
-        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, addOrderV2}) => {
+        { tag: tags + "@Negative" }, async ({ tableList, bookOrder, order, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, addOrderV2 }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -254,22 +254,22 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await order.cancelTableApplyDisabled();
-            }, {tableList, bookOrder, order, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205140] Validate Logic when User can undo Cancel Table before Save Order with button Cancel",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr3.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
                 await UndoCancelTable(order, "Cancel");
-            }, {tableList, bookOrder, order}, testInfo);
+            }, { tableList, bookOrder, order }, testInfo);
         });
 
     test("[TC_0205141] Validate Logic when User can undo Cancel Table after Save Order with button Cancel",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, addOrderV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, addOrderV2 }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -283,12 +283,12 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr4.name);
                 await UndoCancelTable(order, "Cancel");
-            }, {tableList, bookOrder, order, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205142] Validate Logic when User can Cancel Table to Parent (Main) Split Bill",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2 }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -309,12 +309,12 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await cancelTable(order);
-            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205143] Validate Logic when User can Cancel Table to Child (Splitted) Split Bill",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -332,12 +332,12 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await order.saveOrder();
                 await tableList.selectTable(Table.acRoom.ac3.name);
                 await cancelTableSelectNotes(order, "Tidak Jadi");
-            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205144] Validate Logic when User already Hold menu, user can Cancel Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -348,12 +348,12 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await cancelTable(order);
-            }, {tableList, bookOrder, order}, testInfo);
+            }, { tableList, bookOrder, order }, testInfo);
         });
 
     test("[TC_0205145] Validate Logic when User already Hold menu, user can Cancel Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -365,12 +365,12 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await cancelTableSelectNotes(order, "Testing B");
-            }, {tableList, bookOrder, order}, testInfo);
+            }, { tableList, bookOrder, order }, testInfo);
         });
 
     test("[TC_0205146] Validate Logic when User already Hold menu, user can Cancel Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac4.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -385,12 +385,12 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac4.name);
                 await cancelTable(order);
-            }, {tableList, bookOrder, order}, testInfo);
+            }, { tableList, bookOrder, order }, testInfo);
         });
 
     test("[TC_0205147] Validate Logic when User already Fire all menu, user can Cancel Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac3.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -407,7 +407,7 @@ test.describe.serial("Dine in Cancel Table", () => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac3.name);
                 await cancelTableSelectNotes(order, "Testing B");
-            }, {tableList, bookOrder, order}, testInfo);
+            }, { tableList, bookOrder, order }, testInfo);
         });
 
 });

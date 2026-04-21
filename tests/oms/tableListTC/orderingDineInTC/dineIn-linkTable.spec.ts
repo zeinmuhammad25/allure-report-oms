@@ -1,4 +1,4 @@
-import {test} from "../../injection";
+import { test } from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import Table from "../../../../src/modules/oms/objects/table";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
@@ -8,10 +8,10 @@ import AddOrderScenario from "../../../../src/modules/oms/tableList/order/compon
 import AddOrderV2Scenario from "../../../../src/modules/oms/tableList/order/components/addOrderV2/addOrderV2.scenario";
 import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/paymentV2.scenario";
 import PaymentList from "../../../../src/modules/oms/objects/paymentList";
-import {safeTest} from "../../../../src/base/utils/safeTest";
+import { safeTest } from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(100000);
-test.describe.serial("Dine in Link Table", () => {
+test.describe("Dine in Link Table", () => {
     const tags = "@smokeTest @oms @Link_Table";
 
     const makeOrder = async (salesMode: "AT EXCLUSIVE" | "AT INCLUSIVE", bookOrder: BookOrderScenario) => {
@@ -31,7 +31,7 @@ test.describe.serial("Dine in Link Table", () => {
         await addOrderV2.selectPackageGroup("Menu Extra");
         await addOrderV2.extraCategory(MenuList.atCategory.name);
         await addOrderV2.modifyExtraPackage([
-            {menuName: MenuList.menus.atMenuExtraAlpha.shortName, qty: quantity, notes: null}
+            { menuName: MenuList.menus.atMenuExtraAlpha.shortName, qty: quantity, notes: null }
         ]);
     };
 
@@ -40,10 +40,10 @@ test.describe.serial("Dine in Link Table", () => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMurah.name);
         await addOrderV2.modifyDetailPackage([
-            {menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: quantity, notes: null}
+            { menuName: MenuList.menuPackages.bataviaBlended700ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.baileysOriginal700ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.captainMorgan200ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.icelandVodka250ml.shortName, qty: quantity, notes: null }
         ]);
     };
 
@@ -52,10 +52,10 @@ test.describe.serial("Dine in Link Table", () => {
         await order.selectCategoryDetailMenu(MenuList.atCategory.atMenuPaket.name);
         await order.selectMenu(MenuList.atCategory.atMenuPaket.atMenuPaketMahal.name);
         await addOrderV2.modifyDetailPackage([
-            {menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: null},
-            {menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: null}
+            { menuName: MenuList.menuPackages.sababayWhiteVelvet750ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.bombaySapphireDryGin750ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.gilbeysWhisky350ml.shortName, qty: quantity, notes: null },
+            { menuName: MenuList.menuPackages.sprite250ml.shortName, qty: quantity, notes: null }
         ]);
     };
 
@@ -68,7 +68,7 @@ test.describe.serial("Dine in Link Table", () => {
         await paymentV2.closePopUpPaymentSuccessFul();
     };
 
-    test.beforeEach(async ({terminalID, signPin, tableList, order}) => {
+    test.beforeEach(async ({ terminalID, signPin, tableList, order }) => {
         const testWithAuthentication = [
             "[TC_0205210] Validate Logic when User can Link Table to other table with the same Sales Mode",
             "[TC_0205216] Validate Logic when User cannot Link Table while the other table doing Hold",
@@ -101,7 +101,7 @@ test.describe.serial("Dine in Link Table", () => {
         }
     });
 
-    test.afterEach(async ({tableList}) => {
+    test.afterEach(async ({ tableList }) => {
         await Promise.all([
             tableList.cancelAllQuickServices(),
             tableList.cancelAllTables()
@@ -109,8 +109,8 @@ test.describe.serial("Dine in Link Table", () => {
     });
 
     test("[TC_0205210] Validate Logic when User can Link Table to other table with the same Sales Mode",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -132,12 +132,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }, testInfo);
         });
 
     test("[TC_0205211] Validate Logic when User can Link Table to other table with different Sales Mode",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -160,12 +160,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }, testInfo);
         });
 
     test("[TC_0205212] Validate Logic when User can access Parent Table after user Link Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -188,12 +188,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }, testInfo);
         });
 
     test("[TC_0205213] Validate Logic when User can access Child Table after user Link Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -216,12 +216,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }, testInfo);
         });
 
     test("[TC_0205214] Validate Logic when User can undo the Link Table action with button Cancel",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -238,12 +238,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await linkTable.userCancelLink();
                 await order.saveOrder();
-            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205215] Validate Logic when User can Unlink the Link Table from Parent Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -274,12 +274,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {tableList, bookOrder, order, linkTable, addOrderV2, paymentV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2, paymentV2 }, testInfo);
         });
 
     test("[TC_0205216] Validate Logic when User cannot Link Table while the other table doing Hold",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -297,12 +297,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await linkTable.userMultiLinkTable();
-            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205217] Validate Logic when User cannot Link Table while the Link Table on the other table already applied",
-        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+        { tag: tags + "@Negative" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -334,12 +334,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac4.name);
                 await linkTable.userMultiLinkTable();
-            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205218] Validate Logic when User can Link Table with the Parent (Main) Split Bill table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -375,12 +375,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2 }, testInfo);
         });
 
     test("[TC_0205219] Validate Logic when User can access payment on Link Table with Split Bill table from Link Table",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -416,12 +416,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2 }, testInfo);
         });
 
     test("[TC_0205220] Validate Logic when User can access payment on Link Table with Split Bill table from Parent (Main) Split Bill",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2 }) => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -457,12 +457,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await order.printNowPrintingSetting();
                 await order.gotoPayment();
                 await paymentCashFull(paymentV2);
-            }, {tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2, splitBill, paymentV2 }, testInfo);
         });
 
     test("[TC_0205221] Validate Logic when User cannot access payment on Link Table with Split Bill table from Child (Splitted) Split Bill",
-        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, addOrderV2, splitBill}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2, splitBill}) => {
+        { tag: tags + "@Negative" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2, splitBill }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2, splitBill }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
@@ -492,12 +492,12 @@ test.describe.serial("Dine in Link Table", () => {
                 await order.expectDisabledPayment();
                 await order.cancelTable("Cancel");
                 await order.confirmationCloseTable("Yes");
-            }, {tableList, bookOrder, order, linkTable, addOrderV2, splitBill}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2, splitBill }, testInfo);
         });
 
     test("[TC_0205223] Validate Logic when User cannot Link Table while not having access",
-        {tag: tags + "@Negative"}, async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo) => {
-            await safeTest(async ({topNavBar, signPin, tableList, bookOrder, order, addOrderV2}) => {
+        { tag: tags + "@Negative" }, async ({ topNavBar, signPin, tableList, bookOrder, order, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ topNavBar, signPin, tableList, bookOrder, order, addOrderV2 }) => {
                 await topNavBar.userSignOut();
                 await signPin.inputPinByTouch("6");
                 await signPin.validateShowStarCash("20.000");
@@ -520,17 +520,17 @@ test.describe.serial("Dine in Link Table", () => {
                 await signPin.inputPinByTouch("22");
                 await signPin.validateShowStarCash("20.000");
                 await signPin.storeAuthState();
-            }, {topNavBar, signPin, tableList, bookOrder, order, addOrderV2}, testInfo);
+            }, { topNavBar, signPin, tableList, bookOrder, order, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205224] Validate Logic when User cannot Unlink the Link Table from Child/Linked Table",
-        {tag: tags + "@Negative"}, async ({tableList, bookOrder, order, linkTable, addOrderV2},testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+        { tag: tags + "@Negative" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2 }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
-                await orderSingleMenu(order,5,5,5);
+                await orderSingleMenu(order, 5, 5, 5);
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
@@ -546,18 +546,18 @@ test.describe.serial("Dine in Link Table", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await linkTable.userMultiLinkTable();
-            },{tableList, bookOrder, order, linkTable, addOrderV2},testInfo)
+            }, { tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo)
         });
 
 
     test("[TC_0205225] Validate Logic when User cannot Link Table after Hold the menu",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2 }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
-                await orderSingleMenu(order,4,5,6);
+                await orderSingleMenu(order, 4, 5, 6);
                 await order.holdMenu(MenuList.menus.atMenuBiasaBakar.name);
                 await order.saveOrder();
                 await tableList.selectRoom(Table.smokingRoom.name);
@@ -569,17 +569,17 @@ test.describe.serial("Dine in Link Table", () => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr1.name);
                 await linkTable.userMultiLinkTable();
-            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo);
         });
 
     test("[TC_0205226] Validate Logic when User cannot Link Table after Hold All the menu",
-        {tag: tags + "@Positive"}, async ({tableList, bookOrder, order, linkTable, addOrderV2}, testInfo) => {
-            await safeTest(async ({tableList, bookOrder, order, linkTable, addOrderV2}) => {
+        { tag: tags + "@Positive" }, async ({ tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo) => {
+            await safeTest(async ({ tableList, bookOrder, order, linkTable, addOrderV2 }) => {
                 await tableList.selectRoom(Table.smokingRoom.name);
                 await tableList.selectTable(Table.smokingRoom.sr2.name);
                 await makeOrder("AT INCLUSIVE", bookOrder);
                 await order.selectCategoryMenu(MenuList.atCategory.name);
-                await orderSingleMenu(order,3,4,5);
+                await orderSingleMenu(order, 3, 4, 5);
                 await order.holdAllMenu();
                 await order.confirmationCloseTable("Yes");
                 await order.saveOrder();
@@ -592,7 +592,7 @@ test.describe.serial("Dine in Link Table", () => {
                 await tableList.selectRoom(Table.acRoom.name);
                 await tableList.selectTable(Table.acRoom.ac2.name);
                 await linkTable.userMultiLinkTable();
-            }, {tableList, bookOrder, order, linkTable, addOrderV2}, testInfo);
+            }, { tableList, bookOrder, order, linkTable, addOrderV2 }, testInfo);
         });
 
 });

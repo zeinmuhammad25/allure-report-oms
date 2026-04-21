@@ -1,12 +1,12 @@
-import {test} from "../../injection";
+import { test } from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import OrderScenario from "../../../../src/modules/oms/tableList/order/order.scenario";
 import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
-import {safeTest} from "../../../../src/base/utils/safeTest";
+import { safeTest } from "../../../../src/base/utils/safeTest";
 
 test.setTimeout(600000);
-test.describe.serial("Quick Service Cancel Order", () => {
+test.describe("Quick Service Cancel Order", () => {
     const tag = "@smokeTest @oms @quickService @addOrder ";
 
     const makeOrder = async (
@@ -36,7 +36,7 @@ test.describe.serial("Quick Service Cancel Order", () => {
         await order.UndoCancelTable(reason);
     };
 
-    test.beforeEach(async ({terminalID, signPin, tableList}) => {
+    test.beforeEach(async ({ terminalID, signPin, tableList }) => {
         const testWithAuthentication = [
             "[TC_0205376] Validate Logic when User can't Cancel Order before saving order"
         ];
@@ -50,24 +50,24 @@ test.describe.serial("Quick Service Cancel Order", () => {
         await tableList.goHere();
     });
 
-    test.afterEach(async ({tableList}) => {
+    test.afterEach(async ({ tableList }) => {
         await Promise.all([
             tableList.cancelAllQuickServices(),
             tableList.cancelAllTables()
         ]);
     });
     test("[TC_0205376] Validate Logic when User can't Cancel Order before saving order",
-        {tag: tag + "@Negative"}, async ({quickServiceList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order}) => {
+        { tag: tag + "@Negative" }, async ({ quickServiceList, bookOrder, order }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrder, order }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await selectMultipleMenuBiasa(order, 1, 1, 1);
                 await order.disabledCancelTable();
-            }, {quickServiceList, bookOrder, order}, testInfo);
+            }, { quickServiceList, bookOrder, order }, testInfo);
         });
 
     test("[TC_0205377] Validate Logic when User can Cancel Order after saving order",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrder, order, sideNavBar, tableList }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await selectMultipleMenuBiasa(order, 1, 1, 1);
                 await order.saveOrder();
@@ -75,33 +75,33 @@ test.describe.serial("Quick Service Cancel Order", () => {
                 await tableList.gotoQuickService();
                 await quickServiceList.clickLastSalesNum();
                 await cancelTableSelectNotes(order, "Cancel");
-            }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo);
         });
 
     test("[TC_0205378] Validate Logic when User can Cancel Order empty order",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrder, order, sideNavBar, tableList }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await order.saveOrder();
                 await sideNavBar.gotoPageTableList();
                 await tableList.gotoQuickService();
                 await quickServiceList.clickLastSalesNum();
                 await cancelTableSelectNotes(order, "Cancel");
-            }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo);
         });
 
     test("[TC_0205379] Validate Logic when User cannot Cancel Order before Save Order without select Cancel Notes",
-        {tag: tag + "@Negative"}, async ({quickServiceList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order}) => {
+        { tag: tag + "@Negative" }, async ({ quickServiceList, bookOrder, order }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrder, order }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await selectMultipleMenuBiasa(order, 1, 1, 1);
                 await order.disabledCancelTable();
-            }, {quickServiceList, bookOrder, order}, testInfo);
+            }, { quickServiceList, bookOrder, order }, testInfo);
         });
 
     test("[TC_0205380] Validate Logic when User cannot Cancel Order after Save Order without select Cancel Notes",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrder, order, sideNavBar, tableList }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await selectMultipleMenuBiasa(order, 1, 1, 1);
                 await order.saveOrder();
@@ -109,21 +109,21 @@ test.describe.serial("Quick Service Cancel Order", () => {
                 await tableList.gotoQuickService();
                 await quickServiceList.clickLastSalesNum();
                 await order.cancelTableApplyDisabled();
-            }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo);
         });
 
     test("[TC_0205381] Validate Logic when User cannot Cancel Order before Save Order without input Cancel Notes",
-        {tag: tag + "@Negative"}, async ({quickServiceList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order}) => {
+        { tag: tag + "@Negative" }, async ({ quickServiceList, bookOrder, order }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrder, order }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await selectMultipleMenuBiasa(order, 1, 1, 1);
                 await order.disabledCancelTable();
-            }, {quickServiceList, bookOrder, order}, testInfo);
+            }, { quickServiceList, bookOrder, order }, testInfo);
         });
 
     test("[TC_0205382] Validate Logic when User cannot Cancel Order after Save Order without select Cancel Notes",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrder, order, sideNavBar, tableList }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await selectMultipleMenuBiasa(order, 2, 2, 2);
                 await order.saveOrder();
@@ -131,22 +131,22 @@ test.describe.serial("Quick Service Cancel Order", () => {
                 await tableList.gotoQuickService();
                 await quickServiceList.clickLastSalesNum();
                 await order.cancelTableApplyDisabled();
-            }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo);
         });
 
     test("[TC_0205383] Validate Logic when User can undo Cancel Order before Save Order with button Cancel",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrder, order, sideNavBar }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await selectMultipleMenuBiasa(order, 2, 2, 2);
                 await sideNavBar.moveTableList();
                 await order.confirmationCloseTable("Yes");
-            }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo);
         });
 
     test("[TC_0205384] Validate Logic when User can undo Cancel Order after Save Order with button Cancel",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order, sideNavBar, tableList}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrder, order, sideNavBar, tableList }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await selectMultipleMenuBiasa(order, 2, 2, 2);
                 await order.saveOrder();
@@ -154,15 +154,15 @@ test.describe.serial("Quick Service Cancel Order", () => {
                 await tableList.gotoQuickService();
                 await quickServiceList.clickLastSalesNum();
                 await UndoCancelTable(order, "Cancel");
-            }, {quickServiceList, bookOrder, order, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrder, order, sideNavBar, tableList }, testInfo);
         });
 
     test("[TC_0205385] Validate Logic when User cannot Cancel Order while having no ordered items and not saving order first",
-        {tag: tag + "@Negative"}, async ({quickServiceList, bookOrder, order}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrder, order}) => {
+        { tag: tag + "@Negative" }, async ({ quickServiceList, bookOrder, order }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrder, order }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrder, quickServiceList);
                 await order.disabledCancelTable();
-            }, {quickServiceList, bookOrder, order}, testInfo);
+            }, { quickServiceList, bookOrder, order }, testInfo);
         });
 
 });

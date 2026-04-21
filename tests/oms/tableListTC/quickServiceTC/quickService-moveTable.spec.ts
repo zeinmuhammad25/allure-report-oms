@@ -9,7 +9,7 @@ import PaymentV2Scenario from "../../../../src/modules/oms/tableList/paymentV2/p
 import PaymentList from "../../../../src/modules/oms/objects/paymentList";
 
 test.setTimeout(100000);
-test.describe.serial("Quick Service Move Table", () => {
+test.describe("Quick Service Move Table", () => {
     const tags = "@smokeTest @oms @moveTable ";
 
     const selectMenuBiasa = async (order: OrderScenario, quantity = 1) => {

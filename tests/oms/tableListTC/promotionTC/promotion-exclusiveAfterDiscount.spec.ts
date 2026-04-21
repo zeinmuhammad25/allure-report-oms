@@ -11,7 +11,7 @@ import {safeTest} from "../../../../src/base/utils/safeTest";
 import Table from "../../../../src/modules/oms/objects/table";
 
 test.setTimeout(200000);
-test.describe.serial("Promotion Exclusive After Discount", () => {
+test.describe("Promotion Exclusive After Discount", () => {
 
     const tags = "@smokeTest @oms @applyPromotion ";
 

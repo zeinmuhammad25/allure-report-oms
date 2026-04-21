@@ -1,14 +1,14 @@
-import {test} from "../../injection";
+import { test } from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
-import {safeTest} from "../../../../src/base/utils/safeTest";
+import { safeTest } from "../../../../src/base/utils/safeTest";
 import BookOrderClassicScenario
     from "../../../../src/modules/oms/tableList/components/bookOrderClassic/bookOrderClassic.scenario";
 import OrderClassicScenario from "../../../../src/modules/oms/tableList/order/orderClassic.scenario";
 import Table from "../../../../src/modules/oms/objects/table";
 
 test.setTimeout(600000);
-test.describe.serial("Quick Service Classic Cancel Order", () => {
+test.describe("Quick Service Classic Cancel Order", () => {
     const tag = "@smokeTest @oms @quickService @addOrder ";
 
 
@@ -39,7 +39,7 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
     };
 
     let featuresActivated = false;
-    test.beforeEach(async ({terminalID, signPin,orderClassic}) => {
+    test.beforeEach(async ({ terminalID, signPin, orderClassic }) => {
         const testWithAuthentication = [
             "[TCAT_OMS_CQSTM_0004] Validate Logic when User can't Cancel Order before saving order"
         ];
@@ -61,114 +61,114 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
 
     });
 
-    test.afterEach(async ({tableList}) => {
+    test.afterEach(async ({ tableList }) => {
         await Promise.all([
             tableList.cancelAllQuickServices()
         ]);
     });
 
     test("[TCAT_OMS_CQSTM_0004] Validate Logic when User can't Cancel Order before saving order",
-        {tag: tag + "@Negative"}, async ({quickServiceList, bookOrderClassic, orderClassic}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic}) => {
+        { tag: tag + "@Negative" }, async ({ quickServiceList, bookOrderClassic, orderClassic }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrderClassic, orderClassic }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await selectMultipleMenuBiasa(orderClassic, 1, 1, 1);
                 await orderClassic.disabledCancelOrder();
-            }, {quickServiceList, bookOrderClassic, orderClassic}, testInfo);
+            }, { quickServiceList, bookOrderClassic, orderClassic }, testInfo);
         });
 
     test("[TCAT_OMS_CQSTM_0005] Validate Logic when User can Cancel Order after saving order",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await selectMultipleMenuBiasa(orderClassic, 1, 1, 1);
                 await orderClassic.saveOrder();
                 await sideNavBar.gotoPageTableList();
                 await quickServiceList.clickLastSalesNum();
                 await cancelTableSelectNotes(orderClassic, "Cancel");
-            }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo);
         });
 
     test("[TCAT_OMS_CQSTM_0007] Validate Logic when User can Cancel Order empty order",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await orderClassic.saveOrder();
                 await sideNavBar.gotoPageTableList();
                 await quickServiceList.clickLastSalesNum();
                 await cancelTableSelectNotes(orderClassic, "Cancel");
-            }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo);
         });
 
     test("[TCAT_OMS_CQSTM_0008] Validate Logic when User cannot Cancel Order before Save Order without select Cancel Notes",
-        {tag: tag + "@Negative"}, async ({quickServiceList, bookOrderClassic, orderClassic}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic}) => {
+        { tag: tag + "@Negative" }, async ({ quickServiceList, bookOrderClassic, orderClassic }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrderClassic, orderClassic }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await selectMultipleMenuBiasa(orderClassic, 1, 1, 1);
                 await orderClassic.disabledCancelOrder();
-            }, {quickServiceList, bookOrderClassic, orderClassic}, testInfo);
+            }, { quickServiceList, bookOrderClassic, orderClassic }, testInfo);
         });
 
     test("[TCAT_OMS_CQSTM_0009] Validate Logic when User cannot Cancel Order after Save Order without select Cancel Notes",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await selectMultipleMenuBiasa(orderClassic, 1, 1, 1);
                 await orderClassic.saveOrder();
                 await sideNavBar.gotoPageTableList();
                 await quickServiceList.clickLastSalesNum();
                 await orderClassic.cancelOrderApplyDisabled();
-            }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo);
         });
 
     test("[TCAT_OMS_CQSTM_0010] Validate Logic when User cannot Cancel Order before Save Order without input Cancel Notes",
-        {tag: tag + "@Negative"}, async ({quickServiceList, bookOrderClassic, orderClassic}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic}) => {
+        { tag: tag + "@Negative" }, async ({ quickServiceList, bookOrderClassic, orderClassic }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrderClassic, orderClassic }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await selectMultipleMenuBiasa(orderClassic, 1, 1, 1);
                 await orderClassic.disabledCancelOrder();
-            }, {quickServiceList, bookOrderClassic, orderClassic}, testInfo);
+            }, { quickServiceList, bookOrderClassic, orderClassic }, testInfo);
         });
 
     test("[TCAT_OMS_CQSTM_0011] Validate Logic when User cannot Cancel Order after Save Order without input Cancel Notes",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await selectMultipleMenuBiasa(orderClassic, 2, 2, 2);
                 await orderClassic.saveOrder();
                 await sideNavBar.gotoPageTableList();
                 await quickServiceList.clickLastSalesNum();
                 await orderClassic.cancelOrderApplyDisabled();
-            }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo);
         });
 
     test("[TCAT_OMS_CQSTM_0012] Validate Logic when User can undo Cancel Order before Save Order with button Cancel",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await selectMultipleMenuBiasa(orderClassic, 2, 2, 2);
                 await sideNavBar.moveTableList();
                 await orderClassic.confirmationCloseOrder("Yes");
-            }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo);
         });
 
     test("[TCAT_OMS_CQSTM_0013] Validate Logic when User can undo Cancel Order after Save Order with button Cancel",
-        {tag: tag + "@Positive"}, async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}) => {
+        { tag: tag + "@Positive" }, async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await selectMultipleMenuBiasa(orderClassic, 2, 2, 2);
                 await orderClassic.saveOrder();
                 await sideNavBar.gotoPageTableList();
                 await quickServiceList.clickLastSalesNum();
                 await UndoCancelTable(orderClassic, "Cancel");
-            }, {quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList}, testInfo);
+            }, { quickServiceList, bookOrderClassic, orderClassic, sideNavBar, tableList }, testInfo);
         });
 
     test("[TCAT_OMS_CQSTM_0014] Validate Logic when User cannot Cancel Order while having no ordered items and not saving order first",
-        {tag: tag + "@Negative"}, async ({quickServiceList, bookOrderClassic, orderClassic}, testInfo) => {
-            await safeTest(async ({quickServiceList, bookOrderClassic, orderClassic}) => {
+        { tag: tag + "@Negative" }, async ({ quickServiceList, bookOrderClassic, orderClassic }, testInfo) => {
+            await safeTest(async ({ quickServiceList, bookOrderClassic, orderClassic }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await orderClassic.disabledCancelOrder();
-            }, {quickServiceList, bookOrderClassic, orderClassic}, testInfo);
+            }, { quickServiceList, bookOrderClassic, orderClassic }, testInfo);
         });
 
 });

@@ -11,3 +11,6 @@ node_modules/
 .env
 /.cache
 *.g.ts
+/allure-results/
+allure-report/data/attachments/
+/junit-report/

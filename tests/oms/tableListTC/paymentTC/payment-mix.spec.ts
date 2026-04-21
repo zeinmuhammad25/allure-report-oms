@@ -7,7 +7,7 @@ import TableListScenario from "../../../../src/modules/oms/tableList/tableList.s
 import BookOrderScenario from "../../../../src/modules/oms/tableList/components/bookOrder/bookOrder.scenario";
 
 test.setTimeout(100000);
-test.describe.serial("Payment Mix POS", () => {
+test.describe("Payment Mix POS", () => {
     const tags = "@smokeTest @oms @payment @paymentMix ";
     const selectMultipleMenuBiasa = async (order: OrderScenario, isWithQuantity = false, quantity = 1) => {
         await order.selectCategoryMenu(MenuList.atCategory.name);

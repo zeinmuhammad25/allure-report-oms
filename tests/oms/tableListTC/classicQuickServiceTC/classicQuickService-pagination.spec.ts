@@ -6,7 +6,7 @@ import BookOrderClassicScenario
     from "../../../../src/modules/oms/tableList/components/bookOrderClassic/bookOrderClassic.scenario";
 
 test.setTimeout(600000);
-test.describe.serial("Quick Service Classic Pagination Order", () => {
+test.describe("Quick Service Classic Pagination Order", () => {
     const tag = "@smokeTest @oms @quickService @addOrder ";
 
     const makeOrder = async (

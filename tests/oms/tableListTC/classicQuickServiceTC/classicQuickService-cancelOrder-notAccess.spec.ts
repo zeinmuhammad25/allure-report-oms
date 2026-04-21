@@ -1,13 +1,13 @@
-import {test} from "../../injection";
+import { test } from "../../injection";
 import MenuList from "../../../../src/modules/oms/objects/menuList";
 import QuickServiceListScenario from "../../../../src/modules/oms/tableList/quickServiceList/quickServiceList.scenario";
-import {safeTest} from "../../../../src/base/utils/safeTest";
+import { safeTest } from "../../../../src/base/utils/safeTest";
 import BookOrderClassicScenario
     from "../../../../src/modules/oms/tableList/components/bookOrderClassic/bookOrderClassic.scenario";
 import OrderClassicScenario from "../../../../src/modules/oms/tableList/order/orderClassic.scenario";
 
 test.setTimeout(600000);
-test.describe.serial("Quick Service Classic Cancel Order", () => {
+test.describe("Quick Service Classic Cancel Order", () => {
     const tag = "@smokeTest @oms @quickService @addOrder ";
 
 
@@ -28,7 +28,7 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
     };
 
     let featuresActivated = false;
-    test.beforeEach(async ({terminalID, signPin,orderClassic}) => {
+    test.beforeEach(async ({ terminalID, signPin, orderClassic }) => {
         const testWithAuthentication = [
             "[TCAT_OMS_CQSTM_0006] Validate Logic when User cannot directly Cancel Order while not having access"
         ];
@@ -50,7 +50,7 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
 
     });
 
-    test.afterEach(async ({tableList}) => {
+    test.afterEach(async ({ tableList }) => {
         await Promise.all([
             tableList.cancelAllQuickServices()
         ]);
@@ -58,8 +58,8 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
 
 
     test("[TCAT_OMS_CQSTM_0006] Validate Logic when User cannot directly Cancel Order while not having access",
-        {tag: tag + "@Positive"}, async ({topNavBar, signPin, tableList, bookOrder, orderClassic, bookOrderClassic, sideNavBar, quickServiceList}, testInfo) => {
-            await safeTest(async ({topNavBar, signPin, tableList, bookOrder, orderClassic, bookOrderClassic, sideNavBar, quickServiceList}) => {
+        { tag: tag + "@Positive" }, async ({ topNavBar, signPin, tableList, bookOrder, orderClassic, bookOrderClassic, sideNavBar, quickServiceList }, testInfo) => {
+            await safeTest(async ({ topNavBar, signPin, tableList, bookOrder, orderClassic, bookOrderClassic, sideNavBar, quickServiceList }) => {
                 await makeOrder("AT EXCLUSIVE", bookOrderClassic, quickServiceList);
                 await selectMultipleMenuBiasa(orderClassic, 1, 1, 1);
                 await orderClassic.saveOrder();
@@ -67,7 +67,7 @@ test.describe.serial("Quick Service Classic Cancel Order", () => {
                 await quickServiceList.clickLastSalesNum();
                 await orderClassic.cancelMenuButtonIsNotVisible(MenuList.menus.atMenuBiasaGoreng.name);
                 await orderClassic.saveOrder();
-            }, {topNavBar, signPin, tableList, bookOrder, orderClassic, bookOrderClassic, sideNavBar, quickServiceList}, testInfo);
+            }, { topNavBar, signPin, tableList, bookOrder, orderClassic, bookOrderClassic, sideNavBar, quickServiceList }, testInfo);
         });
 
 });
