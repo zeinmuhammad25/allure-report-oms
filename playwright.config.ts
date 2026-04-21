@@ -42,7 +42,7 @@ export default defineConfig({
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: "on-first-retry",
-        headless: true,
+        headless: false,
         permissions: ["geolocation"],
         geolocation: { latitude: -6.2114, longitude: 106.8446 },
         storageState: process.env.STORAGE_STATE ? process.env.STORAGE_STATE : undefined

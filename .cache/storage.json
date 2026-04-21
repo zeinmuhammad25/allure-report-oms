@@ -12,7 +12,7 @@
     },
     {
       "name": "_csrf",
-      "value": "1UnvZtEs_CfWw-OpdpYVAYBrQpaPJD4j",
+      "value": "Y_pPuIPE6K0vnsakogYa6kK8_DrRJR5I",
       "domain": "localhost",
       "path": "/",
       "expires": -1,
@@ -55,7 +55,7 @@
         },
         {
           "name": "lastRefresh",
-          "value": "1776766844168"
+          "value": "1776783745102"
         },
         {
           "name": "showInclusiveTax",
@@ -75,7 +75,7 @@
         },
         {
           "name": "session",
-          "value": "CeWc63ZJnL-0clO6bZubOiJ6Nx4CEQZX7pbOA4HwlpDFpHLLws"
+          "value": "k9tR-sQcT2G9NhWGWIWsreOo5LVYQL58slQkrkpH53FXoPAKxP"
         },
         {
           "name": "orderFee",
@@ -99,7 +99,7 @@
         },
         {
           "name": "tabActive",
-          "value": "{\"timestamp\":1776766844479}"
+          "value": "{\"timestamp\":1776783745448}"
         },
         {
           "name": "weighingItem",
